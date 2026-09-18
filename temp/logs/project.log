@@ -1,50 +1,47 @@
-9-18-2026 14:26:21 - log: Load engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine
-9-18-2026 14:26:21 - log: Register native engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\native
-9-18-2026 14:26:22 - log: Request namespace: device-list
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=24947, profile=core, autostart=true
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] Extension loading...
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] Autostart is enabled, starting MCP server.
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] Starting MCP server...
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=24947, profile=core, autostart=true
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP Server] Creating HTTP server on 127.0.0.1:24947...
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP Server] Listening on http://127.0.0.1:24947/
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] MCP server started at http://127.0.0.1:24947/
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] If this tool saves you time, please consider giving it a Star on GitHub: https://github.com/FunplayAI/funplay-cocos-mcp
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] Checking GitHub for newer Funplay Cocos MCP releases.
-9-18-2026 14:26:26 - log: [Funplay Cocos MCP] Update check completed: current=0.6.3, latest=0.6.3
-9-18-2026 14:26:50 - warn: [Assets] The uuid is already pointing to another asset .
-[
-  "F:\\CocosProject\\PLY_Roomtopia_Cocos\\assets\\1.Animations\\Base\\Scale.anim",
-  "F:\\CocosProject\\PLY_Roomtopia_Cocos\\assets\\1.Animations\\Scale.anim"
-]
-The file uuid has been updated: F:\CocosProject\PLY_Roomtopia_Cocos\assets\1.Animations\Base\Scale.anim
-    7c80c110-b7c2-47eb-9300-0f32e3d332d2 -> 02a06aef-57c2-4682-bfc5-eeade604e3b9Warn: [Assets] The uuid is already pointing to another asset .
-[
-  "F:\\CocosProject\\PLY_Roomtopia_Cocos\\assets\\1.Animations\\Base\\Scale.anim",
-  "F:\\CocosProject\\PLY_Roomtopia_Cocos\\assets\\1.Animations\\Scale.anim"
-]
-The file uuid has been updated: F:\CocosProject\PLY_Roomtopia_Cocos\assets\1.Animations\Base\Scale.anim
-    at NewConsole.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-logger\lib\renderer.ccc:1:1260)
-    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
-    at CustomConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
-    at AssetDB._replaceUUID (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\asset-db.ccc:666:30)
-    at AssetDB._checkAssetsStatSync (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\asset-db.ccc:719:26)
-    at AssetDB.refresh (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\asset-db.ccc:594:18)
-    at AssetDB.start (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\asset-db.ccc:251:19)
-9-18-2026 14:26:57 - log: [Scene] meshopt wasm decoder initialized
-9-18-2026 14:26:57 - log: [Scene] [box2d]:box2d wasm lib loaded.
-9-18-2026 14:26:57 - log: [Scene] [bullet]:bullet wasm lib loaded.
-9-18-2026 14:26:57 - log: [Scene] [PHYSICS]: using builtin.
-9-18-2026 14:26:57 - log: [Scene] Cocos Creator v3.8.8
-9-18-2026 14:26:57 - log: [Scene] No need to specify the "type" of "ItemMovement.originalScale" because cc.Vec3 is a child class of ValueType.
-9-18-2026 14:26:57 - log: [Scene] No need to specify the "type" of "ItemMovement.originalRotation" because cc.Vec3 is a child class of ValueType.
-9-18-2026 14:26:57 - log: [Scene] No need to specify the "type" of "ItemGraphic.listScale" because cc.Vec3 is a child class of ValueType.
-9-18-2026 14:26:57 - log: [Scene] No need to specify the "type" of "ItemGraphic.listRotation" because cc.Vec3 is a child class of ValueType.
-9-18-2026 14:26:57 - log: [Scene] Using custom pipeline: Builtin
-9-18-2026 14:26:57 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
-9-18-2026 14:30:56 - log: [Funplay Cocos MCP] Configuring MCP client target: claude_code
-9-18-2026 14:30:56 - log: [Funplay Cocos MCP] MCP client configured: Claude Code -> C:\Users\Admin\.claude.json
-9-18-2026 14:30:56 - log: [Funplay Cocos MCP] Configuring MCP client target: claude_code
-9-18-2026 14:30:56 - log: [Funplay Cocos MCP] MCP client configured: Claude Code -> C:\Users\Admin\.claude.json
-9-18-2026 14:30:58 - log: [Funplay Cocos MCP] Configuring MCP client target: claude_code
-9-18-2026 14:30:58 - log: [Funplay Cocos MCP] MCP client configured: Claude Code -> C:\Users\Admin\.claude.json
+9-18-2026 14:34:44 - log: Load engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine
+9-18-2026 14:34:44 - log: Register native engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\native
+9-18-2026 14:34:45 - log: Request namespace: device-list
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=24947, profile=core, autostart=true
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP] Extension loading...
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP] Autostart is enabled, starting MCP server.
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP] Starting MCP server...
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=24947, profile=core, autostart=true
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP Server] Creating HTTP server on 127.0.0.1:24947...
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP Server] Listening on http://127.0.0.1:24947/
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP] MCP server started at http://127.0.0.1:24947/
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP] If this tool saves you time, please consider giving it a Star on GitHub: https://github.com/FunplayAI/funplay-cocos-mcp
+9-18-2026 14:34:50 - log: [Funplay Cocos MCP] Checking GitHub for newer Funplay Cocos MCP releases.
+9-18-2026 14:34:51 - log: [Funplay Cocos MCP] Update check completed: current=0.6.3, latest=0.6.3
+9-18-2026 14:34:55 - log: waiting the ready of builder worker...
+9-18-2026 14:34:55 - log: waiting the ready of builder worker...
+9-18-2026 14:34:56 - log: [Scene] meshopt wasm decoder initialized
+9-18-2026 14:34:56 - log: [Scene] [box2d]:box2d wasm lib loaded.
+9-18-2026 14:34:56 - log: [Scene] [bullet]:bullet wasm lib loaded.
+9-18-2026 14:34:56 - log: [Scene] [PHYSICS]: using builtin.
+9-18-2026 14:34:56 - log: [Scene] Cocos Creator v3.8.8
+9-18-2026 14:34:57 - log: [Scene] No need to specify the "type" of "ItemMovement.originalScale" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:34:57 - log: [Scene] No need to specify the "type" of "ItemMovement.originalRotation" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:34:57 - log: [Scene] No need to specify the "type" of "ItemGraphic.listScale" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:34:57 - log: [Scene] No need to specify the "type" of "ItemGraphic.listRotation" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:34:57 - log: [Scene] Using custom pipeline: Builtin
+9-18-2026 14:34:57 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
+9-18-2026 14:35:38 - error: [Assets] ENOENT: no such file or directory, stat 'F:\CocosProject\PLY_Roomtopia_Cocos\assets\0.Spines\box-ingame.png'Error: ENOENT: no such file or directory, stat 'F:\CocosProject\PLY_Roomtopia_Cocos\assets\0.Spines\box-ingame.png'
+9-18-2026 14:36:47 - log: [Scene] No need to specify the "type" of "ItemMovement.originalScale" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:36:47 - log: [Scene] No need to specify the "type" of "ItemMovement.originalRotation" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:36:47 - log: [Scene] No need to specify the "type" of "ItemGraphic.listScale" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:36:47 - log: [Scene] No need to specify the "type" of "ItemGraphic.listRotation" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:36:49 - log: [Scene] No need to specify the "type" of "ItemMovement.originalScale" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:36:49 - log: [Scene] No need to specify the "type" of "ItemMovement.originalRotation" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:36:49 - log: [Scene] No need to specify the "type" of "ItemGraphic.listScale" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:36:49 - log: [Scene] No need to specify the "type" of "ItemGraphic.listRotation" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:49:29 - log: [Scene] meshopt wasm decoder initialized
+9-18-2026 14:49:29 - log: [Scene] [bullet]:bullet wasm lib loaded.
+9-18-2026 14:49:29 - log: [Scene] [box2d]:box2d wasm lib loaded.
+9-18-2026 14:49:29 - log: [Scene] [PHYSICS]: using builtin.
+9-18-2026 14:49:29 - log: [Scene] Cocos Creator v3.8.8
+9-18-2026 14:49:30 - log: [Scene] No need to specify the "type" of "ItemMovement.originalScale" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:49:30 - log: [Scene] No need to specify the "type" of "ItemMovement.originalRotation" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:49:30 - log: [Scene] No need to specify the "type" of "ItemGraphic.listScale" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:49:30 - log: [Scene] No need to specify the "type" of "ItemGraphic.listRotation" because cc.Vec3 is a child class of ValueType.
+9-18-2026 14:49:31 - log: [Scene] Using custom pipeline: Builtin
+9-18-2026 14:49:31 - log: [Scene] [PHYSICS]: switch from builtin to bullet.

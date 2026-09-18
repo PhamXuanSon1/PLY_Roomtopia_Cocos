@@ -152,8 +152,8 @@
             "_value": false
           },
           "spine": {
-            "_value": false,
-            "_option": "spine-3.8"
+            "_value": true,
+            "_option": "spine-4.2"
           },
           "spine-3.8": {
             "_value": false,
@@ -194,6 +194,7 @@
           }
         },
         "flags": {
+          "LOAD_SPINE_MANUALLY": false,
           "LOAD_BULLET_MANUALLY": false
         },
         "name": "Migrated Configuration",
@@ -204,7 +205,6 @@
           "audio",
           "base",
           "custom-pipeline",
-          "custom-pipeline-post-process",
           "gfx-webgl",
           "gfx-webgl2",
           "graphics",
@@ -217,6 +217,7 @@
           "primitive",
           "profiler",
           "skeletal-animation",
+          "spine-4.2",
           "tiled-map",
           "tween",
           "ui",

@@ -150,10 +150,6 @@
             "7.Scripts",
             "8.Models",
             "9.Asset",
-            "0.Spines\\auto-atlas.pac",
-            "0.Spines\\box-ingame.atlas.txt",
-            "0.Spines\\box-ingame.json",
-            "0.Spines\\box-ingame.png",
             "1.Animations\\Arrow.anim",
             "1.Animations\\Box-001.anim",
             "1.Animations\\Box.anim",
@@ -433,15 +429,12 @@
             "3.Sprites\\Box\\ReadyLoop\\frame_1-ready-Loop_0032.png",
             "3.Sprites\\Box\\ReadyLoop\\frame_1-ready-Loop_0033.png",
             "3.Sprites\\Box\\ReadyLoop\\frame_1-ready-Loop_0034.png",
-            "3.Sprites\\Gameplay\\Misc\\auto-atlas.pac",
             "3.Sprites\\Gameplay\\Misc\\BG.png",
             "3.Sprites\\Gameplay\\Misc\\BG_gameplay_2.png",
             "3.Sprites\\Gameplay\\Misc\\booster_bar.png",
             "3.Sprites\\Gameplay\\Misc\\btn_green_SMALL.png",
             "3.Sprites\\Gameplay\\Misc\\default_sprite_splash.png",
             "3.Sprites\\Gameplay\\Misc\\Hand_Drag.png",
-            "3.Sprites\\Gameplay\\Misc\\Icon.png",
-            "3.Sprites\\Gameplay\\Misc\\Logo.png",
             "3.Sprites\\Gameplay\\Misc\\x2.png",
             "3.Sprites\\Gameplay\\WoodEscape\\auto-atlas.pac",
             "3.Sprites\\Gameplay\\WoodEscape\\bee_x2.png",
@@ -551,7 +544,8 @@
             "8.Models\\Textures\\Wind\\Smoke.mtl",
             "8.Models\\Textures\\Wind\\smoke_dusty.png",
             "8.Models\\Textures\\Wind\\trail.mtl",
-            "8.Models\\Textures\\Wind\\trail.png"
+            "8.Models\\Textures\\Wind\\trail.png",
+            "3.Sprites\\Gameplay\\Misc\\logo 3_2.png"
         ]
     }
 }
