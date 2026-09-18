@@ -71,11 +71,7 @@ export class PointerController extends Component {
         if(this.s1 && this.s2) {
             return;
         }
-        let result = this.closestRayCastDetect(this.location, ui.wCamera);
-        // console.log(result);
-        
-        if(result) {  
-        }
+        // Raycast/xoay model đã bỏ — input gameplay do GestureController (TrayDragSnap) xử lý.
     }
 
     onTouchMove(event: EventTouch) { 
@@ -86,14 +82,6 @@ export class PointerController extends Component {
             return;
         }
 
-        let delta = event.getDelta();
-        // convert to rotation
-        let speed = 0.01;
-        let rotationX = Quat.fromAxisAngle(new Quat(), v3(0, 1, 0), delta.x * speed);
-        let rotationY = Quat.fromAxisAngle(new Quat(), v3(1, 0, 0), -delta.y * speed);
-
-        let mul = Quat.multiply(new Quat(), rotationX, rotationY);
-        // let mul2 = Quat.multiply(new Quat(), mul, room.pixel.rotation);
     }
 
     onTouchEnd(event: EventTouch) {

@@ -1,0 +1,227 @@
+PLAN PORT "TRAY - DRAG - SNAP" SANG COCOS CREATOR 3.8 (BAN RUT GON CHO PLAYABLE)
+==================================================================================
+
+0. NHUNG GI BO DI SO VOI BAN UNITY
+----------------------------------
+BO                                          | LY DO
+--------------------------------------------|-----------------------------------------------
+LevelData + Map<id,...>, LevelRegistry, id  | Playable chi 1 level, gan thang reference trong editor
+Pool TrayItem, rebuild(), booster, bot,combo| Khong co nhieu level, khong can tai su dung
+Physics raycast, BoxCollider                | Camera ortho -> so khoang cach pixel la du
+State RotateModel, syncRotationAll          | Playable khong cho xoay model -> set rotation icon 1 lan
+Nhieu target cung id                        | Moi TrayItem <-> dung 1 TargetItem
+Save progress, banner ads offset dong       | Khong co
+
+GIU LAI: tray scroll ngang, nhac len -> ghost full-size, snap theo pixel,
+         go o & don thanh, hint don gian (tay tutorial).
+
+
+1. DATA MODEL - CHI 2 COMPONENT, KHONG REGISTRY
+-----------------------------------------------
+// Gan len tung mesh trong map (Lv50_Bathroom_Root/...)
+@ccclass('TargetItem')
+class TargetItem extends Component {
+  @property(MeshRenderer) renderer: MeshRenderer;   // tu getComponent neu de trong
+  isCompleted = false;
+  defaultMats: Material[] = [];
+  onLoad()  { this.defaultMats = this.renderer.sharedMaterials.slice(); }   // PHAI truoc khi doi gray
+  setGray(m: Material) { this.renderer.sharedMaterials = this.defaultMats.map(() => m); }
+  complete() { isCompleted = true; renderer.sharedMaterials = defaultMats; punchScale(node); }
+}
+
+// Prefab o trong thanh
+@ccclass('TrayItem')
+class TrayItem extends Component {
+  target: TargetItem;            // GameManager gan khi build
+  icon: MeshRenderer;            // child IconMesh
+  isOnScreen = false;
+  scaleCache = new Vec3();
+}
+
+// GameManager giu 1 MANG thay cho Map
+@property([TargetItem]) targets: TargetItem[] = [];   // keo tay trong editor, thu tu = thu tu tren thanh
+items: TrayItem[] = [];        // items[i].target === targets[i] luc build
+collected = 0;
+
+Neu luoi keo tay: targets = model.getComponentsInChildren(TargetItem) roi shuffle 1 lan trong start().
+
+
+2. CAU TRUC NODE
+----------------
+PlayScene
+|- WCam            (ORTHO, orthoHeight 5 -- hien dang 10, can chinh)
+|- Directional Light
+|- World/Gameplay
+|   |- Lv50_Bathroom_Root   <- moi mesh con gan TargetItem
+|   |- DragGhost            (MeshRenderer rong, active=false)
+|   |- Tray
+|       |- Board            (quad nen)
+|       |- Content          (scroll = doi position.x)
+|            |- TrayItem x N (instantiate 1 lan luc start, khong pool)
+|- UI/...          (label "0/63", tay tutorial, CTA)
+
+Prefab TrayItem: IconMesh (MeshRenderer) + Shadow (sprite/quad, y=-0.43). Khong collider.
+
+
+3. CONSTANTS (1 file TrayConfig.ts)
+-----------------------------------
+export const SPACING = 1.3, EDGE_PAD = 0.8, ICON_FILL = 0.75, TRAY_Y_OFFSET = 1.75, CULL_PAD = 0.8;
+export const HEIGHT_OFFSET = 1.3, FOLLOW_LERP = 15, SCROLL_SPEED = 0.04, SCROLL_LERP = 8;
+export const DECISION_PX = 10, SELECT_ANGLE = 70;
+// pixel constants nhan theo width de dong nhat thiet bi
+export const px = (v: number) => v * view.getVisibleSize().width / 1080;
+export const SNAP_PX = () => px(40), SNAP_PX_TUT = () => px(120), WRONG_PX = () => px(120);
+
+
+4. TRAY (LAYOUT + CULL)
+-----------------------
+build() {
+  const vis = view.getVisibleSize(), depth = cam.node.worldPosition.z;
+  worldLeft  = cam.screenToWorld(v3(0, vis.height/2, depth)).x;
+  worldRight = cam.screenToWorld(v3(vis.width, vis.height/2, depth)).x;
+  worldBottom= cam.screenToWorld(v3(0, 0, depth)).y;
+  firstX = worldLeft + EDGE_PAD; limitL = worldLeft - CULL_PAD; limitR = worldRight + CULL_PAD;
+  trayNode.setWorldPosition(0, worldBottom + TRAY_Y_OFFSET, 0);
+
+  targets.forEach((t, i) => {
+    const it = instantiate(prefab).getComponent(TrayItem); it.node.parent = content;
+    it.target = t; it.node.setPosition(firstX + SPACING * i, 0, 0);
+    it.icon.mesh = t.renderer.mesh;
+    t.defaultMats.forEach((m, k) => it.icon.setSharedMaterial(m, k));
+    it.icon.node.setScale(fitScale(t.renderer.mesh));    // 4.1
+    it.icon.node.setWorldRotation(t.node.worldRotation);  // set 1 lan, model khong xoay
+    it.scaleCache.set(it.icon.node.scale);
+    items.push(it);
+    t.setGray(grayMat);
+  });
+  updateVisibility();
+  visibleCount = items.filter(x => x.isOnScreen).length;   // 1 man chua bao nhieu o
+}
+
+4.1 fitScale(mesh)   // cache theo mesh, khong theo id
+  size = max(extent xyz cua mesh.struct.minPosition/maxPosition)
+  return ICON_FILL * size(baseMesh) / size(mesh)
+  (baseMesh = cube nho, chon sao cho icon vua o 0.8)
+
+4.2 scrollMinX() = -(firstX + SPACING * (remain - 1) - SPACING)   // remain = items chua completed
+
+4.3 updateVisibility()
+  for it of items:
+    x = it.node.worldPosition.x
+    it.isOnScreen = !it.target.isCompleted && x >= limitL && x <= limitR
+    it.node.active = it.isOnScreen          // tat het renderer + shadow
+
+
+5. INPUT - GestureController (3 STATE)
+--------------------------------------
+State: None | Pending | Scrolling | Selecting   (bo RotateModel)
+Chi nhan touch dau (e.getID()).
+
+TOUCH_START: start = cur = e.getLocation(); hit = pick(start); state = hit ? Pending : None
+TOUCH_MOVE:
+  Pending:   d = cur - start; if |d| < DECISION_PX return
+             angle(d, UP) <= SELECT_ANGLE ? (Selecting; dragSnap.begin(hit)) : Scrolling
+  Scrolling: if remain <= visibleCount return          // it hon 1 man thi khong scroll
+             targetX = clamp(content.x + dx * SCROLL_SPEED, scrollMinX(), 0.5)
+  Selecting: dragSnap.move(cur)
+TOUCH_END/CANCEL: if Selecting dragSnap.release(); state = None
+update(dt): content.x = lerp(content.x, targetX, dt*SCROLL_LERP); tray.updateVisibility()
+
+5.1 pick(screenPos) - khong physics
+  const ppu = vis.height / (2 * cam.orthoHeight);            // pixel per world unit
+  for (it of items) if (it.isOnScreen) {
+    const s = cam.worldToScreen(it.node.worldPosition);
+    if (|s.x - p.x| < 0.5*SPACING*ppu && |s.y - p.y| < 0.5*SPACING*ppu) return it;
+  }
+
+
+6. DRAGSNAP
+-----------
+begin(it):
+  it.icon.node.setScale(0)  (tween 0.1s)                     // icon nho bien mat
+  ghost.active = true; ghost.mesh = it.target.renderer.mesh; mats = it.target.defaultMats
+  ghost.setWorldScale(it.target.node.worldScale); ghost.setWorldRotation(it.target.node.worldRotation)
+  ghost.pos = toWorld(start) + (0, HEIGHT_OFFSET, 0);  current = it
+  -> cam giac "phong to khi nhac": ghost full-size xuat hien
+
+toWorld(p) = cam.screenToWorld(v3(p.x, p.y, depthOfModel))   // ortho nhin -Z -> khong can plane
+
+move(p):     goal = toWorld(p) + (0, HEIGHT_OFFSET, 0)
+update(dt):  ghost.pos = lerp(ghost.pos, goal, dt*FOLLOW_LERP)
+
+release():
+  g = cam.worldToScreen(ghost.worldPos); thr = tutorialActive ? SNAP_PX_TUT() : SNAP_PX()
+  if dist(g, cam.worldToScreen(current.target.worldPos)) < thr -> onSnap(current)
+  else {
+    if nearestOther(g) < WRONG_PX() sfx('wrong');
+    tween(current.icon.node).to(0.2, {scale: scaleCache})     // o trong thanh hien lai
+  }
+  ghost.active = false; current = null
+
+
+7. SAU SNAP: GO O & DON THANH
+-----------------------------
+onSnap(it):
+  it.target.complete(); sfx('snap'); fx(it.target.worldPos); haptic
+  collected++; label = `${collected}/${targets.length}`
+  removeAndCompact(it)
+  if (collected === targets.length) showEndcard()
+
+removeAndCompact(it):
+  idx = items.indexOf(it); items.splice(idx,1); items.push(it)
+  it.node.active = false; it.node.setPosition(lastX + SPACING, 0, 0)   // day ra cuoi
+  for i in idx..items.length-1: tweenX(items[i], x - SPACING, 0.1, onUpdate: updateVisibility)
+  remain = items.length - collected
+  if remain <= visibleCount: tweenX(content, 0)                     // it hon 1 man -> ve dau
+  else if items[lastActive].worldX < limitR - SPACING: tweenX(content, content.x + SPACING)
+
+Bo case "nua spacing" - playable khong can can giua tinh vi.
+
+
+8. HINT / TUTORIAL (TOI GIAN)
+-----------------------------
+- Luc start: hint(items[0]) -> icon tween y 0<->0.2 yoyo;
+  target doi sang hintMat + tween mainColor white<->green (dung renderer.material instance).
+- Tay tutorial: tween tu worldToScreen(item) -> worldToScreen(target), lap.
+- Snap dung item do -> tat hint, an tay; snap sai -> hint tiep.
+- Sau lan dung dau tien: khong hint nua (hoac hint lai sau 5s idle neu muon).
+
+
+9. THU TU IMPLEMENT
+-------------------
+[ ] 1. Chinh WCam.orthoHeight = 5, dat Tray & DragGhost; log screenToWorld 3 mep de kiem tra.
+[ ] 2. TargetItem (cache mats, gray) - gan hang loat vao mesh Lv50 bang script editor
+       hoac tool AutoAssignByNameTool san co trong 7.Scripts/MyScript/pipeline.
+[ ] 3. Tray.build + fitScale + updateVisibility - keo Content.x tay trong editor de test cull.
+[ ] 4. GestureController - log state 3 gesture, clamp scroll.
+[ ] 5. DragSnap - ghost follow, snap/wrong.
+[ ] 6. onSnap + removeAndCompact - test go dau/giua/cuoi, con < 1 man.
+[ ] 7. Hint + tay tutorial + endcard/CTA.
+
+
+10. EDGE CASE PHAI TEST
+-----------------------
+- TOUCH_CANCEL giua chung (cuoc goi, app pause) -> release() nhu tha sai.
+- Multi-touch: bo touch co ID khac touch dau.
+- O dang hint bi cull roi hien lai -> node.active=false phai stop tween (Tween.stopAllByTarget).
+- Ti le man hinh khac (tablet/landscape): build() goi lai tren view.on('canvas-resize').
+
+
+PHU LUC: BANG QUY DOI UNITY -> COCOS
+------------------------------------
+Unity                                   | Cocos Creator 3.x
+----------------------------------------|------------------------------------------------
+Camera orthographic size 5              | Camera projection ORTHO, orthoHeight = 5
+Physics.Raycast + BoxCollider trigger   | Tu tinh AABB screen-space (khong physics)
+Input.mousePosition / GetMouseButton    | input.on(Input.EventType.TOUCH_START/MOVE/END/CANCEL), e.getLocation()
+ViewportToWorldPoint                    | camera.screenToWorld(new Vec3(px, py, depth))
+WorldToScreenPoint                      | camera.worldToScreen(worldPos)
+MeshFilter.sharedMesh / sharedMaterials | MeshRenderer.mesh / setSharedMaterial(mat, idx)
+MaterialPropertyBlock                   | renderer.material (instance) -> mat.setProperty('mainColor', c)
+mesh.bounds                             | mesh.struct.minPosition / maxPosition
+DOTween                                 | tween(node).to(...); yoyo = .repeatForever(tween().to().to())
+transform.lossyScale                    | node.worldScale
+Time.deltaTime Lerp trong Update        | update(dt) + Vec3.lerp
+
+Don vi: giu nguyen constant world (spacing 1.3, offset 0.8, heightOffset 1.3...) neu camera ortho cung size 5.
+Constant pixel (snap 40, wrong 120, decision 10) nhan voi view.getVisibleSize().width / 1080.
