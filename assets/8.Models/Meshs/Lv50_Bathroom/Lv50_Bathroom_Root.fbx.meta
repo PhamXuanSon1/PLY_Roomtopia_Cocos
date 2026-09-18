@@ -1,0 +1,1361 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "4f698256-e021-4611-aa04-7b9104147a28",
+  "files": [],
+  "subMetas": {
+    "17292": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@17292",
+      "displayName": "",
+      "id": "17292",
+      "name": "Bathroom_Can.mesh",
+      "userData": {
+        "gltfIndex": 53,
+        "triangleCount": 1550
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "47126": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@47126",
+      "displayName": "",
+      "id": "47126",
+      "name": "Bathroom_Towel.mesh",
+      "userData": {
+        "gltfIndex": 50,
+        "triangleCount": 1084
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "51491": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@51491",
+      "displayName": "",
+      "id": "51491",
+      "name": "Bathroom_Can2.mesh",
+      "userData": {
+        "gltfIndex": 55,
+        "triangleCount": 1142
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "c4696": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@c4696",
+      "displayName": "",
+      "id": "c4696",
+      "name": "Bathroom_Floor_1.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 3300
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4e934": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@4e934",
+      "displayName": "",
+      "id": "4e934",
+      "name": "Bathroom_Floor_2.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 2692
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b39e1": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@b39e1",
+      "displayName": "",
+      "id": "b39e1",
+      "name": "Bathroom_Wall_1.mesh",
+      "userData": {
+        "gltfIndex": 2,
+        "triangleCount": 1908
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "9b536": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@9b536",
+      "displayName": "",
+      "id": "9b536",
+      "name": "Bathroom_Wall_2.mesh",
+      "userData": {
+        "gltfIndex": 3,
+        "triangleCount": 748
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f3aac": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@f3aac",
+      "displayName": "",
+      "id": "f3aac",
+      "name": "Bathroom_Wall_3.mesh",
+      "userData": {
+        "gltfIndex": 4,
+        "triangleCount": 1200
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e8404": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@e8404",
+      "displayName": "",
+      "id": "e8404",
+      "name": "Bathroom_Basket.mesh",
+      "userData": {
+        "gltfIndex": 5,
+        "triangleCount": 15052
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "af66d": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@af66d",
+      "displayName": "",
+      "id": "af66d",
+      "name": "Bathroom_Water.mesh",
+      "userData": {
+        "gltfIndex": 6,
+        "triangleCount": 662
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "1299a": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@1299a",
+      "displayName": "",
+      "id": "1299a",
+      "name": "Bathroom_Low_Chair.mesh",
+      "userData": {
+        "gltfIndex": 7,
+        "triangleCount": 972
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "5b41a": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@5b41a",
+      "displayName": "",
+      "id": "5b41a",
+      "name": "Bathroom_Bottle.mesh",
+      "userData": {
+        "gltfIndex": 8,
+        "triangleCount": 5584
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "c5562": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@c5562",
+      "displayName": "",
+      "id": "c5562",
+      "name": "Bathroom_Watercan.mesh",
+      "userData": {
+        "gltfIndex": 9,
+        "triangleCount": 456
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3df61": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@3df61",
+      "displayName": "",
+      "id": "3df61",
+      "name": "Bathroom_Flower.mesh",
+      "userData": {
+        "gltfIndex": 10,
+        "triangleCount": 4638
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2c3f1": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@2c3f1",
+      "displayName": "",
+      "id": "2c3f1",
+      "name": "Bathroom_Brush_1.mesh",
+      "userData": {
+        "gltfIndex": 11,
+        "triangleCount": 3696
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "c74a8": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@c74a8",
+      "displayName": "",
+      "id": "c74a8",
+      "name": "Bathroom_Brush_2.mesh",
+      "userData": {
+        "gltfIndex": 12,
+        "triangleCount": 6848
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "5d2f2": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@5d2f2",
+      "displayName": "",
+      "id": "5d2f2",
+      "name": "Bathroom_Lamp.mesh",
+      "userData": {
+        "gltfIndex": 13,
+        "triangleCount": 458
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e6acd": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@e6acd",
+      "displayName": "",
+      "id": "e6acd",
+      "name": "Bathroom_Roof.mesh",
+      "userData": {
+        "gltfIndex": 14,
+        "triangleCount": 756
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "19b82": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@19b82",
+      "displayName": "",
+      "id": "19b82",
+      "name": "Bathroom_Out_Chair.mesh",
+      "userData": {
+        "gltfIndex": 15,
+        "triangleCount": 392
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d9f95": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@d9f95",
+      "displayName": "",
+      "id": "d9f95",
+      "name": "Bathroom_Lotus.mesh",
+      "userData": {
+        "gltfIndex": 16,
+        "triangleCount": 4842
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6dfee": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@6dfee",
+      "displayName": "",
+      "id": "6dfee",
+      "name": "Bathroom_Shelf_Chair.mesh",
+      "userData": {
+        "gltfIndex": 17,
+        "triangleCount": 1926
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "687c5": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@687c5",
+      "displayName": "",
+      "id": "687c5",
+      "name": "Bathroom_Plant.mesh",
+      "userData": {
+        "gltfIndex": 18,
+        "triangleCount": 2102
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "173b6": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@173b6",
+      "displayName": "",
+      "id": "173b6",
+      "name": "Bathroom_Toilet.mesh",
+      "userData": {
+        "gltfIndex": 19,
+        "triangleCount": 1682
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "bbcda": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@bbcda",
+      "displayName": "",
+      "id": "bbcda",
+      "name": "Bathroom_Paper.mesh",
+      "userData": {
+        "gltfIndex": 20,
+        "triangleCount": 904
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b6e27": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@b6e27",
+      "displayName": "",
+      "id": "b6e27",
+      "name": "Bathroom_Plunger.mesh",
+      "userData": {
+        "gltfIndex": 21,
+        "triangleCount": 1516
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "cfbb9": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@cfbb9",
+      "displayName": "",
+      "id": "cfbb9",
+      "name": "Bathroom_Small_Rug.mesh",
+      "userData": {
+        "gltfIndex": 22,
+        "triangleCount": 508
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "9fd09": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@9fd09",
+      "displayName": "",
+      "id": "9fd09",
+      "name": "Bathroom_Slipper.mesh",
+      "userData": {
+        "gltfIndex": 23,
+        "triangleCount": 776
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "eff6d": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@eff6d",
+      "displayName": "",
+      "id": "eff6d",
+      "name": "Bathroom_Light.mesh",
+      "userData": {
+        "gltfIndex": 24,
+        "triangleCount": 870
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f73da": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@f73da",
+      "displayName": "",
+      "id": "f73da",
+      "name": "Bathroom_Frame.mesh",
+      "userData": {
+        "gltfIndex": 25,
+        "triangleCount": 196
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "60f9d": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@60f9d",
+      "displayName": "",
+      "id": "60f9d",
+      "name": "Bathroom_Chair.mesh",
+      "userData": {
+        "gltfIndex": 26,
+        "triangleCount": 487
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4ea0b": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@4ea0b",
+      "displayName": "",
+      "id": "4ea0b",
+      "name": "Bathroom_Candle.mesh",
+      "userData": {
+        "gltfIndex": 27,
+        "triangleCount": 820
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "5dfeb": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@5dfeb",
+      "displayName": "",
+      "id": "5dfeb",
+      "name": "Bathroom_Cloth.mesh",
+      "userData": {
+        "gltfIndex": 28,
+        "triangleCount": 620
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d63f3": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@d63f3",
+      "displayName": "",
+      "id": "d63f3",
+      "name": "Bathroom_Washingmachine.mesh",
+      "userData": {
+        "gltfIndex": 29,
+        "triangleCount": 2994
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "efbb1": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@efbb1",
+      "displayName": "",
+      "id": "efbb1",
+      "name": "Bathroom_Cabinet.mesh",
+      "userData": {
+        "gltfIndex": 30,
+        "triangleCount": 1592
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "88adb": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@88adb",
+      "displayName": "",
+      "id": "88adb",
+      "name": "Bathroom_Lavabo.mesh",
+      "userData": {
+        "gltfIndex": 31,
+        "triangleCount": 2980
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "cb1c1": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@cb1c1",
+      "displayName": "",
+      "id": "cb1c1",
+      "name": "Bathroom_Faucet.mesh",
+      "userData": {
+        "gltfIndex": 32,
+        "triangleCount": 1552
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4343b": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@4343b",
+      "displayName": "",
+      "id": "4343b",
+      "name": "Bathroom_Soap.mesh",
+      "userData": {
+        "gltfIndex": 33,
+        "triangleCount": 567
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "16aa2": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@16aa2",
+      "displayName": "",
+      "id": "16aa2",
+      "name": "Bathroom_Small_Towel.mesh",
+      "userData": {
+        "gltfIndex": 34,
+        "triangleCount": 576
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2e59a": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@2e59a",
+      "displayName": "",
+      "id": "2e59a",
+      "name": "Bathroom_Carpet.mesh",
+      "userData": {
+        "gltfIndex": 35,
+        "triangleCount": 2932
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "06014": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@06014",
+      "displayName": "",
+      "id": "06014",
+      "name": "Bathroom_Mirror.mesh",
+      "userData": {
+        "gltfIndex": 36,
+        "triangleCount": 644
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6c69e": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@6c69e",
+      "displayName": "",
+      "id": "6c69e",
+      "name": "Bathroom_Book.mesh",
+      "userData": {
+        "gltfIndex": 37,
+        "triangleCount": 487
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "29bb4": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@29bb4",
+      "displayName": "",
+      "id": "29bb4",
+      "name": "Bathroom_Shelf_1.mesh",
+      "userData": {
+        "gltfIndex": 38,
+        "triangleCount": 927
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2c47f": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@2c47f",
+      "displayName": "",
+      "id": "2c47f",
+      "name": "Bathroom_Plant1.mesh",
+      "userData": {
+        "gltfIndex": 39,
+        "triangleCount": 1688
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "1ecc6": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@1ecc6",
+      "displayName": "",
+      "id": "1ecc6",
+      "name": "Bathroom_Butterfly.mesh",
+      "userData": {
+        "gltfIndex": 40,
+        "triangleCount": 1480
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "1cd06": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@1cd06",
+      "displayName": "",
+      "id": "1cd06",
+      "name": "Bathroom_Shelf_2.mesh",
+      "userData": {
+        "gltfIndex": 41,
+        "triangleCount": 188
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3ed18": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@3ed18",
+      "displayName": "",
+      "id": "3ed18",
+      "name": "Bathroom_Shelf_4.mesh",
+      "userData": {
+        "gltfIndex": 42,
+        "triangleCount": 616
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d4663": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@d4663",
+      "displayName": "",
+      "id": "d4663",
+      "name": "Bathroom_Shelf_3.mesh",
+      "userData": {
+        "gltfIndex": 43,
+        "triangleCount": 2292
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e47bf": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@e47bf",
+      "displayName": "",
+      "id": "e47bf",
+      "name": "Bathroom_Shelf_5.mesh",
+      "userData": {
+        "gltfIndex": 44,
+        "triangleCount": 1440
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "fd298": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@fd298",
+      "displayName": "",
+      "id": "fd298",
+      "name": "Bathroom_Shelf_6.mesh",
+      "userData": {
+        "gltfIndex": 45,
+        "triangleCount": 188
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9f8b": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@f9f8b",
+      "displayName": "",
+      "id": "f9f8b",
+      "name": "Bathroom_Wood.mesh",
+      "userData": {
+        "gltfIndex": 46,
+        "triangleCount": 332
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7e695": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@7e695",
+      "displayName": "",
+      "id": "7e695",
+      "name": "Bathroom_Tooth.mesh",
+      "userData": {
+        "gltfIndex": 47,
+        "triangleCount": 1351
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "076b8": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@076b8",
+      "displayName": "",
+      "id": "076b8",
+      "name": "Bathroom_Tooth1.mesh",
+      "userData": {
+        "gltfIndex": 48,
+        "triangleCount": 751
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3aa27": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@3aa27",
+      "displayName": "",
+      "id": "3aa27",
+      "name": "Bathroom_Pot.mesh",
+      "userData": {
+        "gltfIndex": 49,
+        "triangleCount": 3811
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4b38d": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@4b38d",
+      "displayName": "",
+      "id": "4b38d",
+      "name": "Bathroom_Duck.mesh",
+      "userData": {
+        "gltfIndex": 51,
+        "triangleCount": 2744
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4c50f": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@4c50f",
+      "displayName": "",
+      "id": "4c50f",
+      "name": "Bathroom_Cat.mesh",
+      "userData": {
+        "gltfIndex": 52,
+        "triangleCount": 3212
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f64af": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@f64af",
+      "displayName": "",
+      "id": "f64af",
+      "name": "Bathroom_Can1.mesh",
+      "userData": {
+        "gltfIndex": 54,
+        "triangleCount": 966
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b1370": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@b1370",
+      "displayName": "",
+      "id": "b1370",
+      "name": "Bathroom_Khan.mesh",
+      "userData": {
+        "gltfIndex": 56,
+        "triangleCount": 280
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "b5538": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@b5538",
+      "displayName": "",
+      "id": "b5538",
+      "name": "Bathroom_Window.mesh",
+      "userData": {
+        "gltfIndex": 57,
+        "triangleCount": 764
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6480e": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@6480e",
+      "displayName": "",
+      "id": "6480e",
+      "name": "Bathroom_Shelf_Flower.mesh",
+      "userData": {
+        "gltfIndex": 58,
+        "triangleCount": 256
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f8686": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@f8686",
+      "displayName": "",
+      "id": "f8686",
+      "name": "Bathroom_Shelf_Flower1.mesh",
+      "userData": {
+        "gltfIndex": 59,
+        "triangleCount": 4928
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "bdfb1": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@bdfb1",
+      "displayName": "",
+      "id": "bdfb1",
+      "name": "Bathroom_Shelf_Flower2.mesh",
+      "userData": {
+        "gltfIndex": 60,
+        "triangleCount": 720
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "03fc7": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@03fc7",
+      "displayName": "",
+      "id": "03fc7",
+      "name": "Bathroom_Shelf_Flower3.mesh",
+      "userData": {
+        "gltfIndex": 61,
+        "triangleCount": 632
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3a62f": {
+      "importer": "gltf-mesh",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@3a62f",
+      "displayName": "",
+      "id": "3a62f",
+      "name": "Bathroom_Bath.mesh",
+      "userData": {
+        "gltfIndex": 62,
+        "triangleCount": 3536
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6ae95": {
+      "importer": "gltf-embeded-image",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@6ae95",
+      "displayName": "",
+      "id": "6ae95",
+      "name": "file99.image",
+      "userData": {
+        "gltfIndex": 0,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": true,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "491f4": {
+      "importer": "gltf-embeded-image",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@491f4",
+      "displayName": "",
+      "id": "491f4",
+      "name": "gradient_2_1.image",
+      "userData": {
+        "gltfIndex": 1,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": true,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "6f37e": {
+      "importer": "texture",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@6f37e",
+      "displayName": "",
+      "id": "6f37e",
+      "name": "file99.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "4f698256-e021-4611-aa04-7b9104147a28@6ae95"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f07c1": {
+      "importer": "texture",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@f07c1",
+      "displayName": "",
+      "id": "f07c1",
+      "name": "gradient_2_1.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "4f698256-e021-4611-aa04-7b9104147a28@491f4"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a3516": {
+      "importer": "gltf-scene",
+      "uuid": "4f698256-e021-4611-aa04-7b9104147a28@a3516",
+      "displayName": "",
+      "id": "a3516",
+      "name": "Lv50_Bathroom_Root.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "dumpMaterials": true,
+    "materialDumpDir": "db://assets/8.Models/Meshs/Lv50_Bathroom/Materials_Lv50_Bathroom_Root",
+    "imageMetas": [
+      {
+        "name": "file99",
+        "uri": "4f698256-e021-4611-aa04-7b9104147a28@6ae95"
+      },
+      {
+        "name": "gradient_2_1",
+        "uri": "4f698256-e021-4611-aa04-7b9104147a28@491f4"
+      }
+    ],
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "4f698256-e021-4611-aa04-7b9104147a28@c4696",
+        "4f698256-e021-4611-aa04-7b9104147a28@4e934",
+        "4f698256-e021-4611-aa04-7b9104147a28@b39e1",
+        "4f698256-e021-4611-aa04-7b9104147a28@9b536",
+        "4f698256-e021-4611-aa04-7b9104147a28@f3aac",
+        "4f698256-e021-4611-aa04-7b9104147a28@e8404",
+        "4f698256-e021-4611-aa04-7b9104147a28@af66d",
+        "4f698256-e021-4611-aa04-7b9104147a28@1299a",
+        "4f698256-e021-4611-aa04-7b9104147a28@5b41a",
+        "4f698256-e021-4611-aa04-7b9104147a28@c5562",
+        "4f698256-e021-4611-aa04-7b9104147a28@3df61",
+        "4f698256-e021-4611-aa04-7b9104147a28@2c3f1",
+        "4f698256-e021-4611-aa04-7b9104147a28@c74a8",
+        "4f698256-e021-4611-aa04-7b9104147a28@5d2f2",
+        "4f698256-e021-4611-aa04-7b9104147a28@e6acd",
+        "4f698256-e021-4611-aa04-7b9104147a28@19b82",
+        "4f698256-e021-4611-aa04-7b9104147a28@d9f95",
+        "4f698256-e021-4611-aa04-7b9104147a28@6dfee",
+        "4f698256-e021-4611-aa04-7b9104147a28@687c5",
+        "4f698256-e021-4611-aa04-7b9104147a28@173b6",
+        "4f698256-e021-4611-aa04-7b9104147a28@bbcda",
+        "4f698256-e021-4611-aa04-7b9104147a28@b6e27",
+        "4f698256-e021-4611-aa04-7b9104147a28@cfbb9",
+        "4f698256-e021-4611-aa04-7b9104147a28@9fd09",
+        "4f698256-e021-4611-aa04-7b9104147a28@eff6d",
+        "4f698256-e021-4611-aa04-7b9104147a28@f73da",
+        "4f698256-e021-4611-aa04-7b9104147a28@60f9d",
+        "4f698256-e021-4611-aa04-7b9104147a28@4ea0b",
+        "4f698256-e021-4611-aa04-7b9104147a28@5dfeb",
+        "4f698256-e021-4611-aa04-7b9104147a28@d63f3",
+        "4f698256-e021-4611-aa04-7b9104147a28@efbb1",
+        "4f698256-e021-4611-aa04-7b9104147a28@88adb",
+        "4f698256-e021-4611-aa04-7b9104147a28@cb1c1",
+        "4f698256-e021-4611-aa04-7b9104147a28@4343b",
+        "4f698256-e021-4611-aa04-7b9104147a28@16aa2",
+        "4f698256-e021-4611-aa04-7b9104147a28@2e59a",
+        "4f698256-e021-4611-aa04-7b9104147a28@06014",
+        "4f698256-e021-4611-aa04-7b9104147a28@6c69e",
+        "4f698256-e021-4611-aa04-7b9104147a28@29bb4",
+        "4f698256-e021-4611-aa04-7b9104147a28@2c47f",
+        "4f698256-e021-4611-aa04-7b9104147a28@1ecc6",
+        "4f698256-e021-4611-aa04-7b9104147a28@1cd06",
+        "4f698256-e021-4611-aa04-7b9104147a28@3ed18",
+        "4f698256-e021-4611-aa04-7b9104147a28@d4663",
+        "4f698256-e021-4611-aa04-7b9104147a28@e47bf",
+        "4f698256-e021-4611-aa04-7b9104147a28@fd298",
+        "4f698256-e021-4611-aa04-7b9104147a28@f9f8b",
+        "4f698256-e021-4611-aa04-7b9104147a28@7e695",
+        "4f698256-e021-4611-aa04-7b9104147a28@076b8",
+        "4f698256-e021-4611-aa04-7b9104147a28@3aa27",
+        "4f698256-e021-4611-aa04-7b9104147a28@47126",
+        "4f698256-e021-4611-aa04-7b9104147a28@4b38d",
+        "4f698256-e021-4611-aa04-7b9104147a28@4c50f",
+        "4f698256-e021-4611-aa04-7b9104147a28@17292",
+        "4f698256-e021-4611-aa04-7b9104147a28@f64af",
+        "4f698256-e021-4611-aa04-7b9104147a28@51491",
+        "4f698256-e021-4611-aa04-7b9104147a28@b1370",
+        "4f698256-e021-4611-aa04-7b9104147a28@b5538",
+        "4f698256-e021-4611-aa04-7b9104147a28@6480e",
+        "4f698256-e021-4611-aa04-7b9104147a28@f8686",
+        "4f698256-e021-4611-aa04-7b9104147a28@bdfb1",
+        "4f698256-e021-4611-aa04-7b9104147a28@03fc7",
+        "4f698256-e021-4611-aa04-7b9104147a28@3a62f"
+      ],
+      "skeletons": [],
+      "textures": [
+        "4f698256-e021-4611-aa04-7b9104147a28@6f37e",
+        "4f698256-e021-4611-aa04-7b9104147a28@f07c1"
+      ],
+      "materials": [
+        "ae2edfc4-e8aa-4e12-8814-c559b7e33456",
+        "97a77dee-7b01-450f-a94d-62c5404a9da1",
+        "ff9706c2-f923-4dcc-b1f3-a67945a5dce7",
+        "b9d065b9-981e-4322-8083-2a61a4c0d518"
+      ],
+      "scenes": [
+        "4f698256-e021-4611-aa04-7b9104147a28@a3516"
+      ]
+    }
+  }
+}

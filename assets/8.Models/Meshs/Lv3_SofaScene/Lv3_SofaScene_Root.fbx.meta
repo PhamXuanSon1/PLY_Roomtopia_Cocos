@@ -1,0 +1,419 @@
+{
+  "ver": "2.3.14",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41",
+  "files": [],
+  "subMetas": {
+    "26481": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@26481",
+      "displayName": "",
+      "id": "26481",
+      "name": "SofaScene_Hoa.mesh",
+      "userData": {
+        "gltfIndex": 3,
+        "triangleCount": 1460
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "eae93": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@eae93",
+      "displayName": "",
+      "id": "eae93",
+      "name": "SofaScene_Sofa.mesh",
+      "userData": {
+        "gltfIndex": 0,
+        "triangleCount": 3816
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "1fc41": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@1fc41",
+      "displayName": "",
+      "id": "1fc41",
+      "name": "SofaScene_Goi.mesh",
+      "userData": {
+        "gltfIndex": 1,
+        "triangleCount": 3010
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "d85ef": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@d85ef",
+      "displayName": "",
+      "id": "d85ef",
+      "name": "SofaScene_Khan.mesh",
+      "userData": {
+        "gltfIndex": 2,
+        "triangleCount": 2240
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "93fef": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@93fef",
+      "displayName": "",
+      "id": "93fef",
+      "name": "SofaScene_Tu.mesh",
+      "userData": {
+        "gltfIndex": 4,
+        "triangleCount": 1716
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4cac6": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@4cac6",
+      "displayName": "",
+      "id": "4cac6",
+      "name": "SofaScene_Fan.mesh",
+      "userData": {
+        "gltfIndex": 5,
+        "triangleCount": 4880
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4ffb0": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@4ffb0",
+      "displayName": "",
+      "id": "4ffb0",
+      "name": "SofaScene_Plates.mesh",
+      "userData": {
+        "gltfIndex": 6,
+        "triangleCount": 896
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6a0c6": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@6a0c6",
+      "displayName": "",
+      "id": "6a0c6",
+      "name": "SofaScene_CatCup.mesh",
+      "userData": {
+        "gltfIndex": 7,
+        "triangleCount": 1902
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "535f5": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@535f5",
+      "displayName": "",
+      "id": "535f5",
+      "name": "SofaScene_Tui_1.mesh",
+      "userData": {
+        "gltfIndex": 8,
+        "triangleCount": 536
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2b0c1": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@2b0c1",
+      "displayName": "",
+      "id": "2b0c1",
+      "name": "SofaScene_Tui_2.mesh",
+      "userData": {
+        "gltfIndex": 9,
+        "triangleCount": 536
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "68a88": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@68a88",
+      "displayName": "",
+      "id": "68a88",
+      "name": "SofaScene_Table.mesh",
+      "userData": {
+        "gltfIndex": 10,
+        "triangleCount": 216
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "0ec41": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@0ec41",
+      "displayName": "",
+      "id": "0ec41",
+      "name": "SofaScene_plant_1.mesh",
+      "userData": {
+        "gltfIndex": 11,
+        "triangleCount": 4048
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3afbd": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@3afbd",
+      "displayName": "",
+      "id": "3afbd",
+      "name": "SofaScene_Calender.mesh",
+      "userData": {
+        "gltfIndex": 12,
+        "triangleCount": 3334
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "39ff0": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@39ff0",
+      "displayName": "",
+      "id": "39ff0",
+      "name": "SofaScene_Vine.mesh",
+      "userData": {
+        "gltfIndex": 13,
+        "triangleCount": 2292
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "ba394": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@ba394",
+      "displayName": "",
+      "id": "ba394",
+      "name": "SofaScene_Lamp.mesh",
+      "userData": {
+        "gltfIndex": 14,
+        "triangleCount": 512
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "422f3": {
+      "importer": "gltf-mesh",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@422f3",
+      "displayName": "",
+      "id": "422f3",
+      "name": "SofaScene_Rug.mesh",
+      "userData": {
+        "gltfIndex": 15,
+        "triangleCount": 2480
+      },
+      "ver": "1.1.1",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "491f4": {
+      "importer": "gltf-embeded-image",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@491f4",
+      "displayName": "",
+      "id": "491f4",
+      "name": "gradient_2_1.image",
+      "userData": {
+        "gltfIndex": 0,
+        "fixAlphaTransparencyArtifacts": true,
+        "hasAlpha": true,
+        "type": "texture"
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
+    },
+    "f07c1": {
+      "importer": "texture",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@f07c1",
+      "displayName": "",
+      "id": "f07c1",
+      "name": "gradient_2_1.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "b5e0298d-fda0-48ce-b477-e88591c6aa41@491f4"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "2452c": {
+      "importer": "gltf-scene",
+      "uuid": "b5e0298d-fda0-48ce-b477-e88591c6aa41@2452c",
+      "displayName": "",
+      "id": "2452c",
+      "name": "Lv3_SofaScene_Root.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "gradient_2_1",
+        "uri": "b5e0298d-fda0-48ce-b477-e88591c6aa41@491f4"
+      }
+    ],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@eae93",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@1fc41",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@d85ef",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@26481",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@93fef",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@4cac6",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@4ffb0",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@6a0c6",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@535f5",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@2b0c1",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@68a88",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@0ec41",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@3afbd",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@39ff0",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@ba394",
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@422f3"
+      ],
+      "skeletons": [],
+      "textures": [
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@f07c1"
+      ],
+      "materials": [
+        "5e5b3eed-020e-4ec8-b9aa-d3c95862aed1",
+        "8575c756-6741-447c-82f9-bbc1e5bcd65a",
+        "eb4ff003-6e02-4aa3-9bf3-bca6460fbdba"
+      ],
+      "scenes": [
+        "b5e0298d-fda0-48ce-b477-e88591c6aa41@2452c"
+      ]
+    },
+    "dumpMaterials": true,
+    "materialDumpDir": "db://assets/8.Models/Meshs/Lv3_SofaScene/Materials_Lv3_SofaScene_Root"
+  }
+}
