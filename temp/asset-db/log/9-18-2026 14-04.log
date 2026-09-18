@@ -129,3 +129,21 @@
 9-18-2026 14:05:04-debug: asset-db:refresh-all-database (58ms)
 9-18-2026 14:05:04-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
 9-18-2026 14:05:04-debug: asset-db:worker-effect-data-processing (1ms)
+9-18-2026 14:06:41-debug: refresh db internal success
+9-18-2026 14:06:41-debug: refresh db assets success
+9-18-2026 14:06:41-debug: Run asset db hook engine-extends:afterRefresh success!
+9-18-2026 14:06:41-debug: Run asset db hook engine-extends:afterRefresh ...
+9-18-2026 14:06:41-debug: asset-db:refresh-all-database (59ms)
+9-18-2026 14:06:41-debug: asset-db:worker-effect-data-processing (1ms)
+9-18-2026 14:06:41-debug: asset-db-hook-engine-extends-afterRefresh (1ms)
+9-18-2026 14:07:01-debug: run package(funplay-cocos-mcp) handler(register) start
+9-18-2026 14:07:01-debug: run package(funplay-cocos-mcp) handler(register) success!
+9-18-2026 14:07:01-debug: run package(funplay-cocos-mcp) handler(enable) success!
+9-18-2026 14:07:01-debug: run package(funplay-cocos-mcp) handler(enable) start
+9-18-2026 14:07:06-debug: refresh db internal success
+9-18-2026 14:07:06-debug: refresh db assets success
+9-18-2026 14:07:06-debug: Run asset db hook engine-extends:afterRefresh ...
+9-18-2026 14:07:06-debug: Run asset db hook engine-extends:afterRefresh success!
+9-18-2026 14:07:06-debug: asset-db:refresh-all-database (90ms)
+9-18-2026 14:07:06-debug: asset-db-hook-engine-extends-afterRefresh (23ms)
+9-18-2026 14:07:06-debug: asset-db:worker-effect-data-processing (22ms)

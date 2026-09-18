@@ -1,11 +1,27 @@
-9-18-2026 14:04:36 - log: Load engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine
-9-18-2026 14:04:36 - log: Register native engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\native
-9-18-2026 14:04:37 - log: Request namespace: device-list
-9-18-2026 14:04:46 - log: [Scene] meshopt wasm decoder initialized
-9-18-2026 14:04:46 - log: [Scene] [box2d]:box2d wasm lib loaded.
-9-18-2026 14:04:46 - log: [Scene] [bullet]:bullet wasm lib loaded.
-9-18-2026 14:04:46 - log: [Scene] [PHYSICS]: using builtin.
-9-18-2026 14:04:46 - log: [Scene] Cocos Creator v3.8.8
-9-18-2026 14:04:46 - log: [Scene] Using custom pipeline: Builtin
-9-18-2026 14:04:46 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
-9-18-2026 14:04:46 - log: [Scene] [PHYSICS2D]: switch from builtin to box2d.
+9-18-2026 14:09:42 - log: Load engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine
+9-18-2026 14:09:42 - log: Register native engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\native
+9-18-2026 14:09:42 - log: Request namespace: device-list
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=24947, profile=core, autostart=true
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP] Extension loading...
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP] Autostart is enabled, starting MCP server.
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP] Starting MCP server...
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=24947, profile=core, autostart=true
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP Server] Creating HTTP server on 127.0.0.1:24947...
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP Server] Listening on http://127.0.0.1:24947/
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP] MCP server started at http://127.0.0.1:24947/
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP] If this tool saves you time, please consider giving it a Star on GitHub: https://github.com/FunplayAI/funplay-cocos-mcp
+9-18-2026 14:09:47 - log: [Funplay Cocos MCP] Checking GitHub for newer Funplay Cocos MCP releases.
+9-18-2026 14:09:48 - log: [Funplay Cocos MCP] Update check completed: current=0.6.3, latest=0.6.3
+9-18-2026 14:09:51 - log: [Scene] meshopt wasm decoder initialized
+9-18-2026 14:09:51 - log: [Scene] [box2d]:box2d wasm lib loaded.
+9-18-2026 14:09:51 - log: [Scene] [bullet]:bullet wasm lib loaded.
+9-18-2026 14:09:51 - log: [Scene] [PHYSICS]: using builtin.
+9-18-2026 14:09:52 - log: [Scene] Cocos Creator v3.8.8
+9-18-2026 14:09:52 - log: [Scene] Using custom pipeline: Builtin
+9-18-2026 14:09:52 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
+9-18-2026 14:09:52 - log: [Scene] [PHYSICS2D]: switch from builtin to box2d.
+9-18-2026 14:10:32 - info: [Window] Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools
+9-18-2026 14:10:32 - info: [Window] You are running Vue in development mode.
+Make sure to turn on production mode when deploying for production.
+See more tips at https://vuejs.org/guide/deployment.html
