@@ -15,13 +15,14 @@
     "scenes": [
       {
         "url": "db://assets/6.Scenes/PlayScene.scene",
-        "uuid": "37150f18-4c52-4f26-bdc5-00b4308270f1"
+        "uuid": "a22a725c-7587-43dd-a685-9c853d0a2d86"
       }
     ],
     "binGroupConfig": {
       "threshold": 16,
       "enable": false
-    }
+    },
+    "startScene": "a22a725c-7587-43dd-a685-9c853d0a2d86"
   },
   "BuildTaskManager": {
     "taskMap": {
@@ -31,8 +32,8 @@
         "progress": 1,
         "state": "success",
         "stage": "build",
-        "message": "9-17-2026 16:00:55 build success in 21 s!",
-        "detailMessage": "[playable-ads-builder]\r[processFiles] 1/1\r",
+        "message": "9-18-2026 16:42:23 build success in 1 min 33 s!",
+        "detailMessage": "[playable-ads-builder]\rBắt đầu đóng gói playable ad cho 1 kênh -> F:\\CocosProject\\PLY_Roomtopia_Cocos\\Cocos_DreamyRoom_PLY43\r",
         "options": {
           "name": "Cocos_DreamyRoom_PLY43",
           "server": "",
@@ -75,13 +76,13 @@
           "useSplashScreen": true,
           "bundleCommonChunk": false,
           "packAutoAtlas": true,
-          "startScene": "37150f18-4c52-4f26-bdc5-00b4308270f1",
+          "startScene": "a22a725c-7587-43dd-a685-9c853d0a2d86",
           "outputName": "web-mobile",
           "taskName": "web-mobile",
           "scenes": [
             {
               "url": "db://assets/6.Scenes/PlayScene.scene",
-              "uuid": "37150f18-4c52-4f26-bdc5-00b4308270f1"
+              "uuid": "a22a725c-7587-43dd-a685-9c853d0a2d86"
             }
           ],
           "wasmCompressionMode": false,
@@ -93,7 +94,7 @@
             "enable": false
           }
         },
-        "time": "9-17-2026 16:00:33",
+        "time": "9-18-2026 16:40:50",
         "dirty": false
       }
     }
