@@ -1,0 +1,19 @@
+<div id="app">
+    <header>
+        <div class="row">
+            <h2>Item Order Editor</h2>
+            <span id="parentName" class="parent"></span>
+            <span class="grow"></span>
+            <ui-button id="useSelected" tooltip="Lấy node đang chọn trong Hierarchy làm node cha">Load selected node</ui-button>
+            <ui-button id="reload" tooltip="Đọc lại thứ tự hiện tại từ scene">&#8635;</ui-button>
+            <label class="hint">Rows / column</label>
+            <ui-num-input id="perColumn" min="1" step="1" preci="0" value="7" style="width:64px"></ui-num-input>
+            <ui-button id="save" type="primary" tooltip="Ghi thứ tự vào scene (siblingIndex)">Save</ui-button>
+        </div>
+        <span class="hint">Row 1 là node đầu tiên (siblingIndex 0). Kéo ô để đổi chỗ / chuyển cột; click 2 ô để swap; ▲▼ đổi trong cột, ◂▸ chuyển cột. Thứ tự cuối = cột 1 từ trên xuống, rồi cột 2, ...</span>
+    </header>
+
+    <div id="status" class="status hidden"></div>
+
+    <div id="board" class="board"></div>
+</div>

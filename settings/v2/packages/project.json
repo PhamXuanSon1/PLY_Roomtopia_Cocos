@@ -1,3 +1,37 @@
 {
-  "__version__": "1.0.6"
+  "__version__": "1.0.6",
+  "general": {
+    "designResolution": {
+      "width": 1080,
+      "height": 2350,
+      "fitWidth": false,
+      "fitHeight": true
+    },
+    "renderPipeline": "fd8ec536-a354-4a17-9c74-4f3883c378c8"
+  },
+  "custom_joint_texture_layouts": [],
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "Block"
+      },
+      {
+        "index": 2,
+        "name": "Screw"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 8,
+      "1": 30,
+      "2": 2,
+      "3": 19,
+      "4": 10
+    },
+    "gravity": {
+      "y": -20
+    },
+    "allowSleep": false
+  },
+  "layer": []
 }

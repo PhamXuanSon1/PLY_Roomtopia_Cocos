@@ -1,0 +1,15 @@
+{
+  "__version__": "1.0.0",
+  "appleUrl": "https://apps.apple.com/us/app/dreamy-room/id6742221896?platform=iphone",
+  "googleUrl": "https://play.google.com/store/apps/details?id=com.abi.dream.unpacking",
+  "compressionType": "none",
+  "channel_AppLovin": false,
+  "audioCompressionEnabled": false,
+  "channel_Facebook": false,
+  "channel_Google": true,
+  "channel_Mintegral": false,
+  "channel_Moloco": false,
+  "channel_TikTok": false,
+  "channel_Unity": false,
+  "channel_IronSource": false
+}

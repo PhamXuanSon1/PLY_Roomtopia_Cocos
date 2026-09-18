@@ -1,0 +1,34 @@
+{
+  "package_version": 2,
+  "name": "item-order-editor",
+  "version": "1.0.0",
+  "description": "Sắp xếp lại thứ tự node con (siblingIndex) của một node cha bằng kéo-thả theo cột. Bấm Save để ghi thứ tự vào scene.",
+  "author": "PLY",
+  "editor": ">=3.7.0",
+  "main": "./main.js",
+  "panels": {
+    "default": {
+      "title": "Item Order Editor",
+      "type": "dockable",
+      "main": "./src/panels/default.js",
+      "size": {
+        "min-width": 520,
+        "min-height": 360,
+        "width": 1100,
+        "height": 640
+      }
+    }
+  },
+  "contributions": {
+    "menu": [
+      { "path": "Tool", "label": "Item Order Editor", "message": "open-panel" },
+      { "path": "i18n:menu.panel/Item Order Editor", "label": "Open Panel", "message": "open-panel" }
+    ],
+    "messages": {
+      "open-panel": { "methods": ["openPanel"] },
+      "get-selected-node": { "methods": ["getSelectedNode"] },
+      "load-children": { "methods": ["loadChildren"] },
+      "apply-order": { "methods": ["applyOrder"] }
+    }
+  }
+}

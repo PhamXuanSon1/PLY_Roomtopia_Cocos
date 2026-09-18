@@ -1,0 +1,27 @@
+{
+  "host": "127.0.0.1",
+  "port": 24947,
+  "portMode": "project",
+  "clientConfigEntries": {
+    "claude_code": {
+      "serverName": "cocos-ply-roomtopi-e353e0",
+      "url": "http://127.0.0.1:24947/",
+      "configPath": "C:\\Users\\Admin\\.claude.json",
+      "projectIdentity": "e353e0530895206eb1039400"
+    }
+  },
+  "toolProfile": "core",
+  "enabledTools": [],
+  "disabledTools": [],
+  "enabledToolCategories": [],
+  "disabledToolCategories": [],
+  "enableSessions": false,
+  "enableConsoleLogging": true,
+  "executeJavascriptSafetyChecks": true,
+  "autostart": true,
+  "maxInteractionLogEntries": 50,
+  "lastClientTargetId": "claude_code",
+  "activeToolProfileName": "",
+  "savedToolProfiles": [],
+  "language": "auto"
+}
