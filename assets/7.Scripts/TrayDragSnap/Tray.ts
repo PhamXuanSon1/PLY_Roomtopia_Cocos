@@ -29,6 +29,23 @@ export class Tray extends Component {
     private _cam: Camera | null = null;
     private _fitCache = new Map<Mesh, number>();
 
+    onEnable() {
+        screen.on('window-resize', this.onResize, this);
+    }
+
+    onDisable() {
+        screen.off('window-resize', this.onResize, this);
+    }
+
+    private onResize() {
+        if (!this._cam) return;
+        this.layoutBounds();
+        this.items.forEach((it, i) => {
+            it.node.setPosition(this.firstX + SPACING * i, 0, 0);
+        });
+        this.updateVisibility();
+    }
+
     onLoad() {
         this._cam = this.node.parent?.getComponent(Camera) ?? null;
         if (!this._cam) console.error('[Tray] Tray phải là con của node Camera');

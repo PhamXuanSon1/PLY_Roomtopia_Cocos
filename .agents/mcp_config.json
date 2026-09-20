@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "funplay-cocos": {
+      "command": "node",
+      "args": [
+        "D:/CocosProject/PLY_Roomtopia_Cocos/extensions/funplay-cocos-mcp-plugin/bin/funplay-cocos-mcp.js",
+        "--url",
+        "http://127.0.0.1:29634/"
+      ]
+    }
+  }
+}

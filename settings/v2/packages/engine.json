@@ -205,6 +205,7 @@
           "audio",
           "base",
           "custom-pipeline",
+          "custom-pipeline-post-process",
           "gfx-webgl",
           "gfx-webgl2",
           "graphics",
