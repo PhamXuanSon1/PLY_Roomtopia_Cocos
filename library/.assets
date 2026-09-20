@@ -325,8 +325,7 @@
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Texture.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_tex_metal.mtl",
             "7.Scripts\\TrayDragSnap\\BottomBar.ts",
-            "5.Prefabs\\BottomBar.prefab",
-            "6.Scenes\\PlayScene.scene.bak"
+            "5.Prefabs\\BottomBar.prefab"
         ]
     }
 }
