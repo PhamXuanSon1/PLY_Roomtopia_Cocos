@@ -556,7 +556,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 32705079.6745,
+      "mTimestamp": 33406245.0534,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -10019,7 +10019,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/GameController.ts": {
       "mTimestamp": {
-        "mtime": 1789717910510.12,
+        "mtime": 1789986584133.411,
         "uuid": "14a54ca0-e12a-490a-948a-754db1575003"
       },
       "chunkId": "6c223908d2802fbf3b237822f8f0e6631e91db6d",
@@ -10060,6 +10060,19 @@
               "column": 40
             }
           }
+        },
+        {
+          "value": "cc/env",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 24
+            },
+            "end": {
+              "line": 3,
+              "column": 32
+            }
+          }
         }
       ],
       "type": "esm",
@@ -10096,6 +10109,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/h5-helper.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "external",
+            "specifierOrURL": "cc/env"
           },
           "messages": []
         }
@@ -14398,7 +14418,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ItemManager.ts": {
       "mTimestamp": {
-        "mtime": 1789985987595.2788,
+        "mtime": 1789986360102.7107,
         "uuid": "27753742-fc6e-4a91-b9eb-7f580355c2a0"
       },
       "chunkId": "cf70c018604b6a9c1e438bf8798003ebbaf7b0d6",
@@ -15381,7 +15401,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ModelRotate.ts": {
       "mTimestamp": {
-        "mtime": 1789984138310.0396,
+        "mtime": 1789986360102.7107,
         "uuid": "7e5b388b-3bc9-4fbb-82a9-4c3e31e11433"
       },
       "chunkId": "6399692ccf865cbee0afb1efbc46b09610f45b6d",
@@ -15506,7 +15526,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/BoxBg.ts": {
       "mTimestamp": {
-        "mtime": 1789984199701.2256,
+        "mtime": 1789986678665.0583,
         "uuid": "a6585ca0-fa13-439b-9da0-818a9dffd3f8"
       },
       "chunkId": "89e3cb18343fcd65ade58765c73e96324814eecc",
@@ -15526,11 +15546,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 95
+              "column": 108
             },
             "end": {
               "line": 1,
-              "column": 99
+              "column": 112
             }
           }
         },

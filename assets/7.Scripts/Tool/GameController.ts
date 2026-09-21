@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from "cc";
 import playableHelper from "./h5-helper";
+import { PREVIEW } from "cc/env";
 const { ccclass, property } = _decorator;
 
 export var gc: GameController;
@@ -31,9 +32,17 @@ export class GameController extends Component {
 
  
 
-  redirectToStore() {    
-    playableHelper.gameEnd();
+  @property({ tooltip: 'Chỉ khi Preview trong editor: hỏi trước khi mở store (tránh nhảy trang khi đang test)' })
+  storeDialogMessage = 'Mở store? (chỉ hỏi khi Preview)';
 
+  redirectToStore() {
+    if (PREVIEW && typeof window !== 'undefined') {
+      const shouldOpenStore = window.confirm(this.storeDialogMessage);
+      console.log('[GameController] redirectToStore (preview) → confirm =', shouldOpenStore);
+      if (!shouldOpenStore) return;
+    }
+    console.log('[GameController] redirectToStore');
+    playableHelper.gameEnd();
     playableHelper.redirect();
   }
 }

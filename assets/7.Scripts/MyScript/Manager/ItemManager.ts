@@ -74,6 +74,13 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ group: 'Snap', tooltip: 'Target của item phải là target GẦN NHẤT dưới ngón tay; thả lên vật khác = trượt dù trong ngưỡng' })
     requireNearest = true;
 
+    @property({ group: 'Store', tooltip: 'Sau khi gom đủ N item → mọi chạm/kéo/xoay đều mở store (0 = tắt, chỉ mở store khi win)' })
+    storeAfterItems = 0;
+
+    /** Đã vào chế độ "chạm đâu cũng ra store" */
+    get storeMode() { return this._storeMode; }
+    private _storeMode = false;
+
     @property({ group: 'Snap Animation', tooltip: 'Scale tối đa của target khi snap, tính theo scale gốc' })
     snapScale = 1.3;
 
@@ -159,6 +166,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         input.off(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
         input.off(Input.EventType.TOUCH_END, this.onTouchEnd, this);
         input.off(Input.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
+        input.off(Input.EventType.TOUCH_START, this.onStoreTouch, this);
     }
 
     private lastModelRot = new Quat();
@@ -330,7 +338,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     // =========================================================== 3. nhấc & kéo
     /** BottomBar báo: người chơi kéo LÊN từ điểm startPos */
     private onLift(startPos: Vec2) {
-        if (this.dragging) return;
+        if (this.dragging || this._storeMode) return;
         const item = this.pick(startPos);
         if (!item) return;
 
@@ -434,7 +442,22 @@ export class ItemManager extends Component implements ItemCallbacks {
 
         if (this.collected >= this.total) {
             ui?.onWin?.();
+        } else if (this.storeAfterItems > 0 && this.collected >= this.storeAfterItems) {
+            this.enterStoreMode();
         }
+    }
+
+    /** Chơi đủ N item: khoá gameplay, chạm bất kỳ đâu (kể cả kéo thanh / xoay map) → store */
+    enterStoreMode() {
+        if (this._storeMode) return;
+        this._storeMode = true;
+        if (this.bar) this.bar.scrollEnabled = false;
+        input.on(Input.EventType.TOUCH_START, this.onStoreTouch, this);
+        console.log(`[ItemManager] store mode sau ${this.collected} item`);
+    }
+
+    private onStoreTouch() {
+        ui?.openStore?.();
     }
 
     onReturned(item: ItemController, result: ReleaseResult) {

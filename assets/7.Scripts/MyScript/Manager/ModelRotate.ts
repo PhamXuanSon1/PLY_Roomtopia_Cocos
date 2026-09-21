@@ -67,6 +67,7 @@ export class ModelRotate extends Component {
     private onTouchStart(e: EventTouch) {
         if (this.touchId !== -1) return;
         const loc = e.getLocation();
+        if (this.itemManager?.storeMode) return;                  // đã vào chế độ store → không xoay
         if (this.bar && this.bar.hitTest(loc)) return;          // chạm trong thanh → của BottomBar
         this.touchId = e.getID();
         this.touchStartPosition.set(loc); this.last.set(loc);
