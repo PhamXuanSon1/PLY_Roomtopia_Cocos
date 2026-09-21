@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, Material, MeshRenderer, Node, Vec2 } from 'cc';
+import { _decorator, Camera, Component, Material, Node, Vec2 } from 'cc';
 import { ItemGraphic } from './ItemGraphic';
 import { ItemMovement, ReleaseResult } from './ItemMovement';
 const { ccclass, property } = _decorator;
@@ -34,18 +34,18 @@ export class ItemController extends Component {
     get isCompleted() { return this.state === ItemState.Completed; }
 
     /** Gọi 1 lần lúc ItemManager build */
-    init(target: Node, index: number, cam: Camera, ghost: MeshRenderer, gray: Material | null, cb: ItemCallbacks) {
+    init(target: Node, index: number, cam: Camera, ghostRoot: Node, gray: Material | null, cb: ItemCallbacks) {
         this.target = target;
         this.index = index;
         this._cb = cb;
 
-        this.graphic!.bind(target);
+        this.graphic!.bind(target, cam);
         if (gray) this.graphic!.setGray(gray);
 
         const m = this.movement!;
         m.graphic = this.graphic;
         m.cam = cam;
-        m.ghost = ghost;
+        m.ghostRoot = ghostRoot;
     }
 
     // ------------------------------------------------------------ input (từ ItemManager)

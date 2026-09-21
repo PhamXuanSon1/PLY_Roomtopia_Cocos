@@ -1,22 +1,21 @@
-import { _decorator, Camera, Color, Component, Material, Mesh, MeshRenderer, Node, primitives, Tween, tween, utils, Vec3 } from 'cc';
-import { ICON_FILL } from '../Config/TrayConfig';
+import { _decorator, Camera, Component, instantiate, Material, MeshRenderer, Node, primitives, Quat, Tween, tween, utils, Vec3 } from 'cc';
+import { CELL_PX, ICON_FILL } from '../Config/TrayConfig';
 const { ccclass, property } = _decorator;
 
-/** Ô trong thanh rộng CELL world → icon chiếm ICON_FILL của ô */
-const CELL = 0.8;
-
 /**
- * Mọi thứ liên quan HÌNH ẢNH của 1 item:
- *  - icon trong thanh (mesh + material lấy từ target trong map, scale chuẩn hoá, nhìn thẳng camera)
- *  - shadow dưới icon
- *  - material của target trong map (xám khi chưa xong, trả màu khi snap)
- *  - hiệu ứng: pop in/out, hint nhún, punch target
+ * ItemGraphic: mọi thứ liên quan HÌNH ẢNH của 1 item.
+ *
+ *  - iconClone : bản sao mesh của target, nằm trong ô của thanh (con của node Icon).
+ *                Khi kéo, ItemMovement "bốc" chính node này ra world làm ghost.
+ *  - target    : mesh gốc trong map — xám khi chưa xong, trả màu khi snap đúng.
+ *  - hiệu ứng  : pop in/out, hint nhún, punch target.
+ *
  * Không biết vị trí trong thanh, không bắt input.
  */
 @ccclass('ItemGraphic')
 export class ItemGraphic extends Component {
-    @property({ type: MeshRenderer, tooltip: 'Node Icon con của prefab' })
-    icon: MeshRenderer | null = null;
+    @property({ type: Node, tooltip: 'Node Icon con của prefab — chỗ cắm bản sao mesh' })
+    icon: Node | null = null;
 
     @property({ type: MeshRenderer, tooltip: 'Node Shadow con của prefab (quad tạo runtime)' })
     shadow: MeshRenderer | null = null;
@@ -24,82 +23,104 @@ export class ItemGraphic extends Component {
     @property({ type: Material, tooltip: 'Material unlit cho shadow (để trống = không hiện shadow)' })
     shadowMat: Material | null = null;
 
-    @property({ tooltip: 'Xoay thêm cho icon (độ) nếu mesh nhìn thẳng camera không đẹp' })
+    @property({ tooltip: 'Xoay thêm cho icon (độ) so với hướng của nó trong map' })
     iconEuler: Vec3 = new Vec3(0, 0, 0);
 
-    /** Node mesh trong map mà item này đại diện */
+    /** Node mesh gốc trong map */
     target: Node | null = null;
     targetRenderer: MeshRenderer | null = null;
+    /** Material gốc của target (cache trước khi đổi xám) */
     defaultMats: Material[] = [];
-    scaleCache = new Vec3(1, 1, 1);
+    /** Bản sao mesh nằm trong ô */
+    iconClone: Node | null = null;
+    /** Scale của iconClone khi nằm trong ô (đơn vị local của thanh) */
+    iconScale = 1;
 
-    private _targetBaseScale = new Vec3(1, 1, 1);
-    private static _fitCache = new Map<Mesh, number>();
-    private static _quad: Mesh | null = null;
+    private targetBaseScale = new Vec3(1, 1, 1);
+    private static fitCache = new Map<Node, number>();
+    private static quadMesh: any = null;
 
-    // ------------------------------------------------------------ setup
-    /**
-     * Gán target trong map cho icon. Gọi 1 lần lúc build.
-     * PHẢI gọi trước setGray() vì cache defaultMats ở đây.
-     */
-    bind(target: Node) {
+    // =========================================================== setup
+    /** Gọi 1 lần lúc build. PHẢI gọi trước setGray() vì cache defaultMats ở đây. */
+    bind(target: Node, _cam: Camera | null = null) {
         this.target = target;
         this.targetRenderer = target.getComponent(MeshRenderer);
         if (!this.targetRenderer) { console.error(`[ItemGraphic] ${target.name} không có MeshRenderer`); return; }
 
         this.defaultMats = this.targetRenderer.sharedMaterials.slice() as Material[];
-        this._targetBaseScale.set(target.scale);
+        this.targetBaseScale.set(target.scale);
 
-        const mesh = this.targetRenderer.mesh!;
-        this.icon!.mesh = mesh;
-        this.defaultMats.forEach((m, i) => this.icon!.setSharedMaterial(m, i));
+        // 1. nhân bản target
+        const clone = instantiate(target);
+        clone.name = 'IconMesh';
 
-        const k = ItemGraphic.fitScale(mesh);
-        this.scaleCache.set(k, k, k);
-        this.icon!.node.setScale(this.scaleCache);
-        // Tray là con của camera → rotation local 0 = nhìn thẳng camera (không copy rotation của target)
-        this.icon!.node.setRotationFromEuler(this.iconEuler);
+        // 2. bản sao chỉ cần hình: bỏ script khác MeshRenderer, tắt bóng
+        for (const comp of clone.getComponentsInChildren(Component)) {
+            if (!(comp instanceof MeshRenderer)) comp.destroy();
+        }
+        for (const r of clone.getComponentsInChildren(MeshRenderer)) {
+            r.shadowCastingMode = MeshRenderer.ShadowCastingMode.OFF;
+            r.receiveShadow = MeshRenderer.ShadowReceivingMode.OFF;
+        }
+
+        // 3. cắm vào ô, giữ hướng như trong map, scale cho vừa ô
+        this.iconScale = ItemGraphic.fitScale(target);
+        this.iconClone = clone;
+        this.putIconInCell();
 
         this.setupShadow();
     }
 
-    /** Scale để mọi icon to bằng nhau: chuẩn theo cạnh lớn nhất của bounding box (cache theo mesh) */
-    static fitScale(mesh: Mesh): number {
-        let k = ItemGraphic._fitCache.get(mesh);
-        if (k !== undefined) return k;
+    /** Đặt iconClone về đúng chỗ trong ô (dùng lúc bind và khi thả trượt) */
+    putIconInCell() {
+        const c = this.iconClone!;
+        c.setParent(this.icon!);
+        c.setPosition(0, 0, 0);
+        c.setScale(this.iconScale, this.iconScale, this.iconScale);
+        c.layer = this.icon!.layer;
+
+        // giữ đúng hướng như target trong map → camera nhìn icon y hệt nhìn vật thật (+ iconEuler nếu muốn chỉnh)
+        const extra = Quat.fromEuler(new Quat(), this.iconEuler.x, this.iconEuler.y, this.iconEuler.z);
+        const q = Quat.multiply(new Quat(), this.target!.worldRotation, extra);
+        c.setWorldRotation(q);
+    }
+
+    /** Scale để mọi icon to bằng nhau: ICON_FILL của ô CELL_PX, chuẩn theo cạnh lớn nhất (cache theo target) */
+    static fitScale(target: Node): number {
+        const cached = ItemGraphic.fitCache.get(target);
+        if (cached !== undefined) return cached;
+
+        const mesh = target.getComponent(MeshRenderer)!.mesh!;
         const s = mesh.struct;
         const size = Math.max(
             s.maxPosition!.x - s.minPosition!.x,
             s.maxPosition!.y - s.minPosition!.y,
             s.maxPosition!.z - s.minPosition!.z);
-        k = size > 0 ? ICON_FILL * CELL / size : 1;
-        ItemGraphic._fitCache.set(mesh, k);
+        const k = size > 0 ? ICON_FILL * CELL_PX / size : 1;
+        ItemGraphic.fitCache.set(target, k);
         return k;
     }
 
     private setupShadow() {
         if (!this.shadow) return;
         if (!this.shadowMat) { this.shadow.node.active = false; return; }
-        if (!ItemGraphic._quad) ItemGraphic._quad = utils.MeshUtils.createMesh(primitives.quad());
-        this.shadow.mesh = ItemGraphic._quad;
+        if (!ItemGraphic.quadMesh) ItemGraphic.quadMesh = utils.MeshUtils.createMesh(primitives.quad());
+        this.shadow.mesh = ItemGraphic.quadMesh;
         this.shadow.setSharedMaterial(this.shadowMat, 0);
         this.shadow.node.active = true;
     }
 
-    // ------------------------------------------------------------ target trong map
-    /** Target chưa hoàn thành → xám */
+    // =========================================================== target trong map
     setGray(gray: Material) {
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats.map(() => gray);
     }
 
-    /** Trả lại material gốc */
     restore() {
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats;
     }
 
-    /** Target đổi sang material hint (nhấp nháy) — dùng cho tutorial */
     setHintMat(hint: Material) {
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats.map(() => hint);
@@ -111,26 +132,19 @@ export class ItemGraphic extends Component {
         const n = this.target;
         Tween.stopAllByTarget(n);
         tween(n)
-            .to(0.12, { scale: this._targetBaseScale.clone().multiplyScalar(1.3) }, { easing: 'quadOut' })
-            .to(0.18, { scale: this._targetBaseScale.clone() }, { easing: 'backOut' })
+            .to(0.12, { scale: this.targetBaseScale.clone().multiplyScalar(1.3) }, { easing: 'quadOut' })
+            .to(0.18, { scale: this.targetBaseScale.clone() }, { easing: 'backOut' })
             .start();
     }
 
-    // ------------------------------------------------------------ icon trong thanh
-    /** Icon scale 0 → cache (show) hoặc cache → 0 (hide) */
+    // =========================================================== icon trong ô
+    /** Icon scale 0 → iconScale (show) hoặc iconScale → 0 (hide) */
     pop(show: boolean, duration = 0.2) {
-        const n = this.icon!.node;
-        Tween.stopAllByTarget(n);
-        const to = show ? this.scaleCache.clone() : new Vec3(0, 0, 0);
-        tween(n).to(duration, { scale: to }, { easing: show ? 'backOut' : 'quadIn' }).start();
+        const c = this.iconClone!;
+        Tween.stopAllByTarget(c);
+        const k = show ? this.iconScale : 0;
+        tween(c).to(duration, { scale: new Vec3(k, k, k) }, { easing: show ? 'backOut' : 'quadIn' }).start();
         if (this.shadow) this.shadow.node.active = show && !!this.shadowMat;
-    }
-
-    /** Đặt icon về scale cache ngay lập tức (không tween) */
-    resetIcon() {
-        Tween.stopAllByTarget(this.icon!.node);
-        this.icon!.node.setScale(this.scaleCache);
-        this.icon!.node.setPosition(0, 0, 0);
     }
 
     setVisible(on: boolean) {
@@ -139,27 +153,29 @@ export class ItemGraphic extends Component {
         this.node.active = on;
     }
 
-    // ------------------------------------------------------------ hint
-    private _hinting = false;
+    /** Reset icon về trong ô, scale chuẩn (replay) */
+    resetIcon() {
+        Tween.stopAllByTarget(this.iconClone!);
+        this.putIconInCell();
+    }
 
-    /** Icon nhún lên xuống (yoyo) */
+    // =========================================================== hint
+    private hinting = false;
+
     playHint() {
-        if (this._hinting) return;
-        this._hinting = true;
-        const n = this.icon!.node;
-        tween(n)
-            .to(0.25, { position: new Vec3(0, 0.2, 0) }, { easing: 'sineOut' })
+        if (this.hinting) return;
+        this.hinting = true;
+        const c = this.iconClone!;
+        tween(c)
+            .to(0.25, { position: new Vec3(0, CELL_PX * 0.25, 0) }, { easing: 'sineOut' })
             .to(0.25, { position: new Vec3(0, 0, 0) }, { easing: 'sineIn' })
             .union().repeatForever().start();
     }
 
     stopHint() {
-        if (!this._hinting) return;
-        this._hinting = false;
-        Tween.stopAllByTarget(this.icon!.node);
-        this.icon!.node.setPosition(0, 0, 0);
-        this.icon!.node.setScale(this.scaleCache);
+        if (!this.hinting) return;
+        this.hinting = false;
+        Tween.stopAllByTarget(this.iconClone!);
+        this.iconClone!.setPosition(0, 0, 0);
     }
-
-    get isHinting() { return this._hinting; }
 }
