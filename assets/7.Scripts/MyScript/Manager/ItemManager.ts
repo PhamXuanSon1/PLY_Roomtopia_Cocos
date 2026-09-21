@@ -149,14 +149,14 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.updateVisibility();
     }
 
-    /** Model root xoay (ModelRotate hoặc xoay tay trong editor) → icon trong thanh xoay theo target của nó */
+    /** Target xoay (ModelRotate xoay node nào cũng được, hoặc xoay tay trong editor) → icon trong thanh xoay theo */
     private syncIconRotation() {
-        const model = this.findGameManager()?.model;
-        if (!model) return;
-        const r = model.worldRotation;
+        const list = this.items.length ? this.items : (this.bar?.content?.getComponentsInChildren(ItemController) ?? []);
+        const probe = list.find(it => it.target?.isValid)?.target;
+        if (!probe) return;
+        const r = probe.worldRotation;                 // theo dõi 1 target đại diện (cùng cha nên xoay cùng nhau)
         if (Quat.equals(r, this.lastModelRot)) return;
         this.lastModelRot.set(r);
-        const list = this.items.length ? this.items : (this.bar?.content?.getComponentsInChildren(ItemController) ?? []);
         for (const it of list) if (!it.isCompleted) it.graphic?.syncRotation();
     }
 

@@ -32,7 +32,7 @@ export class ModelRotate extends Component {
     dragThresholdPx = 6;
 
     private touchId = -1;
-    private start = new Vec2();
+    private touchStartPosition = new Vec2();
     private last = new Vec2();
     private dragging = false;
     private velocity = 0;        // độ/frame
@@ -65,7 +65,7 @@ export class ModelRotate extends Component {
         const loc = e.getLocation();
         if (this.bar && this.bar.hitTest(loc)) return;          // chạm trong thanh → của BottomBar
         this.touchId = e.getID();
-        this.start.set(loc); this.last.set(loc);
+        this.touchStartPosition.set(loc); this.last.set(loc);
         this.dragging = false;
         this.velocity = 0;
     }
@@ -75,7 +75,7 @@ export class ModelRotate extends Component {
         if (this.itemManager?.isDragging) { this.touchId = -1; return; }   // đang kéo item → bỏ
         const cur = e.getLocation();
         if (!this.dragging) {
-            if (Vec2.distance(cur, this.start) < this.dragThresholdPx) return;
+            if (Vec2.distance(cur, this.touchStartPosition) < this.dragThresholdPx) return;
             this.dragging = true; this.last.set(cur);
         }
         const dx = cur.x - this.last.x;

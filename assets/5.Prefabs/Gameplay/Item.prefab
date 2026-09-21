@@ -188,9 +188,9 @@
     },
     "colorBottom": {
       "__type__": "cc.Color",
-      "r": 70,
-      "g": 72,
-      "b": 78,
+      "r": 58,
+      "g": 64,
+      "b": 82,
       "a": 255
     },
     "radialInner": 0.85,
