@@ -5,6 +5,7 @@ const { ccclass, property } = _decorator;
 /**
  * Thanh bar phía dưới (BottomBar).
  *  - Hold trong dải content rồi kéo ngang → cộng dồn `offset` (local px, không giới hạn).
+ *    Thả tay → trượt tiếp theo quán tính (`inertia`), chạm lại thì dừng.
  *    ItemManager đọc `offset` mỗi frame để xếp item theo vòng lặp.
  *  - Kéo lên → phát EVENT_LIFT để ItemManager nhấc item.
  *  - Chỉ kéo được khi ItemManager gọi setScrollable(true) (item tràn thanh).
@@ -38,6 +39,9 @@ export class BottomBar extends Component {
     @property({ tooltip: 'Kéo lệch so với phương thẳng đứng dưới góc này (độ) = NHẤC item, không scroll' })
     liftAngle = 70;
 
+    @property({ range: [0, 0.99, 0.01], slide: true, tooltip: 'Quán tính sau khi thả (0 = dừng ngay, 0.9 = trượt lâu)' })
+    inertia = 0.9;
+
     /** node.emit(EVENT_LIFT, startPos: Vec2) khi người chơi kéo LÊN từ trong thanh */
     static readonly EVENT_LIFT = 'bottombar-lift';
 
@@ -57,6 +61,7 @@ export class BottomBar extends Component {
     private _offset = 0;
     private _targetOffset = 0;
     private _scrollable = false;
+    private _velocity = 0;       // local px / frame, quán tính sau khi thả
     private _tmpA = new Vec3();
     private _tmpB = new Vec3();
     private _fitKey = '';
@@ -114,6 +119,7 @@ export class BottomBar extends Component {
         this._scrollable = on;
         if (!on) {
             this._offset = this._targetOffset = 0;
+            this._velocity = 0;
             this._touchId = -1;
             this._dragging = false;
         }
@@ -121,6 +127,7 @@ export class BottomBar extends Component {
 
     resetScroll() {
         this._offset = this._targetOffset = 0;
+        this._velocity = 0;
     }
 
     // ------------------------------------------------------------ touch
@@ -134,6 +141,7 @@ export class BottomBar extends Component {
         this._start.set(loc);
         this._last.set(loc);
         this._dragging = false;
+        this._velocity = 0;                       // chạm lại → dừng trượt
     }
 
     private onTouchMove(e: EventTouch) {
@@ -160,7 +168,10 @@ export class BottomBar extends Component {
 
         const dxPx = cur.x - this._last.x;
         const ppu = this.pixelsPerUnit();
-        if (ppu > 0) this._targetOffset += dxPx / ppu;
+        if (ppu > 0) {
+            this._velocity = dxPx / ppu;
+            this._targetOffset += this._velocity;
+        }
         this._last.set(cur);
     }
 
@@ -172,6 +183,12 @@ export class BottomBar extends Component {
 
     update(dt: number) {
         if (this.fitWidthToScreen) this.fitWidth();
+        if (!this._dragging && this._scrollable && Math.abs(this._velocity) >= 0.01) {
+            this._targetOffset += this._velocity;   // trượt theo quán tính
+            this._velocity *= this.inertia;
+        } else if (!this._dragging) {
+            this._velocity = 0;
+        }
         if (Math.abs(this._offset - this._targetOffset) < 0.01) { this._offset = this._targetOffset; return; }
         this._offset = this.followLerp > 0
             ? math.lerp(this._offset, this._targetOffset, Math.min(1, dt * this.followLerp))

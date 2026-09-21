@@ -116,7 +116,7 @@ export class ItemGraphic extends Component {
         const invIcon = Quat.invert(new Quat(), this.icon!.worldRotation);
         const iconWS = this.icon!.worldScale;
         const qr = new Quat(), sc = new Vec3(), tmp = new Vec3();
-        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity, minZ = Infinity, maxZ = -Infinity;
         for (const r of c.getComponentsInChildren(MeshRenderer)) {
             const st = r.mesh?.struct;
             if (!st?.minPosition || !st.maxPosition) continue;
@@ -128,11 +128,13 @@ export class ItemGraphic extends Component {
                 Vec3.transformQuat(tmp, tmp, qr);
                 minX = Math.min(minX, tmp.x); maxX = Math.max(maxX, tmp.x);
                 minY = Math.min(minY, tmp.y); maxY = Math.max(maxY, tmp.y);
+                minZ = Math.min(minZ, tmp.z); maxZ = Math.max(maxZ, tmp.z);
             }
         }
         if (!isFinite(minX)) return;
         // tmp ở trên đã nhân scale → tâm bbox tính ra là offset thật của pivot, dời ngược lại
-        this.iconBasePos.set(-(minX + maxX) / 2, -(minY + maxY) / 2, 0);
+        // (cả Z: mesh nhỏ + pivot xa → scale lớn → lệch Z hàng chục unit, lọt ra ngoài near/far của BarCam)
+        this.iconBasePos.set(-(minX + maxX) / 2, -(minY + maxY) / 2, -(minZ + maxZ) / 2);
         c.setPosition(this.iconBasePos);
     }
 
@@ -174,7 +176,7 @@ export class ItemGraphic extends Component {
         const qr = new Quat();
         const sc = new Vec3();
 
-        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity, minZ = Infinity, maxZ = -Infinity;
         const tmp = new Vec3();
         for (const r of c.getComponentsInChildren(MeshRenderer)) {
             const st = r.mesh?.struct;
@@ -188,14 +190,15 @@ export class ItemGraphic extends Component {
                 Vec3.transformQuat(tmp, tmp, qr);
                 minX = Math.min(minX, tmp.x); maxX = Math.max(maxX, tmp.x);
                 minY = Math.min(minY, tmp.y); maxY = Math.max(maxY, tmp.y);
+                minZ = Math.min(minZ, tmp.z); maxZ = Math.max(maxZ, tmp.z);
             }
         }
         const size = Math.max(maxX - minX, maxY - minY);
         const k = isFinite(size) && size > 0 ? this.iconFill * this.cellPx / size : 1;
 
-        // căn TÂM bbox (đã xoay) vào giữa ô: dời ngược tâm, nhân với scale
+        // căn TÂM bbox (đã xoay) vào giữa ô: dời ngược tâm, nhân với scale — cả Z để icon nằm đúng mặt phẳng thanh
         if (isFinite(size)) {
-            this.iconBasePos.set(-(minX + maxX) / 2 * k, -(minY + maxY) / 2 * k, 0);
+            this.iconBasePos.set(-(minX + maxX) / 2 * k, -(minY + maxY) / 2 * k, -(minZ + maxZ) / 2 * k);
         }
         ItemGraphic.fitCache.set(key, k);
         ItemGraphic.posCache.set(key, this.iconBasePos.clone());
@@ -272,9 +275,10 @@ export class ItemGraphic extends Component {
         if (this.hinting) return;
         this.hinting = true;
         const c = this.iconClone!;
+        const base = this.iconBasePos.clone();
         tween(c)
-            .to(0.25, { position: new Vec3(0, this.cellPx * 0.25, 0) }, { easing: 'sineOut' })
-            .to(0.25, { position: new Vec3(0, 0, 0) }, { easing: 'sineIn' })
+            .to(0.25, { position: base.clone().add3f(0, this.cellPx * 0.25, 0) }, { easing: 'sineOut' })
+            .to(0.25, { position: base }, { easing: 'sineIn' })
             .union().repeatForever().start();
     }
 

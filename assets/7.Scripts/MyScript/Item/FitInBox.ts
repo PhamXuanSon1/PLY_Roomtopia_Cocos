@@ -120,7 +120,7 @@ export class FitInBox extends Component {
         if (!this.allowUpscale) s = Math.min(s, this.baseScale);
         const k = s / s0;
 
-        const o = Vec3.transformMat4(p, this.node.worldPosition, inv);   // gốc node trong cam space
+        const o = Vec3.transformMat4(FitInBox._p, this.node.worldPosition, inv);   // gốc node trong cam space
         const nMinX = o.x + (minX - o.x) * k, nMaxX = o.x + (maxX - o.x) * k;
         const nMinY = o.y + (minY - o.y) * k, nMaxY = o.y + (maxY - o.y) * k;
 
