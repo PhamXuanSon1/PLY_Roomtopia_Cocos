@@ -132,8 +132,8 @@ export class HandHintManager extends Component {
         if (this.rotate?.rotatedOnce) this.rotateHintDone = true;
 
         if (this.showing) {
-            // item đang hint bị gỡ / trượt ra ngoài thanh → hint lại item khác
-            if (this.mode === 'drag' && (!this.hintItem || this.hintItem.isCompleted || !this.hintItem.isOnScreen)) this.restart();
+            // item đang hint bị gỡ / trượt ra ngoài màn → hint lại item khác
+            if (this.mode === 'drag' && (!this.hintItem || this.hintItem.isCompleted || !this.fullyOnScreen(this.hintItem))) this.restart();
             // đã xoay xong → thôi hint xoay
             if (this.mode === 'rotate' && this.rotateHintDone) this.notify();
             return;
@@ -175,9 +175,22 @@ export class HandHintManager extends Component {
         this.hintItem = null;
     }
 
-    /** Item đầu tiên đang hiện trong thanh, chưa xong */
+    /**
+     * Item đầu tiên chưa xong mà CẢ Ô nằm trọn trong màn hình.
+     * `isOnScreen` của ItemManager còn tính cả cullPad (ô đang trượt qua mép, nửa trong nửa ngoài) →
+     * tay sẽ bắt đầu từ ngoài màn. Nên kiểm tra lại bằng pixel: tâm ô cách mép màn ≥ nửa ô.
+     */
     private pickItem(): ItemController | null {
-        return this.itemManager!.items.find(it => it.isOnScreen && !it.isCompleted && !!it.target) ?? null;
+        const im = this.itemManager!, cam = this.cam!;
+        const W = screen.windowSize.width, H = screen.windowSize.height;
+        const half = (im.bar?.hitHeight ?? 200) / 2 * (im.bar?.pixelsPerUnit() ?? 0);   // nửa ô (px màn hình)
+        const tmp = new Vec3();
+        for (const it of im.items) {
+            if (!it.isOnScreen || it.isCompleted || !it.target) continue;
+            const s = cam.worldToScreen(it.node.worldPosition, tmp);
+            if (s.x >= half && s.x <= W - half && s.y >= half && s.y <= H - half) return it;
+        }
+        return null;
     }
 
     // ------------------------------------------------------------ drag: ô → target
@@ -223,6 +236,15 @@ export class HandHintManager extends Component {
     }
 
     // ------------------------------------------------------------ helpers
+    /** Ô của item nằm trọn trong màn hình? (tâm cách mép ≥ nửa ô) */
+    private fullyOnScreen(it: ItemController): boolean {
+        if (!it.isOnScreen) return false;
+        const im = this.itemManager!, W = screen.windowSize.width, H = screen.windowSize.height;
+        const half = (im.bar?.hitHeight ?? 200) / 2 * (im.bar?.pixelsPerUnit() ?? 0);
+        const s = this.cam!.worldToScreen(it.node.worldPosition, new Vec3());
+        return s.x >= half && s.x <= W - half && s.y >= half && s.y <= H - half;
+    }
+
     /** Tâm bbox của mesh target trên màn hình (px). Không có mesh bounds → pivot */
     private targetScreenCenter(target: Node): Vec3 {
         const cam = this.cam!;

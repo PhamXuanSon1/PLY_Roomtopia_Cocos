@@ -556,7 +556,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 33406245.0534,
+      "mTimestamp": 33598315.6833,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -15526,7 +15526,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/BoxBg.ts": {
       "mTimestamp": {
-        "mtime": 1789986678665.0583,
+        "mtime": 1789986786966.9993,
         "uuid": "a6585ca0-fa13-439b-9da0-818a9dffd3f8"
       },
       "chunkId": "89e3cb18343fcd65ade58765c73e96324814eecc",
@@ -15746,7 +15746,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/HandHintManager.ts": {
       "mTimestamp": {
-        "mtime": 1789985408260.5327,
+        "mtime": 1789986871892.9868,
         "uuid": "a7c3d9e1-4b52-4f8e-9d31-7e2f6a1c5b08"
       },
       "chunkId": "f54e95776b2771e28a4371773b27a38f6ed072de",
