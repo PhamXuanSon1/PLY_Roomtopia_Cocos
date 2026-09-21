@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, Layers, Mat4, Node, UITransform, v3, Vec3, view } from 'cc';
+import { _decorator, Camera, Component, Label, Layers, Mat4, Node, UITransform, v3, Vec2, Vec3, view } from 'cc';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
 const { ccclass, property, executeInEditMode } = _decorator;
 
@@ -64,6 +64,18 @@ export class BoxBg extends Component {
     @property({ tooltip: 'Label cách đáy hộp bao nhiêu px (local, 100 px = 1 world unit)' })
     labelBottomPx = 60;
 
+    @property({ tooltip: 'countLabel là KHUNG (Sprite) chứa Label con → khung tự ôm theo chữ + lề này (px ngang, dọc). 0,0 = giữ size trong editor' })
+    labelFramePad = new Vec2(40, 24);
+
+    @property({ group: 'Landscape', tooltip: 'Màn ngang: label nằm góc DƯỚI-PHẢI vùng chơi, cách mép phải bấy nhiêu px (local). Màn dọc vẫn căn giữa' })
+    landscapeLabelRightPx = 60;
+
+    @property({ group: 'Landscape', tooltip: 'Màn ngang: label cách đáy vùng chơi bấy nhiêu px (local). Màn dọc dùng labelBottomPx' })
+    landscapeLabelBottomPx = 60;
+
+    @property({ group: 'Landscape', tooltip: 'Màn ngang: scale của label (màn dọc = 1)' })
+    landscapeLabelScale = 1.5;
+
     private _key = '';
 
     onLoad() {
@@ -75,6 +87,19 @@ export class BoxBg extends Component {
 
     update() {
         this.fit();
+        this.fitLabelFrame();
+    }
+
+    /** Khung countLabel ôm theo Label con (chữ đổi "x / y" là khung đổi theo) */
+    private fitLabelFrame() {
+        const f = this.countLabel;
+        if (!f || (this.labelFramePad.x === 0 && this.labelFramePad.y === 0)) return;
+        const lb = f.getComponentInChildren(Label);
+        const ut = f.getComponent(UITransform);
+        if (!lb || !ut || lb.node === f) return;
+        const s = lb.node.getComponent(UITransform)!.contentSize, k = lb.node.scale;
+        const w = s.width * k.x + this.labelFramePad.x, h = s.height * k.y + this.labelFramePad.y;
+        if (Math.abs(ut.width - w) > 0.5 || Math.abs(ut.height - h) > 0.5) ut.setContentSize(w, h);
     }
 
     fit() {
@@ -88,7 +113,7 @@ export class BoxBg extends Component {
         const w = (r.right - r.left) * k, h = (r.top - r.bottom) * k;
         const cx = (r.left + r.right) / 2, cy = (r.top + r.bottom) / 2;
 
-        const key = `${w.toFixed(2)}|${h.toFixed(2)}|${cx.toFixed(3)}|${cy.toFixed(3)}|${this.labelBottomPx}|${this.countLabel?.uuid}|${this.borderPx}|${this.borderNode?.uuid}`;
+        const key = `${w.toFixed(2)}|${h.toFixed(2)}|${cx.toFixed(3)}|${cy.toFixed(3)}|${this.labelBottomPx}|${this.countLabel?.uuid}|${this.borderPx}|${this.borderNode?.uuid}|${this.landscape}|${this.landscapeLabelRightPx}|${this.landscapeLabelBottomPx}|${this.landscapeLabelScale}`;
         if (key === this._key) return;
         this._key = key;
 
@@ -130,16 +155,29 @@ export class BoxBg extends Component {
         bg.setPosition((left + right) / 2, (top + bottom) / 2, this.node.position.z);
     }
 
-    /** CountLabel: giữa vùng chơi theo ngang, cách đáy vùng chơi labelBottomPx (local px của hộp) */
+    /**
+     * CountLabel: cách đáy vùng chơi labelBottomPx (local px của hộp).
+     *  - Màn dọc : căn giữa vùng chơi theo ngang.
+     *  - Màn ngang: góc dưới-phải vùng chơi, cách mép phải landscapeLabelRightPx (tính theo anchor của label).
+     */
     private placeLabel(cx: number, cy: number, k: number) {
         const l = this.countLabel;
         if (!l || !this.cam) return;
         if (l.parent !== this.node) l.setParent(this.node, false);
         l.layer = this.node.layer;
         l.setRotationFromEuler(0, 0, 0);
-        l.setScale(1, 1, 1);
+        const sc = this.landscape ? this.landscapeLabelScale : 1;
+        l.setScale(sc, sc, sc);
         const pr = this.getCamRect(this.cam.orthoHeight, true, true);
-        l.setPosition(((pr.left + pr.right) / 2 - cx) * k, (pr.bottom - cy) * k + this.labelBottomPx, 1);   // z=1 → trước mặt hộp
+        let x = ((pr.left + pr.right) / 2 - cx) * k;
+        let bottomPx = this.labelBottomPx;
+        if (this.landscape) {
+            const lut = l.getComponent(UITransform);
+            const w = (lut?.contentSize.width ?? 0) * sc, ax = lut?.anchorX ?? 0.5;   // bề rộng đã nhân scale
+            x = (pr.right - cx) * k - this.landscapeLabelRightPx - w * (1 - ax);
+            bottomPx = this.landscapeLabelBottomPx;
+        }
+        l.setPosition(x, (pr.bottom - cy) * k + bottomPx, 1);   // z=1 → trước mặt hộp
     }
 
     /** Màn ngang? */
