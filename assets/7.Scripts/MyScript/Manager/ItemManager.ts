@@ -13,7 +13,8 @@ const { ccclass, property, executeInEditMode } = _decorator;
  * ItemManager: quản lý TẤT CẢ item trong thanh.
  *
  *  build()            tạo 1 Item cho mỗi mesh trong map, xếp vào BottomBar/Content
- *  updateVisibility() mỗi frame: xếp ô theo bar.offset (vòng lặp nếu tràn thanh), ẩn ô ngoài thanh
+ *  updateVisibility() mỗi frame: xếp ô theo bar.offset (vòng lặp nếu tràn thanh), ẩn ô ngoài thanh.
+ *                     Thanh ngang: ô xếp theo +X; thanh dọc (màn ngang, bar.vertical): theo −Y từ trên xuống
  *  nhấc item          nghe BottomBar.EVENT_LIFT → pick() ô dưới ngón tay → item.onSelect
  *                     rồi tự theo dõi TOUCH_MOVE / END cho tới khi thả
  *  onSnapped()        đếm tiến trình, gỡ ô, dồn thanh, báo win
@@ -111,7 +112,9 @@ export class ItemManager extends Component implements ItemCallbacks {
     private dragging: ItemController | null = null;   // item đang được kéo
     get isDragging() { return !!this.dragging; }
     private touchId = -1;
+    /** nửa độ dài thanh theo trục xếp (local px): ngang = width/2, dọc = height/2 */
     private barHalfW = 540;
+    private lastVertical = false;
     /** true = item tràn thanh → xếp vòng lặp + cho kéo; false = đủ chỗ, căn giữa, không kéo */
     private loop = false;
     /** chu kỳ vòng lặp (local px) khi loop */
@@ -169,7 +172,8 @@ export class ItemManager extends Component implements ItemCallbacks {
         const gm = GameManager.inst!;
         const cam = this.camera();
         const content = this.bar!.content!;
-        this.barHalfW = (this.bar!.getComponent(UITransform)?.contentSize.width ?? 1080) / 2;
+        this.barHalfW = this.barHalfLen();
+        this.lastVertical = this.bar!.vertical;
 
         const allMeshes = gm.model!.getComponentsInChildren(MeshRenderer).map(r => r.node);
 
@@ -211,7 +215,7 @@ export class ItemManager extends Component implements ItemCallbacks {
                 const node = instantiate(this.itemPrefab!);
                 node.setParent(content);
                 item = node.getComponent(ItemController)!;
-                item.node.setPosition(this.slotX(i), 0, 0);
+                this.placeSlot(item, this.slotX(i));
             }
             // item có sẵn: giữ nguyên vị trí/scale như editor; Cell luôn theo showCells (mặc định tắt)
             item.init(target, i, cam, this.ghostRoot!, gm.grayMat, this, this.cellPx(), this.iconFill);
@@ -251,7 +255,18 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.bar!.setScrollable(this.loop);
     }
 
-    /** x (local trong Content) của ô thứ i với offset hiện tại */
+    /** Nửa độ dài thanh theo trục xếp item */
+    private barHalfLen() {
+        return (this.bar?.length ?? 1080) / 2;
+    }
+
+    /** Đặt ô tại toạ độ `pos` dọc theo trục thanh: ngang → x, dọc → −y (ô đầu ở trên) */
+    private placeSlot(item: ItemController, pos: number) {
+        if (this.bar!.vertical) item.node.setPosition(0, -pos, 0);
+        else item.node.setPosition(pos, 0, 0);
+    }
+
+    /** toạ độ dọc trục thanh (local trong Content) của ô thứ i với offset hiện tại */
     private slotX(i: number, n = this.remain) {
         if (this.loop) {
             const off = this.bar!.offset;
@@ -266,9 +281,13 @@ export class ItemManager extends Component implements ItemCallbacks {
     // =========================================================== 2. layout + cull (mỗi frame)
     updateVisibility() {
         if (!this.bar?.content) return;
-        // thanh đổi bề rộng (resize / fitWidthToScreen) → tính lại loop/period
-        const halfW = (this.bar.getComponent(UITransform)?.contentSize.width ?? 1080) / 2;
-        if (halfW !== this.barHalfW) { this.barHalfW = halfW; this.setLayout(this.remain); }
+        // thanh đổi độ dài / đổi ngang↔dọc (resize / fitLayout) → tính lại loop/period
+        const halfW = this.barHalfLen();
+        const vertical = this.bar.vertical;
+        if (halfW !== this.barHalfW || vertical !== this.lastVertical) {
+            this.barHalfW = halfW; this.lastVertical = vertical;
+            this.setLayout(this.remain);
+        }
         const left = -this.barHalfW - this.cullPad;
         const right = this.barHalfW + this.cullPad;
         const n = this.remain;
@@ -278,7 +297,7 @@ export class ItemManager extends Component implements ItemCallbacks {
             if (item === this.dragging) continue;          // đang kéo thì không đụng
             if (i >= n) { item.setOnScreen(false); continue; }   // đã xong → ẩn
             const x = this.slotX(i, n);
-            item.node.setPosition(x, 0, 0);
+            this.placeSlot(item, x);
             item.setOnScreen(x >= left && x <= right);
         }
     }
@@ -417,7 +436,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.clearContent();
         const allMeshes = gm.model.getComponentsInChildren(MeshRenderer).map(r => r.node);
         const targets = this.pickTargets.length > 0 ? this.pickTargets : allMeshes;
-        this.barHalfW = (this.bar!.getComponent(UITransform)?.contentSize.width ?? 1080) / 2;
+        this.barHalfW = this.barHalfLen();
         this.loop = this.contentWidth(targets.length) > this.barHalfW * 2;
         this.period = Math.max(targets.length * this.spacing, this.barHalfW * 2 + this.spacing);
 
@@ -425,8 +444,8 @@ export class ItemManager extends Component implements ItemCallbacks {
             const node = instantiate(this.itemPrefab!);
             node.name = `Item_${target.name}`;
             node.setParent(content);                              // LƯU vào scene → Play dùng lại
-            node.setPosition(this.slotX(i, targets.length), 0, 0);
             const item = node.getComponent(ItemController)!;
+            this.placeSlot(item, this.slotX(i, targets.length));
             item.target = target;
             item.graphic!.bind(target, this.bar!.cam ?? this.cam, this.cellPx(), this.iconFill);   // chỉ hình, không gray
             ItemManager.setTrayLayer(node);

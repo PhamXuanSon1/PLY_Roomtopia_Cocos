@@ -33,6 +33,9 @@ export class FitInBox extends Component {
     @property({ tooltip: 'Cho phép phóng to hơn scale gốc để lấp đầy hộp' })
     allowUpscale = false;
 
+    @property({ tooltip: 'Màn ngang: luôn phóng to/thu nhỏ cho lấp đầy vùng chơi (room to như ảnh tham chiếu)' })
+    landscapeUpscale = true;
+
     @property({ range: [0, 1, 0.01], slide: true, tooltip: 'Vị trí ngang trong hộp: 0 = sát trái, 0.5 = giữa, 1 = sát phải' })
     anchorX = 0.5;
 
@@ -109,7 +112,7 @@ export class FitInBox extends Component {
         if (!isFinite(minX)) return;
 
         // ---- rect hộp (đã trừ padding) ----
-        const r = box.getCamRect(cam.orthoHeight);
+        const r = box.getCamRect(cam.orthoHeight, true, true);      // vùng chơi (màn ngang trừ panel item)
         const bw = r.right - r.left - 2 * this.padding;
         const bh = r.top - r.bottom - 2 * this.padding;
         if (bw <= 0 || bh <= 0) return;
@@ -117,7 +120,8 @@ export class FitInBox extends Component {
         // ---- scale quanh gốc node ----
         const s0 = this.node.scale.x || 1;
         let s = s0 * Math.min(bw / (maxX - minX), bh / (maxY - minY));
-        if (!this.allowUpscale) s = Math.min(s, this.baseScale);
+        const upscale = this.allowUpscale || (this.landscapeUpscale && box.landscape);
+        if (!upscale) s = Math.min(s, this.baseScale);
         const k = s / s0;
 
         const o = Vec3.transformMat4(FitInBox._p, this.node.worldPosition, inv);   // gốc node trong cam space

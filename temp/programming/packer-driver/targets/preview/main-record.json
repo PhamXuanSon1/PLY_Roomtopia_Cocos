@@ -556,7 +556,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 26595096.8161,
+      "mTimestamp": 28011919.4592,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -4883,7 +4883,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts": {
       "mTimestamp": {
-        "mtime": 1789976736753.829,
+        "mtime": 1789980276179.0276,
         "uuid": "5e407573-3124-45d2-9050-3c44d0cf0470"
       },
       "chunkId": "1b7f82203514813a6554f85b64a57be5be9a49a1",
@@ -14377,7 +14377,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ItemManager.ts": {
       "mTimestamp": {
-        "mtime": 1789977153884.5684,
+        "mtime": 1789980606957.762,
         "uuid": "27753742-fc6e-4a91-b9eb-7f580355c2a0"
       },
       "chunkId": "cf70c018604b6a9c1e438bf8798003ebbaf7b0d6",
@@ -14794,7 +14794,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/BottomBar.ts": {
       "mTimestamp": {
-        "mtime": 1789977940242.957,
+        "mtime": 1789980836550.6475,
         "uuid": "b4969562-a208-4e85-a971-30cb5c31daf7"
       },
       "chunkId": "7c9abc9496c0814ea5603ff19e933ec0564b7d12",
@@ -14814,11 +14814,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 122
+              "column": 134
             },
             "end": {
               "line": 1,
-              "column": 126
+              "column": 138
             }
           }
         },
@@ -14833,6 +14833,20 @@
             "end": {
               "line": 2,
               "column": 37
+            }
+          }
+        },
+        {
+          "value": "../Config/TrayConfig",
+          "resolved": "__unresolved_2",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 37
+            },
+            "end": {
+              "line": 3,
+              "column": 59
             }
           }
         }
@@ -14871,6 +14885,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Config/TrayConfig.ts"
           },
           "messages": []
         }
@@ -15151,7 +15172,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Config/TrayConfig.ts": {
       "mTimestamp": {
-        "mtime": 1789964108706.191,
+        "mtime": 1789980424206.7122,
         "uuid": "af3ffaf2-9033-4425-961c-aa4728143eff"
       },
       "chunkId": "98c010ed52d7a6f48fbdb8d463b3c34f109be104",
@@ -15464,11 +15485,15 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/BoxBg.ts": {
       "mTimestamp": {
-        "mtime": 1789979847708.0762,
+        "mtime": 1789981294104.0366,
         "uuid": "a6585ca0-fa13-439b-9da0-818a9dffd3f8"
       },
       "chunkId": "89e3cb18343fcd65ade58765c73e96324814eecc",
       "imports": [
+        {
+          "value": "cce:/internal/code-quality/cr.mjs",
+          "resolved": "__unresolved_0"
+        },
         {
           "value": "cc"
         },
@@ -15487,6 +15512,20 @@
               "column": 99
             }
           }
+        },
+        {
+          "value": "../Config/TrayConfig",
+          "resolved": "__unresolved_1",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 37
+            },
+            "end": {
+              "line": 2,
+              "column": 59
+            }
+          }
         }
       ],
       "type": "esm",
@@ -15494,7 +15533,7 @@
         {
           "resolved": {
             "type": "module",
-            "url": "cce:/internal/x/cc"
+            "url": "cce:/internal/code-quality/cr.mjs"
           },
           "messages": []
         },
@@ -15509,6 +15548,20 @@
           "resolved": {
             "type": "module",
             "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Config/TrayConfig.ts"
           },
           "messages": []
         }
@@ -15568,7 +15621,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/FitInBox.ts": {
       "mTimestamp": {
-        "mtime": 1789978300662.0144,
+        "mtime": 1789980606958.74,
         "uuid": "f17b0c4e-3a52-4d9b-8e21-6c0d5a9b7e31"
       },
       "chunkId": "9ad66f89178f33aa60dcc11308b4b9c18da585d6",

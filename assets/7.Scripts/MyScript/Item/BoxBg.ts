@@ -1,4 +1,5 @@
 import { _decorator, Camera, Component, Layers, Mat4, Node, UITransform, v3, Vec3, view } from 'cc';
+import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -8,6 +9,8 @@ const { ccclass, property, executeInEditMode } = _decorator;
  *  - Node là CON của BgCam, scale 0.01 → local = camera space (100 px = 1 world unit).
  *  - Gán `frame` (node 3D có UITransform, vd BoxFrame) → hộp khớp đúng hình chiếu của khung đó qua WCam,
  *    bỏ qua heightPercent. BgCam & WCam cùng orthoHeight + aspect nên toạ độ camera space của 2 cam trùng nhau.
+ *  - Màn NGANG (landscapeFullScreen): hộp phủ cả màn (tràn ra ngoài để giấu góc bo); "vùng chơi" cho FitInBox /
+ *    CountLabel = màn trừ panel item dọc bên phải (landscapePanelFrac).
  */
 @ccclass('BoxBg')
 @executeInEditMode
@@ -34,8 +37,20 @@ export class BoxBg extends Component {
     @property({ tooltip: 'Tràn lên trên bấy nhiêu px để giấu góc bo trên (0 = thấy góc bo)' })
     topOverflow = 100;
 
-    @property({ tooltip: 'Màn NGANG: bề ngang hộp = chiều cao màn × tỉ lệ này (1080/2350 = giống hộp ở màn dọc), căn giữa. 0 = phủ cả bề ngang' })
-    landscapeWidthRatio = 1080 / 2350;
+    @property({ group: 'Landscape', tooltip: 'Màn ngang: hộp phủ cả màn hình (vẫn trừ sideMargin, cộng topOverflow như màn dọc)' })
+    landscapeFullScreen = true;
+
+    @property({ group: 'Landscape', tooltip: 'Màn ngang: hộp cách đáy màn bấy nhiêu px (âm = tràn xuống để giấu góc bo)' })
+    landscapeBottomMargin = -100;
+
+    @property({ group: 'Landscape', tooltip: 'Màn ngang: nền panel item tràn ra ngoài màn bấy nhiêu px để giấu góc bo' })
+    landscapeOverflow = 100;
+
+    @property({ group: 'Landscape', range: [0, 0.6, 0.01], slide: true, tooltip: 'Màn ngang: panel item dọc bên phải chiếm bao nhiêu phần bề ngang → vùng chơi = phần còn lại (khớp BottomBar.panelFrac)' })
+    landscapePanelFrac = LANDSCAPE_PANEL_FRAC;
+
+    @property({ group: 'Landscape', type: Node, tooltip: 'Nền trắng panel item (Sprite, em kế sau BoxBg dưới BgCam, scale 0.01). Chỉ hiện màn ngang, tự đặt phủ vùng panel + overflow' })
+    panelBg: Node | null = null;
 
     @property({ type: Node, tooltip: 'Label đếm (con của node này): tự đặt ở đáy hộp + labelBottomPx, cùng layer BG' })
     countLabel: Node | null = null;
@@ -73,40 +88,66 @@ export class BoxBg extends Component {
 
         ut.setContentSize(w, h);
         this.node.setPosition(cx, cy, this.node.position.z);
-        this.placeLabel(h);
+        this.placeLabel(cx, cy, k);
+        this.placePanelBg(cam.orthoHeight, k);
     }
 
-    /** CountLabel nằm giữa theo ngang, cách đáy hộp labelBottomPx (local px của hộp) */
-    private placeLabel(h: number) {
+    /** Nền panel item bên phải (màn ngang): từ mép vùng chơi tới hết màn, tràn overflow để giấu góc bo */
+    private placePanelBg(orthoHeight: number, k: number) {
+        const bg = this.panelBg;
+        if (!bg) return;
+        const on = this.landscape && this.landscapePanelFrac > 0;
+        bg.active = on;
+        if (!on) return;
+        const size = view.getVisibleSize();
+        const halfH = orthoHeight, halfW = halfH * size.width / size.height, o = this.landscapeOverflow / k;
+        const left = halfW - 2 * halfW * this.landscapePanelFrac, right = halfW + o, top = halfH + o, bottom = -halfH - o;
+        bg.layer = this.node.layer;
+        bg.setScale(this.node.scale);
+        bg.getComponent(UITransform)?.setContentSize((right - left) * k, (top - bottom) * k);
+        bg.setPosition((left + right) / 2, (top + bottom) / 2, this.node.position.z);
+    }
+
+    /** CountLabel: giữa vùng chơi theo ngang, cách đáy vùng chơi labelBottomPx (local px của hộp) */
+    private placeLabel(cx: number, cy: number, k: number) {
         const l = this.countLabel;
-        if (!l) return;
+        if (!l || !this.cam) return;
         if (l.parent !== this.node) l.setParent(this.node, false);
         l.layer = this.node.layer;
         l.setRotationFromEuler(0, 0, 0);
         l.setScale(1, 1, 1);
-        l.setPosition(0, -h / 2 + this.labelBottomPx, 1);        // z=1 → vẽ trước mặt hộp
+        const pr = this.getCamRect(this.cam.orthoHeight, true, true);
+        l.setPosition(((pr.left + pr.right) / 2 - cx) * k, (pr.bottom - cy) * k + this.labelBottomPx, 1);   // z=1 → trước mặt hộp
+    }
+
+    /** Màn ngang? */
+    get landscape() {
+        const size = view.getVisibleSize();
+        return size.width > size.height;
     }
 
     /**
      * Rect của hộp trong camera space (world unit, gốc = tâm camera, cùng cho BgCam & WCam).
+     *  - Màn ngang + landscapeFullScreen → cả màn (đáy + landscapeBottomMargin).
      *  - Có `frame` → AABB hình chiếu 4 góc UITransform của frame qua WCam (syncOrthoFrom).
      *  - Không → cả bề ngang màn hình, cao heightPercent từ mép trên.
      *  Đã trừ sideMargin, cộng topOverflow. clipToScreen = true → cắt theo màn hình (FitInBox dùng).
+     *  playArea = true → màn ngang trừ thêm panel item bên phải (vùng đặt room / label).
      */
-    getCamRect(orthoHeight: number, clipToScreen = true) {
+    getCamRect(orthoHeight: number, clipToScreen = true, playArea = false) {
         const size = view.getVisibleSize();
         const k = 1 / (this.node.scale.x || 0.01);
         const halfH = orthoHeight;
         const halfW = halfH * size.width / size.height;
+        const landscape = size.width > size.height;
+        const full = landscape && this.landscapeFullScreen;
         let left = -halfW, right = halfW, top = halfH, bottom = halfH - 2 * halfH * this.heightPercent / 100;
-        if (size.width > size.height && this.landscapeWidthRatio > 0) {          // màn ngang → hộp hẹp như màn dọc, giữa màn
-            const hw = Math.min(halfW, halfH * this.landscapeWidthRatio);
-            left = -hw; right = hw;
-        }
 
         const fut = this.frame?.getComponent(UITransform);
         const wcam = this.syncOrthoFrom ?? this.cam;
-        if (fut && wcam) {
+        if (full) {
+            bottom = -halfH + this.landscapeBottomMargin / k;
+        } else if (fut && wcam) {
             const inv = Mat4.invert(BoxBg._inv, wcam.node.worldMatrix);
             Mat4.multiply(inv, inv, this.frame!.worldMatrix);          // frame local → WCam space
             const { width: fw, height: fh } = fut.contentSize, a = fut.anchorPoint;
@@ -122,6 +163,7 @@ export class BoxBg extends Component {
             left = Math.max(left, -halfW); right = Math.min(right, halfW);
             top = Math.min(top, halfH); bottom = Math.max(bottom, -halfH);
         }
+        if (playArea && landscape) right = Math.min(right, halfW - 2 * halfW * this.landscapePanelFrac);
         return { left, right, top, bottom };
     }
 

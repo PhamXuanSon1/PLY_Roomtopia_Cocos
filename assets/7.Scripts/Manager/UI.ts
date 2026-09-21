@@ -285,8 +285,9 @@ export class UI extends Component {
             bind.binds.forEach(item => {
                 if (!item || !item.isValid) return;
 
-                // Kiểm tra nếu item là node 3D (không có UITransform hoặc thuộc layer 3D)
-                const is3D = !item.getComponent(UITransform) || item.layer !== 33554432;
+                // Node 3D = KHÔNG ở layer UI_2D. Container UI rỗng (không UITransform) như Bindable/Bottom/Left
+                // vẫn là 2D → căn theo uiCamera; nếu coi là 3D sẽ bị đẩy ra mép WCam (x≈±4.3) → nằm ngoài UICam (±1.3) → mất hình
+                const is3D = item.layer !== 33554432;
 
                 if (is3D && this.wCamera) {
                     this.bind3D(item, bind.type, bind.offset || 0);
