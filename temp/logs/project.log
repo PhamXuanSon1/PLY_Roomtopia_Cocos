@@ -1,39 +1,33 @@
-20-9-2026 08:46:14 - log: Load engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine
-20-9-2026 08:46:15 - log: Register native engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\native
-20-9-2026 08:46:15 - log: Request namespace: device-list
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=29634, profile=core, autostart=true
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP] Extension loading...
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP] Autostart is enabled, starting MCP server.
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP] Starting MCP server...
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=29634, profile=core, autostart=true
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP Server] Creating HTTP server on 127.0.0.1:29634...
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP Server] Listening on http://127.0.0.1:29634/
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP] MCP server started at http://127.0.0.1:29634/
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP] If this tool saves you time, please consider giving it a Star on GitHub: https://github.com/FunplayAI/funplay-cocos-mcp
-20-9-2026 08:46:25 - log: [Funplay Cocos MCP] Checking GitHub for newer Funplay Cocos MCP releases.
-20-9-2026 08:46:26 - log: [Funplay Cocos MCP] Update check completed: current=0.6.3, latest=0.6.4
-20-9-2026 08:46:42 - log: [Scene] meshopt wasm decoder initialized
-20-9-2026 08:46:42 - log: [Scene] [bullet]:bullet wasm lib loaded.
-20-9-2026 08:46:43 - log: [Scene] [box2d]:box2d wasm lib loaded.
-20-9-2026 08:46:43 - log: [Scene] [PHYSICS]: using builtin.
-20-9-2026 08:46:46 - log: [Scene] Cocos Creator v3.8.8
-20-9-2026 08:46:47 - log: [Scene] Using custom pipeline: Builtin
-20-9-2026 08:46:47 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
-20-9-2026 09:14:59 - log: [Funplay Cocos MCP Server] RPC tools/list
-20-9-2026 09:15:14 - log: [Funplay Cocos MCP Server] RPC tools/call
-20-9-2026 09:15:29 - log: [Funplay Cocos MCP Server] RPC tools/call
-20-9-2026 09:42:41 - log: [Funplay Cocos MCP Server] RPC tools/call
-20-9-2026 21:49:57 - warn: [Scene] You are trying to destroy a object twice or more.Error: [Scene] You are trying to destroy a object twice or more.
+9-21-2026 08:14:51 - log: Load engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine
+9-21-2026 08:14:52 - log: Register native engine in C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\native
+9-21-2026 08:14:52 - log: Request namespace: device-list
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=24947, profile=core, autostart=true
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP] Extension loading...
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP] Autostart is enabled, starting MCP server.
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP] Starting MCP server...
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP] Runtime config loaded: host=127.0.0.1, port=24947, profile=core, autostart=true
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP Server] Creating HTTP server on 127.0.0.1:24947...
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP Server] Listening on http://127.0.0.1:24947/
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP] MCP server started at http://127.0.0.1:24947/
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP] If this tool saves you time, please consider giving it a Star on GitHub: https://github.com/FunplayAI/funplay-cocos-mcp
+9-21-2026 08:14:57 - log: [Funplay Cocos MCP] Checking GitHub for newer Funplay Cocos MCP releases.
+9-21-2026 08:14:58 - log: [Funplay Cocos MCP] Update check completed: current=0.6.3, latest=0.6.4
+9-21-2026 08:15:27 - log: [Scene] meshopt wasm decoder initialized
+9-21-2026 08:15:27 - log: [Scene] [box2d]:box2d wasm lib loaded.
+9-21-2026 08:15:27 - log: [Scene] [bullet]:bullet wasm lib loaded.
+9-21-2026 08:15:27 - log: [Scene] [PHYSICS]: using builtin.
+9-21-2026 08:15:34 - log: [Scene] Cocos Creator v3.8.8
+9-21-2026 08:15:36 - log: [Scene] Using custom pipeline: Builtin
+9-21-2026 08:15:36 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
+9-21-2026 08:17:45 - warn: [Scene] Can not keep world transform due to the zero scaling of parent nodeError: [Scene] Can not keep world transform due to the zero scaling of parent node
     at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
     at warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\bin\.cache\dev\editor\bundled\index.js:162864:12)
     at warnID (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\bin\.cache\dev\editor\bundled\index.js:163052:5)
-    at Node.destroy (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\bin\.cache\dev\editor\bundled\index.js:145706:13)
-    at Node.destroy (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\bin\.cache\dev\editor\bundled\index.js:58015:21)
-    at MiniPreview.clearByComponent (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\manager\mini-preview\index.ccc:1:3685)
-    at MiniPreview.createPreviewNode (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\manager\mini-preview\index.ccc:1:4036)
-    at MiniPreview.handleSelect (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\manager\mini-preview\index.ccc:1:3277)
-    at PreviewManager.callPreviewFunction (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\manager\preview\index.ccc:1:3351)
-    at SceneFacadeManager.callPreviewFunction (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\facade\scene-facade-manager.ccc:1:29271)
+    at Node._onSetParent (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\bin\.cache\dev\editor\bundled\index.js:58656:17)
+    at Node.setParent (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\resources\3d\engine\bin\.cache\dev\editor\bundled\index.js:57190:16)
+    at NodeManager.setParent (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\manager\node\index.ccc:1:15110)
+    at GeneralSceneFacade.setNodeParent (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\facade\general-scene-facade.ccc:1:9643)
+    at SceneFacadeManager.setNodeParent (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\facade\scene-facade-manager.ccc:1:13243)
     at step (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\manager\ipc\web\ipc.ccc:1:733)
     at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\manager\ipc\web\ipc.ccc:2:377
     at new Promise (<anonymous>)
@@ -41,10 +35,3 @@
     at IpcRenderer.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\scene\dist\script\3d\manager\ipc\web\webview.ccc:1:973)
     at IpcRenderer.emit (node:events:519:28)
     at Object.onMessage (node:electron/js2c/renderer_init:2:8837)
-20-9-2026 22:16:27 - log: [Scene] meshopt wasm decoder initialized
-20-9-2026 22:16:27 - log: [Scene] [bullet]:bullet wasm lib loaded.
-20-9-2026 22:16:27 - log: [Scene] [box2d]:box2d wasm lib loaded.
-20-9-2026 22:16:27 - log: [Scene] [PHYSICS]: using builtin.
-20-9-2026 22:16:27 - log: [Scene] Cocos Creator v3.8.8
-20-9-2026 22:16:28 - log: [Scene] Using custom pipeline: Builtin
-20-9-2026 22:16:28 - log: [Scene] [PHYSICS]: switch from builtin to bullet.

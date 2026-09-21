@@ -1,7 +1,7 @@
 {
   "modules": {
     "cce:/internal/x/cc": {
-      "mTimestamp": 20168.6518,
+      "mTimestamp": 22299.7009,
       "chunkId": "93ba276ea7b26ffcdc433fab14afc1ed6f05647b",
       "imports": [
         {
@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 47020984.2515,
+      "mTimestamp": 41820.8411,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -1085,7 +1085,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Gameplay/Data.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Gameplay/Data.ts",
           "resolved": "__unresolved_6",
           "loc": {
             "start": {
@@ -1099,7 +1099,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/AssetsManagerCustom.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/AssetsManagerCustom.ts",
           "resolved": "__unresolved_7",
           "loc": {
             "start": {
@@ -1113,7 +1113,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/Clock.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/Clock.ts",
           "resolved": "__unresolved_8",
           "loc": {
             "start": {
@@ -1127,7 +1127,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/InputManager.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/InputManager.ts",
           "resolved": "__unresolved_9",
           "loc": {
             "start": {
@@ -1141,7 +1141,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/Joystick.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/Joystick.ts",
           "resolved": "__unresolved_10",
           "loc": {
             "start": {
@@ -1155,7 +1155,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/MainCamera.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/MainCamera.ts",
           "resolved": "__unresolved_11",
           "loc": {
             "start": {
@@ -1169,7 +1169,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts",
           "resolved": "__unresolved_12",
           "loc": {
             "start": {
@@ -1183,7 +1183,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/SoundManager.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/SoundManager.ts",
           "resolved": "__unresolved_13",
           "loc": {
             "start": {
@@ -1197,7 +1197,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts",
           "resolved": "__unresolved_14",
           "loc": {
             "start": {
@@ -1211,7 +1211,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/VFX.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/VFX.ts",
           "resolved": "__unresolved_15",
           "loc": {
             "start": {
@@ -1225,7 +1225,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/World.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/World.ts",
           "resolved": "__unresolved_16",
           "loc": {
             "start": {
@@ -1239,7 +1239,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/MatchSprite.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/MatchSprite.ts",
           "resolved": "__unresolved_17",
           "loc": {
             "start": {
@@ -1253,7 +1253,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/NodeOrder.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/NodeOrder.ts",
           "resolved": "__unresolved_18",
           "loc": {
             "start": {
@@ -1267,7 +1267,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/ReadImagePixel.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/ReadImagePixel.ts",
           "resolved": "__unresolved_19",
           "loc": {
             "start": {
@@ -1281,7 +1281,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/SpriteSizeSetter.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/SpriteSizeSetter.ts",
           "resolved": "__unresolved_20",
           "loc": {
             "start": {
@@ -1295,7 +1295,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/Ulis.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/Ulis.ts",
           "resolved": "__unresolved_21",
           "loc": {
             "start": {
@@ -1309,7 +1309,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/AStar.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/AStar.ts",
           "resolved": "__unresolved_22",
           "loc": {
             "start": {
@@ -1323,7 +1323,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Black.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Black.ts",
           "resolved": "__unresolved_23",
           "loc": {
             "start": {
@@ -1337,7 +1337,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Cloud.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Cloud.ts",
           "resolved": "__unresolved_24",
           "loc": {
             "start": {
@@ -1351,7 +1351,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/IQ.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/IQ.ts",
           "resolved": "__unresolved_25",
           "loc": {
             "start": {
@@ -1365,7 +1365,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Mats.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Mats.ts",
           "resolved": "__unresolved_26",
           "loc": {
             "start": {
@@ -1379,7 +1379,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/MeshLoader.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/MeshLoader.ts",
           "resolved": "__unresolved_27",
           "loc": {
             "start": {
@@ -1393,7 +1393,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/SkinManager.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/SkinManager.ts",
           "resolved": "__unresolved_28",
           "loc": {
             "start": {
@@ -1407,7 +1407,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/SplineLineRenderer.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/SplineLineRenderer.ts",
           "resolved": "__unresolved_29",
           "loc": {
             "start": {
@@ -1421,7 +1421,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Tool.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Tool.ts",
           "resolved": "__unresolved_30",
           "loc": {
             "start": {
@@ -1435,7 +1435,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Tooth.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Tooth.ts",
           "resolved": "__unresolved_31",
           "loc": {
             "start": {
@@ -1449,7 +1449,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Ulis.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Ulis.ts",
           "resolved": "__unresolved_32",
           "loc": {
             "start": {
@@ -1463,7 +1463,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/ComponentCache.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/ComponentCache.ts",
           "resolved": "__unresolved_33",
           "loc": {
             "start": {
@@ -1477,7 +1477,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts",
           "resolved": "__unresolved_34",
           "loc": {
             "start": {
@@ -1491,7 +1491,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts",
           "resolved": "__unresolved_35",
           "loc": {
             "start": {
@@ -1505,7 +1505,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Singleton.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Singleton.ts",
           "resolved": "__unresolved_36",
           "loc": {
             "start": {
@@ -1519,7 +1519,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_SoundManager.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_SoundManager.ts",
           "resolved": "__unresolved_37",
           "loc": {
             "start": {
@@ -1533,7 +1533,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Types.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Types.ts",
           "resolved": "__unresolved_38",
           "loc": {
             "start": {
@@ -1547,7 +1547,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Yielders.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Yielders.ts",
           "resolved": "__unresolved_39",
           "loc": {
             "start": {
@@ -1561,7 +1561,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolControl.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolControl.ts",
           "resolved": "__unresolved_40",
           "loc": {
             "start": {
@@ -1575,7 +1575,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolManager.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolManager.ts",
           "resolved": "__unresolved_41",
           "loc": {
             "start": {
@@ -1589,7 +1589,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolMember.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolMember.ts",
           "resolved": "__unresolved_42",
           "loc": {
             "start": {
@@ -1603,7 +1603,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Sand/SandSimulation.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Sand/SandSimulation.ts",
           "resolved": "__unresolved_43",
           "loc": {
             "start": {
@@ -1617,7 +1617,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/AppLovinAnalytics.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/AppLovinAnalytics.ts",
           "resolved": "__unresolved_44",
           "loc": {
             "start": {
@@ -1631,7 +1631,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/GameController.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/GameController.ts",
           "resolved": "__unresolved_45",
           "loc": {
             "start": {
@@ -1645,7 +1645,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/h5-helper.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/h5-helper.ts",
           "resolved": "__unresolved_46",
           "loc": {
             "start": {
@@ -1659,7 +1659,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/BottomBar.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/BottomBar.ts",
           "resolved": "__unresolved_47",
           "loc": {
             "start": {
@@ -1673,7 +1673,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/GameManager.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/GameManager.ts",
           "resolved": "__unresolved_48",
           "loc": {
             "start": {
@@ -1687,7 +1687,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/GestureController.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/GestureController.ts",
           "resolved": "__unresolved_49",
           "loc": {
             "start": {
@@ -1701,7 +1701,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TargetItem.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TargetItem.ts",
           "resolved": "__unresolved_50",
           "loc": {
             "start": {
@@ -1715,7 +1715,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/Tray.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/Tray.ts",
           "resolved": "__unresolved_51",
           "loc": {
             "start": {
@@ -1729,7 +1729,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayConfig.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayConfig.ts",
           "resolved": "__unresolved_52",
           "loc": {
             "start": {
@@ -1743,7 +1743,7 @@
           }
         },
         {
-          "value": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayItem.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayItem.ts",
           "resolved": "__unresolved_53",
           "loc": {
             "start": {
@@ -1804,336 +1804,336 @@
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Gameplay/Data.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Gameplay/Data.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/AssetsManagerCustom.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/AssetsManagerCustom.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/Clock.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/Clock.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/InputManager.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/InputManager.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/Joystick.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/Joystick.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/MainCamera.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/MainCamera.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/SoundManager.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/SoundManager.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/VFX.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/VFX.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/World.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/World.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/MatchSprite.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/MatchSprite.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/NodeOrder.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/NodeOrder.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/ReadImagePixel.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/ReadImagePixel.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/SpriteSizeSetter.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/SpriteSizeSetter.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/Ulis.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MatchAsset/Ulis.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/AStar.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/AStar.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Black.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Black.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Cloud.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Cloud.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/IQ.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/IQ.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Mats.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Mats.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/MeshLoader.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/MeshLoader.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/SkinManager.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/SkinManager.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/SplineLineRenderer.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/SplineLineRenderer.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Tool.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Tool.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Tooth.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Tooth.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Ulis.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Misc/Ulis.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/ComponentCache.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/ComponentCache.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Singleton.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Singleton.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_SoundManager.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_SoundManager.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Types.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Types.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Yielders.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Yielders.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolControl.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolControl.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolManager.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolManager.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolMember.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolMember.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Sand/SandSimulation.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Sand/SandSimulation.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/AppLovinAnalytics.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/AppLovinAnalytics.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/GameController.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/GameController.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/h5-helper.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/h5-helper.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/BottomBar.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/BottomBar.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/GameManager.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/GameManager.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/GestureController.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/GestureController.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TargetItem.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TargetItem.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/Tray.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/Tray.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayConfig.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayConfig.ts"
           },
           "messages": []
         },
         {
           "resolved": {
             "type": "module",
-            "url": "file:///D:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayItem.ts"
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayItem.ts"
           },
           "messages": []
         }
@@ -4200,7 +4200,7 @@
       ]
     },
     "cce:/internal/code-quality/cr.mjs": {
-      "mTimestamp": 1789868775343,
+      "mTimestamp": 1789953292267,
       "chunkId": "6a5019a719a9014c047e67aa1cf34453ab8392ce",
       "imports": [],
       "type": "esm",
@@ -4208,7 +4208,7 @@
     },
     "file:///C:/ProgramData/cocos/editors/Creator/3.8.8/resources/resources/3d/engine/editor/assets/default_renderpipeline/builtin-dof-pass.ts": {
       "mTimestamp": {
-        "mtime": 1789815178261.1726,
+        "mtime": 1788507723495.4458,
         "uuid": "11f3130e-c08c-47bb-a209-71d114594e6d"
       },
       "chunkId": "50ec684ab28702df18cf262b25c26ec6d899c3a5",
@@ -4354,7 +4354,7 @@
     },
     "file:///C:/ProgramData/cocos/editors/Creator/3.8.8/resources/resources/3d/engine/editor/assets/default_renderpipeline/builtin-pipeline-pass.ts": {
       "mTimestamp": {
-        "mtime": 1789815178284.7756,
+        "mtime": 1788507723511.181,
         "uuid": "6f94083c-fc92-438b-a15b-a20ec61666c7"
       },
       "chunkId": "b18130d786bcadd1d0cb653401afdf2ede79b799",
@@ -4458,7 +4458,7 @@
     },
     "file:///C:/ProgramData/cocos/editors/Creator/3.8.8/resources/resources/3d/engine/editor/assets/default_renderpipeline/builtin-pipeline-settings.ts": {
       "mTimestamp": {
-        "mtime": 1789815178287.775,
+        "mtime": 1788507723517.0432,
         "uuid": "de1c2107-70c8-4021-8459-6399f24d01c6"
       },
       "chunkId": "e2831fde95d58c09916d0f882742b7597544b8d1",
@@ -4562,7 +4562,7 @@
     },
     "file:///C:/ProgramData/cocos/editors/Creator/3.8.8/resources/resources/3d/engine/editor/assets/default_renderpipeline/builtin-pipeline-types.ts": {
       "mTimestamp": {
-        "mtime": 1789815178291.058,
+        "mtime": 1788507723519.0305,
         "uuid": "cbf30902-517f-40dc-af90-a550bac27cf1"
       },
       "chunkId": "7dd5f1b51da4ae6cb44c6f9d41d8fc719b109223",
@@ -4614,7 +4614,7 @@
     },
     "file:///C:/ProgramData/cocos/editors/Creator/3.8.8/resources/resources/3d/engine/editor/assets/default_renderpipeline/builtin-pipeline.ts": {
       "mTimestamp": {
-        "mtime": 1789815178296.0718,
+        "mtime": 1788507723523.9333,
         "uuid": "ff9b0199-ce04-4cfe-86cc-6c719f08d6e4"
       },
       "chunkId": "fd74c742a972dbbcd3691d204a338b19a4515b62",
@@ -4718,7 +4718,7 @@
     },
     "file:///C:/ProgramData/cocos/editors/Creator/3.8.8/resources/resources/3d/engine/editor/assets/tools/debug-view-runtime-control.ts": {
       "mTimestamp": {
-        "mtime": 1789815178934.567,
+        "mtime": 1788507724027.881,
         "uuid": "b2bd1fa7-8d7c-49c5-a158-df29a6d3a594"
       },
       "chunkId": "621a159ce4a7bac550092546e00c97e12458f12b",
@@ -5219,7 +5219,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts": {
       "mTimestamp": {
-        "mtime": 1789717910124.9563,
+        "mtime": 1789953257335.451,
         "uuid": "5e407573-3124-45d2-9050-3c44d0cf0470"
       },
       "chunkId": "1b7f82203514813a6554f85b64a57be5be9a49a1",
@@ -5239,11 +5239,24 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 133
+              "column": 153
             },
             "end": {
               "line": 1,
-              "column": 137
+              "column": 157
+            }
+          }
+        },
+        {
+          "value": "cc/env",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 23
+            },
+            "end": {
+              "line": 2,
+              "column": 31
             }
           }
         },
@@ -5252,11 +5265,11 @@
           "resolved": "__unresolved_1",
           "loc": {
             "start": {
-              "line": 2,
+              "line": 3,
               "column": 38
             },
             "end": {
-              "line": 2,
+              "line": 3,
               "column": 59
             }
           }
@@ -5266,11 +5279,11 @@
           "resolved": "__unresolved_2",
           "loc": {
             "start": {
-              "line": 3,
+              "line": 4,
               "column": 30
             },
             "end": {
-              "line": 3,
+              "line": 4,
               "column": 46
             }
           }
@@ -5280,11 +5293,11 @@
           "resolved": "__unresolved_3",
           "loc": {
             "start": {
-              "line": 4,
+              "line": 5,
               "column": 19
             },
             "end": {
-              "line": 4,
+              "line": 5,
               "column": 43
             }
           }
@@ -5317,6 +5330,13 @@
           "resolved": {
             "type": "module",
             "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "external",
+            "specifierOrURL": "cc/env"
           },
           "messages": []
         },
@@ -10556,7 +10576,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/TrayConfig.ts": {
       "mTimestamp": {
-        "mtime": 1789727517106.8513,
+        "mtime": 1789728518484.2285,
         "uuid": "71c9176a-a204-41ab-917e-f55d8c8d5281"
       },
       "chunkId": "e1b1964c3d04528607c51ce03d5b6144b7b65f06",
@@ -10671,7 +10691,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/Tray.ts": {
       "mTimestamp": {
-        "mtime": 1789727058534.0098,
+        "mtime": 1789953257399.2063,
         "uuid": "2ee60f20-a4e2-4f78-9310-ca4138e5b98a"
       },
       "chunkId": "6b68c1ac2ca55dbfd60cffe225c175e7bd0cf106",
@@ -14469,6 +14489,58 @@
         "uuid": "b4969562-a208-4e85-a971-30cb5c31daf7"
       },
       "chunkId": "f0bd2fb5ec578369e7d0b7306b7bd40ac2867e1f",
+      "imports": [
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 51
+            },
+            "end": {
+              "line": 1,
+              "column": 55
+            }
+          }
+        }
+      ],
+      "type": "esm",
+      "resolutions": [
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        }
+      ]
+    },
+    "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/TrayDragSnap/BottomBar.ts": {
+      "mTimestamp": {
+        "mtime": 1789953257345.7883,
+        "uuid": "b4969562-a208-4e85-a971-30cb5c31daf7"
+      },
+      "chunkId": "05d5a45c963580aad47db381643aa0822b5a9da0",
       "imports": [
         {
           "value": "cc"

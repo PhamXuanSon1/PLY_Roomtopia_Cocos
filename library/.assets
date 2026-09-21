@@ -9,9 +9,12 @@
             "1.Animations\\Install",
             "1.Animations\\TapToDecor",
             "3.Sprites\\Base",
+            "3.Sprites\\Captures",
             "3.Sprites\\Chung",
             "3.Sprites\\Gameplay",
             "4.Sounds\\BGM",
+            "4.Sounds\\Use",
+            "5.Prefabs\\Gameplay",
             "5.Prefabs\\Misc",
             "5.Prefabs\\TrayDragSnap",
             "7.Scripts\\Gameplay",
@@ -37,6 +40,7 @@
             "8.Models\\Materials\\Pixel",
             "8.Models\\Meshs\\Lv3_SofaScene",
             "8.Models\\Meshs\\Lv50_Bathroom",
+            "8.Models\\Meshs\\Main",
             "8.Models\\Textures\\Cloud",
             "8.Models\\Textures\\Common",
             "8.Models\\Textures\\Lv3_SofaScene",
@@ -91,6 +95,7 @@
             "7.Scripts\\Tool\\GameController.ts",
             "7.Scripts\\Tool\\h5-helper.ts",
             "7.Scripts\\Tool\\PlayableSDK.d.ts",
+            "7.Scripts\\TrayDragSnap\\BottomBar.ts",
             "7.Scripts\\TrayDragSnap\\GameManager.ts",
             "7.Scripts\\TrayDragSnap\\GestureController.ts",
             "7.Scripts\\TrayDragSnap\\TargetItem.ts",
@@ -104,6 +109,7 @@
             "7.Scripts\\MyScript\\ScriptTemplate\\Ply_SoundManager.ts",
             "7.Scripts\\MyScript\\ScriptTemplate\\Ply_Types.ts",
             "7.Scripts\\MyScript\\ScriptTemplate\\Yielders.ts",
+            "0.Spines",
             "1.Animations",
             "2.Fonts",
             "3.Sprites",
@@ -112,6 +118,7 @@
             "6.Scenes",
             "7.Scripts",
             "8.Models",
+            "9.Asset",
             "1.Animations\\Arrow.anim",
             "1.Animations\\Box-001.anim",
             "1.Animations\\Box.anim",
@@ -157,6 +164,7 @@
             "4.Sounds\\Window.mp3",
             "4.Sounds\\WoodenDoor Small.mp3",
             "5.Prefabs\\BlinkEffect.prefab",
+            "5.Prefabs\\BottomBar.prefab",
             "5.Prefabs\\Star.prefab",
             "6.Scenes\\PlayScene.scene",
             "1.Animations\\Base\\Lose.anim",
@@ -323,9 +331,7 @@
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\Ma_Texture_Tranparent.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Floor.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Texture.mtl",
-            "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_tex_metal.mtl",
-            "7.Scripts\\TrayDragSnap\\BottomBar.ts",
-            "5.Prefabs\\BottomBar.prefab"
+            "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_tex_metal.mtl"
         ]
     }
 }
