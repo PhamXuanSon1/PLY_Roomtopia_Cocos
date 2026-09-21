@@ -26,47 +26,73 @@ export class ItemGraphic extends Component {
     @property({ tooltip: 'Xoay thêm cho icon (độ) so với hướng của nó trong map' })
     iconEuler: Vec3 = new Vec3(0, 0, 0);
 
-    /** Node mesh gốc trong map */
+    /** Node mesh gốc trong map (lưu vào scene để Play dùng lại item đã preview) */
+    @property({ type: Node, visible: false })
     target: Node | null = null;
     targetRenderer: MeshRenderer | null = null;
     /** Material gốc của target (cache trước khi đổi xám) */
     defaultMats: Material[] = [];
-    /** Bản sao mesh nằm trong ô */
+    /** Bản sao mesh nằm trong ô (lưu vào scene để không phải clone lại) */
+    @property({ type: Node, visible: false })
     iconClone: Node | null = null;
-    /** Scale của iconClone khi nằm trong ô (đơn vị local của thanh) */
+
+    @property({ type: Node, tooltip: 'Quad vuông hiện ranh giới ô (tuỳ chọn)' })
+    cell: Node | null = null;
+    /** Scale của iconClone khi nằm trong ô (lưu vào scene) */
+    @property({ visible: false })
     iconScale = 1;
+    /** Vị trí local của iconClone trong ô (đã căn tâm, lưu vào scene) */
+    @property({ visible: false })
+    iconBasePos = new Vec3();
+    /** Camera dùng để đo kích thước icon "như mắt nhìn" */
+    cam: Camera | null = null;
+    /** Cạnh ô vuông (local px của thanh) mà icon phải nằm gọn */
+    cellPx = CELL_PX;
+    /** Icon chiếm bao nhiêu phần của ô (0..1) */
+    iconFill = ICON_FILL;
 
     private targetBaseScale = new Vec3(1, 1, 1);
-    private static fitCache = new Map<Node, number>();
+    private static fitCache = new Map<string, number>();
+    private static posCache = new Map<string, Vec3>();
     private static quadMesh: any = null;
 
     // =========================================================== setup
     /** Gọi 1 lần lúc build. PHẢI gọi trước setGray() vì cache defaultMats ở đây. */
-    bind(target: Node, _cam: Camera | null = null) {
+    bind(target: Node, _cam: Camera | null = null, cellPx = CELL_PX, iconFill = ICON_FILL) {
         this.target = target;
+        this.cellPx = cellPx;
+        this.iconFill = iconFill;
         this.targetRenderer = target.getComponent(MeshRenderer);
         if (!this.targetRenderer) { console.error(`[ItemGraphic] ${target.name} không có MeshRenderer`); return; }
 
         this.defaultMats = this.targetRenderer.sharedMaterials.slice() as Material[];
         this.targetBaseScale.set(target.scale);
 
-        // 1. nhân bản target
-        const clone = instantiate(target);
-        clone.name = 'IconMesh';
-
-        // 2. bản sao chỉ cần hình: bỏ script khác MeshRenderer, tắt bóng
-        for (const comp of clone.getComponentsInChildren(Component)) {
-            if (!(comp instanceof MeshRenderer)) comp.destroy();
+        // 1. nhân bản target — nếu đã có clone (item sinh từ Preview trong editor) thì dùng lại
+        let clone = this.iconClone && this.iconClone.isValid ? this.iconClone : null;
+        if (!clone) {
+            clone = instantiate(target);
+            clone.name = 'IconMesh';
+            // 2. bản sao chỉ cần hình: bỏ script khác MeshRenderer, tắt bóng
+            for (const comp of clone.getComponentsInChildren(Component)) {
+                if (!(comp instanceof MeshRenderer)) comp.destroy();
+            }
+            for (const r of clone.getComponentsInChildren(MeshRenderer)) {
+                r.shadowCastingMode = MeshRenderer.ShadowCastingMode.OFF;
+                r.receiveShadow = MeshRenderer.ShadowReceivingMode.OFF;
+            }
         }
-        for (const r of clone.getComponentsInChildren(MeshRenderer)) {
-            r.shadowCastingMode = MeshRenderer.ShadowCastingMode.OFF;
-            r.receiveShadow = MeshRenderer.ShadowReceivingMode.OFF;
-        }
 
-        // 3. cắm vào ô, giữ hướng như trong map, scale cho vừa ô
-        this.iconScale = ItemGraphic.fitScale(target);
+        // 3. cắm vào ô. Clone tái dùng (từ Preview) → giữ nguyên scale/vị trí đã lưu, KHÔNG đo lại
+        const reused = clone === this.iconClone;
         this.iconClone = clone;
-        this.putIconInCell();
+        if (!reused) {
+            this.iconScale = 1;
+            this.putIconInCell();
+            this.iconScale = this.fitScale();
+            clone.setScale(this.iconScale, this.iconScale, this.iconScale);
+            clone.setPosition(this.iconBasePos);
+        }
 
         this.setupShadow();
     }
@@ -83,21 +109,56 @@ export class ItemGraphic extends Component {
         const extra = Quat.fromEuler(new Quat(), this.iconEuler.x, this.iconEuler.y, this.iconEuler.z);
         const q = Quat.multiply(new Quat(), this.target!.worldRotation, extra);
         c.setWorldRotation(q);
+
+        // dời icon để tâm hình chiếu nằm đúng tâm ô
+        c.setPosition(this.iconBasePos);
     }
 
-    /** Scale để mọi icon to bằng nhau: ICON_FILL của ô CELL_PX, chuẩn theo cạnh lớn nhất (cache theo target) */
-    static fitScale(target: Node): number {
-        const cached = ItemGraphic.fitCache.get(target);
-        if (cached !== undefined) return cached;
+    /**
+     * Scale để bbox của icon (SAU khi xoay như trong map) nằm gọn trong ô vuông cạnh `cellPx`,
+     * chiếm ICON_FILL của ô. So theo chiều ngang & dọc trong không gian local của node Icon
+     * (trục X/Y của thanh ≈ trục màn hình vì camera ortho nhìn thẳng).
+     */
+    fitScale(): number {
+        const c = this.iconClone!;
+        const key = `${this.target!.uuid}|${this.cellPx}|${this.iconFill}`;
+        const cached = ItemGraphic.fitCache.get(key);
+        if (cached !== undefined) {
+            this.iconBasePos.set(ItemGraphic.posCache.get(key) ?? Vec3.ZERO);
+            return cached;
+        }
 
-        const mesh = target.getComponent(MeshRenderer)!.mesh!;
-        const s = mesh.struct;
-        const size = Math.max(
-            s.maxPosition!.x - s.minPosition!.x,
-            s.maxPosition!.y - s.minPosition!.y,
-            s.maxPosition!.z - s.minPosition!.z);
-        const k = size > 0 ? ICON_FILL * CELL_PX / size : 1;
-        ItemGraphic.fitCache.set(target, k);
+        // rotation của từng mesh so với node Icon (clone đang scale 1)
+        const invIcon = Quat.invert(new Quat(), this.icon!.worldRotation);
+        const iconWS = this.icon!.worldScale;
+        const qr = new Quat();
+        const sc = new Vec3();
+
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        const tmp = new Vec3();
+        for (const r of c.getComponentsInChildren(MeshRenderer)) {
+            const st = r.mesh?.struct;
+            if (!st?.minPosition || !st.maxPosition) continue;
+            Quat.multiply(qr, invIcon, r.node.worldRotation);
+            const lo = st.minPosition, hi = st.maxPosition;
+            // scale của mesh so với node Icon (bỏ scale của thanh/parent)
+            Vec3.divide(sc, r.node.worldScale, iconWS);
+            for (let i = 0; i < 8; i++) {
+                tmp.set((i & 1 ? hi.x : lo.x) * sc.x, (i & 2 ? hi.y : lo.y) * sc.y, (i & 4 ? hi.z : lo.z) * sc.z);
+                Vec3.transformQuat(tmp, tmp, qr);
+                minX = Math.min(minX, tmp.x); maxX = Math.max(maxX, tmp.x);
+                minY = Math.min(minY, tmp.y); maxY = Math.max(maxY, tmp.y);
+            }
+        }
+        const size = Math.max(maxX - minX, maxY - minY);
+        const k = isFinite(size) && size > 0 ? this.iconFill * this.cellPx / size : 1;
+
+        // căn TÂM bbox (đã xoay) vào giữa ô: dời ngược tâm, nhân với scale
+        if (isFinite(size)) {
+            this.iconBasePos.set(-(minX + maxX) / 2 * k, -(minY + maxY) / 2 * k, 0);
+        }
+        ItemGraphic.fitCache.set(key, k);
+        ItemGraphic.posCache.set(key, this.iconBasePos.clone());
         return k;
     }
 
@@ -167,7 +228,7 @@ export class ItemGraphic extends Component {
         this.hinting = true;
         const c = this.iconClone!;
         tween(c)
-            .to(0.25, { position: new Vec3(0, CELL_PX * 0.25, 0) }, { easing: 'sineOut' })
+            .to(0.25, { position: new Vec3(0, this.cellPx * 0.25, 0) }, { easing: 'sineOut' })
             .to(0.25, { position: new Vec3(0, 0, 0) }, { easing: 'sineIn' })
             .union().repeatForever().start();
     }
@@ -176,6 +237,6 @@ export class ItemGraphic extends Component {
         if (!this.hinting) return;
         this.hinting = false;
         Tween.stopAllByTarget(this.iconClone!);
-        this.iconClone!.setPosition(0, 0, 0);
+        this.iconClone!.setPosition(this.iconBasePos);
     }
 }

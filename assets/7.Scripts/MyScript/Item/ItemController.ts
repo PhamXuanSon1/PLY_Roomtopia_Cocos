@@ -21,7 +21,8 @@ export class ItemController extends Component {
     @property(ItemGraphic) graphic: ItemGraphic | null = null;
     @property(ItemMovement) movement: ItemMovement | null = null;
 
-    /** Node mesh trong map */
+    /** Node mesh trong map (lưu vào scene) */
+    @property({ type: Node, tooltip: 'Mesh trong map mà item này đại diện' })
     target: Node | null = null;
     /** Vị trí trong thanh (thứ tự ban đầu) */
     index = 0;
@@ -34,12 +35,12 @@ export class ItemController extends Component {
     get isCompleted() { return this.state === ItemState.Completed; }
 
     /** Gọi 1 lần lúc ItemManager build */
-    init(target: Node, index: number, cam: Camera, ghostRoot: Node, gray: Material | null, cb: ItemCallbacks) {
+    init(target: Node, index: number, cam: Camera, ghostRoot: Node, gray: Material | null, cb: ItemCallbacks, cellPx?: number, iconFill?: number) {
         this.target = target;
         this.index = index;
         this._cb = cb;
 
-        this.graphic!.bind(target, cam);
+        this.graphic!.bind(target, cam, cellPx, iconFill);
         if (gray) this.graphic!.setGray(gray);
 
         const m = this.movement!;

@@ -1,10 +1,10 @@
-import { _decorator, Camera, CCObject, Component, director, EventTouch, Input, input, instantiate, MeshRenderer, Node, Prefab, tween, UITransform, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Component, director, EventTouch, Input, input, instantiate, MeshRenderer, Node, Prefab, tween, UITransform, Vec2, Vec3 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { BottomBar } from '../Item/BottomBar';
 import { ItemCallbacks, ItemController } from '../Item/ItemController';
 import { ReleaseResult } from '../Item/ItemMovement';
-import { CELL_PX, CULL_PAD_PX, EDGE_PAD_PX, SPACING_PX } from '../Config/TrayConfig';
+import { CELL_PX, CULL_PAD_PX, EDGE_PAD_PX, ICON_FILL, SPACING_PX } from '../Config/TrayConfig';
 import { GameManager } from './GameManager';
 const { ccclass, property, executeInEditMode } = _decorator;
 
@@ -36,11 +36,34 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ type: [Node], tooltip: 'Các mesh được chơi, thứ tự = thứ tự ô trong thanh. Để trống → tất cả mesh trong map' })
     pickTargets: Node[] = [];
 
+    // ---- layout (đơn vị local của BottomBar, 1080 = full width). Đổi xong tick Preview để áp ----
+    @property({ group: 'Layout', tooltip: 'Cạnh ô vuông chứa icon. 0 = tự lấy chiều cao Bg' })
+    cellSize = CELL_PX;
+
+    @property({ group: 'Layout', range: [0.1, 1, 0.05], slide: true, tooltip: 'Icon chiếm bao nhiêu phần của ô' })
+    iconFill = ICON_FILL;
+
+    @property({ group: 'Layout', tooltip: 'Khoảng cách tâm 2 ô' })
+    spacing = SPACING_PX;
+
+    @property({ group: 'Layout', tooltip: 'Ô đầu cách mép trái thanh' })
+    edgePad = EDGE_PAD_PX;
+
+    @property({ group: 'Layout', tooltip: 'Ô còn hiện khi tâm cách mép thanh ≤ giá trị này' })
+    cullPad = CULL_PAD_PX;
+
     @property({ tooltip: 'Mesh KHÔNG có trong pickTargets cũng đổi sang xám' })
     grayOthers = true;
 
+    @property({ serializable: true, visible: false })
+    private _showCells = false;
+
+    @property({ tooltip: 'Hiện quad Cell (ranh giới ô). Áp cho mọi item cả editor lẫn khi Play. Mặc định tắt' })
+    get showCells() { return this._showCells; }
+    set showCells(v: boolean) { this._showCells = v; this.applyShowCells(); }
+
     // ---- nút xem trước trong editor (tick = chạy, tự bỏ tick) ----
-    @property({ displayName: '▶ Preview items', tooltip: 'Sinh item vào Content để xem trước (không lưu vào scene, không đổi màu map)' })
+    @property({ displayName: '▶ Preview items', tooltip: 'Sinh item vào Content theo pickTargets (lưu vào scene, Play dùng lại). Bấm lại = sinh lại từ đầu' })
     get previewItems() { return false; }
     set previewItems(v: boolean) { if (v && EDITOR) this.buildPreview(); }
 
@@ -92,11 +115,20 @@ export class ItemManager extends Component implements ItemCallbacks {
         const gm = GameManager.inst!;
         const cam = this.camera();
         const content = this.bar!.content!;
-        this.clearContent();                          // bỏ item preview còn sót
+        this.barHalfW = (this.bar!.getComponent(UITransform)?.contentSize.width ?? 1080) / 2;
 
-        // target = danh sách chọn tay, hoặc mọi node có MeshRenderer trong map
+        // item có sẵn trong Content (sinh từ Preview trong editor) → dùng lại, không sinh mới
+        const existing = content.getComponentsInChildren(ItemController)
+            .filter(it => it.target && it.target.isValid)
+            .sort((a, b) => a.node.position.x - b.node.position.x);
+
         const allMeshes = gm.model!.getComponentsInChildren(MeshRenderer).map(r => r.node);
-        const targets = this.pickTargets.length > 0 ? this.pickTargets.slice() : allMeshes.slice();
+        let targets: Node[];
+        if (existing.length > 0) {
+            targets = existing.map(it => it.target!);
+        } else {
+            targets = this.pickTargets.length > 0 ? this.pickTargets.slice() : allMeshes.slice();
+        }
 
         // mesh không được chọn chơi: xám luôn (không cần trả màu nên đổi thẳng)
         if (this.grayOthers && gm.grayMat) {
@@ -107,16 +139,18 @@ export class ItemManager extends Component implements ItemCallbacks {
             }
         }
 
-        this.barHalfW = (this.bar!.getComponent(UITransform)?.contentSize.width ?? 1080) / 2;
-
         this.items = [];
         targets.forEach((target, i) => {
-            const node = instantiate(this.itemPrefab!);
-            node.setParent(content);
-            node.setPosition(this.slotX(i), 0, 0);
-
-            const item = node.getComponent(ItemController)!;
-            item.init(target, i, cam, this.ghostRoot!, gm.grayMat, this);
+            let item = existing[i];
+            if (!item) {
+                const node = instantiate(this.itemPrefab!);
+                node.setParent(content);
+                item = node.getComponent(ItemController)!;
+                item.node.setPosition(this.slotX(i), 0, 0);
+            }
+            // item có sẵn: giữ nguyên vị trí/scale như editor; Cell luôn theo showCells (mặc định tắt)
+            item.init(target, i, cam, this.ghostRoot!, gm.grayMat, this, this.cellPx(), this.iconFill);
+            this.setCellActive(item, this.showCells);
             this.items.push(item);
         });
 
@@ -134,20 +168,20 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     /** x của ô thứ i trong Content */
     private slotX(i: number) {
-        return -this.barHalfW + EDGE_PAD_PX + SPACING_PX * i;
+        return -this.barHalfW + this.edgePad + this.spacing * i;
     }
 
     /** Tổng chiều rộng content khi còn n ô — để BottomBar tính giới hạn scroll */
     private contentWidth(n: number) {
-        return EDGE_PAD_PX * 2 + SPACING_PX * Math.max(0, n - 1);
+        return this.edgePad * 2 + this.spacing * Math.max(0, n - 1);
     }
 
     // =========================================================== 2. cull
     updateVisibility() {
         if (!this.bar?.content) return;
         const cx = this.bar.content.position.x;
-        const left = -this.barHalfW - CULL_PAD_PX;
-        const right = this.barHalfW + CULL_PAD_PX;
+        const left = -this.barHalfW - this.cullPad;
+        const right = this.barHalfW + this.cullPad;
 
         for (const item of this.items) {
             if (item === this.dragging) continue;          // đang kéo thì không đụng
@@ -168,10 +202,10 @@ export class ItemManager extends Component implements ItemCallbacks {
         item.onSelect(startPos);
     }
 
-    /** Ô nào đang nằm dưới ngón tay (so trên màn hình, nửa ô = CELL_PX/2) */
+    /** Ô nào đang nằm dưới ngón tay (so trên màn hình, nửa ô = cellPx/2) */
     private pick(screenPos: Vec2): ItemController | null {
         const cam = this.camera();
-        const half = CELL_PX / 2 * this.bar!.pixelsPerUnit();   // nửa ô đổi ra pixel màn hình
+        const half = this.cellPx() / 2 * this.bar!.pixelsPerUnit();   // nửa ô đổi ra pixel màn hình
         const tmp = new Vec3();
 
         for (const item of this.items) {
@@ -241,7 +275,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     }
 
     // =========================================================== editor preview
-    /** Sinh item vào Content để xem bố cục ngay trong editor. Không đổi màu map, không lưu vào scene. */
+    /** Sinh item vào Content ngay trong editor. Item được LƯU vào scene và dùng lại khi Play. Không đổi màu map. */
     private buildPreview() {
         const gm = this.findGameManager();
         const content = this.bar?.content;
@@ -255,14 +289,29 @@ export class ItemManager extends Component implements ItemCallbacks {
         targets.forEach((target, i) => {
             const node = instantiate(this.itemPrefab!);
             node.name = `Item_${target.name}`;
-            node.hideFlags |= CCObject.Flags.DontSave;            // không ghi vào scene
-            node.setParent(content);
-            node.setPosition(-halfW + EDGE_PAD_PX + SPACING_PX * i, 0, 0);
-            node.getComponent(ItemController)!.graphic!.bind(target, this.bar!.cam ?? this.cam);   // chỉ hình, không gray
+            node.setParent(content);                              // LƯU vào scene → Play dùng lại
+            node.setPosition(-halfW + this.edgePad + this.spacing * i, 0, 0);
+            const item = node.getComponent(ItemController)!;
+            item.target = target;
+            item.graphic!.bind(target, this.bar!.cam ?? this.cam, this.cellPx(), this.iconFill);   // chỉ hình, không gray
         });
+        this.applyShowCells();
         this.collected = 0;
         this.refreshCount(targets.length);           // label trong editor cũng hiện 0/max
         console.log(`[ItemManager] preview ${targets.length} items`);
+    }
+
+    /** Bật/tắt quad Cell của 1 item (fallback tìm con tên "Cell" cho item sinh từ prefab cũ) */
+    private setCellActive(item: ItemController, on: boolean) {
+        const cell = item.graphic?.cell ?? item.node.getChildByName('Cell');
+        if (cell) cell.active = on;
+    }
+
+    /** Áp showCells cho mọi item đang có trong Content */
+    private applyShowCells() {
+        const content = this.bar?.content;
+        if (!content) return;
+        for (const it of content.getComponentsInChildren(ItemController)) this.setCellActive(it, this._showCells);
     }
 
     /** Xoá mọi con của Content */
@@ -277,6 +326,12 @@ export class ItemManager extends Component implements ItemCallbacks {
     }
 
     // =========================================================== helpers
+    /** Ô vuông chứa icon: cellSize, hoặc (=0) chiều cao Bg của BottomBar */
+    private cellPx(): number {
+        if (this.cellSize > 0) return this.cellSize;
+        return this.bar?.bgNode?.getComponent(UITransform)?.contentSize.height ?? CELL_PX;
+    }
+
     private camera(): Camera {
         return this.cam ?? ui.wCamera;
     }

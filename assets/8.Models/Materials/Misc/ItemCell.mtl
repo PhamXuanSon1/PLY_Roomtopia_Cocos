@@ -10,9 +10,7 @@
   },
   "_techIdx": 1,
   "_defines": [
-    {
-      "USE_TEXTURE": true
-    }
+    {}
   ],
   "_states": [
     {
@@ -20,6 +18,7 @@
         "cullMode": 0
       },
       "depthStencilState": {
+        "depthTest": true,
         "depthWrite": false
       },
       "blendState": {
@@ -37,16 +36,12 @@
   ],
   "_props": [
     {
-      "mainTexture": {
-        "__uuid__": "06a6d7b4-e715-402d-b8aa-de93fb323e54@6c48a",
-        "__expectedType__": "cc.Texture2D"
-      },
       "mainColor": {
         "__type__": "cc.Color",
-        "r": 0,
-        "g": 0,
-        "b": 0,
-        "a": 100
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 110
       }
     }
   ]

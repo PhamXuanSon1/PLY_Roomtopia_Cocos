@@ -461,3 +461,26 @@ https://github.com/vuejs/vue-devtools
 9-21-2026 10:26:03 - info: [Window] You are running Vue in development mode.
 Make sure to turn on production mode when deploying for production.
 See more tips at https://vuejs.org/guide/deployment.html
+9-21-2026 10:30:15 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:44:32 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:45:58 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:47:19 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:49:08 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:49:10 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:50:09 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:51:06 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:52:13 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:53:18 - log: [Scene] meshopt wasm decoder initialized
+9-21-2026 10:53:18 - log: [Scene] [bullet]:bullet wasm lib loaded.
+9-21-2026 10:53:18 - log: [Scene] [box2d]:box2d wasm lib loaded.
+9-21-2026 10:53:18 - log: [Scene] [PHYSICS]: using builtin.
+9-21-2026 10:53:18 - log: [Scene] Cocos Creator v3.8.8
+9-21-2026 10:53:18 - log: [Scene] Using custom pipeline: Builtin
+9-21-2026 10:53:18 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
+9-21-2026 10:55:26 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:57:13 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 10:58:30 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 11:03:22 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 11:03:37 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 11:03:47 - log: [Scene] [ItemManager] preview 10 items
+9-21-2026 11:03:53 - log: [Scene] [ItemManager] preview 10 items

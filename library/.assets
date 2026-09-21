@@ -334,7 +334,11 @@
             "7.Scripts\\MyScript\\Config\\TrayConfig.ts",
             "3.Sprites\\Chung\\CardFrame04_Glow.png",
             "5.Prefabs\\Gameplay\\Item.prefab",
-            "8.Models\\Materials\\Misc\\ItemShadow.mtl"
+            "8.Models\\Materials\\Misc\\ItemShadow.mtl",
+            "7.Scripts\\MyScript\\Item\\QuadImage.ts",
+            "8.Models\\Materials\\Misc\\BarBg.mtl",
+            "8.Models\\Materials\\Misc\\BarTab.mtl",
+            "8.Models\\Materials\\Misc\\ItemCell.mtl"
         ]
     }
 }
