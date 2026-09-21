@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "a6a43b27-ca75-4153-b6d2-169f8a03b434",
+  "uuid": "6c1642bc-b2d1-469d-b159-eb4dfc4e2d7b",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "TrayItem"
+    "syncNodeName": "Item"
   }
 }

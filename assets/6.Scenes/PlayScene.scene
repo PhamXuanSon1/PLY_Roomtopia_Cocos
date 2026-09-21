@@ -26,7 +26,7 @@
         "__id__": 7
       },
       {
-        "__id__": 435
+        "__id__": 364
       },
       {
         "__id__": 22
@@ -35,7 +35,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 436
+      "__id__": 365
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -66,7 +66,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 437
+      "__id__": 366
     },
     "_id": "a22a725c-7587-43dd-a685-9c853d0a2d86"
   },
@@ -622,8 +622,6 @@
       "__uuid__": "520c7020-802b-4bf2-b38c-dbe7ef07d527",
       "__expectedType__": "cc.Material"
     },
-    "targets": [],
-    "shuffle": false,
     "_id": "7bKh4/7uJEHbx1lXYsgnCE"
   },
   {
@@ -636,7 +634,7 @@
     },
     "_children": [
       {
-        "__id__": 180
+        "__id__": 172
       }
     ],
     "_active": true,
@@ -682,17 +680,10 @@
     "_children": [
       {
         "__id__": 19
-      },
-      {
-        "__id__": 176
       }
     ],
     "_active": true,
-    "_components": [
-      {
-        "__id__": 179
-      }
-    ],
+    "_components": [],
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -736,10 +727,10 @@
         "__id__": 20
       },
       {
-        "__id__": 150
+        "__id__": 146
       },
       {
-        "__id__": 165
+        "__id__": 161
       }
     ],
     "_active": true,
@@ -793,25 +784,25 @@
         "__id__": 21
       },
       {
-        "__id__": 31
+        "__id__": 27
       },
       {
-        "__id__": 83
+        "__id__": 79
       },
       {
-        "__id__": 100
+        "__id__": 96
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 147
+        "__id__": 143
       },
       {
-        "__id__": 148
+        "__id__": 144
       },
       {
-        "__id__": 149
+        "__id__": 145
       }
     ],
     "_prefab": null,
@@ -943,15 +934,11 @@
     "_parent": {
       "__id__": 22
     },
-    "_children": [
-      {
-        "__id__": 26
-      }
-    ],
+    "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 30
+        "__id__": 26
       }
     ],
     "_prefab": null,
@@ -983,160 +970,6 @@
       "z": 0
     },
     "_id": "3a9xF2byxFcrvA1ozWdYLO"
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "Tray",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "_parent": {
-      "__id__": 25
-    },
-    "_children": [
-      {
-        "__id__": 27
-      },
-      {
-        "__id__": 28
-      }
-    ],
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 29
-      }
-    ],
-    "_prefab": null,
-    "_lpos": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": -3.25,
-      "z": -10
-    },
-    "_lrot": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_lscale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_mobility": 0,
-    "_layer": 1073741824,
-    "_euler": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_id": "fezNnVccNBiIrELWGDXQo/"
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "Board",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "_parent": {
-      "__id__": 26
-    },
-    "_children": [],
-    "_active": true,
-    "_components": [],
-    "_prefab": null,
-    "_lpos": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_lrot": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_lscale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_mobility": 0,
-    "_layer": 1073741824,
-    "_euler": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_id": "4eidTaK3ROD6ihaeA2l52c"
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "Content",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "_parent": {
-      "__id__": 26
-    },
-    "_children": [],
-    "_active": true,
-    "_components": [],
-    "_prefab": null,
-    "_lpos": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_lrot": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_lscale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_mobility": 0,
-    "_layer": 1073741824,
-    "_euler": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_id": "7dMHSYoY5MjbczsPgxW7fS"
-  },
-  {
-    "__type__": "2ee608gpOJPeJMQykE45bmK",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 26
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "itemPrefab": {
-      "__uuid__": "a6a43b27-ca75-4153-b6d2-169f8a03b434",
-      "__expectedType__": "cc.Prefab"
-    },
-    "content": {
-      "__id__": 28
-    },
-    "depth": 10,
-    "_id": "FqNVbNTCB+9gRbA2Zjdhj6"
   },
   {
     "__type__": "cc.Camera",
@@ -1194,19 +1027,19 @@
     },
     "_children": [
       {
-        "__id__": 32
+        "__id__": 28
       },
       {
-        "__id__": 39
+        "__id__": 35
       },
       {
-        "__id__": 45
+        "__id__": 41
       },
       {
-        "__id__": 59
+        "__id__": 55
       },
       {
-        "__id__": 82
+        "__id__": 78
       }
     ],
     "_active": true,
@@ -1247,11 +1080,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 31
+      "__id__": 27
     },
     "_children": [
       {
-        "__id__": 33
+        "__id__": 29
       }
     ],
     "_active": true,
@@ -1292,20 +1125,20 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 32
+      "__id__": 28
     },
     "_children": [
       {
-        "__id__": 34
+        "__id__": 30
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 37
+        "__id__": 33
       },
       {
-        "__id__": 38
+        "__id__": 34
       }
     ],
     "_prefab": null,
@@ -1344,16 +1177,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 33
+      "__id__": 29
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 35
+        "__id__": 31
       },
       {
-        "__id__": 36
+        "__id__": 32
       }
     ],
     "_prefab": null,
@@ -1392,7 +1225,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 34
+      "__id__": 30
     },
     "_enabled": true,
     "__prefab": null,
@@ -1414,7 +1247,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 34
+      "__id__": 30
     },
     "_enabled": true,
     "__prefab": null,
@@ -1479,7 +1312,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 33
+      "__id__": 29
     },
     "_enabled": true,
     "__prefab": null,
@@ -1501,7 +1334,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 33
+      "__id__": 29
     },
     "_enabled": true,
     "__prefab": null,
@@ -1524,11 +1357,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 31
+      "__id__": 27
     },
     "_children": [
       {
-        "__id__": 40
+        "__id__": 36
       }
     ],
     "_active": true,
@@ -1569,11 +1402,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 39
+      "__id__": 35
     },
     "_children": [
       {
-        "__id__": 41
+        "__id__": 37
       }
     ],
     "_active": true,
@@ -1614,11 +1447,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 40
+      "__id__": 36
     },
     "_children": [
       {
-        "__id__": 42
+        "__id__": 38
       }
     ],
     "_active": false,
@@ -1659,16 +1492,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 41
+      "__id__": 37
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 43
+        "__id__": 39
       },
       {
-        "__id__": 44
+        "__id__": 40
       }
     ],
     "_prefab": null,
@@ -1707,7 +1540,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 42
+      "__id__": 38
     },
     "_enabled": true,
     "__prefab": null,
@@ -1729,7 +1562,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 42
+      "__id__": 38
     },
     "_enabled": true,
     "__prefab": null,
@@ -1771,11 +1604,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 31
+      "__id__": 27
     },
     "_children": [
       {
-        "__id__": 46
+        "__id__": 42
       }
     ],
     "_active": true,
@@ -1816,11 +1649,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 45
+      "__id__": 41
     },
     "_children": [
       {
-        "__id__": 47
+        "__id__": 43
       }
     ],
     "_active": true,
@@ -1861,17 +1694,17 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 46
+      "__id__": 42
     },
     "_children": [
       {
-        "__id__": 48
+        "__id__": 44
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 58
+        "__id__": 54
       }
     ],
     "_prefab": null,
@@ -1910,11 +1743,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 47
+      "__id__": 43
     },
     "_children": [
       {
-        "__id__": 49
+        "__id__": 45
       }
     ],
     "_active": true,
@@ -1955,14 +1788,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 48
+      "__id__": 44
     },
     "_children": [
       {
-        "__id__": 50
+        "__id__": 46
       },
       {
-        "__id__": 55
+        "__id__": 51
       }
     ],
     "_active": false,
@@ -2003,19 +1836,19 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 49
+      "__id__": 45
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 51
+        "__id__": 47
       },
       {
-        "__id__": 52
+        "__id__": 48
       },
       {
-        "__id__": 53
+        "__id__": 49
       }
     ],
     "_prefab": null,
@@ -2054,7 +1887,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 50
+      "__id__": 46
     },
     "_enabled": true,
     "__prefab": null,
@@ -2076,7 +1909,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 50
+      "__id__": 46
     },
     "_enabled": true,
     "__prefab": null,
@@ -2118,13 +1951,13 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 50
+      "__id__": 46
     },
     "_enabled": true,
     "__prefab": null,
     "clickEvents": [
       {
-        "__id__": 54
+        "__id__": 50
       }
     ],
     "_interactable": true,
@@ -2182,16 +2015,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 49
+      "__id__": 45
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 56
+        "__id__": 52
       },
       {
-        "__id__": 57
+        "__id__": 53
       }
     ],
     "_prefab": null,
@@ -2230,7 +2063,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 55
+      "__id__": 51
     },
     "_enabled": true,
     "__prefab": null,
@@ -2252,7 +2085,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 55
+      "__id__": 51
     },
     "_enabled": true,
     "__prefab": null,
@@ -2317,7 +2150,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 47
+      "__id__": 43
     },
     "_enabled": true,
     "__prefab": null,
@@ -2340,20 +2173,20 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 31
+      "__id__": 27
     },
     "_children": [
       {
-        "__id__": 60
+        "__id__": 56
       },
       {
-        "__id__": 66
+        "__id__": 62
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 81
+        "__id__": 77
       }
     ],
     "_prefab": null,
@@ -2392,11 +2225,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 59
+      "__id__": 55
     },
     "_children": [
       {
-        "__id__": 61
+        "__id__": 57
       }
     ],
     "_active": true,
@@ -2437,11 +2270,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 60
+      "__id__": 56
     },
     "_children": [
       {
-        "__id__": 62
+        "__id__": 58
       }
     ],
     "_active": true,
@@ -2482,11 +2315,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 61
+      "__id__": 57
     },
     "_children": [
       {
-        "__id__": 63
+        "__id__": 59
       }
     ],
     "_active": false,
@@ -2527,16 +2360,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 62
+      "__id__": 58
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 64
+        "__id__": 60
       },
       {
-        "__id__": 65
+        "__id__": 61
       }
     ],
     "_prefab": null,
@@ -2575,7 +2408,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 63
+      "__id__": 59
     },
     "_enabled": true,
     "__prefab": null,
@@ -2597,7 +2430,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 63
+      "__id__": 59
     },
     "_enabled": true,
     "__prefab": null,
@@ -2636,11 +2469,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 59
+      "__id__": 55
     },
     "_children": [
       {
-        "__id__": 67
+        "__id__": 63
       }
     ],
     "_active": true,
@@ -2681,11 +2514,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 66
+      "__id__": 62
     },
     "_children": [
       {
-        "__id__": 68
+        "__id__": 64
       }
     ],
     "_active": true,
@@ -2726,11 +2559,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 67
+      "__id__": 63
     },
     "_children": [
       {
-        "__id__": 69
+        "__id__": 65
       }
     ],
     "_active": true,
@@ -2771,17 +2604,17 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 68
+      "__id__": 64
     },
     "_children": [
       {
-        "__id__": 70
+        "__id__": 66
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 80
+        "__id__": 76
       }
     ],
     "_prefab": null,
@@ -2820,11 +2653,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 69
+      "__id__": 65
     },
     "_children": [
       {
-        "__id__": 71
+        "__id__": 67
       }
     ],
     "_active": true,
@@ -2865,14 +2698,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 70
+      "__id__": 66
     },
     "_children": [
       {
-        "__id__": 72
+        "__id__": 68
       },
       {
-        "__id__": 77
+        "__id__": 73
       }
     ],
     "_active": false,
@@ -2913,19 +2746,19 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 71
+      "__id__": 67
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 73
+        "__id__": 69
       },
       {
-        "__id__": 74
+        "__id__": 70
       },
       {
-        "__id__": 75
+        "__id__": 71
       }
     ],
     "_prefab": null,
@@ -2964,7 +2797,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 72
+      "__id__": 68
     },
     "_enabled": true,
     "__prefab": null,
@@ -2986,7 +2819,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 72
+      "__id__": 68
     },
     "_enabled": true,
     "__prefab": null,
@@ -3025,13 +2858,13 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 72
+      "__id__": 68
     },
     "_enabled": true,
     "__prefab": null,
     "clickEvents": [
       {
-        "__id__": 76
+        "__id__": 72
       }
     ],
     "_interactable": true,
@@ -3071,7 +2904,7 @@
     "_duration": 0.1,
     "_zoomScale": 1.2,
     "_target": {
-      "__id__": 72
+      "__id__": 68
     },
     "_id": "fb+UKa0yRKWLcYFI12wxCd"
   },
@@ -3091,16 +2924,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 71
+      "__id__": 67
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 78
+        "__id__": 74
       },
       {
-        "__id__": 79
+        "__id__": 75
       }
     ],
     "_prefab": null,
@@ -3139,7 +2972,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 77
+      "__id__": 73
     },
     "_enabled": true,
     "__prefab": null,
@@ -3161,7 +2994,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 77
+      "__id__": 73
     },
     "_enabled": true,
     "__prefab": null,
@@ -3226,7 +3059,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 69
+      "__id__": 65
     },
     "_enabled": true,
     "__prefab": null,
@@ -3249,7 +3082,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 59
+      "__id__": 55
     },
     "_enabled": true,
     "__prefab": null,
@@ -3271,7 +3104,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 31
+      "__id__": 27
     },
     "_children": [],
     "_active": true,
@@ -3316,6 +3149,9 @@
     },
     "_children": [
       {
+        "__id__": 80
+      },
+      {
         "__id__": 84
       },
       {
@@ -3323,9 +3159,6 @@
       },
       {
         "__id__": 92
-      },
-      {
-        "__id__": 96
       }
     ],
     "_active": true,
@@ -3366,11 +3199,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 83
+      "__id__": 79
     },
     "_children": [
       {
-        "__id__": 85
+        "__id__": 81
       }
     ],
     "_active": false,
@@ -3404,6 +3237,151 @@
       "z": 0
     },
     "_id": "5a1+oXjBdAnIALSOxRc0a2"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Cube",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 80
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 82
+      }
+    ],
+    "_prefab": null,
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_mobility": 0,
+    "_layer": 33554432,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": "576Y+cOIJF6JkNyRclaLMg"
+  },
+  {
+    "__type__": "cc.MeshRenderer",
+    "_name": "Cube<ModelComponent>",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 81
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_materials": [
+      {
+        "__uuid__": "620b6bf3-0369-4560-837f-2a2c00b73c26",
+        "__expectedType__": "cc.Material"
+      }
+    ],
+    "_visFlags": 0,
+    "bakeSettings": {
+      "__id__": 83
+    },
+    "_mesh": {
+      "__uuid__": "1263d74c-8167-4928-91a6-4e2672411f47@a804a",
+      "__expectedType__": "cc.Mesh"
+    },
+    "_shadowCastingMode": 1,
+    "_shadowReceivingMode": 1,
+    "_shadowBias": 0,
+    "_shadowNormalBias": 0,
+    "_reflectionProbeId": -1,
+    "_reflectionProbeBlendId": -1,
+    "_reflectionProbeBlendWeight": 0,
+    "_enabledGlobalStandardSkinObject": false,
+    "_enableMorph": true,
+    "_id": "65WjpUhXdGFrJ8NPUou/9E"
+  },
+  {
+    "__type__": "cc.ModelBakeSettings",
+    "texture": null,
+    "uvParam": {
+      "__type__": "cc.Vec4",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+    },
+    "_bakeable": false,
+    "_castShadow": false,
+    "_receiveShadow": false,
+    "_recieveShadow": false,
+    "_lightmapSize": 64,
+    "_useLightProbe": false,
+    "_bakeToLightProbe": true,
+    "_reflectionProbeType": 0,
+    "_bakeToReflectionProbe": true
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Bottom",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 79
+    },
+    "_children": [
+      {
+        "__id__": 85
+      }
+    ],
+    "_active": false,
+    "_components": [],
+    "_prefab": null,
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": -2,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_mobility": 0,
+    "_layer": 33554432,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": "9bRumiI51Eo4roQPXnkPbd"
   },
   {
     "__type__": "cc.Node",
@@ -3448,7 +3426,7 @@
       "y": 0,
       "z": 0
     },
-    "_id": "576Y+cOIJF6JkNyRclaLMg"
+    "_id": "a6JvWZLhBHaYucM3jJ8PfK"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -3483,7 +3461,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "65WjpUhXdGFrJ8NPUou/9E"
+    "_id": "5cL3gAh71BIKqOeMMOytHl"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -3507,11 +3485,11 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Bottom",
+    "_name": "Left",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 83
+      "__id__": 79
     },
     "_children": [
       {
@@ -3523,8 +3501,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": -2,
+      "x": -0.9191489361702128,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -3548,7 +3526,7 @@
       "y": 0,
       "z": 0
     },
-    "_id": "9bRumiI51Eo4roQPXnkPbd"
+    "_id": "10mbV4VgdOnrdVbgkAjeOD"
   },
   {
     "__type__": "cc.Node",
@@ -3593,7 +3571,7 @@
       "y": 0,
       "z": 0
     },
-    "_id": "a6JvWZLhBHaYucM3jJ8PfK"
+    "_id": "87fmWWFEZAlr2Lqe9ynmY7"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -3628,7 +3606,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "5cL3gAh71BIKqOeMMOytHl"
+    "_id": "b9/vSU2UNBmJmfAKdNQgr8"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -3652,11 +3630,11 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Left",
+    "_name": "Right",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 83
+      "__id__": 79
     },
     "_children": [
       {
@@ -3668,7 +3646,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -0.9191489361702128,
+      "x": 0.9191489361702128,
       "y": 0,
       "z": 0
     },
@@ -3693,7 +3671,7 @@
       "y": 0,
       "z": 0
     },
-    "_id": "10mbV4VgdOnrdVbgkAjeOD"
+    "_id": "02ZdOP8qJEcKYnEqx5HUce"
   },
   {
     "__type__": "cc.Node",
@@ -3738,7 +3716,7 @@
       "y": 0,
       "z": 0
     },
-    "_id": "87fmWWFEZAlr2Lqe9ynmY7"
+    "_id": "f1+MaC+3dAYqb0A63wugUd"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -3759,151 +3737,6 @@
     "_visFlags": 0,
     "bakeSettings": {
       "__id__": 95
-    },
-    "_mesh": {
-      "__uuid__": "1263d74c-8167-4928-91a6-4e2672411f47@a804a",
-      "__expectedType__": "cc.Mesh"
-    },
-    "_shadowCastingMode": 1,
-    "_shadowReceivingMode": 1,
-    "_shadowBias": 0,
-    "_shadowNormalBias": 0,
-    "_reflectionProbeId": -1,
-    "_reflectionProbeBlendId": -1,
-    "_reflectionProbeBlendWeight": 0,
-    "_enabledGlobalStandardSkinObject": false,
-    "_enableMorph": true,
-    "_id": "b9/vSU2UNBmJmfAKdNQgr8"
-  },
-  {
-    "__type__": "cc.ModelBakeSettings",
-    "texture": null,
-    "uvParam": {
-      "__type__": "cc.Vec4",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 0
-    },
-    "_bakeable": false,
-    "_castShadow": false,
-    "_receiveShadow": false,
-    "_recieveShadow": false,
-    "_lightmapSize": 64,
-    "_useLightProbe": false,
-    "_bakeToLightProbe": true,
-    "_reflectionProbeType": 0,
-    "_bakeToReflectionProbe": true
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "Right",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "_parent": {
-      "__id__": 83
-    },
-    "_children": [
-      {
-        "__id__": 97
-      }
-    ],
-    "_active": false,
-    "_components": [],
-    "_prefab": null,
-    "_lpos": {
-      "__type__": "cc.Vec3",
-      "x": 0.9191489361702128,
-      "y": 0,
-      "z": 0
-    },
-    "_lrot": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_lscale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_mobility": 0,
-    "_layer": 33554432,
-    "_euler": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_id": "02ZdOP8qJEcKYnEqx5HUce"
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "Cube",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "_parent": {
-      "__id__": 96
-    },
-    "_children": [],
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 98
-      }
-    ],
-    "_prefab": null,
-    "_lpos": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_lrot": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_lscale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_mobility": 0,
-    "_layer": 33554432,
-    "_euler": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_id": "f1+MaC+3dAYqb0A63wugUd"
-  },
-  {
-    "__type__": "cc.MeshRenderer",
-    "_name": "Cube<ModelComponent>",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 97
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "_materials": [
-      {
-        "__uuid__": "620b6bf3-0369-4560-837f-2a2c00b73c26",
-        "__expectedType__": "cc.Material"
-      }
-    ],
-    "_visFlags": 0,
-    "bakeSettings": {
-      "__id__": 99
     },
     "_mesh": {
       "__uuid__": "1263d74c-8167-4928-91a6-4e2672411f47@a804a",
@@ -3950,10 +3783,10 @@
     },
     "_children": [
       {
-        "__id__": 101
+        "__id__": 97
       },
       {
-        "__id__": 125
+        "__id__": 121
       }
     ],
     "_active": true,
@@ -3994,20 +3827,20 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 100
+      "__id__": 96
     },
     "_children": [
       {
-        "__id__": 102
+        "__id__": 98
       },
       {
-        "__id__": 105
+        "__id__": 101
       }
     ],
     "_active": false,
     "_components": [
       {
-        "__id__": 124
+        "__id__": 120
       }
     ],
     "_prefab": null,
@@ -4046,16 +3879,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 101
+      "__id__": 97
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 103
+        "__id__": 99
       },
       {
-        "__id__": 104
+        "__id__": 100
       }
     ],
     "_prefab": null,
@@ -4094,7 +3927,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 102
+      "__id__": 98
     },
     "_enabled": true,
     "__prefab": null,
@@ -4116,7 +3949,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 102
+      "__id__": 98
     },
     "_enabled": true,
     "__prefab": null,
@@ -4155,26 +3988,26 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 101
+      "__id__": 97
     },
     "_children": [
       {
-        "__id__": 106
+        "__id__": 102
       },
       {
-        "__id__": 109
+        "__id__": 105
       },
       {
-        "__id__": 112
+        "__id__": 108
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 122
+        "__id__": 118
       },
       {
-        "__id__": 123
+        "__id__": 119
       }
     ],
     "_prefab": null,
@@ -4213,16 +4046,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 105
+      "__id__": 101
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 107
+        "__id__": 103
       },
       {
-        "__id__": 108
+        "__id__": 104
       }
     ],
     "_prefab": null,
@@ -4261,7 +4094,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 106
+      "__id__": 102
     },
     "_enabled": true,
     "__prefab": null,
@@ -4283,7 +4116,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 106
+      "__id__": 102
     },
     "_enabled": true,
     "__prefab": null,
@@ -4348,16 +4181,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 105
+      "__id__": 101
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 110
+        "__id__": 106
       },
       {
-        "__id__": 111
+        "__id__": 107
       }
     ],
     "_prefab": null,
@@ -4396,7 +4229,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 109
+      "__id__": 105
     },
     "_enabled": true,
     "__prefab": null,
@@ -4418,7 +4251,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 109
+      "__id__": 105
     },
     "_enabled": true,
     "__prefab": null,
@@ -4460,17 +4293,17 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 105
+      "__id__": 101
     },
     "_children": [
       {
-        "__id__": 113
+        "__id__": 109
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 121
+        "__id__": 117
       }
     ],
     "_prefab": null,
@@ -4509,11 +4342,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 112
+      "__id__": 108
     },
     "_children": [
       {
-        "__id__": 114
+        "__id__": 110
       }
     ],
     "_active": true,
@@ -4554,14 +4387,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 113
+      "__id__": 109
     },
     "_children": [
       {
-        "__id__": 115
+        "__id__": 111
       },
       {
-        "__id__": 118
+        "__id__": 114
       }
     ],
     "_active": true,
@@ -4602,16 +4435,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 114
+      "__id__": 110
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 116
+        "__id__": 112
       },
       {
-        "__id__": 117
+        "__id__": 113
       }
     ],
     "_prefab": null,
@@ -4650,7 +4483,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 115
+      "__id__": 111
     },
     "_enabled": true,
     "__prefab": null,
@@ -4672,7 +4505,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 115
+      "__id__": 111
     },
     "_enabled": true,
     "__prefab": null,
@@ -4714,16 +4547,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 114
+      "__id__": 110
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 119
+        "__id__": 115
       },
       {
-        "__id__": 120
+        "__id__": 116
       }
     ],
     "_prefab": null,
@@ -4762,7 +4595,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 118
+      "__id__": 114
     },
     "_enabled": true,
     "__prefab": null,
@@ -4784,7 +4617,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 118
+      "__id__": 114
     },
     "_enabled": true,
     "__prefab": null,
@@ -4849,7 +4682,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 112
+      "__id__": 108
     },
     "_enabled": true,
     "__prefab": null,
@@ -4872,7 +4705,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 105
+      "__id__": 101
     },
     "_enabled": true,
     "__prefab": null,
@@ -4894,7 +4727,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 105
+      "__id__": 101
     },
     "_enabled": true,
     "__prefab": null,
@@ -4930,7 +4763,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 101
+      "__id__": 97
     },
     "_enabled": true,
     "__prefab": null,
@@ -4953,20 +4786,20 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 100
+      "__id__": 96
     },
     "_children": [
       {
-        "__id__": 126
+        "__id__": 122
       },
       {
-        "__id__": 129
+        "__id__": 125
       }
     ],
     "_active": false,
     "_components": [
       {
-        "__id__": 146
+        "__id__": 142
       }
     ],
     "_prefab": null,
@@ -5005,16 +4838,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 125
+      "__id__": 121
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 127
+        "__id__": 123
       },
       {
-        "__id__": 128
+        "__id__": 124
       }
     ],
     "_prefab": null,
@@ -5053,7 +4886,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 126
+      "__id__": 122
     },
     "_enabled": true,
     "__prefab": null,
@@ -5075,7 +4908,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 126
+      "__id__": 122
     },
     "_enabled": true,
     "__prefab": null,
@@ -5117,23 +4950,23 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 125
+      "__id__": 121
     },
     "_children": [
       {
-        "__id__": 130
+        "__id__": 126
       },
       {
-        "__id__": 133
+        "__id__": 129
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 144
+        "__id__": 140
       },
       {
-        "__id__": 145
+        "__id__": 141
       }
     ],
     "_prefab": null,
@@ -5172,16 +5005,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 129
+      "__id__": 125
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 131
+        "__id__": 127
       },
       {
-        "__id__": 132
+        "__id__": 128
       }
     ],
     "_prefab": null,
@@ -5220,7 +5053,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 130
+      "__id__": 126
     },
     "_enabled": true,
     "__prefab": null,
@@ -5242,7 +5075,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 130
+      "__id__": 126
     },
     "_enabled": true,
     "__prefab": null,
@@ -5310,17 +5143,17 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 129
+      "__id__": 125
     },
     "_children": [
       {
-        "__id__": 134
+        "__id__": 130
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 143
+        "__id__": 139
       }
     ],
     "_prefab": null,
@@ -5359,11 +5192,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 133
+      "__id__": 129
     },
     "_children": [
       {
-        "__id__": 135
+        "__id__": 131
       }
     ],
     "_active": true,
@@ -5404,20 +5237,20 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 134
+      "__id__": 130
     },
     "_children": [
       {
-        "__id__": 136
+        "__id__": 132
       },
       {
-        "__id__": 139
+        "__id__": 135
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 142
+        "__id__": 138
       }
     ],
     "_prefab": null,
@@ -5456,16 +5289,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 135
+      "__id__": 131
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 137
+        "__id__": 133
       },
       {
-        "__id__": 138
+        "__id__": 134
       }
     ],
     "_prefab": null,
@@ -5504,7 +5337,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 136
+      "__id__": 132
     },
     "_enabled": true,
     "__prefab": null,
@@ -5526,7 +5359,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 136
+      "__id__": 132
     },
     "_enabled": true,
     "__prefab": null,
@@ -5571,16 +5404,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 135
+      "__id__": 131
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 140
+        "__id__": 136
       },
       {
-        "__id__": 141
+        "__id__": 137
       }
     ],
     "_prefab": null,
@@ -5619,7 +5452,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 139
+      "__id__": 135
     },
     "_enabled": true,
     "__prefab": null,
@@ -5641,7 +5474,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 139
+      "__id__": 135
     },
     "_enabled": true,
     "__prefab": null,
@@ -5709,7 +5542,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 135
+      "__id__": 131
     },
     "_enabled": true,
     "__prefab": null,
@@ -5735,7 +5568,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 133
+      "__id__": 129
     },
     "_enabled": true,
     "__prefab": null,
@@ -5758,7 +5591,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 129
+      "__id__": 125
     },
     "_enabled": true,
     "__prefab": null,
@@ -5780,7 +5613,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 129
+      "__id__": 125
     },
     "_enabled": true,
     "__prefab": null,
@@ -5819,7 +5652,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 125
+      "__id__": 121
     },
     "_enabled": true,
     "__prefab": null,
@@ -5884,78 +5717,78 @@
       "__id__": 24
     },
     "wCamera": {
-      "__id__": 30
+      "__id__": 26
     },
     "fail": {
-      "__id__": 101
+      "__id__": 97
     },
     "win": null,
     "hand": {
-      "__id__": 150
+      "__id__": 146
     },
     "offButtons": [
       {
-        "__id__": 68
+        "__id__": 64
       },
       {
-        "__id__": 46
+        "__id__": 42
       }
     ],
     "endOffs": [
       {
-        "__id__": 69
+        "__id__": 65
       },
       {
-        "__id__": 47
+        "__id__": 43
       },
       {
-        "__id__": 40
+        "__id__": 36
       },
       {
-        "__id__": 61
+        "__id__": 57
       }
     ],
     "fisrtOn": [
       {
-        "__id__": 70
+        "__id__": 66
       },
       {
-        "__id__": 48
+        "__id__": 44
       },
       {
-        "__id__": 40
+        "__id__": 36
       },
       {
-        "__id__": 61
+        "__id__": 57
       }
     ],
     "firstOff": [
       {
-        "__id__": 33
+        "__id__": 29
       }
     ],
     "adaptUIs": [
       {
-        "__id__": 68
+        "__id__": 64
       },
       {
-        "__id__": 46
+        "__id__": 42
       }
     ],
     "portraitNodes": [
       {
-        "__id__": 71
+        "__id__": 67
       },
       {
-        "__id__": 62
+        "__id__": 58
       }
     ],
     "landscapeNodes": [
       {
-        "__id__": 49
+        "__id__": 45
       },
       {
-        "__id__": 41
+        "__id__": 37
       }
     ],
     "gameplays": [
@@ -5966,29 +5799,29 @@
     "widthNodes": [],
     "bindings": [
       {
-        "__id__": 157
+        "__id__": 153
       },
       {
-        "__id__": 158
+        "__id__": 154
       },
       {
-        "__id__": 159
+        "__id__": 155
       },
       {
-        "__id__": 160
+        "__id__": 156
       }
     ],
     "topNode": {
-      "__id__": 161
+      "__id__": 157
     },
     "bottomNode": {
-      "__id__": 162
+      "__id__": 158
     },
     "leftNode": {
-      "__id__": 163
+      "__id__": 159
     },
     "rightNode": {
-      "__id__": 164
+      "__id__": 160
     },
     "_id": "08td4gBMdBlo3fL7m3UC5v"
   },
@@ -6002,7 +5835,7 @@
     },
     "_children": [
       {
-        "__id__": 151
+        "__id__": 147
       }
     ],
     "_active": false,
@@ -6043,17 +5876,17 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 150
+      "__id__": 146
     },
     "_children": [
       {
-        "__id__": 152
+        "__id__": 148
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 156
+        "__id__": 152
       }
     ],
     "_prefab": null,
@@ -6092,11 +5925,11 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 151
+      "__id__": 147
     },
     "_children": [
       {
-        "__id__": 153
+        "__id__": 149
       }
     ],
     "_active": true,
@@ -6137,16 +5970,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 152
+      "__id__": 148
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 154
+        "__id__": 150
       },
       {
-        "__id__": 155
+        "__id__": 151
       }
     ],
     "_prefab": null,
@@ -6185,7 +6018,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 153
+      "__id__": 149
     },
     "_enabled": true,
     "__prefab": null,
@@ -6207,7 +6040,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 153
+      "__id__": 149
     },
     "_enabled": true,
     "__prefab": null,
@@ -6252,7 +6085,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 151
+      "__id__": 147
     },
     "_enabled": true,
     "__prefab": null,
@@ -6273,7 +6106,7 @@
     "__type__": "BindingUI",
     "binds": [
       {
-        "__id__": 82
+        "__id__": 78
       },
       {
         "__id__": 19
@@ -6286,10 +6119,10 @@
     "__type__": "BindingUI",
     "binds": [
       {
-        "__id__": 39
+        "__id__": 35
       },
       {
-        "__id__": 60
+        "__id__": 56
       }
     ],
     "type": 0,
@@ -6299,10 +6132,10 @@
     "__type__": "BindingUI",
     "binds": [
       {
-        "__id__": 45
+        "__id__": 41
       },
       {
-        "__id__": 66
+        "__id__": 62
       }
     ],
     "type": 1,
@@ -6312,10 +6145,10 @@
     "__type__": "BindingUI",
     "binds": [
       {
-        "__id__": 59
+        "__id__": 55
       },
       {
-        "__id__": 32
+        "__id__": 28
       }
     ],
     "type": 3,
@@ -6325,7 +6158,7 @@
     "__type__": "BindingUI",
     "binds": [
       {
-        "__id__": 84
+        "__id__": 80
       }
     ],
     "type": 2,
@@ -6335,7 +6168,7 @@
     "__type__": "BindingUI",
     "binds": [
       {
-        "__id__": 88
+        "__id__": 84
       }
     ],
     "type": 3,
@@ -6345,7 +6178,7 @@
     "__type__": "BindingUI",
     "binds": [
       {
-        "__id__": 92
+        "__id__": 88
       }
     ],
     "type": 0,
@@ -6355,7 +6188,7 @@
     "__type__": "BindingUI",
     "binds": [
       {
-        "__id__": 96
+        "__id__": 92
       }
     ],
     "type": 1,
@@ -6371,16 +6204,16 @@
     },
     "_children": [
       {
-        "__id__": 166
+        "__id__": 162
       },
       {
-        "__id__": 169
+        "__id__": 165
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 175
+        "__id__": 171
       }
     ],
     "_prefab": null,
@@ -6419,16 +6252,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 165
+      "__id__": 161
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 167
+        "__id__": 163
       },
       {
-        "__id__": 168
+        "__id__": 164
       }
     ],
     "_prefab": null,
@@ -6467,7 +6300,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 166
+      "__id__": 162
     },
     "_enabled": true,
     "__prefab": null,
@@ -6489,7 +6322,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 166
+      "__id__": 162
     },
     "_enabled": true,
     "__prefab": null,
@@ -6528,20 +6361,20 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 165
+      "__id__": 161
     },
     "_children": [
       {
-        "__id__": 170
+        "__id__": 166
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 173
+        "__id__": 169
       },
       {
-        "__id__": 174
+        "__id__": 170
       }
     ],
     "_prefab": null,
@@ -6580,16 +6413,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 169
+      "__id__": 165
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 171
+        "__id__": 167
       },
       {
-        "__id__": 172
+        "__id__": 168
       }
     ],
     "_prefab": null,
@@ -6628,7 +6461,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 170
+      "__id__": 166
     },
     "_enabled": true,
     "__prefab": null,
@@ -6650,7 +6483,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 170
+      "__id__": 166
     },
     "_enabled": true,
     "__prefab": null,
@@ -6715,7 +6548,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 169
+      "__id__": 165
     },
     "_enabled": true,
     "__prefab": null,
@@ -6737,7 +6570,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 169
+      "__id__": 165
     },
     "_enabled": true,
     "__prefab": null,
@@ -6776,7 +6609,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 165
+      "__id__": 161
     },
     "_enabled": true,
     "__prefab": null,
@@ -6794,118 +6627,6 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DragGhost",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "_parent": {
-      "__id__": 20
-    },
-    "_children": [],
-    "_active": false,
-    "_components": [
-      {
-        "__id__": 177
-      }
-    ],
-    "_prefab": null,
-    "_lpos": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_lrot": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_lscale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_mobility": 0,
-    "_layer": 1073741824,
-    "_euler": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_id": "80kEoy0GdKFLyjR/Gb+4j1"
-  },
-  {
-    "__type__": "cc.MeshRenderer",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 176
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "_materials": [],
-    "_visFlags": 0,
-    "bakeSettings": {
-      "__id__": 178
-    },
-    "_mesh": null,
-    "_shadowCastingMode": 1,
-    "_shadowReceivingMode": 1,
-    "_shadowBias": 0,
-    "_shadowNormalBias": 0,
-    "_reflectionProbeId": -1,
-    "_reflectionProbeBlendId": -1,
-    "_reflectionProbeBlendWeight": 0,
-    "_enabledGlobalStandardSkinObject": false,
-    "_enableMorph": true,
-    "_id": "a1FPuxkMFBCr+S49GEZARe"
-  },
-  {
-    "__type__": "cc.ModelBakeSettings",
-    "texture": null,
-    "uvParam": {
-      "__type__": "cc.Vec4",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 0
-    },
-    "_bakeable": false,
-    "_castShadow": false,
-    "_receiveShadow": false,
-    "_recieveShadow": false,
-    "_lightmapSize": 64,
-    "_useLightProbe": false,
-    "_bakeToLightProbe": true,
-    "_reflectionProbeType": 0,
-    "_bakeToReflectionProbe": true
-  },
-  {
-    "__type__": "d6f58cCRgVLTKdeD3QB6Cia",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 20
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "tray": {
-      "__id__": 29
-    },
-    "cam": {
-      "__id__": 30
-    },
-    "scrollEnabled": true,
-    "debug": true,
-    "_id": "4R9JTuy0MK8ZYIDYMmW64i"
-  },
-  {
-    "__type__": "cc.Node",
     "_name": "Lv50_Bathroom_Root",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -6914,10 +6635,10 @@
     },
     "_children": [
       {
-        "__id__": 181
+        "__id__": 173
       },
       {
-        "__id__": 190
+        "__id__": 180
       }
     ],
     "_active": true,
@@ -6958,14 +6679,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 180
+      "__id__": 172
     },
     "_children": [
       {
-        "__id__": 182
+        "__id__": 174
       },
       {
-        "__id__": 186
+        "__id__": 177
       }
     ],
     "_active": true,
@@ -7006,16 +6727,13 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 181
+      "__id__": 173
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 183
-      },
-      {
-        "__id__": 185
+        "__id__": 175
       }
     ],
     "_prefab": null,
@@ -7054,7 +6772,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 182
+      "__id__": 174
     },
     "_enabled": true,
     "__prefab": null,
@@ -7066,7 +6784,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 184
+      "__id__": 176
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@c4696",
@@ -7104,36 +6822,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 182
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 183
-    },
-    "_id": "15X19Gbm5KbotAfk6UPprH"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Floor_2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 181
+      "__id__": 173
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 187
-      },
-      {
-        "__id__": 189
+        "__id__": 178
       }
     ],
     "_prefab": null,
@@ -7172,7 +6872,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 186
+      "__id__": 177
     },
     "_enabled": true,
     "__prefab": null,
@@ -7184,7 +6884,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 188
+      "__id__": 179
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@4e934",
@@ -7222,211 +6922,196 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 186
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 187
-    },
-    "_id": "39oOZGBYZJkqKAG5+24lBj"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Mat",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 180
+      "__id__": 172
     },
     "_children": [
       {
-        "__id__": 191
+        "__id__": 181
       },
       {
-        "__id__": 195
+        "__id__": 184
+      },
+      {
+        "__id__": 187
+      },
+      {
+        "__id__": 190
+      },
+      {
+        "__id__": 193
+      },
+      {
+        "__id__": 196
       },
       {
         "__id__": 199
       },
       {
-        "__id__": 203
+        "__id__": 202
       },
       {
-        "__id__": 207
+        "__id__": 205
+      },
+      {
+        "__id__": 208
       },
       {
         "__id__": 211
       },
       {
-        "__id__": 215
+        "__id__": 214
       },
       {
-        "__id__": 219
+        "__id__": 217
+      },
+      {
+        "__id__": 220
       },
       {
         "__id__": 223
       },
       {
-        "__id__": 227
+        "__id__": 226
       },
       {
-        "__id__": 231
+        "__id__": 229
+      },
+      {
+        "__id__": 232
       },
       {
         "__id__": 235
       },
       {
-        "__id__": 239
+        "__id__": 238
       },
       {
-        "__id__": 243
+        "__id__": 241
+      },
+      {
+        "__id__": 244
       },
       {
         "__id__": 247
       },
       {
-        "__id__": 251
+        "__id__": 250
       },
       {
-        "__id__": 255
+        "__id__": 253
+      },
+      {
+        "__id__": 256
       },
       {
         "__id__": 259
       },
       {
-        "__id__": 263
+        "__id__": 262
       },
       {
-        "__id__": 267
+        "__id__": 265
+      },
+      {
+        "__id__": 268
       },
       {
         "__id__": 271
       },
       {
-        "__id__": 275
+        "__id__": 274
       },
       {
-        "__id__": 279
+        "__id__": 277
+      },
+      {
+        "__id__": 280
       },
       {
         "__id__": 283
       },
       {
-        "__id__": 287
+        "__id__": 286
       },
       {
-        "__id__": 291
+        "__id__": 289
+      },
+      {
+        "__id__": 292
       },
       {
         "__id__": 295
       },
       {
-        "__id__": 299
+        "__id__": 298
       },
       {
-        "__id__": 303
+        "__id__": 301
+      },
+      {
+        "__id__": 304
       },
       {
         "__id__": 307
       },
       {
-        "__id__": 311
+        "__id__": 310
       },
       {
-        "__id__": 315
+        "__id__": 313
+      },
+      {
+        "__id__": 316
       },
       {
         "__id__": 319
       },
       {
-        "__id__": 323
+        "__id__": 322
       },
       {
-        "__id__": 327
+        "__id__": 325
+      },
+      {
+        "__id__": 328
       },
       {
         "__id__": 331
       },
       {
-        "__id__": 335
+        "__id__": 334
       },
       {
-        "__id__": 339
+        "__id__": 337
+      },
+      {
+        "__id__": 340
       },
       {
         "__id__": 343
       },
       {
-        "__id__": 347
+        "__id__": 346
       },
       {
-        "__id__": 351
+        "__id__": 349
+      },
+      {
+        "__id__": 352
       },
       {
         "__id__": 355
       },
       {
-        "__id__": 359
+        "__id__": 358
       },
       {
-        "__id__": 363
-      },
-      {
-        "__id__": 367
-      },
-      {
-        "__id__": 371
-      },
-      {
-        "__id__": 375
-      },
-      {
-        "__id__": 379
-      },
-      {
-        "__id__": 383
-      },
-      {
-        "__id__": 387
-      },
-      {
-        "__id__": 391
-      },
-      {
-        "__id__": 395
-      },
-      {
-        "__id__": 399
-      },
-      {
-        "__id__": 403
-      },
-      {
-        "__id__": 407
-      },
-      {
-        "__id__": 411
-      },
-      {
-        "__id__": 415
-      },
-      {
-        "__id__": 419
-      },
-      {
-        "__id__": 423
-      },
-      {
-        "__id__": 427
-      },
-      {
-        "__id__": 431
+        "__id__": 361
       }
     ],
     "_active": true,
@@ -7467,16 +7152,13 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 192
-      },
-      {
-        "__id__": 194
+        "__id__": 182
       }
     ],
     "_prefab": null,
@@ -7515,7 +7197,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 191
+      "__id__": 181
     },
     "_enabled": true,
     "__prefab": null,
@@ -7527,7 +7209,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 193
+      "__id__": 183
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@b39e1",
@@ -7565,36 +7247,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 191
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 192
-    },
-    "_id": "89VpKg4mZGHrIB7uhBUvP7"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Wall_2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 196
-      },
-      {
-        "__id__": 198
+        "__id__": 185
       }
     ],
     "_prefab": null,
@@ -7633,7 +7297,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 195
+      "__id__": 184
     },
     "_enabled": true,
     "__prefab": null,
@@ -7645,7 +7309,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 197
+      "__id__": 186
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@9b536",
@@ -7683,36 +7347,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 195
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 196
-    },
-    "_id": "b9zp9kPKdOppzkhI68RFKv"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Wall_3",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 200
-      },
-      {
-        "__id__": 202
+        "__id__": 188
       }
     ],
     "_prefab": null,
@@ -7751,7 +7397,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 199
+      "__id__": 187
     },
     "_enabled": true,
     "__prefab": null,
@@ -7763,7 +7409,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 201
+      "__id__": 189
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@f3aac",
@@ -7801,36 +7447,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 199
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 200
-    },
-    "_id": "c0S3bekDpDFpPSMmXBUYwr"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Basket",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 204
-      },
-      {
-        "__id__": 206
+        "__id__": 191
       }
     ],
     "_prefab": null,
@@ -7869,7 +7497,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 203
+      "__id__": 190
     },
     "_enabled": true,
     "__prefab": null,
@@ -7881,7 +7509,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 205
+      "__id__": 192
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@e8404",
@@ -7919,36 +7547,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 203
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 204
-    },
-    "_id": "5fmGTfp2dPRqT/v6OL13I+"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Water",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 208
-      },
-      {
-        "__id__": 210
+        "__id__": 194
       }
     ],
     "_prefab": null,
@@ -7987,7 +7597,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 207
+      "__id__": 193
     },
     "_enabled": true,
     "__prefab": null,
@@ -8003,7 +7613,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 209
+      "__id__": 195
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@af66d",
@@ -8041,36 +7651,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 207
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 208
-    },
-    "_id": "59OnunzzFIJ5PDQZjanPUh"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Low_Chair",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 212
-      },
-      {
-        "__id__": 214
+        "__id__": 197
       }
     ],
     "_prefab": null,
@@ -8109,7 +7701,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 211
+      "__id__": 196
     },
     "_enabled": true,
     "__prefab": null,
@@ -8121,7 +7713,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 213
+      "__id__": 198
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@1299a",
@@ -8159,36 +7751,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 211
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 212
-    },
-    "_id": "9eXAnIlNhEvJzzAgLnCwTE"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Bottle",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 216
-      },
-      {
-        "__id__": 218
+        "__id__": 200
       }
     ],
     "_prefab": null,
@@ -8227,7 +7801,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 215
+      "__id__": 199
     },
     "_enabled": true,
     "__prefab": null,
@@ -8239,7 +7813,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 217
+      "__id__": 201
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@5b41a",
@@ -8277,36 +7851,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 215
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 216
-    },
-    "_id": "f9AJdEw4pPMoGe5y3D2ENm"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Watercan",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 220
-      },
-      {
-        "__id__": 222
+        "__id__": 203
       }
     ],
     "_prefab": null,
@@ -8345,7 +7901,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 219
+      "__id__": 202
     },
     "_enabled": true,
     "__prefab": null,
@@ -8357,7 +7913,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 221
+      "__id__": 204
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@c5562",
@@ -8395,36 +7951,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 219
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 220
-    },
-    "_id": "7dTng3AMtDt4sp5vsjLO/m"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Flower",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 224
-      },
-      {
-        "__id__": 226
+        "__id__": 206
       }
     ],
     "_prefab": null,
@@ -8463,7 +8001,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 223
+      "__id__": 205
     },
     "_enabled": true,
     "__prefab": null,
@@ -8475,7 +8013,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 225
+      "__id__": 207
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@3df61",
@@ -8513,36 +8051,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 223
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 224
-    },
-    "_id": "8aLTsHIvtKMZXLDI/huoV5"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Brush_1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 228
-      },
-      {
-        "__id__": 230
+        "__id__": 209
       }
     ],
     "_prefab": null,
@@ -8581,7 +8101,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 227
+      "__id__": 208
     },
     "_enabled": true,
     "__prefab": null,
@@ -8593,7 +8113,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 229
+      "__id__": 210
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@2c3f1",
@@ -8631,36 +8151,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 227
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 228
-    },
-    "_id": "b77AWmPclPOaZY0AR25/DR"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Brush_2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 232
-      },
-      {
-        "__id__": 234
+        "__id__": 212
       }
     ],
     "_prefab": null,
@@ -8699,7 +8201,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 231
+      "__id__": 211
     },
     "_enabled": true,
     "__prefab": null,
@@ -8711,7 +8213,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 233
+      "__id__": 213
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@c74a8",
@@ -8749,36 +8251,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 231
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 232
-    },
-    "_id": "2dEyahkVFDr7ce02nNAeMb"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Lamp",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 236
-      },
-      {
-        "__id__": 238
+        "__id__": 215
       }
     ],
     "_prefab": null,
@@ -8817,7 +8301,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 235
+      "__id__": 214
     },
     "_enabled": true,
     "__prefab": null,
@@ -8829,7 +8313,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 237
+      "__id__": 216
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@5d2f2",
@@ -8867,36 +8351,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 235
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 236
-    },
-    "_id": "25UuPx319F3boxh89KEi4r"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Roof",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 240
-      },
-      {
-        "__id__": 242
+        "__id__": 218
       }
     ],
     "_prefab": null,
@@ -8935,7 +8401,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 239
+      "__id__": 217
     },
     "_enabled": true,
     "__prefab": null,
@@ -8947,7 +8413,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 241
+      "__id__": 219
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@e6acd",
@@ -8985,36 +8451,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 239
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 240
-    },
-    "_id": "e436/qbkxATaXjvOGWh6x7"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Out_Chair",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 244
-      },
-      {
-        "__id__": 246
+        "__id__": 221
       }
     ],
     "_prefab": null,
@@ -9053,7 +8501,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 243
+      "__id__": 220
     },
     "_enabled": true,
     "__prefab": null,
@@ -9065,7 +8513,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 245
+      "__id__": 222
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@19b82",
@@ -9103,36 +8551,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 243
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 244
-    },
-    "_id": "f1Gx9JT3BDJKAkMP17dVM7"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Lotus",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 248
-      },
-      {
-        "__id__": 250
+        "__id__": 224
       }
     ],
     "_prefab": null,
@@ -9171,7 +8601,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 247
+      "__id__": 223
     },
     "_enabled": true,
     "__prefab": null,
@@ -9183,7 +8613,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 249
+      "__id__": 225
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@d9f95",
@@ -9221,36 +8651,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 247
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 248
-    },
-    "_id": "b85eLDwPlDeaU2Zak5O96o"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_Chair",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 252
-      },
-      {
-        "__id__": 254
+        "__id__": 227
       }
     ],
     "_prefab": null,
@@ -9289,7 +8701,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 251
+      "__id__": 226
     },
     "_enabled": true,
     "__prefab": null,
@@ -9305,7 +8717,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 253
+      "__id__": 228
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@6dfee",
@@ -9343,36 +8755,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 251
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 252
-    },
-    "_id": "94/F+8CQpANpZ9WNBXPKdm"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Plant",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 256
-      },
-      {
-        "__id__": 258
+        "__id__": 230
       }
     ],
     "_prefab": null,
@@ -9411,7 +8805,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 255
+      "__id__": 229
     },
     "_enabled": true,
     "__prefab": null,
@@ -9423,7 +8817,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 257
+      "__id__": 231
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@687c5",
@@ -9461,36 +8855,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 255
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 256
-    },
-    "_id": "e3Bb/1V69Lc4OjIR/Z6WGo"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Toilet",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 260
-      },
-      {
-        "__id__": 262
+        "__id__": 233
       }
     ],
     "_prefab": null,
@@ -9529,7 +8905,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 259
+      "__id__": 232
     },
     "_enabled": true,
     "__prefab": null,
@@ -9541,7 +8917,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 261
+      "__id__": 234
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@173b6",
@@ -9579,36 +8955,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 259
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 260
-    },
-    "_id": "f2aGk+XwtF0KjQop9H9yqB"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Paper",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 264
-      },
-      {
-        "__id__": 266
+        "__id__": 236
       }
     ],
     "_prefab": null,
@@ -9647,7 +9005,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 263
+      "__id__": 235
     },
     "_enabled": true,
     "__prefab": null,
@@ -9663,7 +9021,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 265
+      "__id__": 237
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@bbcda",
@@ -9701,36 +9059,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 263
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 264
-    },
-    "_id": "5f5VGk025D0I3Xw0N9kCcO"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Plunger",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 268
-      },
-      {
-        "__id__": 270
+        "__id__": 239
       }
     ],
     "_prefab": null,
@@ -9769,7 +9109,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 267
+      "__id__": 238
     },
     "_enabled": true,
     "__prefab": null,
@@ -9781,7 +9121,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 269
+      "__id__": 240
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@b6e27",
@@ -9819,36 +9159,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 267
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 268
-    },
-    "_id": "d9ZEFycLROH6qNMQaK7Ss1"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Small_Rug",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 272
-      },
-      {
-        "__id__": 274
+        "__id__": 242
       }
     ],
     "_prefab": null,
@@ -9887,7 +9209,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 271
+      "__id__": 241
     },
     "_enabled": true,
     "__prefab": null,
@@ -9899,7 +9221,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 273
+      "__id__": 243
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@cfbb9",
@@ -9937,36 +9259,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 271
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 272
-    },
-    "_id": "443V92ZNBGqKsg2EkTJ6L8"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Slipper",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 276
-      },
-      {
-        "__id__": 278
+        "__id__": 245
       }
     ],
     "_prefab": null,
@@ -10005,7 +9309,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 275
+      "__id__": 244
     },
     "_enabled": true,
     "__prefab": null,
@@ -10017,7 +9321,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 277
+      "__id__": 246
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@9fd09",
@@ -10055,36 +9359,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 275
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 276
-    },
-    "_id": "0098xAVchP+qgEHdD9q2yf"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Light",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 280
-      },
-      {
-        "__id__": 282
+        "__id__": 248
       }
     ],
     "_prefab": null,
@@ -10123,7 +9409,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 279
+      "__id__": 247
     },
     "_enabled": true,
     "__prefab": null,
@@ -10135,7 +9421,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 281
+      "__id__": 249
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@eff6d",
@@ -10173,36 +9459,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 279
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 280
-    },
-    "_id": "1f3xhv6xRJlrm2xj1bn4sz"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Frame",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 284
-      },
-      {
-        "__id__": 286
+        "__id__": 251
       }
     ],
     "_prefab": null,
@@ -10241,7 +9509,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 283
+      "__id__": 250
     },
     "_enabled": true,
     "__prefab": null,
@@ -10253,7 +9521,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 285
+      "__id__": 252
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@f73da",
@@ -10291,36 +9559,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 283
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 284
-    },
-    "_id": "871O8sw1xON5ELUxqzJDIL"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Chair",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 288
-      },
-      {
-        "__id__": 290
+        "__id__": 254
       }
     ],
     "_prefab": null,
@@ -10359,7 +9609,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 287
+      "__id__": 253
     },
     "_enabled": true,
     "__prefab": null,
@@ -10371,7 +9621,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 289
+      "__id__": 255
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@60f9d",
@@ -10409,36 +9659,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 287
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 288
-    },
-    "_id": "e9aKRzIBFGi4FtIOSpUKww"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Candle",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 292
-      },
-      {
-        "__id__": 294
+        "__id__": 257
       }
     ],
     "_prefab": null,
@@ -10477,7 +9709,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 291
+      "__id__": 256
     },
     "_enabled": true,
     "__prefab": null,
@@ -10489,7 +9721,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 293
+      "__id__": 258
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@4ea0b",
@@ -10527,36 +9759,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 291
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 292
-    },
-    "_id": "76espSOflBJKnZSGDJ17CE"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Cloth",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 296
-      },
-      {
-        "__id__": 298
+        "__id__": 260
       }
     ],
     "_prefab": null,
@@ -10595,7 +9809,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 295
+      "__id__": 259
     },
     "_enabled": true,
     "__prefab": null,
@@ -10607,7 +9821,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 297
+      "__id__": 261
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@5dfeb",
@@ -10645,36 +9859,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 295
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 296
-    },
-    "_id": "c231F0bdpAx6SNYCwhm7UZ"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Washingmachine",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 300
-      },
-      {
-        "__id__": 302
+        "__id__": 263
       }
     ],
     "_prefab": null,
@@ -10713,7 +9909,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 299
+      "__id__": 262
     },
     "_enabled": true,
     "__prefab": null,
@@ -10725,7 +9921,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 301
+      "__id__": 264
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@d63f3",
@@ -10763,36 +9959,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 299
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 300
-    },
-    "_id": "2c0zixc39P0ItYLG/0LCM+"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Cabinet",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 304
-      },
-      {
-        "__id__": 306
+        "__id__": 266
       }
     ],
     "_prefab": null,
@@ -10831,7 +10009,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 303
+      "__id__": 265
     },
     "_enabled": true,
     "__prefab": null,
@@ -10847,7 +10025,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 305
+      "__id__": 267
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@efbb1",
@@ -10885,36 +10063,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 303
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 304
-    },
-    "_id": "ef8PIuPCpDDb4frWL9uLPB"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Lavabo",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 308
-      },
-      {
-        "__id__": 310
+        "__id__": 269
       }
     ],
     "_prefab": null,
@@ -10953,7 +10113,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 307
+      "__id__": 268
     },
     "_enabled": true,
     "__prefab": null,
@@ -10969,7 +10129,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 309
+      "__id__": 270
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@88adb",
@@ -11007,36 +10167,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 307
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 308
-    },
-    "_id": "d1gALFboNEYpifb2Z77ick"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Faucet",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 312
-      },
-      {
-        "__id__": 314
+        "__id__": 272
       }
     ],
     "_prefab": null,
@@ -11075,7 +10217,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 311
+      "__id__": 271
     },
     "_enabled": true,
     "__prefab": null,
@@ -11087,7 +10229,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 313
+      "__id__": 273
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@cb1c1",
@@ -11125,36 +10267,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 311
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 312
-    },
-    "_id": "9fJZYIrLBB6Iku8wU7ftF2"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Soap",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 316
-      },
-      {
-        "__id__": 318
+        "__id__": 275
       }
     ],
     "_prefab": null,
@@ -11193,7 +10317,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 315
+      "__id__": 274
     },
     "_enabled": true,
     "__prefab": null,
@@ -11205,7 +10329,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 317
+      "__id__": 276
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@4343b",
@@ -11243,36 +10367,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 315
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 316
-    },
-    "_id": "95eqMV1lVDCJhKsT+zCUc6"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Small_Towel",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 320
-      },
-      {
-        "__id__": 322
+        "__id__": 278
       }
     ],
     "_prefab": null,
@@ -11311,7 +10417,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 319
+      "__id__": 277
     },
     "_enabled": true,
     "__prefab": null,
@@ -11323,7 +10429,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 321
+      "__id__": 279
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@16aa2",
@@ -11361,36 +10467,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 319
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 320
-    },
-    "_id": "2a+ohOgh1POq2CZMuJpdYL"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Carpet",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 324
-      },
-      {
-        "__id__": 326
+        "__id__": 281
       }
     ],
     "_prefab": null,
@@ -11429,7 +10517,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 323
+      "__id__": 280
     },
     "_enabled": true,
     "__prefab": null,
@@ -11445,7 +10533,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 325
+      "__id__": 282
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@2e59a",
@@ -11483,36 +10571,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 323
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 324
-    },
-    "_id": "a2DPK+LL1N2476Dh7Isy9b"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Mirror",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 328
-      },
-      {
-        "__id__": 330
+        "__id__": 284
       }
     ],
     "_prefab": null,
@@ -11551,7 +10621,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 327
+      "__id__": 283
     },
     "_enabled": true,
     "__prefab": null,
@@ -11563,7 +10633,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 329
+      "__id__": 285
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@06014",
@@ -11601,36 +10671,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 327
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 328
-    },
-    "_id": "ae2iE2ApBNhqAFOoxFEkh7"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Book",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 332
-      },
-      {
-        "__id__": 334
+        "__id__": 287
       }
     ],
     "_prefab": null,
@@ -11669,7 +10721,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 331
+      "__id__": 286
     },
     "_enabled": true,
     "__prefab": null,
@@ -11681,7 +10733,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 333
+      "__id__": 288
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@6c69e",
@@ -11719,36 +10771,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 331
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 332
-    },
-    "_id": "dbO2h/oAtAf5aC4NbG92U6"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 336
-      },
-      {
-        "__id__": 338
+        "__id__": 290
       }
     ],
     "_prefab": null,
@@ -11787,7 +10821,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 335
+      "__id__": 289
     },
     "_enabled": true,
     "__prefab": null,
@@ -11799,7 +10833,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 337
+      "__id__": 291
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@29bb4",
@@ -11837,36 +10871,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 335
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 336
-    },
-    "_id": "36QS21AeJHN5LgunPuFe4M"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Plant1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 340
-      },
-      {
-        "__id__": 342
+        "__id__": 293
       }
     ],
     "_prefab": null,
@@ -11905,7 +10921,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 339
+      "__id__": 292
     },
     "_enabled": true,
     "__prefab": null,
@@ -11917,7 +10933,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 341
+      "__id__": 294
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@2c47f",
@@ -11955,36 +10971,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 339
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 340
-    },
-    "_id": "9eySiyXXxLlYsdJGtVTvrF"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Butterfly",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 344
-      },
-      {
-        "__id__": 346
+        "__id__": 296
       }
     ],
     "_prefab": null,
@@ -12023,7 +11021,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 343
+      "__id__": 295
     },
     "_enabled": true,
     "__prefab": null,
@@ -12035,7 +11033,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 345
+      "__id__": 297
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@1ecc6",
@@ -12073,36 +11071,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 343
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 344
-    },
-    "_id": "77zL/1C7lAArt3St/Q0utL"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 348
-      },
-      {
-        "__id__": 350
+        "__id__": 299
       }
     ],
     "_prefab": null,
@@ -12141,7 +11121,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 347
+      "__id__": 298
     },
     "_enabled": true,
     "__prefab": null,
@@ -12153,7 +11133,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 349
+      "__id__": 300
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@1cd06",
@@ -12191,36 +11171,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 347
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 348
-    },
-    "_id": "1eJAnwqD1Dkoa6bJtJdXE0"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_4",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 352
-      },
-      {
-        "__id__": 354
+        "__id__": 302
       }
     ],
     "_prefab": null,
@@ -12259,7 +11221,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 351
+      "__id__": 301
     },
     "_enabled": true,
     "__prefab": null,
@@ -12271,7 +11233,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 353
+      "__id__": 303
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@3ed18",
@@ -12309,36 +11271,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 351
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 352
-    },
-    "_id": "36RnxG2jBImrO3NQPEJQGv"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_3",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 356
-      },
-      {
-        "__id__": 358
+        "__id__": 305
       }
     ],
     "_prefab": null,
@@ -12377,7 +11321,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 355
+      "__id__": 304
     },
     "_enabled": true,
     "__prefab": null,
@@ -12393,7 +11337,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 357
+      "__id__": 306
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@d4663",
@@ -12431,36 +11375,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 355
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 356
-    },
-    "_id": "379x+vfy5FWZtyPU7Mu6fQ"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_5",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 360
-      },
-      {
-        "__id__": 362
+        "__id__": 308
       }
     ],
     "_prefab": null,
@@ -12499,7 +11425,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 359
+      "__id__": 307
     },
     "_enabled": true,
     "__prefab": null,
@@ -12511,7 +11437,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 361
+      "__id__": 309
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@e47bf",
@@ -12549,36 +11475,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 359
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 360
-    },
-    "_id": "21Rkf8yNhCUZIaNjTa+BJm"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_6",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 364
-      },
-      {
-        "__id__": 366
+        "__id__": 311
       }
     ],
     "_prefab": null,
@@ -12617,7 +11525,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 363
+      "__id__": 310
     },
     "_enabled": true,
     "__prefab": null,
@@ -12629,7 +11537,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 365
+      "__id__": 312
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@fd298",
@@ -12667,36 +11575,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 363
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 364
-    },
-    "_id": "d2cKFwIXdH2qISxUL0EDjN"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Wood",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 368
-      },
-      {
-        "__id__": 370
+        "__id__": 314
       }
     ],
     "_prefab": null,
@@ -12735,7 +11625,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 367
+      "__id__": 313
     },
     "_enabled": true,
     "__prefab": null,
@@ -12747,7 +11637,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 369
+      "__id__": 315
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@f9f8b",
@@ -12785,36 +11675,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 367
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 368
-    },
-    "_id": "87kH+cBQZFqIfAYW2ZdqOe"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Tooth",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 372
-      },
-      {
-        "__id__": 374
+        "__id__": 317
       }
     ],
     "_prefab": null,
@@ -12853,7 +11725,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 371
+      "__id__": 316
     },
     "_enabled": true,
     "__prefab": null,
@@ -12865,7 +11737,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 373
+      "__id__": 318
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@7e695",
@@ -12903,36 +11775,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 371
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 372
-    },
-    "_id": "bdHO6TwhRPL4mBqkIthlJ3"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Tooth1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 376
-      },
-      {
-        "__id__": 378
+        "__id__": 320
       }
     ],
     "_prefab": null,
@@ -12971,7 +11825,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 375
+      "__id__": 319
     },
     "_enabled": true,
     "__prefab": null,
@@ -12983,7 +11837,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 377
+      "__id__": 321
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@076b8",
@@ -13021,36 +11875,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 375
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 376
-    },
-    "_id": "79WErEeGdJHZYgvCa14mht"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Pot",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 380
-      },
-      {
-        "__id__": 382
+        "__id__": 323
       }
     ],
     "_prefab": null,
@@ -13089,7 +11925,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 379
+      "__id__": 322
     },
     "_enabled": true,
     "__prefab": null,
@@ -13101,7 +11937,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 381
+      "__id__": 324
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@3aa27",
@@ -13139,36 +11975,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 379
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 380
-    },
-    "_id": "b0HXodxflCTrR3XdZVHOMZ"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Towel",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 384
-      },
-      {
-        "__id__": 386
+        "__id__": 326
       }
     ],
     "_prefab": null,
@@ -13207,7 +12025,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 383
+      "__id__": 325
     },
     "_enabled": true,
     "__prefab": null,
@@ -13219,7 +12037,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 385
+      "__id__": 327
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@47126",
@@ -13257,36 +12075,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 383
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 384
-    },
-    "_id": "13MpBt9gBJRp1ValGmv+5p"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Duck",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 388
-      },
-      {
-        "__id__": 390
+        "__id__": 329
       }
     ],
     "_prefab": null,
@@ -13325,7 +12125,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 387
+      "__id__": 328
     },
     "_enabled": true,
     "__prefab": null,
@@ -13337,7 +12137,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 389
+      "__id__": 330
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@4b38d",
@@ -13375,36 +12175,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 387
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 388
-    },
-    "_id": "beaxpMhORBPaKCGsXVIFVJ"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Cat",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 392
-      },
-      {
-        "__id__": 394
+        "__id__": 332
       }
     ],
     "_prefab": null,
@@ -13443,7 +12225,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 391
+      "__id__": 331
     },
     "_enabled": true,
     "__prefab": null,
@@ -13455,7 +12237,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 393
+      "__id__": 333
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@4c50f",
@@ -13493,36 +12275,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 391
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 392
-    },
-    "_id": "c5ZVVh2FpF6rJxwEr9Td4v"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Can",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 396
-      },
-      {
-        "__id__": 398
+        "__id__": 335
       }
     ],
     "_prefab": null,
@@ -13561,7 +12325,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 395
+      "__id__": 334
     },
     "_enabled": true,
     "__prefab": null,
@@ -13573,7 +12337,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 397
+      "__id__": 336
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@17292",
@@ -13611,36 +12375,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 395
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 396
-    },
-    "_id": "90bOFZCbxDQIqkiIgnADI9"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Can1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 400
-      },
-      {
-        "__id__": 402
+        "__id__": 338
       }
     ],
     "_prefab": null,
@@ -13679,7 +12425,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 399
+      "__id__": 337
     },
     "_enabled": true,
     "__prefab": null,
@@ -13691,7 +12437,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 401
+      "__id__": 339
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@f64af",
@@ -13729,36 +12475,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 399
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 400
-    },
-    "_id": "a4cFgAfO9DyJq6pwkIzvDU"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Can2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 404
-      },
-      {
-        "__id__": 406
+        "__id__": 341
       }
     ],
     "_prefab": null,
@@ -13797,7 +12525,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 403
+      "__id__": 340
     },
     "_enabled": true,
     "__prefab": null,
@@ -13809,7 +12537,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 405
+      "__id__": 342
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@51491",
@@ -13847,36 +12575,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 403
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 404
-    },
-    "_id": "bf203JThxEDb5pdkXtRq6D"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Khan",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 408
-      },
-      {
-        "__id__": 410
+        "__id__": 344
       }
     ],
     "_prefab": null,
@@ -13915,7 +12625,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 407
+      "__id__": 343
     },
     "_enabled": true,
     "__prefab": null,
@@ -13927,7 +12637,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 409
+      "__id__": 345
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@b1370",
@@ -13965,36 +12675,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 407
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 408
-    },
-    "_id": "6c8y0iGrlKXIW09mvAVBzk"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Window",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 412
-      },
-      {
-        "__id__": 414
+        "__id__": 347
       }
     ],
     "_prefab": null,
@@ -14033,7 +12725,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 411
+      "__id__": 346
     },
     "_enabled": true,
     "__prefab": null,
@@ -14049,7 +12741,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 413
+      "__id__": 348
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@b5538",
@@ -14087,36 +12779,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 411
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 412
-    },
-    "_id": "b3Me41akdE3LNjy85ngr57"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_Flower",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 416
-      },
-      {
-        "__id__": 418
+        "__id__": 350
       }
     ],
     "_prefab": null,
@@ -14155,7 +12829,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 415
+      "__id__": 349
     },
     "_enabled": true,
     "__prefab": null,
@@ -14167,7 +12841,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 417
+      "__id__": 351
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@6480e",
@@ -14205,36 +12879,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 415
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 416
-    },
-    "_id": "50Gfq32olNiaCYpNDSKLGL"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_Flower1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 420
-      },
-      {
-        "__id__": 422
+        "__id__": 353
       }
     ],
     "_prefab": null,
@@ -14273,7 +12929,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 419
+      "__id__": 352
     },
     "_enabled": true,
     "__prefab": null,
@@ -14285,7 +12941,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 421
+      "__id__": 354
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@f8686",
@@ -14323,36 +12979,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 419
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 420
-    },
-    "_id": "8eoy3L4aVOSq47YNplpPo5"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_Flower2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 424
-      },
-      {
-        "__id__": 426
+        "__id__": 356
       }
     ],
     "_prefab": null,
@@ -14391,7 +13029,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 423
+      "__id__": 355
     },
     "_enabled": true,
     "__prefab": null,
@@ -14403,7 +13041,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 425
+      "__id__": 357
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@bdfb1",
@@ -14441,36 +13079,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 423
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 424
-    },
-    "_id": "2a/cVbqHpB3K5mI/RqxJr6"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Shelf_Flower3",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 428
-      },
-      {
-        "__id__": 430
+        "__id__": 359
       }
     ],
     "_prefab": null,
@@ -14509,7 +13129,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 427
+      "__id__": 358
     },
     "_enabled": true,
     "__prefab": null,
@@ -14521,7 +13141,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 429
+      "__id__": 360
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@03fc7",
@@ -14559,36 +13179,18 @@
     "_bakeToReflectionProbe": true
   },
   {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 427
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 428
-    },
-    "_id": "eaOO/s6BBG5p6Shc1+QCRj"
-  },
-  {
     "__type__": "cc.Node",
     "_name": "Bathroom_Bath",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 190
+      "__id__": 180
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 432
-      },
-      {
-        "__id__": 434
+        "__id__": 362
       }
     ],
     "_prefab": null,
@@ -14627,7 +13229,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 431
+      "__id__": 361
     },
     "_enabled": true,
     "__prefab": null,
@@ -14647,7 +13249,7 @@
     ],
     "_visFlags": 0,
     "bakeSettings": {
-      "__id__": 433
+      "__id__": 363
     },
     "_mesh": {
       "__uuid__": "4f698256-e021-4611-aa04-7b9104147a28@3a62f",
@@ -14683,21 +13285,6 @@
     "_bakeToLightProbe": true,
     "_reflectionProbeType": 0,
     "_bakeToReflectionProbe": true
-  },
-  {
-    "__type__": "3c310iCpFNGDKLpZtFpD5Vp",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 431
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "renderer": {
-      "__id__": 432
-    },
-    "_id": "eaFxcmkC5JI6SVLxCFlucU"
   },
   {
     "__type__": "cc.Node",
@@ -14751,28 +13338,28 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 438
+      "__id__": 367
     },
     "shadows": {
-      "__id__": 439
+      "__id__": 368
     },
     "_skybox": {
-      "__id__": 440
+      "__id__": 369
     },
     "fog": {
-      "__id__": 441
+      "__id__": 370
     },
     "octree": {
-      "__id__": 442
+      "__id__": 371
     },
     "skin": {
-      "__id__": 443
+      "__id__": 372
     },
     "lightProbeInfo": {
-      "__id__": 444
+      "__id__": 373
     },
     "postSettings": {
-      "__id__": 445
+      "__id__": 374
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

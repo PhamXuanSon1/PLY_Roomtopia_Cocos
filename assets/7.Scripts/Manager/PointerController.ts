@@ -71,7 +71,7 @@ export class PointerController extends Component {
         if(this.s1 && this.s2) {
             return;
         }
-        // Raycast/xoay model đã bỏ — input gameplay do GestureController (TrayDragSnap) xử lý.
+        // Raycast/xoay model đã bỏ.
     }
 
     onTouchMove(event: EventTouch) { 
