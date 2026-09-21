@@ -166,7 +166,7 @@
       "__id__": 6
     },
     "material": {
-      "__uuid__": "5928d9d0-45f1-4f13-93ee-436b3d822540",
+      "__uuid__": "4efbe895-a910-4159-ba74-cb762999fe36",
       "__expectedType__": "cc.Material"
     },
     "color": {
@@ -177,6 +177,23 @@
       "a": 255
     },
     "cornerRadius": 28,
+    "gradient": true,
+    "gradientMode": 1,
+    "colorTop": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "colorBottom": {
+      "__type__": "cc.Color",
+      "r": 70,
+      "g": 72,
+      "b": 78,
+      "a": 255
+    },
+    "radialInner": 0.85,
     "cornerSegments": 8,
     "_id": ""
   },
@@ -198,7 +215,7 @@
     },
     "_materials": [
       {
-        "__uuid__": "5928d9d0-45f1-4f13-93ee-436b3d822540",
+        "__uuid__": "4efbe895-a910-4159-ba74-cb762999fe36",
         "__expectedType__": "cc.Material"
       }
     ],
@@ -507,6 +524,7 @@
     "graphic": {
       "__id__": 20
     },
+    "dragZ": 6,
     "_id": ""
   },
   {

@@ -101,6 +101,41 @@ export class ItemGraphic extends Component {
         this.setupShadow();
     }
 
+    /** Icon xoay theo target (gọi khi model root xoay): đổi rotation rồi căn lại tâm bbox vào giữa ô, giữ scale */
+    syncRotation() {
+        const c = this.iconClone;
+        if (!c || !this.target || c.parent !== this.icon) return;   // đang kéo (ở ghostRoot) thì bỏ
+        const extra = Quat.fromEuler(new Quat(), this.iconEuler.x, this.iconEuler.y, this.iconEuler.z);
+        c.setWorldRotation(Quat.multiply(new Quat(), this.target.worldRotation, extra));
+        this.recenter();
+    }
+
+    /** Tính lại iconBasePos để tâm bbox (theo rotation hiện tại) nằm giữa ô */
+    recenter() {
+        const c = this.iconClone!;
+        const invIcon = Quat.invert(new Quat(), this.icon!.worldRotation);
+        const iconWS = this.icon!.worldScale;
+        const qr = new Quat(), sc = new Vec3(), tmp = new Vec3();
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        for (const r of c.getComponentsInChildren(MeshRenderer)) {
+            const st = r.mesh?.struct;
+            if (!st?.minPosition || !st.maxPosition) continue;
+            Quat.multiply(qr, invIcon, r.node.worldRotation);
+            Vec3.divide(sc, r.node.worldScale, iconWS);        // đã gồm iconScale
+            const lo = st.minPosition, hi = st.maxPosition;
+            for (let i = 0; i < 8; i++) {
+                tmp.set((i & 1 ? hi.x : lo.x) * sc.x, (i & 2 ? hi.y : lo.y) * sc.y, (i & 4 ? hi.z : lo.z) * sc.z);
+                Vec3.transformQuat(tmp, tmp, qr);
+                minX = Math.min(minX, tmp.x); maxX = Math.max(maxX, tmp.x);
+                minY = Math.min(minY, tmp.y); maxY = Math.max(maxY, tmp.y);
+            }
+        }
+        if (!isFinite(minX)) return;
+        // tmp ở trên đã nhân scale → tâm bbox tính ra là offset thật của pivot, dời ngược lại
+        this.iconBasePos.set(-(minX + maxX) / 2, -(minY + maxY) / 2, 0);
+        c.setPosition(this.iconBasePos);
+    }
+
     /** Đặt iconClone về đúng chỗ trong ô (dùng lúc bind và khi thả trượt) */
     putIconInCell() {
         const c = this.iconClone!;
@@ -114,8 +149,9 @@ export class ItemGraphic extends Component {
         const q = Quat.multiply(new Quat(), this.target!.worldRotation, extra);
         c.setWorldRotation(q);
 
-        // dời icon để tâm hình chiếu nằm đúng tâm ô
-        c.setPosition(this.iconBasePos);
+        // căn tâm bbox vào giữa ô theo rotation HIỆN TẠI (map có thể đã xoay so với lúc sinh)
+        if (this.iconScale !== 1) this.recenter();
+        else c.setPosition(this.iconBasePos);            // lúc bind lần đầu (scale tạm = 1) fitScale sẽ tự căn
     }
 
     /**

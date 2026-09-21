@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, director, EventTouch, Input, input, instantiate, Layers, MeshRenderer, Node, Prefab, tween, UITransform, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Component, director, EventTouch, Input, input, instantiate, Layers, MeshRenderer, Node, Prefab, Quat, tween, UITransform, Vec2, Vec3 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { BottomBar } from '../Item/BottomBar';
@@ -105,6 +105,7 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     // ---- nội bộ ----
     private dragging: ItemController | null = null;   // item đang được kéo
+    get isDragging() { return !!this.dragging; }
     private touchId = -1;
     private barHalfW = 540;
     /** true = item tràn thanh → xếp vòng lặp + cho kéo; false = đủ chỗ, căn giữa, không kéo */
@@ -140,9 +141,23 @@ export class ItemManager extends Component implements ItemCallbacks {
         input.off(Input.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
     }
 
+    private lastModelRot = new Quat();
+
     update() {
+        this.syncIconRotation();          // chạy cả trong editor: xoay model root là icon xoay theo ngay
         if (EDITOR) return;
         this.updateVisibility();
+    }
+
+    /** Model root xoay (ModelRotate hoặc xoay tay trong editor) → icon trong thanh xoay theo target của nó */
+    private syncIconRotation() {
+        const model = this.findGameManager()?.model;
+        if (!model) return;
+        const r = model.worldRotation;
+        if (Quat.equals(r, this.lastModelRot)) return;
+        this.lastModelRot.set(r);
+        const list = this.items.length ? this.items : (this.bar?.content?.getComponentsInChildren(ItemController) ?? []);
+        for (const it of list) if (!it.isCompleted) it.graphic?.syncRotation();
     }
 
     // =========================================================== 1. build

@@ -338,7 +338,14 @@
             "7.Scripts\\MyScript\\Item\\QuadImage.ts",
             "8.Models\\Materials\\Misc\\BarBg.mtl",
             "8.Models\\Materials\\Misc\\BarTab.mtl",
-            "8.Models\\Materials\\Misc\\ItemCell.mtl"
+            "8.Models\\Materials\\Misc\\ItemCell.mtl",
+            "7.Scripts\\MyScript\\Item\\BarClipCamera.ts",
+            "5.Prefabs\\Gameplay\\Bg.prefab",
+            "5.Prefabs\\Gameplay\\Tab.prefab",
+            "7.Scripts\\MyScript\\Manager\\ModelRotate.ts",
+            "7.Scripts\\MyScript\\Item\\BoxBg.ts",
+            "8.Models\\Materials\\Misc\\ItemCellGradient.mtl",
+            "3.Sprites\\Gameplay\\Misc\\SolidBox.png"
         ]
     }
 }
