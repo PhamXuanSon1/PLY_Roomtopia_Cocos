@@ -195,8 +195,8 @@
       "__id__": 6
     },
     "_visibility": 1073741825,
-    "_illuminanceHDR": 120000,
-    "_illuminance": 120000,
+    "_illuminanceHDR": 80000,
+    "_illuminance": 80000,
     "_illuminanceLDR": 1.6927083333333335,
     "_shadowEnabled": true,
     "_shadowPcf": 3,
@@ -973,7 +973,7 @@
       "__id__": 24
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 26
@@ -28141,6 +28141,9 @@
     "snapPx": 50,
     "snapByBounds": true,
     "requireNearest": true,
+    "snapScale": 1.1,
+    "snapScaleUpDuration": 0.12,
+    "snapScaleDownDuration": 0.18,
     "_showCells": true,
     "_id": "0ddNWBVxBDkJm9V3IgJPMw"
   },

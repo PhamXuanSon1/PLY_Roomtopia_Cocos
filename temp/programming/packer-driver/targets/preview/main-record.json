@@ -556,7 +556,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 28011919.4592,
+      "mTimestamp": 30271185.2956,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -14377,7 +14377,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ItemManager.ts": {
       "mTimestamp": {
-        "mtime": 1789980606957.762,
+        "mtime": 1789983542907.052,
         "uuid": "27753742-fc6e-4a91-b9eb-7f580355c2a0"
       },
       "chunkId": "cf70c018604b6a9c1e438bf8798003ebbaf7b0d6",
@@ -14899,7 +14899,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/ItemController.ts": {
       "mTimestamp": {
-        "mtime": 1789965413993.657,
+        "mtime": 1789983542908.028,
         "uuid": "ed299cb6-f79f-4900-8d42-f5c34f39a1af"
       },
       "chunkId": "556ec74c7738d5387376beefddca68e4fa45f058",
@@ -15004,7 +15004,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/ItemGraphic.ts": {
       "mTimestamp": {
-        "mtime": 1789978762740.397,
+        "mtime": 1789983542907.052,
         "uuid": "edafe2cf-8e9d-41c2-a0b7-ff4c517f522c"
       },
       "chunkId": "930b50fe3dce78a017ff0dff251ffee06982848f",
@@ -15360,7 +15360,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ModelRotate.ts": {
       "mTimestamp": {
-        "mtime": 1789975315875.53,
+        "mtime": 1789983561820.532,
         "uuid": "7e5b388b-3bc9-4fbb-82a9-4c3e31e11433"
       },
       "chunkId": "6399692ccf865cbee0afb1efbc46b09610f45b6d",

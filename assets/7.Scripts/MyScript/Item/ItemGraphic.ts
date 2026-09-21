@@ -235,14 +235,14 @@ export class ItemGraphic extends Component {
         this.targetRenderer.sharedMaterials = this.defaultMats.map(() => hint);
     }
 
-    /** Target scale 1 → 1.3 → 1 khi snap đúng */
-    punchTarget() {
+    /** Target phóng to rồi thu về scale gốc khi snap đúng */
+    punchTarget(scale: number, scaleUpDuration: number, scaleDownDuration: number) {
         if (!this.target) return;
         const n = this.target;
         Tween.stopAllByTarget(n);
         tween(n)
-            .to(0.12, { scale: this.targetBaseScale.clone().multiplyScalar(1.3) }, { easing: 'quadOut' })
-            .to(0.18, { scale: this.targetBaseScale.clone() }, { easing: 'backOut' })
+            .to(scaleUpDuration, { scale: this.targetBaseScale.clone().multiplyScalar(scale) }, { easing: 'quadOut' })
+            .to(scaleDownDuration, { scale: this.targetBaseScale.clone() }, { easing: 'backOut' })
             .start();
     }
 

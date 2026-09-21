@@ -33,14 +33,20 @@ export class ItemController extends Component {
     isOnScreen = false;
 
     private _cb: ItemCallbacks | null = null;
+    private _snapScale = 1;
+    private _snapScaleUpDuration = 0;
+    private _snapScaleDownDuration = 0;
 
     get isCompleted() { return this.state === ItemState.Completed; }
 
     /** Gọi 1 lần lúc ItemManager build */
-    init(target: Node, index: number, cam: Camera, ghostRoot: Node, gray: Material | null, cb: ItemCallbacks, cellPx?: number, iconFill?: number) {
+    init(target: Node, index: number, cam: Camera, ghostRoot: Node, gray: Material | null, cb: ItemCallbacks, cellPx?: number, iconFill?: number, snapScale = 1, snapScaleUpDuration = 0, snapScaleDownDuration = 0) {
         this.target = target;
         this.index = index;
         this._cb = cb;
+        this._snapScale = snapScale;
+        this._snapScaleUpDuration = snapScaleUpDuration;
+        this._snapScaleDownDuration = snapScaleDownDuration;
 
         this.graphic!.bind(target, cam, cellPx, iconFill);
         if (gray) this.graphic!.setGray(gray);
@@ -102,7 +108,7 @@ export class ItemController extends Component {
         if (this.state === ItemState.Completed) return;
         this.state = ItemState.Completed;
         this.graphic!.restore();
-        this.graphic!.punchTarget();
+        this.graphic!.punchTarget(this._snapScale, this._snapScaleUpDuration, this._snapScaleDownDuration);
         this.graphic!.setVisible(false);
         this._cb?.onSnapped(this);
     }

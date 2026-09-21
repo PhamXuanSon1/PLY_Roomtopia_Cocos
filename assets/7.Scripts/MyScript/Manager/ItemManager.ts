@@ -74,6 +74,15 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ group: 'Snap', tooltip: 'Target của item phải là target GẦN NHẤT dưới ngón tay; thả lên vật khác = trượt dù trong ngưỡng' })
     requireNearest = true;
 
+    @property({ group: 'Snap Animation', tooltip: 'Scale tối đa của target khi snap, tính theo scale gốc' })
+    snapScale = 1.3;
+
+    @property({ group: 'Snap Animation', tooltip: 'Thời gian target phóng to khi snap (giây)' })
+    snapScaleUpDuration = 0.12;
+
+    @property({ group: 'Snap Animation', tooltip: 'Thời gian target thu về scale gốc (giây)' })
+    snapScaleDownDuration = 0.18;
+
     /** Layer riêng cho thẻ + icon trong thanh → BarClipCamera vẽ & cắt theo vùng thanh */
     static readonly TRAY_LAYER_NAME = 'TRAY';
     static readonly TRAY_LAYER_BIT = 0;
@@ -218,7 +227,19 @@ export class ItemManager extends Component implements ItemCallbacks {
                 this.placeSlot(item, this.slotX(i));
             }
             // item có sẵn: giữ nguyên vị trí/scale như editor; Cell luôn theo showCells (mặc định tắt)
-            item.init(target, i, cam, this.ghostRoot!, gm.grayMat, this, this.cellPx(), this.iconFill);
+            item.init(
+                target,
+                i,
+                cam,
+                this.ghostRoot!,
+                gm.grayMat,
+                this,
+                this.cellPx(),
+                this.iconFill,
+                this.snapScale,
+                this.snapScaleUpDuration,
+                this.snapScaleDownDuration,
+            );
             this.setCellActive(item, this.showCells);
             ItemManager.setTrayLayer(item.node);
             this.items.push(item);
