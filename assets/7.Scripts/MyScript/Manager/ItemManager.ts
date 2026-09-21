@@ -110,6 +110,10 @@ export class ItemManager extends Component implements ItemCallbacks {
     get clearPreview() { return false; }
     set clearPreview(v: boolean) { if (v && EDITOR) this.clearContent(); }
 
+    @property({ displayName: '🔀 Shuffle items', tooltip: 'Xáo thứ tự item trong thanh. Editor: xáo item preview (lưu vào scene); Play: xáo ô chưa xong' })
+    get shuffleItems() { return false; }
+    set shuffleItems(v: boolean) { if (v) EDITOR ? this.shufflePreview() : this.shuffle(); }
+
     /** Tất cả item, theo thứ tự trong thanh */
     items: ItemController[] = [];
     collected = 0;
@@ -437,6 +441,31 @@ export class ItemManager extends Component implements ItemCallbacks {
         // thả trượt: icon đã tự về ô. Chỗ này để thêm sound / hint nếu cần
     }
 
+    /**
+     * Xáo thứ tự các ô CHƯA xong trong thanh (nút Shuffle gọi). Ô đã xong giữ ở cuối.
+     * Không xáo khi đang kéo item. Thanh cuộn về đầu, ô pop nhẹ để thấy đổi.
+     */
+    shuffle() {
+        if (this.dragging) return;
+        const n = this.remain;
+        if (n < 2) return;
+        const rest = this.items.slice(0, n);
+        for (let i = rest.length - 1; i > 0; i--) {            // Fisher–Yates
+            const j = Math.floor(Math.random() * (i + 1));
+            [rest[i], rest[j]] = [rest[j], rest[i]];
+        }
+        this.items = rest.concat(this.items.slice(n));
+        this.bar?.resetScroll();
+        this.setLayout(n);
+        this.updateVisibility();
+        for (const it of rest) {
+            const g = it.graphic;
+            if (!it.isOnScreen || !g?.iconClone) continue;
+            g.iconClone.setScale(0, 0, 0);
+            g.pop(true, 0.25);                                 // 0 → iconScale
+        }
+    }
+
     /** Gỡ ô đã xong: đẩy ra cuối danh sách, các ô sau tự dồn lên ở frame kế (updateVisibility) */
     private removeAndCompact(item: ItemController) {
         const idx = this.items.indexOf(item);
@@ -475,6 +504,25 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.collected = 0;
         this.refreshCount(targets.length);           // label trong editor cũng hiện 0/max
         console.log(`[ItemManager] preview ${targets.length} items`);
+    }
+
+    /** Xáo thứ tự item preview trong Content (editor) → thứ tự ô lúc Play cũng theo đó */
+    private shufflePreview() {
+        const content = this.bar?.content;
+        if (!content) return;
+        const list = content.getComponentsInChildren(ItemController);
+        if (list.length < 2) return;
+        for (let i = list.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [list[i], list[j]] = [list[j], list[i]];
+        }
+        this.barHalfW = this.barHalfLen();
+        this.loop = this.contentWidth(list.length) > this.barHalfW * 2;
+        this.period = Math.max(list.length * this.spacing, this.barHalfW * 2 + this.spacing);
+        list.forEach((it, i) => {
+            it.node.setSiblingIndex(i);
+            this.placeSlot(it, this.slotX(i, list.length));
+        });
     }
 
     /** Bật/tắt quad Cell của 1 item (fallback tìm con tên "Cell" cho item sinh từ prefab cũ) */

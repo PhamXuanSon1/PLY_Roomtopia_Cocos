@@ -28,6 +28,13 @@ export class ModelRotate extends Component {
     @property({ tooltip: 'Ngón tay phải đi quá số px này mới tính là kéo' })
     dragThresholdPx = 6;
 
+    @property({ tooltip: 'Xoay quá bao nhiêu độ thì tính là người chơi đã biết xoay (HandHintManager thôi hint xoay)' })
+    rotatedDeg = 10;
+
+    /** Người chơi đã tự xoay phòng (≥ rotatedDeg) chưa */
+    get rotatedOnce() { return this._rotatedOnce; }
+    private _rotatedOnce = false;
+
     private touchId = -1;
     private touchStartPosition = new Vec2();
     private last = new Vec2();
@@ -79,6 +86,7 @@ export class ModelRotate extends Component {
         this.velocity = dx * this.degPerPx;
         this.rotateBy(this.velocity);
         this.last.set(cur);
+        if (Math.abs(this.angle) >= this.rotatedDeg) this._rotatedOnce = true;
     }
 
     private onTouchEnd(e: EventTouch) {

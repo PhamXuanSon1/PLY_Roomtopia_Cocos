@@ -8,7 +8,7 @@ const { ccclass, property } = _decorator;
  *  - iconClone : bản sao mesh của target, nằm trong ô của thanh (con của node Icon).
  *                Khi kéo, ItemMovement "bốc" chính node này ra world làm ghost.
  *  - target    : mesh gốc trong map — xám khi chưa xong, trả màu khi snap đúng.
- *  - hiệu ứng  : pop in/out, hint nhún, punch target.
+ *  - hiệu ứng  : pop in/out, punch target.
  *
  * Không biết vị trí trong thanh, không bắt input.
  */
@@ -258,7 +258,6 @@ export class ItemGraphic extends Component {
 
     setVisible(on: boolean) {
         if (this.node.active === on) return;
-        if (!on) this.stopHint();
         this.node.active = on;
     }
 
@@ -266,26 +265,5 @@ export class ItemGraphic extends Component {
     resetIcon() {
         Tween.stopAllByTarget(this.iconClone!);
         this.putIconInCell();
-    }
-
-    // =========================================================== hint
-    private hinting = false;
-
-    playHint() {
-        if (this.hinting) return;
-        this.hinting = true;
-        const c = this.iconClone!;
-        const base = this.iconBasePos.clone();
-        tween(c)
-            .to(0.25, { position: base.clone().add3f(0, this.cellPx * 0.25, 0) }, { easing: 'sineOut' })
-            .to(0.25, { position: base }, { easing: 'sineIn' })
-            .union().repeatForever().start();
-    }
-
-    stopHint() {
-        if (!this.hinting) return;
-        this.hinting = false;
-        Tween.stopAllByTarget(this.iconClone!);
-        this.iconClone!.setPosition(this.iconBasePos);
     }
 }

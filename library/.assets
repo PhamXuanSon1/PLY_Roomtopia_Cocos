@@ -346,7 +346,8 @@
             "7.Scripts\\MyScript\\Item\\BoxBg.ts",
             "8.Models\\Materials\\Misc\\ItemCellGradient.mtl",
             "3.Sprites\\Gameplay\\Misc\\SolidBox.png",
-            "7.Scripts\\MyScript\\Item\\FitInBox.ts"
+            "7.Scripts\\MyScript\\Item\\FitInBox.ts",
+            "7.Scripts\\MyScript\\Manager\\HandHintManager.ts"
         ]
     }
 }

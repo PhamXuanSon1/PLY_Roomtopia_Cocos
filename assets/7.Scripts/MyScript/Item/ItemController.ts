@@ -63,7 +63,6 @@ export class ItemController extends Component {
     onSelect(screenPos: Vec2) {
         if (this.state !== ItemState.InTray) return;
         this.state = ItemState.Dragging;
-        this.graphic!.stopHint();
         // ẩn thẻ Cell của ô này khi đang kéo (ô trống)
         const cell = this.graphic!.cell;
         if (cell) { this._cellWasActive = cell.active; cell.active = false; }
@@ -122,7 +121,6 @@ export class ItemController extends Component {
     /** Reset về trạng thái ban đầu (replay) */
     reset(gray: Material | null) {
         this.state = ItemState.InTray;
-        this.graphic!.stopHint();
         this.graphic!.resetIcon();
         if (gray) this.graphic!.setGray(gray);
     }

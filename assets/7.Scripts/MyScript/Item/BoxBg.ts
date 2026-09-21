@@ -55,6 +55,12 @@ export class BoxBg extends Component {
     @property({ type: Node, tooltip: 'Label đếm (con của node này): tự đặt ở đáy hộp + labelBottomPx, cùng layer BG' })
     countLabel: Node | null = null;
 
+    @property({ group: 'Border', type: Node, tooltip: 'Sprite viền (em đứng TRƯỚC BoxBg dưới BgCam, scale 0.01). Tự đặt to hơn hộp borderPx mỗi bên, nằm sau hộp → thành viền' })
+    borderNode: Node | null = null;
+
+    @property({ group: 'Border', tooltip: 'Độ dày viền (px local, 100 px = 1 world unit). 0 = ẩn viền' })
+    borderPx = 10;
+
     @property({ tooltip: 'Label cách đáy hộp bao nhiêu px (local, 100 px = 1 world unit)' })
     labelBottomPx = 60;
 
@@ -82,7 +88,7 @@ export class BoxBg extends Component {
         const w = (r.right - r.left) * k, h = (r.top - r.bottom) * k;
         const cx = (r.left + r.right) / 2, cy = (r.top + r.bottom) / 2;
 
-        const key = `${w.toFixed(2)}|${h.toFixed(2)}|${cx.toFixed(3)}|${cy.toFixed(3)}|${this.labelBottomPx}|${this.countLabel?.uuid}`;
+        const key = `${w.toFixed(2)}|${h.toFixed(2)}|${cx.toFixed(3)}|${cy.toFixed(3)}|${this.labelBottomPx}|${this.countLabel?.uuid}|${this.borderPx}|${this.borderNode?.uuid}`;
         if (key === this._key) return;
         this._key = key;
 
@@ -90,6 +96,22 @@ export class BoxBg extends Component {
         this.node.setPosition(cx, cy, this.node.position.z);
         this.placeLabel(cx, cy, k);
         this.placePanelBg(cam.orthoHeight, k);
+        this.placeBorder(w, h, cx, cy);
+    }
+
+    /** Viền: sprite trắng to hơn hộp borderPx mỗi bên, vẽ TRƯỚC hộp (sibling đứng trước) → chỉ lòi phần mép */
+    private placeBorder(w: number, h: number, cx: number, cy: number) {
+        const b = this.borderNode;
+        if (!b) return;
+        const on = this.borderPx > 0;
+        b.active = on;
+        if (!on) return;
+        if (b.parent !== this.node.parent && this.node.parent) b.setParent(this.node.parent, false);
+        if (b.getSiblingIndex() > this.node.getSiblingIndex()) b.setSiblingIndex(this.node.getSiblingIndex());
+        b.layer = this.node.layer;
+        b.setScale(this.node.scale);
+        b.getComponent(UITransform)?.setContentSize(w + 2 * this.borderPx, h + 2 * this.borderPx);
+        b.setPosition(cx, cy, this.node.position.z);
     }
 
     /** Nền panel item bên phải (màn ngang): từ mép vùng chơi tới hết màn, tràn overflow để giấu góc bo */
