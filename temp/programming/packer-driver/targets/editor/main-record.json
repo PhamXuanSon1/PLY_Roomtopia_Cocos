@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 20934095.8803,
+      "mTimestamp": 22030278.3775,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -14797,7 +14797,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ItemManager.ts": {
       "mTimestamp": {
-        "mtime": 1789974039685.2744,
+        "mtime": 1789974757125.9385,
         "uuid": "27753742-fc6e-4a91-b9eb-7f580355c2a0"
       },
       "chunkId": "cf70c018604b6a9c1e438bf8798003ebbaf7b0d6",
@@ -15738,7 +15738,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ModelRotate.ts": {
       "mTimestamp": {
-        "mtime": 1789972585432.8171,
+        "mtime": 1789975315875.53,
         "uuid": "7e5b388b-3bc9-4fbb-82a9-4c3e31e11433"
       },
       "chunkId": "6399692ccf865cbee0afb1efbc46b09610f45b6d",
@@ -15758,11 +15758,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 82
+              "column": 76
             },
             "end": {
               "line": 1,
-              "column": 86
+              "column": 80
             }
           }
         },
@@ -15884,6 +15884,58 @@
             "end": {
               "line": 1,
               "column": 77
+            }
+          }
+        }
+      ],
+      "type": "esm",
+      "resolutions": [
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        }
+      ]
+    },
+    "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/GhostCamera.ts": {
+      "mTimestamp": {
+        "mtime": 1789974767315.729,
+        "uuid": "4a57e506-18f0-4b87-a629-b8fe86cd1b06"
+      },
+      "chunkId": "18c28e95271dffe0583e337cb1849fd239909cd8",
+      "imports": [
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 54
+            },
+            "end": {
+              "line": 1,
+              "column": 58
             }
           }
         }

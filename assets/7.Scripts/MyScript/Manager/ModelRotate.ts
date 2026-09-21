@@ -1,4 +1,4 @@
-import { _decorator, Component, EventTouch, Input, input, math, Node, Vec2 } from 'cc';
+import { _decorator, Component, EventTouch, Input, input, Node, Vec2 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { BottomBar } from '../Item/BottomBar';
 import { ItemManager } from './ItemManager';
@@ -21,9 +21,6 @@ export class ModelRotate extends Component {
 
     @property({ tooltip: 'Độ xoay cho mỗi px ngón tay đi ngang' })
     degPerPx = 0.3;
-
-    @property({ tooltip: 'Giới hạn góc Y (độ) so với góc ban đầu. 0 = không giới hạn' })
-    limitDeg = 45;
 
     @property({ tooltip: 'Quán tính sau khi thả (0 = dừng ngay, 0.9 = trượt lâu)' })
     inertia = 0.85;
@@ -98,7 +95,6 @@ export class ModelRotate extends Component {
 
     private rotateBy(deg: number) {
         this.angle += deg;
-        if (this.limitDeg > 0) this.angle = math.clamp(this.angle, -this.limitDeg, this.limitDeg);
         const e = this.model!.eulerAngles;
         this.model!.setRotationFromEuler(e.x, this.baseY + this.angle, e.z);
     }
