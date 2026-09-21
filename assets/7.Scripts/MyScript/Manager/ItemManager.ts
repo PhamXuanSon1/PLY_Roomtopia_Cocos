@@ -60,10 +60,10 @@ export class ItemManager extends Component implements ItemCallbacks {
     grayOthers = true;
 
     // ---- snap (px quy về màn 393pt, xem px() trong TrayConfig) ----
-    @property({ group: 'Snap', tooltip: 'Thả cách target (pt @393) dưới ngưỡng này = snap. Nếu snapByBounds bật thì đo tới MÉP bbox, không thì tới TÂM' })
+    @property({ group: 'Snap', tooltip: 'Ghost lệch so với target (pt @393) dưới ngưỡng này = snap (ghost chồng khít target = 0)' })
     snapPx = 40;
 
-    @property({ group: 'Snap', tooltip: 'Đo khoảng cách tới bbox của target trên màn hình (vật to dễ thả, vật nhỏ phải chính xác) thay vì tới tâm' })
+    @property({ group: 'Snap', tooltip: 'Cộng thêm nửa cạnh nhỏ bbox target vào ngưỡng (vật to dễ thả hơn)' })
     snapByBounds = true;
 
     @property({ group: 'Snap', tooltip: 'Target của item phải là target GẦN NHẤT dưới ngón tay; thả lên vật khác = trượt dù trong ngưỡng' })
@@ -318,32 +318,35 @@ export class ItemManager extends Component implements ItemCallbacks {
     judgeSnap(item: ItemController, ghostPos: Vec2): boolean {
         const own = item.target;
         if (!own) return false;
-        const dOwn = this.distToTarget(own, ghostPos);
-        if (dOwn > px(this.snapPx)) return false;
+
+        // Ghost là cùng mesh/scale/rotation với target → ghost CHỒNG KHÍT target khi pivot trùng pivot.
+        // (Mesh FBX bake toạ độ vào đỉnh nên pivot có thể nằm xa hình, đo bbox sẽ sai.)
+        const dOwn = this.distToCenter(own, ghostPos);
+        const tol = px(this.snapPx) + (this.snapByBounds ? this.halfMinExtentPx(own) : 0);
+        if (dOwn > tol) return false;
 
         if (this.requireNearest) {
             for (const other of this.items) {
                 if (other === item || other.isCompleted || !other.target) continue;
-                if (this.distToTarget(other.target, ghostPos) < dOwn) return false;
+                // pivot trùng nhau (cùng FBX) thì không phân biệt được → bỏ qua
+                if (this.distToCenter(other.target, ghostPos) < dOwn - 1) return false;
             }
         }
         return true;
     }
 
-    /** Khoảng cách (px màn hình) từ p tới target: tới mép bbox chiếu ra màn hình (0 = nằm trong) hoặc tới tâm */
-    private distToTarget(target: Node, p: Vec2): number {
+    /** Khoảng cách (px màn hình) từ p tới pivot của target */
+    private distToCenter(target: Node, p: Vec2): number {
+        const s = this.camera().worldToScreen(target.worldPosition, new Vec3());
+        return Math.hypot(s.x - p.x, s.y - p.y);
+    }
+
+    /** Nửa cạnh nhỏ của bbox target trên màn hình (px) — vật to thì dung sai lớn hơn */
+    private halfMinExtentPx(target: Node): number {
         const cam = this.camera();
-        const tmp = new Vec3();
-        if (!this.snapByBounds) {
-            const s = cam.worldToScreen(target.worldPosition, tmp);
-            return Math.hypot(s.x - p.x, s.y - p.y);
-        }
         const st = target.getComponent(MeshRenderer)?.mesh?.struct;
-        if (!st?.minPosition || !st.maxPosition) {
-            const s = cam.worldToScreen(target.worldPosition, tmp);
-            return Math.hypot(s.x - p.x, s.y - p.y);
-        }
-        const lo = st.minPosition, hi = st.maxPosition, mat = target.worldMatrix;
+        if (!st?.minPosition || !st.maxPosition) return 0;
+        const lo = st.minPosition, hi = st.maxPosition, mat = target.worldMatrix, tmp = new Vec3();
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
         for (let i = 0; i < 8; i++) {
             tmp.set(i & 1 ? hi.x : lo.x, i & 2 ? hi.y : lo.y, i & 4 ? hi.z : lo.z);
@@ -352,9 +355,7 @@ export class ItemManager extends Component implements ItemCallbacks {
             minX = Math.min(minX, s.x); maxX = Math.max(maxX, s.x);
             minY = Math.min(minY, s.y); maxY = Math.max(maxY, s.y);
         }
-        const dx = Math.max(minX - p.x, 0, p.x - maxX);
-        const dy = Math.max(minY - p.y, 0, p.y - maxY);
-        return Math.hypot(dx, dy);
+        return Math.min(maxX - minX, maxY - minY) / 2;
     }
 
     onSnapped(item: ItemController) {

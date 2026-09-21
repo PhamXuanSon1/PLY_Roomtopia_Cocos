@@ -33,5 +33,10 @@
     },
     "allowSleep": false
   },
-  "layer": []
+  "layer": [
+    {
+      "name": "TRAY",
+      "value": 1
+    }
+  ]
 }

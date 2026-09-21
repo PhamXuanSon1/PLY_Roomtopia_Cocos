@@ -70,6 +70,10 @@ export class ItemGraphic extends Component {
 
         // 1. nhân bản target — nếu đã có clone (item sinh từ Preview trong editor) thì dùng lại
         let clone = this.iconClone && this.iconClone.isValid ? this.iconClone : null;
+        // mất reference nhưng trong Icon vẫn còn IconMesh cũ → dùng lại nó thay vì clone thêm
+        if (!clone && this.icon) clone = this.icon.getChildByName('IconMesh');
+        // dọn mọi con thừa trong Icon (tránh 2 bản mesh chồng nhau)
+        if (this.icon) for (const ch of this.icon.children.slice()) if (ch !== clone) ch.destroy();
         if (!clone) {
             clone = instantiate(target);
             clone.name = 'IconMesh';

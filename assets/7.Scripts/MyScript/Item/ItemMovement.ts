@@ -29,6 +29,9 @@ export class ItemMovement extends Component {
     /** Node rỗng trong world, icon được cắm vào đây khi kéo */
     ghostRoot: Node | null = null;
 
+    @property({ tooltip: 'Mặt phẳng z mà item bám theo ngón tay khi kéo. Đặt GẦN camera hơn thanh (BottomBar z≈3.8) để không bị thẻ che' })
+    dragZ = 6;
+
     /** Đang kéo hay không */
     dragging = false;
 
@@ -39,8 +42,8 @@ export class ItemMovement extends Component {
     private floorPlane = new geometry.Plane();  // mặt phẳng z = 0 để "chiếu" ngón tay xuống world
 
     onLoad() {
-        // mặt phẳng đi qua gốc toạ độ, hướng theo trục Z (map nằm quanh z = 0)
-        geometry.Plane.fromNormalAndPoint(this.floorPlane, new Vec3(0, 0, 1), new Vec3(0, 0, 0));
+        // mặt phẳng z = dragZ, hướng theo trục Z (gần camera hơn thanh → item kéo luôn nổi trên thẻ)
+        geometry.Plane.fromNormalAndPoint(this.floorPlane, new Vec3(0, 0, 1), new Vec3(0, 0, this.dragZ));
     }
 
     // =========================================================== 1. bắt đầu kéo

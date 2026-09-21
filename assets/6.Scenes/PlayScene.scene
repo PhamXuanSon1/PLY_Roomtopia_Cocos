@@ -145,9 +145,9 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -6.428,
-      "y": 15.321,
-      "z": 11.133
+      "x": -20.798,
+      "y": 49.572,
+      "z": 36.023
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -194,7 +194,7 @@
     "_staticSettings": {
       "__id__": 6
     },
-    "_visibility": 1073741824,
+    "_visibility": 1073741825,
     "_illuminanceHDR": 120000,
     "_illuminance": 120000,
     "_illuminanceLDR": 1.6927083333333335,
@@ -1055,7 +1055,7 @@
     },
     "_depth": 1,
     "_stencil": 0,
-    "_clearFlags": 6,
+    "_clearFlags": 0,
     "_rect": {
       "__type__": "cc.Rect",
       "x": 0,
@@ -1274,7 +1274,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "06FC0D3ulCCY/uvSYfLSRB",
+    "fileId": "bdyEMCrkNByIC4V9ZVfE14",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -1357,7 +1357,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "73Zf+mYDNDqbcre5WeQh2D"
+    "_id": "d6FKb6RCJOrYpaJiB9848s"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -1392,7 +1392,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "85rBYVVrVKRIAMkXMX6SGp"
+    "_id": "fe4JvlMqpE54OsxLWmNaXf"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -1494,7 +1494,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "12P3PcdBZMYp+wc0HZ6sxq",
+    "fileId": "3arhsyIPdAjK3MwAmrC1d2",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -1577,7 +1577,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "6eqY4FohRO2rc/5nLH8IbI"
+    "_id": "afTrSf0n1ARbKfN/AThxhW"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -1612,7 +1612,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "542aOdgSxCRblintSGpZrP"
+    "_id": "93aTdhYj9MG6teXmueuXtC"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -1714,7 +1714,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "5dcQ4LTyBFpq9nR6OW6OA9",
+    "fileId": "ecfb1REYhAsaV7AOMgHNxb",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -1797,7 +1797,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "ea9DRTY6NOs7f/bMdKKtea"
+    "_id": "00Rrih8I1CWayu4Ip/7vG/"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -1832,7 +1832,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "77LOw7cpdG8Je/fmLALRuo"
+    "_id": "dcb40r+2ZJ9YB1EOzVjwtU"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -1934,7 +1934,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "ee/eYmtpFHKb92bVW5jkML",
+    "fileId": "30oa4/atVNZJmdCSIA7JFC",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -2017,7 +2017,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "48Fkw9i0VCL7/PKJsBoRLF"
+    "_id": "7adRngua5FBrmSoNXs0J95"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -2052,7 +2052,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "1dItvSB8VJvbQ6egnDNO6d"
+    "_id": "95HTttaTRMAKXLeh0Kp3Dw"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -2154,7 +2154,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "d4uDRwhxZNJbg5i/Lmqkbs",
+    "fileId": "27zKBSk7VOUa7gVLy2cdEv",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -2237,7 +2237,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "e8LzYIcTJKx4mhOB+eLuxh"
+    "_id": "53juuJqDdM/aLt9DE+2FqA"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -2276,7 +2276,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "33EgT2EnNJxbZEm9zSkYcr"
+    "_id": "12qVkx13pDZZIPlNq8HOgo"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -2378,7 +2378,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "f1V+tFr+hLhLlLodHrKr6J",
+    "fileId": "c9+Nos0N1KgaQLa9gZm0kE",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -2461,7 +2461,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "a8G6J89jBEZbiIliGteQaj"
+    "_id": "c52lRET/hNoLjs6q2bfa7j"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -2496,7 +2496,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "74Am5FKqZEp4KLw2aStD6d"
+    "_id": "0aDrqFWOtNcqziUCBO6OL2"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -2598,7 +2598,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "3c5rsNTP1IgLZANSDCT2Ld",
+    "fileId": "72FmWkHrFCLYaES4A4S2xu",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -2681,7 +2681,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "827bDGDHZP1bwB3jTJUB3p"
+    "_id": "64Q60MbrJIqaUzVyg1vWgF"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -2716,7 +2716,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "ebQ4EG9YBFMLqcYvW60dtb"
+    "_id": "11XiF+hIZE9581Hx+foBx9"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -2818,7 +2818,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "e5YzCaCplBy6j4aQKFl6BT",
+    "fileId": "85WG+LiNVBbYXn60/ydlez",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -2901,7 +2901,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "29+jh6wYREPrP4t4AeWQtK"
+    "_id": "60tKjpu9dGUIapHcI8nr/+"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -2936,7 +2936,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "10UkmGPqhJG4flvsYAbqeZ"
+    "_id": "658EU9GbNOHoLsS2an1RT9"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -3038,7 +3038,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "c6N3EdYhlGspTxPshvjGvO",
+    "fileId": "deBBbKLPdJbr8Df9wJhnZu",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -3121,7 +3121,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "b8gimYxT5Kt4rOdq5AZSnX"
+    "_id": "f4s+QZEbVDQJxAamUOHWMi"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -3156,7 +3156,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "02i7w/BVJLLYUiz4wkMxKG"
+    "_id": "bcuRN4sKBAiriK44/GXCgE"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -3258,7 +3258,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "f2SxUQmXpMoZx+v6HNqrS6",
+    "fileId": "a6h5tXdNlHVLhU6N2KT8Yt",
     "prefabRootNode": null,
     "mountedChildren": [
       {
@@ -3341,7 +3341,7 @@
       "y": -61.66326651288595,
       "z": -19.939820919152588
     },
-    "_id": "00YlVTe3NBppqYW0BYP3bm"
+    "_id": "adSihTPZVDuYb9yQTdWGtD"
   },
   {
     "__type__": "cc.MeshRenderer",
@@ -3376,7 +3376,7 @@
     "_reflectionProbeBlendWeight": 0,
     "_enabledGlobalStandardSkinObject": false,
     "_enableMorph": true,
-    "_id": "eamrrZ+vhBuKMzw1AeuYqB"
+    "_id": "000BjwbCRKhJMLUqG5FLiz"
   },
   {
     "__type__": "cc.ModelBakeSettings",
@@ -3424,7 +3424,7 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": 2280,
+      "x": -720,
       "y": 0,
       "z": 0
     }
@@ -15399,7 +15399,7 @@
     "edgePad": 120,
     "cullPad": 215,
     "grayOthers": true,
-    "snapPx": 40,
+    "snapPx": 100,
     "snapByBounds": true,
     "requireNearest": true,
     "_showCells": true,
