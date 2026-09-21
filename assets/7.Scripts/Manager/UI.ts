@@ -125,8 +125,8 @@ export class UI extends Component {
     firstMove() {
         if(this.first) {
             this.first = false;
-            this.fisrtOn.forEach(node => node.active = true);
-            this.firstOff.forEach(node => node.active = false);
+            this.fisrtOn.forEach(node => { if (node) node.active = true; });
+            this.firstOff.forEach(node => { if (node) node.active = false; });
         }
     }
 

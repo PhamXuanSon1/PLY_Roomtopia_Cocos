@@ -11,7 +11,6 @@ export const CULL_PAD_PX = 150;    // ô còn hiện khi tâm cách mép thanh �
 export const TRAY_Y_OFFSET = 2.75; // thanh cách đáy màn hình
 export const CULL_PAD = 0.8;       // ô còn hiển thị khi x ∈ [left-pad, right+pad]
 
-export const HEIGHT_OFFSET = 1.3;  // ghost nhấc cao hơn ngón tay
 export const FOLLOW_LERP = 15;
 export const SCROLL_GAIN = 1;      // 1 = thanh đi đúng bằng ngón tay
 export const SCROLL_LERP = 8;

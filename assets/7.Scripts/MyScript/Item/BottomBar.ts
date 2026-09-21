@@ -1,21 +1,18 @@
-import { _decorator, Camera, Component, EventTouch, Input, input, Label, math, Node, UITransform, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Component, EventTouch, Input, input, Label, math, Node, UITransform, Vec2, Vec3, view } from 'cc';
 import { ui } from '../../Manager/UI';
 const { ccclass, property } = _decorator;
 
 /**
- * Điều khiển giao diện thanh bar phía dưới (BottomBar).
- * Hỗ trợ kéo trái/phải để scroll `content` (đơn vị local của BottomBar, 1080 = full width).
+ * Thanh bar phía dưới (BottomBar).
+ *  - Hold trong dải content rồi kéo ngang → cộng dồn `offset` (local px, không giới hạn).
+ *    ItemManager đọc `offset` mỗi frame để xếp item theo vòng lặp.
+ *  - Kéo lên → phát EVENT_LIFT để ItemManager nhấc item.
+ *  - Chỉ kéo được khi ItemManager gọi setScrollable(true) (item tràn thanh).
  */
 @ccclass('BottomBar')
 export class BottomBar extends Component {
     @property(Label)
     countLabel: Label | null = null;
-
-    @property(Node)
-    tabNode: Node | null = null;
-
-    @property(Node)
-    bgNode: Node | null = null;
 
     @property({ type: Node, tooltip: 'Node chứa item, sẽ bị dịch theo trục X khi kéo. Để trống → tự tạo child "Content"' })
     content: Node | null = null;
@@ -26,11 +23,11 @@ export class BottomBar extends Component {
     @property({ tooltip: 'Cho phép kéo scroll' })
     scrollEnabled = true;
 
-    @property({ tooltip: 'Giới hạn X nhỏ nhất của content (local)' })
-    minX = 0;
+    @property({ tooltip: 'Tự đặt UITransform.width của thanh = chiều ngang màn hình (theo camera) → vùng hiện item phủ hết màn' })
+    fitWidthToScreen = true;
 
-    @property({ tooltip: 'Giới hạn X lớn nhất của content (local)' })
-    maxX = 0;
+    @property({ tooltip: 'Chiều cao (local px) của dải content quanh content.y — chỉ chạm trong dải này mới kéo được' })
+    hitHeight = 250;
 
     @property({ tooltip: 'Ngón tay phải đi quá số px này mới tính là kéo' })
     dragThresholdPx = 8;
@@ -47,14 +44,22 @@ export class BottomBar extends Component {
     /** Đang kéo thanh (để script khác biết mà không xử lý touch) */
     get isDragging() { return this._dragging; }
 
+    /** Offset scroll hiện tại (local px, không giới hạn — ItemManager tự wrap theo chu kỳ) */
+    get offset() { return this._offset; }
+
+    /** Có được kéo trái/phải không (ItemManager bật khi item tràn màn hình) */
+    get scrollable() { return this._scrollable; }
+
     private _touchId = -1;
     private _dragging = false;
     private _start = new Vec2();
     private _last = new Vec2();
-    private _targetX = 0;
-    private _contentWidth = 0;
+    private _offset = 0;
+    private _targetOffset = 0;
+    private _scrollable = false;
     private _tmpA = new Vec3();
     private _tmpB = new Vec3();
+    private _fitKey = '';
 
     onLoad() {
         if (!this.content) {
@@ -62,7 +67,7 @@ export class BottomBar extends Component {
             this.content.layer = this.node.layer;
             this.content.setParent(this.node);
         }
-        this._targetX = this.content.position.x;
+        if (this.fitWidthToScreen) this.fitWidth();
     }
 
     onEnable() {
@@ -88,7 +93,7 @@ export class BottomBar extends Component {
      */
     setCount(current: number, total: number) {
         if (this.countLabel) {
-            this.countLabel.string = `${current}/${total}`;
+            this.countLabel.string = `${current} / ${total}`;
         }
     }
 
@@ -102,29 +107,27 @@ export class BottomBar extends Component {
     }
 
     /**
-     * Đặt giới hạn scroll theo tổng chiều rộng content (local px).
-     * Content rộng hơn thanh mới được kéo; content neo mép trái.
+     * Bật/tắt kéo. ItemManager gọi: item tràn thanh → true (loop), đủ chỗ → false.
+     * Tắt thì offset về 0.
      */
-    setContentWidth(contentWidth: number) {
-        this._contentWidth = contentWidth;
-        const barW = this.getComponent(UITransform)?.contentSize.width ?? 1080;
-        this.maxX = 0;
-        this.minX = Math.min(0, barW - contentWidth);
-        this.scrollTo(this._targetX, true);
+    setScrollable(on: boolean) {
+        this._scrollable = on;
+        if (!on) {
+            this._offset = this._targetOffset = 0;
+            this._touchId = -1;
+            this._dragging = false;
+        }
     }
 
-    scrollTo(x: number, immediate = false) {
-        this._targetX = math.clamp(x, this.minX, this.maxX);
-        if (immediate && this.content) {
-            const p = this.content.position;
-            this.content.setPosition(this._targetX, p.y, p.z);
-        }
+    resetScroll() {
+        this._offset = this._targetOffset = 0;
     }
 
     // ------------------------------------------------------------ touch
 
     private onTouchStart(e: EventTouch) {
         if (!this.scrollEnabled || this._touchId !== -1) return;
+        // không scroll được vẫn cần bắt touch để phát EVENT_LIFT
         const loc = e.getLocation();
         if (!this.hitTest(loc)) return;
         this._touchId = e.getID();
@@ -150,15 +153,14 @@ export class BottomBar extends Component {
                 return;
             }
 
+            if (!this._scrollable) { this._touchId = -1; return; }   // đủ chỗ → không kéo ngang
             this._dragging = true;
             this._last.set(cur);
         }
 
         const dxPx = cur.x - this._last.x;
         const ppu = this.pixelsPerUnit();
-        if (ppu > 0) {
-            this._targetX = math.clamp(this._targetX + dxPx / ppu, this.minX, this.maxX);
-        }
+        if (ppu > 0) this._targetOffset += dxPx / ppu;
         this._last.set(cur);
     }
 
@@ -169,13 +171,34 @@ export class BottomBar extends Component {
     }
 
     update(dt: number) {
-        if (!this.content) return;
-        const p = this.content.position;
-        if (Math.abs(p.x - this._targetX) < 0.01) return;
-        const x = this.followLerp > 0
-            ? math.lerp(p.x, this._targetX, Math.min(1, dt * this.followLerp))
-            : this._targetX;
-        this.content.setPosition(x, p.y, p.z);
+        if (this.fitWidthToScreen) this.fitWidth();
+        if (Math.abs(this._offset - this._targetOffset) < 0.01) { this._offset = this._targetOffset; return; }
+        this._offset = this.followLerp > 0
+            ? math.lerp(this._offset, this._targetOffset, Math.min(1, dt * this.followLerp))
+            : this._targetOffset;
+    }
+
+    // ------------------------------------------------------------ fit
+
+    /** Chiều ngang màn hình đổi ra local px của thanh (camera ortho: 2·orthoHeight·aspect / worldScale.x) */
+    screenWidthLocal(): number {
+        const cam = this.camera();
+        if (!cam) return this.getComponent(UITransform)?.contentSize.width ?? 1080;
+        const size = view.getVisibleSize();
+        const worldW = 2 * cam.orthoHeight * (size.width / size.height);
+        return worldW / (this.node.worldScale.x || 1);
+    }
+
+    /** UITransform.width = chiều ngang màn hình; chỉ tính lại khi camera/màn hình đổi */
+    fitWidth() {
+        const cam = this.camera();
+        const ut = this.getComponent(UITransform);
+        if (!cam || !ut) return;
+        const size = view.getVisibleSize();
+        const key = `${cam.orthoHeight}|${size.width}|${size.height}|${this.node.worldScale.x}`;
+        if (key === this._fitKey) return;
+        this._fitKey = key;
+        ut.setContentSize(this.screenWidthLocal(), ut.contentSize.height);
     }
 
     // ------------------------------------------------------------ helpers
@@ -197,18 +220,21 @@ export class BottomBar extends Component {
         return Math.hypot(b.x - a.x, b.y - a.y);
     }
 
-    /** Touch có nằm trong AABB screen-space của thanh không (UITransform của node này) */
+    /**
+     * Touch có nằm trong dải content không: rộng = UITransform.width của thanh,
+     * cao = hitHeight, tâm dọc = content.y (AABB screen-space).
+     */
     hitTest(p: Vec2): boolean {
         const cam = this.camera();
-        const ut = this.getComponent(UITransform);
-        if (!cam || !ut) return true;
-        const { width, height } = ut.contentSize;
-        const ax = ut.anchorX, ay = ut.anchorY;
+        if (!cam || !this.content) return true;
+        const width = this.getComponent(UITransform)?.contentSize.width ?? 1080;
+        const cy = this.content.position.y;
+        const h = this.hitHeight / 2;
         const mat = this.node.worldMatrix;
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
         const corners = [
-            [-ax * width, -ay * height], [(1 - ax) * width, -ay * height],
-            [-ax * width, (1 - ay) * height], [(1 - ax) * width, (1 - ay) * height],
+            [-width / 2, cy - h], [width / 2, cy - h],
+            [-width / 2, cy + h], [width / 2, cy + h],
         ];
         for (const [x, y] of corners) {
             Vec3.transformMat4(this._tmpA, this._tmpA.set(x, y, 0), mat);

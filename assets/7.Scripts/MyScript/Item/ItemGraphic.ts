@@ -103,7 +103,7 @@ export class ItemGraphic extends Component {
         c.setParent(this.icon!);
         c.setPosition(0, 0, 0);
         c.setScale(this.iconScale, this.iconScale, this.iconScale);
-        c.layer = this.icon!.layer;
+        ItemGraphic.setLayerRecursive(c, this.icon!.layer);
 
         // giữ đúng hướng như target trong map → camera nhìn icon y hệt nhìn vật thật (+ iconEuler nếu muốn chỉnh)
         const extra = Quat.fromEuler(new Quat(), this.iconEuler.x, this.iconEuler.y, this.iconEuler.z);
@@ -160,6 +160,11 @@ export class ItemGraphic extends Component {
         ItemGraphic.fitCache.set(key, k);
         ItemGraphic.posCache.set(key, this.iconBasePos.clone());
         return k;
+    }
+
+    static setLayerRecursive(n: Node, layer: number) {
+        n.layer = layer;
+        for (const ch of n.children) ItemGraphic.setLayerRecursive(ch, layer);
     }
 
     private setupShadow() {

@@ -1,5 +1,4 @@
-import { _decorator, Camera, Component, geometry, Node, Vec2, Vec3 } from 'cc';
-import { FOLLOW_LERP, HEIGHT_OFFSET, SNAP_PX } from '../Config/TrayConfig';
+import { _decorator, Camera, Component, geometry, MeshRenderer, Node, Vec2, Vec3 } from 'cc';
 import { ItemGraphic } from './ItemGraphic';
 const { ccclass, property } = _decorator;
 
@@ -12,9 +11,9 @@ export type ReleaseResult = 'snap' | 'miss';
  *
  * Luồng chạy:
  *   1. begin(ngón tay)  -> bốc iconClone ra ghostRoot (world), phóng to bằng target, đặt dưới ngón tay
- *   2. move(ngón tay)   -> ghi nhớ điểm cần tới;  update(dt) -> trượt dần tới đó cho mượt
- *   3. release()        -> đo khoảng cách icon ↔ target trên màn hình
- *                          gần => 'snap' (đúng chỗ)  |  xa => 'miss' (icon quay về ô)
+ *   2. move(ngón tay)   -> icon bám ĐÚNG dưới ngón tay (tâm bbox của icon = điểm chạm, không lerp)
+ *   3. release()        -> trả vị trí ghost trên màn hình cho ItemManager phán snap/miss
+ *                          (ngưỡng, bbox, gần nhất... cấu hình ở ItemManager), icon quay về ô
  *
  * Script này KHÔNG tự bắt touch (ItemManager làm) và KHÔNG đổi màu (ItemGraphic làm).
  */
@@ -34,7 +33,8 @@ export class ItemMovement extends Component {
     dragging = false;
 
     // ---- biến nội bộ ----
-    private goal = new Vec3();                  // điểm icon cần tới
+    private goal = new Vec3();                  // điểm ngón tay trong world (trên mặt z = 0)
+    private pivotOffset = new Vec3();           // tâm bbox − pivot của icon (world), để tâm hình nằm dưới ngón tay
     private ray = new geometry.Ray();
     private floorPlane = new geometry.Plane();  // mặt phẳng z = 0 để "chiếu" ngón tay xuống world
 
@@ -53,52 +53,55 @@ export class ItemMovement extends Component {
         icon.setParent(this.ghostRoot!);
         icon.setWorldScale(target.worldScale);
         icon.setWorldRotation(target.worldRotation);
-        icon.layer = this.ghostRoot!.layer;
+        ItemGraphic.setLayerRecursive(icon, this.ghostRoot!.layer);   // về layer world → WCam vẽ, không bị cắt
 
-        // đặt ngay dưới ngón tay (cao hơn 1 chút để tay không che)
-        this.fingerToWorld(fingerPos, this.goal);
-        this.goal.y += HEIGHT_OFFSET;
-        icon.setWorldPosition(this.goal);
+        // pivot của mesh có thể lệch tâm hình (vd nằm ở đáy) → tính offset để TÂM bbox nằm dưới ngón tay
+        this.computePivotOffset(icon);
 
+        // đặt ngay dưới ngón tay
         this.dragging = true;
+        this.move(fingerPos);
     }
 
     // =========================================================== 2. đang kéo
+    /** Icon bám thẳng theo ngón tay, không lerp, không cộng offset */
     move(fingerPos: Vec2) {
         if (!this.dragging) return;
         this.fingerToWorld(fingerPos, this.goal);
-        this.goal.y += HEIGHT_OFFSET;
-    }
-
-    update(dt: number) {
-        if (!this.dragging) return;
         const icon = this.graphic!.iconClone!;
-
-        // trượt dần từ vị trí hiện tại tới goal (lerp) cho mượt
-        const now = icon.worldPosition;
-        const t = Math.min(1, dt * FOLLOW_LERP);   // 0..1
         icon.setWorldPosition(
-            now.x + (this.goal.x - now.x) * t,
-            now.y + (this.goal.y - now.y) * t,
-            now.z + (this.goal.z - now.z) * t,
+            this.goal.x - this.pivotOffset.x,
+            this.goal.y - this.pivotOffset.y,
+            this.goal.z - this.pivotOffset.z,
         );
     }
 
+    /** offset (world) từ pivot tới tâm bbox của icon, tính theo rotation + scale hiện tại của icon */
+    private computePivotOffset(icon: Node) {
+        this.pivotOffset.set(0, 0, 0);
+        const st = icon.getComponent(MeshRenderer)?.mesh?.struct;
+        if (!st?.minPosition || !st.maxPosition) return;
+        const c = new Vec3(
+            (st.minPosition.x + st.maxPosition.x) / 2,
+            (st.minPosition.y + st.maxPosition.y) / 2,
+            (st.minPosition.z + st.maxPosition.z) / 2,
+        );
+        Vec3.multiply(c, c, icon.worldScale);
+        Vec3.transformQuat(this.pivotOffset, c, icon.worldRotation);
+    }
+
     // =========================================================== 3. thả tay
-    release(): ReleaseResult {
-        if (!this.dragging) return 'miss';
+    /**
+     * Thả tay: đưa icon về ô, trả về vị trí ghost trên màn hình (pixel) để ItemManager phán.
+     * null = không đang kéo.
+     */
+    release(): Vec2 | null {
+        if (!this.dragging) return null;
         this.dragging = false;
-
         const g = this.graphic!;
-        const icon = g.iconClone!;
-
-        // đổi icon và target sang toạ độ màn hình (pixel) rồi đo khoảng cách
-        const distance = Vec2.distance(this.toScreen(icon.worldPosition), this.toScreen(g.target!.worldPosition));
-        const result: ReleaseResult = distance < SNAP_PX() ? 'snap' : 'miss';
-
-        // dù đúng hay sai, icon về lại ô (snap thì ItemController sẽ ẩn cả ô)
+        const pos = this.toScreen(g.iconClone!.worldPosition);
         g.putIconInCell();
-        return result;
+        return pos;
     }
 
     /** Huỷ giữa chừng (touch cancel, app bị pause) — coi như thả trượt */

@@ -6,6 +6,8 @@ const { ccclass, property } = _decorator;
 export enum ItemState { InTray, Dragging, Completed }
 
 export interface ItemCallbacks {
+    /** Thả tay tại ghostPos (pixel màn hình) → có snap vào target của item không? */
+    judgeSnap(item: ItemController, ghostPos: Vec2): boolean;
     /** Thả đúng target → ItemManager gỡ ô, đếm tiến trình */
     onSnapped(item: ItemController): void;
     /** Thả sai / huỷ → icon đã về thanh */
@@ -50,11 +52,22 @@ export class ItemController extends Component {
     }
 
     // ------------------------------------------------------------ input (từ ItemManager)
+    private _cellWasActive = false;
+
     onSelect(screenPos: Vec2) {
         if (this.state !== ItemState.InTray) return;
         this.state = ItemState.Dragging;
         this.graphic!.stopHint();
+        // ẩn thẻ Cell của ô này khi đang kéo (ô trống)
+        const cell = this.graphic!.cell;
+        if (cell) { this._cellWasActive = cell.active; cell.active = false; }
         this.movement!.begin(screenPos);
+    }
+
+    /** Thả trượt/huỷ → thẻ Cell hiện lại như trước */
+    private restoreCell() {
+        const cell = this.graphic!.cell;
+        if (cell) cell.active = this._cellWasActive;
     }
 
     onMove(screenPos: Vec2) {
@@ -64,12 +77,14 @@ export class ItemController extends Component {
 
     onRelease() {
         if (this.state !== ItemState.Dragging) return;
-        const result = this.movement!.release();
-        if (result === 'snap') {
+        const ghostPos = this.movement!.release();
+        const snap = !!ghostPos && !!this._cb?.judgeSnap(this, ghostPos);
+        if (snap) {
             this.complete();
         } else {
             this.state = ItemState.InTray;
-            this._cb?.onReturned(this, result);
+            this.restoreCell();
+            this._cb?.onReturned(this, 'miss');
         }
     }
 
@@ -77,6 +92,7 @@ export class ItemController extends Component {
         if (this.state !== ItemState.Dragging) return;
         this.movement!.cancel();
         this.state = ItemState.InTray;
+        this.restoreCell();
         this._cb?.onReturned(this, 'miss');
     }
 

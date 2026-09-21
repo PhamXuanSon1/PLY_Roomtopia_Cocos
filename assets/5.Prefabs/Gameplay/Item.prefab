@@ -81,7 +81,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 3
@@ -100,7 +100,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 0
+      "z": -500
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -139,8 +139,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 200,
-      "height": 200
+      "width": 190,
+      "height": 190
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -176,8 +176,8 @@
       "b": 255,
       "a": 255
     },
-    "cornerRadius": 0,
-    "cornerSegments": 6,
+    "cornerRadius": 28,
+    "cornerSegments": 8,
     "_id": ""
   },
   {
