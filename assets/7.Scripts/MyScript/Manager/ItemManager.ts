@@ -2,6 +2,7 @@ import { _decorator, Camera, Component, director, EventTouch, Input, input, inst
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { BottomBar } from '../Item/BottomBar';
+import { BarClipCamera } from '../Item/BarClipCamera';
 import { ItemCallbacks, ItemController } from '../Item/ItemController';
 import { ReleaseResult } from '../Item/ItemMovement';
 import { CELL_PX, CULL_PAD_PX, EDGE_PAD_PX, ICON_FILL, SPACING_PX, px } from '../Config/TrayConfig';
@@ -27,8 +28,11 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ type: BottomBar, tooltip: 'Thanh dưới màn hình' })
     bar: BottomBar | null = null;
 
-    @property({ type: Node, tooltip: 'Node rỗng trong world để cắm icon khi kéo (Gameplay/DragGhost)' })
+    @property({ type: Node, tooltip: 'Node rỗng trong world để cắm icon khi kéo (Gameplay/DragGhost). Layer = TRAY để BarCam vẽ' })
     ghostRoot: Node | null = null;
+
+    @property({ type: BarClipCamera, tooltip: 'BarCam: khi kéo item sẽ mở viewport cả màn → ghost (layer TRAY) vẽ đè lên map + CountLabel' })
+    clipCam: BarClipCamera | null = null;
 
     @property({ type: Camera, tooltip: 'Camera vẽ map. Để trống → ui.wCamera' })
     cam: Camera | null = null;
@@ -288,7 +292,15 @@ export class ItemManager extends Component implements ItemCallbacks {
 
         this.dragging = item;
         this.touchId = -2;                 // chờ TOUCH_MOVE đầu tiên để lấy id thật
+        if (this.clipCam) this.clipCam.fullScreen = true;   // ghost nổi trên map + label
         item.onSelect(startPos);
+    }
+
+    /** Kết thúc kéo (thả / huỷ): đóng viewport BarCam về vùng thanh */
+    private endDrag() {
+        this.dragging = null;
+        this.touchId = -1;
+        if (this.clipCam) this.clipCam.fullScreen = false;
     }
 
     /** Ô nào đang nằm dưới ngón tay (so trên màn hình, nửa ô = cellPx/2) */
@@ -315,16 +327,14 @@ export class ItemManager extends Component implements ItemCallbacks {
     private onTouchEnd(e: EventTouch) {
         if (!this.dragging || (this.touchId !== -2 && e.getID() !== this.touchId)) return;
         const item = this.dragging;
-        this.dragging = null;
-        this.touchId = -1;
+        this.endDrag();
         item.onRelease();                  // → onSnapped hoặc onReturned
     }
 
     private onTouchCancel(e: EventTouch) {
         if (!this.dragging) return;
         const item = this.dragging;
-        this.dragging = null;
-        this.touchId = -1;
+        this.endDrag();
         item.onCancel();
     }
 

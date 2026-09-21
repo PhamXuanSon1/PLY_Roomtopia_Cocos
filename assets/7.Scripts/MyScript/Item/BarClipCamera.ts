@@ -16,6 +16,12 @@ export class BarClipCamera extends Component {
     @property({ tooltip: 'Nới vùng cắt thêm bấy nhiêu px màn hình mỗi bên (0 = sát mép thanh)' })
     paddingPx = 0;
 
+    /**
+     * true = bỏ cắt, viewport = cả màn hình. ItemManager bật khi đang kéo item:
+     * ghost giữ layer TRAY nên được camera này (chạy SAU WCam) vẽ đè lên map + CountLabel.
+     */
+    fullScreen = false;
+
     private cam: Camera | null = null;
     private mainCam: Camera | null = null;
     private tmp = new Vec3();
@@ -45,6 +51,7 @@ export class BarClipCamera extends Component {
         minX -= this.paddingPx; maxX += this.paddingPx; minY -= this.paddingPx; maxY += this.paddingPx;
 
         const W = screen.windowSize.width, H = screen.windowSize.height;
+        if (this.fullScreen) { minX = 0; minY = 0; maxX = W; maxY = H; }
         minX = Math.max(0, minX); minY = Math.max(0, minY); maxX = Math.min(W, maxX); maxY = Math.min(H, maxY);
         const rw = maxX - minX, rh = maxY - minY;
         if (rw <= 1 || rh <= 1) { this.cam.enabled = false; return; }

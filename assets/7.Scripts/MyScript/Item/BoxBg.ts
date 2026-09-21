@@ -65,4 +65,21 @@ export class BoxBg extends Component {
         ut.setContentSize(w, h);
         this.node.setPosition(0, (top + bottom) / 2 / k, this.node.position.z);
     }
+
+    /**
+     * Rect phần hộp NHÌN THẤY trên màn hình, trong camera space (world unit, gốc = tâm camera).
+     * Dùng cho camera bất kỳ có cùng orthoHeight (WCam) → FitInBox căn map 3D vào hộp.
+     */
+    getCamRect(orthoHeight: number) {
+        const size = view.getVisibleSize();
+        const k = 1 / (this.node.scale.x || 0.01);
+        const halfH = orthoHeight;
+        const halfW = halfH * size.width / size.height;
+        return {
+            left:   Math.max(-halfW, -halfW + this.sideMargin / k),
+            right:  Math.min( halfW,  halfW - this.sideMargin / k),
+            top:    halfH,                                            // topOverflow tràn ra ngoài màn hình → cắt
+            bottom: halfH - 2 * halfH * this.heightPercent / 100,
+        };
+    }
 }
