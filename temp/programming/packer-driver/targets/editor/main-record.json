@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 18893980.8221,
+      "mTimestamp": 19416924.8697,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -1743,7 +1743,7 @@
           }
         },
         {
-          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolControl.ts",
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/WinReact.ts",
           "resolved": "__unresolved_53",
           "loc": {
             "start": {
@@ -1752,77 +1752,91 @@
             },
             "end": {
               "line": 5,
-              "column": 5918
+              "column": 5925
+            }
+          }
+        },
+        {
+          "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolControl.ts",
+          "resolved": "__unresolved_54",
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 5941
+            },
+            "end": {
+              "line": 5,
+              "column": 6023
             }
           }
         },
         {
           "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolManager.ts",
-          "resolved": "__unresolved_54",
+          "resolved": "__unresolved_55",
           "loc": {
             "start": {
               "line": 5,
-              "column": 5934
+              "column": 6039
             },
             "end": {
               "line": 5,
-              "column": 6016
+              "column": 6121
             }
           }
         },
         {
           "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolMember.ts",
-          "resolved": "__unresolved_55",
+          "resolved": "__unresolved_56",
           "loc": {
             "start": {
               "line": 5,
-              "column": 6032
+              "column": 6137
             },
             "end": {
               "line": 5,
-              "column": 6113
+              "column": 6218
             }
           }
         },
         {
           "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Sand/SandSimulation.ts",
-          "resolved": "__unresolved_56",
+          "resolved": "__unresolved_57",
           "loc": {
             "start": {
               "line": 5,
-              "column": 6129
+              "column": 6234
             },
             "end": {
               "line": 5,
-              "column": 6214
+              "column": 6319
             }
           }
         },
         {
           "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/AppLovinAnalytics.ts",
-          "resolved": "__unresolved_57",
+          "resolved": "__unresolved_58",
           "loc": {
             "start": {
               "line": 5,
-              "column": 6230
+              "column": 6335
             },
             "end": {
               "line": 5,
-              "column": 6318
+              "column": 6423
             }
           }
         },
         {
           "value": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Tool/GameController.ts",
-          "resolved": "__unresolved_58",
+          "resolved": "__unresolved_59",
           "loc": {
             "start": {
               "line": 5,
-              "column": 6334
+              "column": 6439
             },
             "end": {
               "line": 5,
-              "column": 6419
+              "column": 6524
             }
           }
         }
@@ -2197,6 +2211,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/SnapEffect.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/WinReact.ts"
           },
           "messages": []
         },
@@ -16364,7 +16385,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/SnapEffect.ts": {
       "mTimestamp": {
-        "mtime": 1790055857387.125,
+        "mtime": 1790059101057.9697,
         "uuid": "b20530d8-e1d2-477a-8802-6ad83263fcf2"
       },
       "chunkId": "7c61707e63e344083880ee453cebfd6ec17ef890",
@@ -16384,11 +16405,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 95
+              "column": 103
             },
             "end": {
               "line": 1,
-              "column": 99
+              "column": 107
             }
           }
         },
@@ -16462,6 +16483,58 @@
           "resolved": {
             "type": "module",
             "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts"
+          },
+          "messages": []
+        }
+      ]
+    },
+    "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/WinReact.ts": {
+      "mTimestamp": {
+        "mtime": 1790059187853.95,
+        "uuid": "d3919d87-3003-400e-a540-614c4ed5ec08"
+      },
+      "chunkId": "083af8aebedccc6c87b0ac360bc5ac5d4dad8cc2",
+      "imports": [
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 106
+            },
+            "end": {
+              "line": 1,
+              "column": 110
+            }
+          }
+        }
+      ],
+      "type": "esm",
+      "resolutions": [
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
           },
           "messages": []
         }

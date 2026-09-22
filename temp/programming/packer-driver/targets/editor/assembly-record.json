@@ -4261,6 +4261,39 @@
       },
       "timestamp": 1790053061354
     },
+    "7c61707e63e344083880ee453cebfd6ec17ef890": {
+      "imports": {
+        "__unresolved_0": {
+          "resolved": {
+            "type": "chunk",
+            "id": "6a5019a719a9014c047e67aa1cf34453ab8392ce"
+          },
+          "messages": []
+        },
+        "__unresolved_1": {
+          "resolved": {
+            "type": "chunk",
+            "id": "930b50fe3dce78a017ff0dff251ffee06982848f"
+          },
+          "messages": []
+        },
+        "__unresolved_2": {
+          "resolved": {
+            "type": "chunk",
+            "id": "1b7f82203514813a6554f85b64a57be5be9a49a1"
+          },
+          "messages": []
+        },
+        "cc": {
+          "resolved": {
+            "type": "chunk",
+            "id": "93ba276ea7b26ffcdc433fab14afc1ed6f05647b"
+          },
+          "messages": []
+        }
+      },
+      "timestamp": 1790059120781
+    },
     "6d8fd2b0177941b032ddc0733af48a561fb60657": {
       "imports": {
         "__unresolved_0": {
@@ -4609,39 +4642,46 @@
         "__unresolved_53": {
           "resolved": {
             "type": "chunk",
-            "id": "3c0337c415922e62a53d7ced45323b7a10938d94"
+            "id": "083af8aebedccc6c87b0ac360bc5ac5d4dad8cc2"
           },
           "messages": []
         },
         "__unresolved_54": {
           "resolved": {
             "type": "chunk",
-            "id": "d45843bae44fec706d8a5d8755495261e6b4fa81"
+            "id": "3c0337c415922e62a53d7ced45323b7a10938d94"
           },
           "messages": []
         },
         "__unresolved_55": {
           "resolved": {
             "type": "chunk",
-            "id": "7de9035049133365dae4f37d32e1704958ad6d16"
+            "id": "d45843bae44fec706d8a5d8755495261e6b4fa81"
           },
           "messages": []
         },
         "__unresolved_56": {
           "resolved": {
             "type": "chunk",
-            "id": "1011d47620ab228f6b3c4ecb204ca850d327182b"
+            "id": "7de9035049133365dae4f37d32e1704958ad6d16"
           },
           "messages": []
         },
         "__unresolved_57": {
           "resolved": {
             "type": "chunk",
-            "id": "431ba5b5278d2099b378c7a96a1ef6d1424fdfc9"
+            "id": "1011d47620ab228f6b3c4ecb204ca850d327182b"
           },
           "messages": []
         },
         "__unresolved_58": {
+          "resolved": {
+            "type": "chunk",
+            "id": "431ba5b5278d2099b378c7a96a1ef6d1424fdfc9"
+          },
+          "messages": []
+        },
+        "__unresolved_59": {
           "resolved": {
             "type": "chunk",
             "id": "6c223908d2802fbf3b237822f8f0e6631e91db6d"
@@ -4677,31 +4717,10 @@
           "messages": []
         }
       },
-      "timestamp": 1790058701752
+      "timestamp": 1790059224649
     },
-    "7c61707e63e344083880ee453cebfd6ec17ef890": {
+    "083af8aebedccc6c87b0ac360bc5ac5d4dad8cc2": {
       "imports": {
-        "__unresolved_0": {
-          "resolved": {
-            "type": "chunk",
-            "id": "6a5019a719a9014c047e67aa1cf34453ab8392ce"
-          },
-          "messages": []
-        },
-        "__unresolved_1": {
-          "resolved": {
-            "type": "chunk",
-            "id": "930b50fe3dce78a017ff0dff251ffee06982848f"
-          },
-          "messages": []
-        },
-        "__unresolved_2": {
-          "resolved": {
-            "type": "chunk",
-            "id": "1b7f82203514813a6554f85b64a57be5be9a49a1"
-          },
-          "messages": []
-        },
         "cc": {
           "resolved": {
             "type": "chunk",
@@ -4710,7 +4729,7 @@
           "messages": []
         }
       },
-      "timestamp": 1790058701829
+      "timestamp": 1790059224723
     }
   },
   "entries": {
@@ -4769,6 +4788,7 @@
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Types.ts": "e3160e3fb122ac83d8f5ca30fbcf2e0f18136417",
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Yielders.ts": "ba3f929293326d54bae1c5f2465e6cb2fcd7a7c0",
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/SnapEffect.ts": "7c61707e63e344083880ee453cebfd6ec17ef890",
+    "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/WinReact.ts": "083af8aebedccc6c87b0ac360bc5ac5d4dad8cc2",
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolControl.ts": "3c0337c415922e62a53d7ced45323b7a10938d94",
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolManager.ts": "d45843bae44fec706d8a5d8755495261e6b4fa81",
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Pool/PoolMember.ts": "7de9035049133365dae4f37d32e1704958ad6d16",

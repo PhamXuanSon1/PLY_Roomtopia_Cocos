@@ -328,7 +328,9 @@
             "4.Sounds\\sfx_4.mp3",
             "4.Sounds\\sfx_3.mp3",
             "2.Fonts\\Nunito-Black.ttf",
-            "4.Sounds\\PickItem.mp3"
+            "4.Sounds\\PickItem.mp3",
+            "7.Scripts\\MyScript\\Utils\\WinReact.ts",
+            "5.Prefabs\\WinReact.prefab"
         ]
     }
 }
