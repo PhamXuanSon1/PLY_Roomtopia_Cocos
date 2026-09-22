@@ -11,5 +11,6 @@
   "channel_Moloco": false,
   "channel_TikTok": false,
   "channel_Unity": false,
-  "channel_IronSource": false
+  "channel_IronSource": false,
+  "compressionQuality": 50
 }

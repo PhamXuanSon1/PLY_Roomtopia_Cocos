@@ -163,3 +163,659 @@ Warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: 
     at build (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\index.ccc:1:4763)
     at Ipc.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\msg-util.ccc:1:210)
 9-22-2026 09:45:13 - log: [texture-compress-batch] enabled PNG80 on 19 asset(s) in db://assets/3.Sprites
+9-22-2026 09:46:22 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:46:22 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:46:22 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:46:29 - warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts
+Warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at Socket.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\worker-pools\sub-process-manager.ccc:1:2763)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Socket.Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+9-22-2026 09:46:29 - warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts
+Warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at Socket.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\worker-pools\sub-process-manager.ccc:1:2763)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Socket.Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+9-22-2026 09:46:31 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:46:31 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:46:31 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:46:38 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:46:38 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:46:38 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:15 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:15 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:15 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:21 - warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts
+[warning][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts
+Warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts
+[warning][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at Socket.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\worker-pools\sub-process-manager.ccc:1:2763)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Socket.Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+9-22-2026 09:48:24 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:24 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:24 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:29 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:29 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:48:29 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:10 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:10 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:10 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:20 - warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts
+Warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/UI.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/Manager/PointerController.ts
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at Socket.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\worker-pools\sub-process-manager.ccc:1:2763)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Socket.Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+9-22-2026 09:50:20 - warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts
+Warn: [Assets] [buildScriptCommand][[Build.Script.Rollup]] Circular dependency: file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_GameUnit.ts -> file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/ScriptTemplate/Ply_Pool.ts
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at Socket.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\worker-pools\sub-process-manager.ccc:1:2763)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Socket.Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:191:23)
+9-22-2026 09:50:24 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:24 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:24 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\builder\dist\worker\console.ccc:1:2358)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:30 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Sprite-001"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Gameplay\Misc\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "a98d9382-be04-449c-abcb-e05bd30e6d47"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:30 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Lose/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 09:50:30 - warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+Warn: [Assets] The SpriteAtlas used by component "cc.Sprite" in scene "PlayScene" is missing. Detailed information:
+Node path: "UI/Endcard/Win/Sprite/Button/First/Render/Sprite"
+Asset url: "db://assets/6.Scenes/PlayScene"
+Asset file: "F:\CocosProject\PLY_Roomtopia_Cocos\assets\3.Sprites\Base\auto-atlas.pac"
+Asset deleted time: "9/22/2026, 9:44:49 AM"
+Missing uuid: "568166b7-d841-4baf-bb58-9f06238b8991"
+
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at MissingObjectReporter.doReport (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\engine\dist\editor-extends\missing-reporter\missing-object-reporter.ccc:6:68)
+9-22-2026 10:04:22 - warn: [Assets] Unsupported glTF extension: EXT_meshopt_compression {asset(66ecd5ca-8f43-4b31-80bb-f413fc1990f3)}Warn: [Assets] Unsupported glTF extension: EXT_meshopt_compression {asset(66ecd5ca-8f43-4b31-80bb-f413fc1990f3)}
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at GltfConverter.logger [as _logger] (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:4255)
+    at GltfConverter._warnIfExtensionNotSupported (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:18005)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4283
+    at Array.forEach (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4267)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:04:22 - warn: [Assets] Unsupported glTF extension: KHR_mesh_quantization {asset(66ecd5ca-8f43-4b31-80bb-f413fc1990f3)}Warn: [Assets] Unsupported glTF extension: KHR_mesh_quantization {asset(66ecd5ca-8f43-4b31-80bb-f413fc1990f3)}
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at GltfConverter.logger [as _logger] (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:4255)
+    at GltfConverter._warnIfExtensionNotSupported (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:18005)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4283
+    at Array.forEach (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4267)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:04:22 - error: [Assets] Importer exec failed: {asset[F:\CocosProject\PLY_Roomtopia_Cocos\assets\8.Models\Meshs\Lv50_Bathroom\NewFBXRoom\Lv50_Bathroom_Root-compressed.glb](66ecd5ca-8f43-4b31-80bb-f413fc1990f3)}Error: [Assets] Importer exec failed: {asset[F:\CocosProject\PLY_Roomtopia_Cocos\assets\8.Models\Meshs\Lv50_Bathroom\NewFBXRoom\Lv50_Bathroom_Root-compressed.glb](66ecd5ca-8f43-4b31-80bb-f413fc1990f3)}
+    at console.error (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.error (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1536)
+    at ImportTask.importAsset (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\task.ccc:222:29)
+    at ImportTask.exec (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\task.ccc:68:25)
+    at ParallelQueue._generate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\asset-db.ccc:163:25)
+9-22-2026 10:04:22 - error: [Assets] Offset is outside the bounds of the DataViewRangeError: Offset is outside the bounds of the DataView
+    at DataView.prototype.getUint16 (<anonymous>)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:32948
+    at GltfConverter._readAccessor (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:30077)
+    at GltfConverter._readAccessorIntoArray (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:25900)
+    at GltfConverter._readPrimitive (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:21571)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:5438
+    at Array.map (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:5415)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:05:11 - warn: [Assets] Unsupported glTF extension: EXT_meshopt_compression {asset(802793ca-f6f8-4e57-9451-a63e8d95855f)}Warn: [Assets] Unsupported glTF extension: EXT_meshopt_compression {asset(802793ca-f6f8-4e57-9451-a63e8d95855f)}
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at GltfConverter.logger [as _logger] (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:4255)
+    at GltfConverter._warnIfExtensionNotSupported (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:18005)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4283
+    at Array.forEach (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4267)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:05:11 - warn: [Assets] Unsupported glTF extension: KHR_mesh_quantization {asset(802793ca-f6f8-4e57-9451-a63e8d95855f)}Warn: [Assets] Unsupported glTF extension: KHR_mesh_quantization {asset(802793ca-f6f8-4e57-9451-a63e8d95855f)}
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at GltfConverter.logger [as _logger] (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:4255)
+    at GltfConverter._warnIfExtensionNotSupported (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:18005)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4283
+    at Array.forEach (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4267)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:05:11 - error: [Assets] Importer exec failed: {asset[F:\CocosProject\PLY_Roomtopia_Cocos\assets\8.Models\Meshs\Lv50_Bathroom\Lv50_Bathroom_Root-compressed.glb](802793ca-f6f8-4e57-9451-a63e8d95855f)}Error: [Assets] Importer exec failed: {asset[F:\CocosProject\PLY_Roomtopia_Cocos\assets\8.Models\Meshs\Lv50_Bathroom\Lv50_Bathroom_Root-compressed.glb](802793ca-f6f8-4e57-9451-a63e8d95855f)}
+    at console.error (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.error (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1536)
+    at ImportTask.importAsset (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\task.ccc:222:29)
+    at ImportTask.exec (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\task.ccc:68:25)
+    at ParallelQueue._generate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\asset-db.ccc:163:25)
+9-22-2026 10:05:11 - error: [Assets] Offset is outside the bounds of the DataViewRangeError: Offset is outside the bounds of the DataView
+    at DataView.prototype.getUint16 (<anonymous>)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:32948
+    at GltfConverter._readAccessor (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:30077)
+    at GltfConverter._readAccessorIntoArray (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:25900)
+    at GltfConverter._readPrimitive (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:21571)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:5438
+    at Array.map (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:5415)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:12:21 - warn: [Assets] Unsupported glTF extension: KHR_mesh_quantization {asset(802793ca-f6f8-4e57-9451-a63e8d95855f)}Warn: [Assets] Unsupported glTF extension: KHR_mesh_quantization {asset(802793ca-f6f8-4e57-9451-a63e8d95855f)}
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at GltfConverter.logger [as _logger] (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:4255)
+    at GltfConverter._warnIfExtensionNotSupported (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:18005)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4283
+    at Array.forEach (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4267)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:13:11 - warn: [Assets] Unsupported glTF extension: EXT_meshopt_compression {asset(2256b78d-b84b-431a-b8e4-b7a8a7e20cec)}Warn: [Assets] Unsupported glTF extension: EXT_meshopt_compression {asset(2256b78d-b84b-431a-b8e4-b7a8a7e20cec)}
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at GltfConverter.logger [as _logger] (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:4255)
+    at GltfConverter._warnIfExtensionNotSupported (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:18005)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4283
+    at Array.forEach (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4267)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:13:11 - warn: [Assets] Unsupported glTF extension: KHR_mesh_quantization {asset(2256b78d-b84b-431a-b8e4-b7a8a7e20cec)}Warn: [Assets] Unsupported glTF extension: KHR_mesh_quantization {asset(2256b78d-b84b-431a-b8e4-b7a8a7e20cec)}
+    at console.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.warn (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1637)
+    at GltfConverter.logger [as _logger] (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:4255)
+    at GltfConverter._warnIfExtensionNotSupported (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:18005)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4283
+    at Array.forEach (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:4267)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:13:11 - error: [Assets] Importer exec failed: {asset[F:\CocosProject\PLY_Roomtopia_Cocos\assets\8.Models\Meshs\Lv50_Bathroom\FabConvert.com_Lv50_Bathroom_Root-compressed.glb](2256b78d-b84b-431a-b8e4-b7a8a7e20cec)}Error: [Assets] Importer exec failed: {asset[F:\CocosProject\PLY_Roomtopia_Cocos\assets\8.Models\Meshs\Lv50_Bathroom\FabConvert.com_Lv50_Bathroom_Root-compressed.glb](2256b78d-b84b-431a-b8e4-b7a8a7e20cec)}
+    at console.error (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@sentry\core\src\utils-hoist\instrument\console.ts:40:14)
+    at NewConsole.error (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\console.ccc:1:1536)
+    at ImportTask.importAsset (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\task.ccc:222:29)
+    at ImportTask.exec (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\task.ccc:68:25)
+    at ParallelQueue._generate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\asset-db\libs\asset-db.ccc:163:25)
+9-22-2026 10:13:11 - error: [Assets] Offset is outside the bounds of the DataViewRangeError: Offset is outside the bounds of the DataView
+    at DataView.prototype.getUint16 (<anonymous>)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:32948
+    at GltfConverter._readAccessor (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:30077)
+    at GltfConverter._readAccessorIntoArray (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:25900)
+    at GltfConverter._readPrimitive (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:21571)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:5438
+    at Array.map (<anonymous>)
+    at new GltfConverter (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\utils\gltf-converter.ccc:1:5415)
+    at createGlTfReader (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:1894)
+    at GlTfReaderManager.getOrCreate (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf\reader-manager.ccc:1:563)
+    at importSubAssets (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\modules\engine-extensions\extensions\engine-extends\dist\handler\assets\gltf.ccc:1:4996)
+    at CustomImporter.import (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\builtin\asset-db\dist\worker\manager\asset-handler-manager.ccc:1:1249)
+9-22-2026 10:28:57 - log: [Scene] LOADING
+9-22-2026 10:28:57 - log: [Scene] LOADED
+9-22-2026 10:28:57 - log: [Scene] DISPLAYED

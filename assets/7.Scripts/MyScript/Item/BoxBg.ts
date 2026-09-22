@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, Label, Mat4, Node, UITransform, v3, Vec2, Vec3, view } from 'cc';
+import { _decorator, Camera, Component, Label, Layers, Mat4, Node, UITransform, v3, Vec2, Vec3, view } from 'cc';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
 const { ccclass, property, executeInEditMode } = _decorator;
 
@@ -73,6 +73,8 @@ export class BoxBg extends Component {
 
     onLoad() {
         if (!this.cam) this.cam = this.node.parent?.getComponent(Camera) ?? null;
+        // luôn ở layer DEFAULT (WCam vẽ). Trước đây dùng layer BG riêng cho BgCam → scene cũ có thể còn lưu layer 4
+        this.node.layer = Layers.Enum.DEFAULT;
     }
 
     update() {

@@ -39,7 +39,6 @@
             "8.Models\\Materials\\Box",
             "8.Models\\Materials\\Misc",
             "8.Models\\Materials\\Pixel",
-            "8.Models\\Meshs\\Lv3_SofaScene",
             "8.Models\\Meshs\\Lv50_Bathroom",
             "8.Models\\Meshs\\Main",
             "8.Models\\Textures\\Cloud",
@@ -47,7 +46,6 @@
             "8.Models\\Textures\\Lv3_SofaScene",
             "8.Models\\Textures\\Merge",
             "8.Models\\Textures\\Wind",
-            "8.Models\\Meshs\\Lv3_SofaScene\\Materials_Lv3_SofaScene_Root",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root",
             "8.Models\\Shaders\\builtin-camera-texture.effect",
             "8.Models\\Shaders\\builtin-spine.effect",
@@ -306,7 +304,6 @@
             "8.Models\\Materials\\Pixel\\7Black.mtl",
             "8.Models\\Materials\\Pixel\\8Orange.mtl",
             "8.Models\\Materials\\Pixel\\9White.mtl",
-            "8.Models\\Meshs\\Lv3_SofaScene\\Lv3_SofaScene_Root.fbx",
             "8.Models\\Meshs\\Lv50_Bathroom\\Lv50_Bathroom_Root.fbx",
             "8.Models\\Textures\\Cloud\\Cloud.mtl",
             "8.Models\\Textures\\Cloud\\cloud1.png",
@@ -337,16 +334,14 @@
             "8.Models\\Textures\\Wind\\smoke_dusty.png",
             "8.Models\\Textures\\Wind\\trail.mtl",
             "8.Models\\Textures\\Wind\\trail.png",
-            "8.Models\\Meshs\\Lv3_SofaScene\\Materials_Lv3_SofaScene_Root\\M_Texture-0.mtl",
-            "8.Models\\Meshs\\Lv3_SofaScene\\Materials_Lv3_SofaScene_Root\\M_Texture-1.mtl",
-            "8.Models\\Meshs\\Lv3_SofaScene\\Materials_Lv3_SofaScene_Root\\M_tex_metal-2.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\Ma_Texture_Tranparent.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Floor.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Texture.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_tex_metal.mtl",
             "8.Models\\Materials\\Misc\\BlinkMat.mtl",
             "8.Models\\Shaders\\dcc-specular-glossiness-clip.effect",
-            "8.Models\\Shaders\\unlit-clip.effect"
+            "8.Models\\Shaders\\unlit-clip.effect",
+            "8.Models\\Meshs\\Lv50_Bathroom\\NewFBXRoom"
         ]
     }
 }
