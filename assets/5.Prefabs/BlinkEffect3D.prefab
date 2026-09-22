@@ -50,7 +50,7 @@
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
-      "x": 90,
+      "x": 89.99999999999999,
       "y": 0,
       "z": 0
     },
@@ -112,7 +112,7 @@
     "startLifetime": {
       "__id__": 13
     },
-    "duration": 0.5,
+    "duration": 0.8,
     "loop": false,
     "simulationSpeed": 1,
     "playOnAwake": true,
@@ -171,7 +171,7 @@
       "__id__": 61
     },
     "_prewarm": false,
-    "_capacity": 32,
+    "_capacity": 50,
     "_simulationSpace": 1,
     "_id": ""
   },
@@ -211,7 +211,7 @@
   {
     "__type__": "cc.CurveRange",
     "mode": 0,
-    "constant": 5,
+    "constant": 10,
     "multiplier": 1
   },
   {
@@ -241,7 +241,7 @@
   {
     "__type__": "cc.CurveRange",
     "mode": 0,
-    "constant": 0.7,
+    "constant": 1,
     "multiplier": 1
   },
   {
@@ -274,7 +274,7 @@
   {
     "__type__": "cc.CurveRange",
     "mode": 0,
-    "constant": 20,
+    "constant": 50,
     "multiplier": 1
   },
   {
@@ -347,7 +347,7 @@
     "randomDirectionAmount": 0,
     "sphericalDirectionAmount": 0,
     "randomPositionAmount": 0,
-    "radius": 0.3,
+    "radius": 1.049,
     "radiusThickness": 1,
     "arcMode": 0,
     "arcSpread": 0,
@@ -380,7 +380,7 @@
       "z": 1
     },
     "_arc": 6.283185307179586,
-    "_angle": 0.4363323129985824
+    "_angle": 0.11470303844106734
   },
   {
     "__type__": "cc.CurveRange",
@@ -731,10 +731,7 @@
     "_velocityScale": 1,
     "_lengthScale": 1,
     "_mesh": null,
-    "_cpuMaterial": {
-      "__uuid__": "805f8309-d4d3-41fb-b2e2-e8431553901c",
-      "__expectedType__": "cc.Material"
-    },
+    "_cpuMaterial": null,
     "_gpuMaterial": null,
     "_mainTexture": {
       "__uuid__": "d2bab5eb-3241-4785-b002-47e3232e6551@6c48a",
@@ -752,6 +749,7 @@
       "__id__": 0
     },
     "fileId": "d8TRONhORDRpCXbQBSi+LM",
-    "instance": null
+    "instance": null,
+    "targetOverrides": null
   }
 ]
