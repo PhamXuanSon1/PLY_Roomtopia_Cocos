@@ -5,7 +5,7 @@
   "__editorExtras__": {},
   "_native": "",
   "_effectAsset": {
-    "__uuid__": "a3cd009f-0ab0-420d-9278-b9fdab939bbc",
+    "__uuid__": "b545fb37-4c55-475a-ac67-9559bec7ab89",
     "__expectedType__": "cc.EffectAsset"
   },
   "_techIdx": 1,
@@ -21,7 +21,7 @@
       },
       "depthStencilState": {
         "depthTest": true,
-        "depthWrite": false
+        "depthWrite": true
       },
       "blendState": {
         "targets": [

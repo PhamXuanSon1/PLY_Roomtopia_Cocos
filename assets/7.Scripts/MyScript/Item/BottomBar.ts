@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, EventTouch, Input, input, Label, Mat4, math, Node, Size, UITransform, Vec2, Vec3, view } from 'cc';
+import { _decorator, Camera, Component, EventTouch, Input, input, Label, Mat4, math, Node, screen, Size, UITransform, Vec2, Vec3, Vec4, view } from 'cc';
 import { ui } from '../../Manager/UI';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
 const { ccclass, property } = _decorator;
@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
  * Thanh bar chứa item (BottomBar).
  *  - Màn DỌC : thanh NGANG dưới màn (vị trí như đặt trong scene), kéo trái/phải để cuộn, kéo LÊN để nhấc.
  *  - Màn NGANG: tự thành PANEL DỌC bám mép phải (panelFrac bề ngang, cao hết màn), kéo lên/xuống để cuộn,
- *               kéo theo verticalLiftDir (mặc định sang trái, vào phòng) để nhấc. Nền trắng của panel do BoxBg vẽ (BgCam).
+ *               kéo theo verticalLiftDir (mặc định sang trái, vào phòng) để nhấc. Nền trắng của panel do BoxBg vẽ (dưới WCam).
  *  - Hold trong dải content rồi kéo dọc theo trục thanh → cộng dồn `offset` (local px, không giới hạn).
  *    Thả tay → trượt tiếp theo quán tính (`inertia`), chạm lại thì dừng.
  *    ItemManager đọc `offset` + `vertical` mỗi frame để xếp item theo vòng lặp.
@@ -53,6 +53,9 @@ export class BottomBar extends Component {
 
     @property({ group: 'Landscape', tooltip: 'Panel dọc: kéo về hướng này (màn hình) = NHẤC item. (-1,0) = sang trái vào phòng' })
     verticalLiftDir = new Vec2(-1, 0);
+
+    @property({ tooltip: 'Vùng cắt item (clipRect) nới thêm bấy nhiêu px màn hình mỗi bên (0 = sát mép thanh)' })
+    clipPaddingPx = 0;
 
     /** node.emit(EVENT_LIFT, startPos: Vec2) khi người chơi kéo item RA KHỎI thanh */
     static readonly EVENT_LIFT = 'bottombar-lift';
@@ -341,5 +344,33 @@ export class BottomBar extends Component {
             minY = Math.min(minY, s.y); maxY = Math.max(maxY, s.y);
         }
         return p.x >= minX && p.x <= maxX && p.y >= minY && p.y <= maxY;
+    }
+
+    /**
+     * Vùng thanh trên màn hình, chuẩn hoá 0..1 (xMin, yMin, xMax, yMax) — dùng làm `clipRect` cho shader
+     * của item trong tray (thay camera phụ cắt theo viewport). AABB hình chiếu 4 góc UITransform qua camera.
+     * Trả về false nếu thanh không hiện trên màn (rect rỗng).
+     */
+    screenRect01(out: Vec4): boolean {
+        const cam = this.camera();
+        const ut = this.getComponent(UITransform);
+        if (!cam || !ut) return false;
+        const { width: w, height: h } = ut.contentSize;
+        const ax = ut.anchorX, ay = ut.anchorY;
+        const mat = this.node.worldMatrix;
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        for (const [x, y] of [[-ax * w, -ay * h], [(1 - ax) * w, -ay * h], [-ax * w, (1 - ay) * h], [(1 - ax) * w, (1 - ay) * h]]) {
+            Vec3.transformMat4(this._tmpA, this._tmpA.set(x, y, 0), mat);
+            const s = cam.worldToScreen(this._tmpA, this._tmpB);
+            minX = Math.min(minX, s.x); maxX = Math.max(maxX, s.x);
+            minY = Math.min(minY, s.y); maxY = Math.max(maxY, s.y);
+        }
+        const pad = this.clipPaddingPx;
+        const W = screen.windowSize.width, H = screen.windowSize.height;
+        minX = math.clamp(minX - pad, 0, W); maxX = math.clamp(maxX + pad, 0, W);
+        minY = math.clamp(minY - pad, 0, H); maxY = math.clamp(maxY + pad, 0, H);
+        if (maxX - minX <= 1 || maxY - minY <= 1) return false;
+        out.set(minX / W, minY / H, maxX / W, maxY / H);
+        return true;
     }
 }

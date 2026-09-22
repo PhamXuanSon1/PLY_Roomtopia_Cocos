@@ -56,7 +56,7 @@ export class ItemMovement extends Component {
         icon.setParent(this.ghostRoot!);
         icon.setWorldScale(target.worldScale);
         icon.setWorldRotation(target.worldRotation);
-        ItemGraphic.setLayerRecursive(icon, this.ghostRoot!.layer);   // DragGhost layer TRAY → BarCam (fullScreen khi kéo) vẽ đè lên map + label
+        ItemGraphic.setLayerRecursive(icon, this.ghostRoot!.layer);   // DragGhost layer TRAY (đèn chiếu); ghost gần camera hơn map + nền nên đè lên (clipRect = không cắt khi kéo)
 
         // pivot của mesh có thể lệch tâm hình (vd nằm ở đáy) → tính offset để TÂM bbox nằm dưới ngón tay
         this.computePivotOffset(icon);

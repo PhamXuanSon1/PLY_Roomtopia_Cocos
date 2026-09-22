@@ -1,29 +1,22 @@
-import { _decorator, Camera, Component, Label, Layers, Mat4, Node, UITransform, v3, Vec2, Vec3, view } from 'cc';
+import { _decorator, Camera, Component, Label, Mat4, Node, UITransform, v3, Vec2, Vec3, view } from 'cc';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
  * BoxBg: hộp nền (bo góc, màu tím) nằm SAU map 3D, chiếm `heightPercent` phía trên màn hình.
  *
- *  - BgCam (priority thấp nhất, chỉ vẽ layer BG) vẽ node này; WCam clear DEPTH_ONLY → map đè lên.
- *  - Node là CON của BgCam, scale 0.01 → local = camera space (100 px = 1 world unit).
+ *  - Node là CON của WCam, scale 0.01 → local = camera space (100 px = 1 world unit); đặt z rất sâu (-100)
+ *    và Sprite/Label dùng material có depth test (BgDepth.mtl) → map 3D (gần camera hơn) đè lên nền.
  *  - Gán `frame` (node 3D có UITransform, vd BoxFrame) → hộp khớp đúng hình chiếu của khung đó qua WCam,
- *    bỏ qua heightPercent. BgCam & WCam cùng orthoHeight + aspect nên toạ độ camera space của 2 cam trùng nhau.
+ *    bỏ qua heightPercent.
  *  - Màn NGANG (landscapeFullScreen): hộp phủ cả màn (tràn ra ngoài để giấu góc bo); "vùng chơi" cho FitInBox /
  *    CountLabel = màn trừ panel item dọc bên phải (landscapePanelFrac).
  */
 @ccclass('BoxBg')
 @executeInEditMode
 export class BoxBg extends Component {
-    static readonly LAYER_NAME = 'BG';
-    static readonly LAYER_BIT = 2;
-    static get layer() { return 1 << BoxBg.LAYER_BIT; }
-
-    @property({ type: Camera, tooltip: 'Camera nền (BgCam). Để trống → Camera trên node cha' })
+    @property({ type: Camera, tooltip: 'Camera vẽ map (WCam). Để trống → Camera trên node cha' })
     cam: Camera | null = null;
-
-    @property({ type: Camera, tooltip: 'Đồng bộ orthoHeight từ camera này (WCam) để khớp map khi UI.resize đổi orthoHeight' })
-    syncOrthoFrom: Camera | null = null;
 
     @property({ range: [0, 100, 1], slide: true, tooltip: 'Hộp chiếm bao nhiêu % chiều cao màn hình, tính từ mép trên' })
     heightPercent = 60;
@@ -49,13 +42,13 @@ export class BoxBg extends Component {
     @property({ group: 'Landscape', range: [0, 0.6, 0.01], slide: true, tooltip: 'Màn ngang: panel item dọc bên phải chiếm bao nhiêu phần bề ngang → vùng chơi = phần còn lại (khớp BottomBar.panelFrac)' })
     landscapePanelFrac = LANDSCAPE_PANEL_FRAC;
 
-    @property({ group: 'Landscape', type: Node, tooltip: 'Nền trắng panel item (Sprite, em kế sau BoxBg dưới BgCam, scale 0.01). Chỉ hiện màn ngang, tự đặt phủ vùng panel + overflow' })
+    @property({ group: 'Landscape', type: Node, tooltip: 'Nền trắng panel item (Sprite, em kế sau BoxBg dưới WCam, scale 0.01). Chỉ hiện màn ngang, tự đặt phủ vùng panel + overflow' })
     panelBg: Node | null = null;
 
     @property({ type: Node, tooltip: 'Label đếm (con của node này): tự đặt ở đáy hộp + labelBottomPx, cùng layer BG' })
     countLabel: Node | null = null;
 
-    @property({ group: 'Border', type: Node, tooltip: 'Sprite viền (em đứng TRƯỚC BoxBg dưới BgCam, scale 0.01). Tự đặt to hơn hộp borderPx mỗi bên, nằm sau hộp → thành viền' })
+    @property({ group: 'Border', type: Node, tooltip: 'Sprite viền (em đứng TRƯỚC BoxBg dưới WCam, scale 0.01). Tự đặt to hơn hộp borderPx mỗi bên, nằm sau hộp → thành viền' })
     borderNode: Node | null = null;
 
     @property({ group: 'Border', tooltip: 'Độ dày viền (px local, 100 px = 1 world unit). 0 = ẩn viền' })
@@ -79,9 +72,6 @@ export class BoxBg extends Component {
     private _key = '';
 
     onLoad() {
-        const existing = Layers.nameToLayer(BoxBg.LAYER_NAME);
-        if (existing === undefined || existing < 0) Layers.addLayer(BoxBg.LAYER_NAME, BoxBg.LAYER_BIT);
-        this.node.layer = BoxBg.layer;
         if (!this.cam) this.cam = this.node.parent?.getComponent(Camera) ?? null;
     }
 
@@ -106,8 +96,6 @@ export class BoxBg extends Component {
         const cam = this.cam;
         const ut = this.getComponent(UITransform);
         if (!cam || !ut) return;
-        if (this.syncOrthoFrom && cam.orthoHeight !== this.syncOrthoFrom.orthoHeight) cam.orthoHeight = this.syncOrthoFrom.orthoHeight;
-
         const k = 1 / (this.node.scale.x || 0.01);           // local px / world unit
         const r = this.getCamRect(cam.orthoHeight, false);
         const w = (r.right - r.left) * k, h = (r.top - r.bottom) * k;
@@ -124,7 +112,7 @@ export class BoxBg extends Component {
         this.placeBorder(w, h, cx, cy);
     }
 
-    /** Viền: sprite trắng to hơn hộp borderPx mỗi bên, vẽ TRƯỚC hộp (sibling đứng trước) → chỉ lòi phần mép */
+    /** Viền: sprite trắng to hơn hộp borderPx mỗi bên, vẽ TRƯỚC hộp (sibling đứng trước) và xa camera hơn → chỉ lòi phần mép */
     private placeBorder(w: number, h: number, cx: number, cy: number) {
         const b = this.borderNode;
         if (!b) return;
@@ -136,7 +124,7 @@ export class BoxBg extends Component {
         b.layer = this.node.layer;
         b.setScale(this.node.scale);
         b.getComponent(UITransform)?.setContentSize(w + 2 * this.borderPx, h + 2 * this.borderPx);
-        b.setPosition(cx, cy, this.node.position.z);
+        b.setPosition(cx, cy, this.node.position.z - 0.2);   // xa camera hơn hộp → hộp đè lên, chỉ lòi mép (depth test, depthFunc LESS)
     }
 
     /** Nền panel item bên phải (màn ngang): từ mép vùng chơi tới hết màn, tràn overflow để giấu góc bo */
@@ -152,7 +140,7 @@ export class BoxBg extends Component {
         bg.layer = this.node.layer;
         bg.setScale(this.node.scale);
         bg.getComponent(UITransform)?.setContentSize((right - left) * k, (top - bottom) * k);
-        bg.setPosition((left + right) / 2, (top + bottom) / 2, this.node.position.z);
+        bg.setPosition((left + right) / 2, (top + bottom) / 2, this.node.position.z + 0.1);   // gần camera hơn hộp 1 chút → đè lên hộp (depth test)
     }
 
     /**
@@ -187,9 +175,9 @@ export class BoxBg extends Component {
     }
 
     /**
-     * Rect của hộp trong camera space (world unit, gốc = tâm camera, cùng cho BgCam & WCam).
+     * Rect của hộp trong camera space (world unit, gốc = tâm camera).
      *  - Màn ngang + landscapeFullScreen → cả màn (đáy + landscapeBottomMargin).
-     *  - Có `frame` → AABB hình chiếu 4 góc UITransform của frame qua WCam (syncOrthoFrom).
+     *  - Có `frame` → AABB hình chiếu 4 góc UITransform của frame qua WCam (cam).
      *  - Không → cả bề ngang màn hình, cao heightPercent từ mép trên.
      *  Đã trừ sideMargin, cộng topOverflow. clipToScreen = true → cắt theo màn hình (FitInBox dùng).
      *  playArea = true → màn ngang trừ thêm panel item bên phải (vùng đặt room / label).
@@ -204,7 +192,7 @@ export class BoxBg extends Component {
         let left = -halfW, right = halfW, top = halfH, bottom = halfH - 2 * halfH * this.heightPercent / 100;
 
         const fut = this.frame?.getComponent(UITransform);
-        const wcam = this.syncOrthoFrom ?? this.cam;
+        const wcam = this.cam;
         if (full) {
             bottom = -halfH + this.landscapeBottomMargin / k;
         } else if (fut && wcam) {

@@ -1,8 +1,9 @@
-import { _decorator, Camera, Component, Input, input, MeshRenderer, Node, screen, Tween, tween, v3, Vec3 } from 'cc';
+import { _decorator, Camera, Component, Input, input, Node, screen, Tween, tween, v3, Vec3 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { BoxBg } from '../Item/BoxBg';
 import { ItemController } from '../Item/ItemController';
+import { ItemGraphic } from '../Item/ItemGraphic';
 import { ItemManager } from './ItemManager';
 import { ModelRotate } from './ModelRotate';
 const { ccclass, property } = _decorator;
@@ -68,6 +69,9 @@ export class HandHintManager extends Component {
     rotateSwipeTime = 0.9;
 
 
+    /** Instance đang chạy — chặn trường hợp scene gắn nhầm 2 cái */
+    static inst: HandHintManager | null = null;
+
     private idle = 0;
     private showing = false;
     private mode: 'drag' | 'rotate' | 'none' = 'none';
@@ -79,15 +83,31 @@ export class HandHintManager extends Component {
 
     onLoad() {
         if (EDITOR) return;
+        // scene có thể lỡ gắn 2 HandHintManager (2 node khác nhau) → cái sau tự tắt,
+        // không thì cả hai cùng tween một node tay và giành nhau mỗi frame
+        if (HandHintManager.inst && HandHintManager.inst.isValid && HandHintManager.inst !== this) {
+            console.warn(`[HandHint] đã có HandHintManager ở "${HandHintManager.inst.node.name}" → tắt cái trên "${this.node.name}"`);
+            this.enabled = false;
+            return;
+        }
+        HandHintManager.inst = this;
+
         if (!this.hand) this.hand = this.node;
-        if (!this.itemManager || !this.cam || !this.uiCam) console.warn('[HandHint] thiếu itemManager / cam / uiCam → không hint');
-        const root = this.uiRoot ?? this.uiCam?.node.parent ?? null;
+        if (!this.itemManager) console.warn('[HandHint] thiếu itemManager → không hint');
+        const root = this.uiRoot ?? this.uiCamera?.node.parent ?? null;
         if (root && this.hand.parent !== root) this.hand.setParent(root, false);
         HandHintManager.setLayerRecursive(this.hand, root?.layer ?? this.hand.layer);
         this.hand.setRotationFromEuler(0, 0, 0);
         this.setHandVisible(false);
         this.idle = this.idleDelay - this.firstDelay;      // để lần đầu chỉ chờ firstDelay
     }
+
+    /**
+     * Camera lấy lười (Inspector → ui singleton) chứ không chốt trong onLoad:
+     * thứ tự onLoad giữa các component không đảm bảo, `ui` có thể chưa gán xong.
+     */
+    private get wCamera(): Camera | null { return this.cam ?? ui?.wCamera ?? null; }
+    private get uiCamera(): Camera | null { return this.uiCam ?? ui?.uiCamera ?? null; }
 
     onEnable() {
         if (EDITOR) return;
@@ -98,6 +118,10 @@ export class HandHintManager extends Component {
         if (EDITOR) return;
         input.off(Input.EventType.TOUCH_START, this.onUserTouch, this);
         this.stop();
+    }
+
+    onDestroy() {
+        if (HandHintManager.inst === this) HandHintManager.inst = null;
     }
 
     // ============================================================ public
@@ -116,6 +140,7 @@ export class HandHintManager extends Component {
     // ============================================================ loop
     update(dt: number) {
         if (EDITOR || !this.enabledHint || !this.itemManager) return;
+        if (!this.wCamera || !this.uiCamera) return;        // ref chưa sẵn sàng → chờ frame sau
         const im = this.itemManager;
 
         // hết item / win / lose → tắt
@@ -185,7 +210,7 @@ export class HandHintManager extends Component {
      * tay sẽ bắt đầu từ ngoài màn. Nên kiểm tra lại bằng pixel: tâm ô cách mép màn ≥ nửa ô.
      */
     private pickItem(): ItemController | null {
-        const im = this.itemManager!, cam = this.cam!;
+        const im = this.itemManager!, cam = this.wCamera!;
         const W = screen.windowSize.width, H = screen.windowSize.height;
         const half = (im.bar?.hitHeight ?? 200) / 2 * (im.bar?.pixelsPerUnit() ?? 0);   // nửa ô (px màn hình)
         const tmp = new Vec3();
@@ -201,8 +226,8 @@ export class HandHintManager extends Component {
     private dragStep() {
         const item = this.hintItem;
         if (!this.showing || !item || !item.target) return;
-        const from = this.toHand(this.cam!.worldToScreen(item.node.worldPosition, new Vec3()));
-        const to = this.toHand(this.targetScreenCenter(item.target));   // tâm bbox trên màn (pivot FBX có thể nằm xa hình)
+        const from = this.toHand(this.wCamera!.worldToScreen(item.node.worldPosition, new Vec3()));
+        const to = this.toHand(ItemGraphic.screenCenter(item.target, this.wCamera!));   // tâm bbox trên màn (pivot FBX có thể nằm xa hình)
         const hand = this.hand!;
         hand.setPosition(from);
         hand.setScale(1, 1, 1);
@@ -220,11 +245,11 @@ export class HandHintManager extends Component {
     private rotateStep() {
         if (!this.showing) return;
         const hand = this.hand!;
-        const r = this.box && this.cam ? this.box.getCamRect(this.cam.orthoHeight, true, true) : null;
+        const r = this.box && this.wCamera ? this.box.getCamRect(this.wCamera.orthoHeight, true, true) : null;
         const cx = r ? (r.left + r.right) / 2 : 0, cy = r ? (r.top + r.bottom) / 2 : 0;
         const half = r ? (r.right - r.left) * this.rotateSwipeFrac / 2 : 2;
         // cam space (WCam) → pixel màn hình → UI: cùng orthoHeight/aspect nên pixel = (x/ppu + W/2, y/ppu + H/2)
-        const W = screen.windowSize.width, H = screen.windowSize.height, ppu = H / (2 * this.cam!.orthoHeight);
+        const W = screen.windowSize.width, H = screen.windowSize.height, ppu = H / (2 * this.wCamera!.orthoHeight);
         const a = this.toHand(v3((cx - half) * ppu + W / 2, cy * ppu + H / 2, 0));
         const b = this.toHand(v3((cx + half) * ppu + W / 2, cy * ppu + H / 2, 0));
         hand.setPosition(a);
@@ -245,30 +270,13 @@ export class HandHintManager extends Component {
         if (!it.isOnScreen) return false;
         const im = this.itemManager!, W = screen.windowSize.width, H = screen.windowSize.height;
         const half = (im.bar?.hitHeight ?? 200) / 2 * (im.bar?.pixelsPerUnit() ?? 0);
-        const s = this.cam!.worldToScreen(it.node.worldPosition, new Vec3());
+        const s = this.wCamera!.worldToScreen(it.node.worldPosition, new Vec3());
         return s.x >= half && s.x <= W - half && s.y >= half && s.y <= H - half;
-    }
-
-    /** Tâm bbox của mesh target trên màn hình (px). Không có mesh bounds → pivot */
-    private targetScreenCenter(target: Node): Vec3 {
-        const cam = this.cam!;
-        const st = target.getComponent(MeshRenderer)?.mesh?.struct;
-        if (!st?.minPosition || !st.maxPosition) return cam.worldToScreen(target.worldPosition, new Vec3());
-        const lo = st.minPosition, hi = st.maxPosition, mat = target.worldMatrix, tmp = new Vec3();
-        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-        for (let i = 0; i < 8; i++) {
-            tmp.set(i & 1 ? hi.x : lo.x, i & 2 ? hi.y : lo.y, i & 4 ? hi.z : lo.z);
-            Vec3.transformMat4(tmp, tmp, mat);
-            cam.worldToScreen(tmp, tmp);
-            minX = Math.min(minX, tmp.x); maxX = Math.max(maxX, tmp.x);
-            minY = Math.min(minY, tmp.y); maxY = Math.max(maxY, tmp.y);
-        }
-        return new Vec3((minX + maxX) / 2, (minY + maxY) / 2, 0);
     }
 
     /** pixel màn hình → local của node cha tay (UI 2D) qua UICam */
     private toHand(s: Vec3): Vec3 {
-        const w = this.uiCam!.screenToWorld(v3(s.x, s.y, 0), new Vec3());
+        const w = this.uiCamera!.screenToWorld(v3(s.x, s.y, 0), new Vec3());
         const parent = this.hand!.parent;
         const l = parent ? parent.inverseTransformPoint(new Vec3(), w) : w;
         l.z = -1;                                   // trước UICam một chút

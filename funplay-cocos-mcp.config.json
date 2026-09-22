@@ -1,13 +1,13 @@
 {
   "host": "127.0.0.1",
-  "port": 29634,
+  "port": 24947,
   "portMode": "project",
   "clientConfigEntries": {
     "claude_code": {
-      "serverName": "cocos-ply-roomtopi-83d5d7",
-      "url": "http://127.0.0.1:29634/",
+      "serverName": "cocos-ply-roomtopi-e353e0",
+      "url": "http://127.0.0.1:24947/",
       "configPath": "C:\\Users\\Admin\\.claude.json",
-      "projectIdentity": "83d5d782886534a3bc7fb581"
+      "projectIdentity": "e353e0530895206eb1039400"
     }
   },
   "toolProfile": "core",

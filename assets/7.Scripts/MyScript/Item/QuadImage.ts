@@ -1,4 +1,4 @@
-import { _decorator, Color, Component, Enum, Material, MeshRenderer, Size, UITransform, utils, Vec2 } from 'cc';
+import { _decorator, Color, Component, Enum, Material, MeshRenderer, Size, UITransform, utils, Vec2, Vec4 } from 'cc';
 
 export enum GradientMode { Vertical = 0, Radial = 1 }
 Enum(GradientMode);
@@ -56,6 +56,8 @@ export class QuadImage extends Component {
     private renderer: MeshRenderer | null = null;
     private lastKey = '';
     private lastColor = new Color(0, 0, 0, 0);
+    /** Rect màn hình 0..1 cho shader unlit-clip (thẻ trong tray); (0,0,1,1) = không cắt */
+    private clipRect = new Vec4(0, 0, 1, 1);
 
     onLoad() {
         this.renderer = this.getComponent(MeshRenderer) ?? this.addComponent(MeshRenderer)!;
@@ -146,6 +148,23 @@ export class QuadImage extends Component {
         this.renderer.setSharedMaterial(this.material, 0);
         const inst = this.renderer.material;            // tạo instance
         inst?.setProperty('mainColor', this.color);
+        this.applyClip();
+    }
+
+    /** Cắt theo rect màn hình 0..1 (material phải dùng unlit-clip.effect, không thì bỏ qua) */
+    setClip(rect: Vec4) {
+        if (Vec4.equals(this.clipRect, rect)) return;
+        this.clipRect.set(rect);
+        this.applyClip();
+    }
+
+    private applyClip() {
+        const inst = this.renderer?.material;
+        if (!inst) return;
+        for (const p of inst.passes) {
+            const h = p.getHandle('clipRect');
+            if (h) p.setUniform(h, this.clipRect);
+        }
     }
 
     /** Gọi khi đổi color trong Inspector lúc runtime/editor */

@@ -32,8 +32,8 @@
         "progress": 1,
         "state": "success",
         "stage": "build",
-        "message": "9-18-2026 16:42:23 build success in 1 min 33 s!",
-        "detailMessage": "[playable-ads-builder]\rBắt đầu đóng gói playable ad cho 1 kênh -> F:\\CocosProject\\PLY_Roomtopia_Cocos\\Cocos_DreamyRoom_PLY43\r",
+        "message": "9-22-2026 09:28:19 build success in 1 min 37 s!",
+        "detailMessage": "[playable-ads-builder]\r[processFiles] 1/1\r",
         "options": {
           "name": "Cocos_DreamyRoom_PLY43",
           "server": "",
@@ -94,7 +94,7 @@
             "enable": false
           }
         },
-        "time": "9-18-2026 16:40:50",
+        "time": "9-22-2026 09:26:41",
         "dirty": false
       }
     }

@@ -1,5 +1,6 @@
-import { _decorator, Camera, Color, Component, instantiate, Material, MeshRenderer, Node, primitives, Quat, Tween, tween, utils, Vec3 } from 'cc';
+import { _decorator, Camera, Color, Component, instantiate, Material, MeshRenderer, Node, primitives, Quat, Tween, tween, utils, Vec3, Vec4 } from 'cc';
 import { CELL_PX, ICON_FILL } from '../Config/TrayConfig';
+import { QuadImage } from './QuadImage';
 const { ccclass, property } = _decorator;
 
 /**
@@ -9,6 +10,8 @@ const { ccclass, property } = _decorator;
  *                Khi kéo, ItemMovement "bốc" chính node này ra world làm ghost.
  *  - target    : mesh gốc trong map — xám khi chưa xong, trả màu khi snap đúng.
  *  - hiệu ứng  : pop in/out, punch target.
+ *  - clip      : icon/thẻ dùng material có `clipRect` (shader *-clip.effect) → setClip(rect màn hình 0..1)
+ *                cắt phần lòi ra ngoài thanh (thay camera phụ). Rect (0,0,1,1) = không cắt (lúc kéo ghost).
  *
  * Không biết vị trí trong thanh, không bắt input.
  */
@@ -52,6 +55,10 @@ export class ItemGraphic extends Component {
     iconFill = ICON_FILL;
 
     private targetBaseScale = new Vec3(1, 1, 1);
+    /** Material RIÊNG (instance) của icon/thẻ/shadow — chỉ item này bị cắt, map giữ shared material */
+    private clipMats: Material[] = [];
+    private clipRect = new Vec4(0, 0, 1, 1);
+    static readonly CLIP_NONE = new Vec4(0, 0, 1, 1);
     private static fitCache = new Map<string, number>();
     private static posCache = new Map<string, Vec3>();
     private static quadMesh: any = null;
@@ -99,6 +106,41 @@ export class ItemGraphic extends Component {
         }
 
         this.setupShadow();
+        this.collectClipMats();
+    }
+
+    // =========================================================== clip theo thanh
+    /** Tách material instance cho mọi MeshRenderer của icon + shadow (gọi sau bind/setupShadow). Thẻ Cell do QuadImage tự lo */
+    private collectClipMats() {
+        this.clipMats.length = 0;
+        const rs: MeshRenderer[] = [];
+        if (this.iconClone) rs.push(...this.iconClone.getComponentsInChildren(MeshRenderer));
+        if (this.shadow && this.shadow.node.active) rs.push(this.shadow);
+        for (const r of rs) {
+            for (let i = 0; i < r.sharedMaterials.length; i++) {
+                const m = r.getMaterialInstance(i);
+                if (m && m.passes.some(p => p.getHandle('clipRect'))) this.clipMats.push(m);
+            }
+        }
+        this.applyClip();
+    }
+
+    /** Rect màn hình 0..1 (xMin,yMin,xMax,yMax) mà icon/thẻ được vẽ; ItemGraphic.CLIP_NONE = không cắt */
+    setClip(rect: Vec4) {
+        if (Vec4.equals(this.clipRect, rect)) return;
+        this.clipRect.set(rect);
+        this.applyClip();
+    }
+
+    private applyClip() {
+        this.cell?.getComponent(QuadImage)?.setClip(this.clipRect);
+        for (const m of this.clipMats) {
+            if (!m.isValid) continue;
+            for (const p of m.passes) {
+                const h = p.getHandle('clipRect');
+                if (h) p.setUniform(h, this.clipRect);
+            }
+        }
     }
 
     /** Icon xoay theo target (gọi khi model root xoay): đổi rotation rồi căn lại tâm bbox vào giữa ô, giữ scale */
@@ -133,7 +175,7 @@ export class ItemGraphic extends Component {
         }
         if (!isFinite(minX)) return;
         // tmp ở trên đã nhân scale → tâm bbox tính ra là offset thật của pivot, dời ngược lại
-        // (cả Z: mesh nhỏ + pivot xa → scale lớn → lệch Z hàng chục unit, lọt ra ngoài near/far của BarCam)
+        // (cả Z: mesh nhỏ + pivot xa → scale lớn → lệch Z hàng chục unit, lọt ra ngoài near/far của camera)
         this.iconBasePos.set(-(minX + maxX) / 2, -(minY + maxY) / 2, -(minZ + maxZ) / 2);
         c.setPosition(this.iconBasePos);
     }
@@ -203,6 +245,25 @@ export class ItemGraphic extends Component {
         ItemGraphic.fitCache.set(key, k);
         ItemGraphic.posCache.set(key, this.iconBasePos.clone());
         return k;
+    }
+
+    /**
+     * Tâm bbox của mesh target trên màn hình (px). Không có mesh bounds → pivot.
+     * Pivot của mesh FBX hay nằm xa hình (toạ độ bake vào đỉnh) nên phải đo bbox mới ra đúng tâm.
+     */
+    static screenCenter(target: Node, cam: Camera): Vec3 {
+        const st = target.getComponent(MeshRenderer)?.mesh?.struct;
+        if (!st?.minPosition || !st.maxPosition) return cam.worldToScreen(target.worldPosition, new Vec3());
+        const lo = st.minPosition, hi = st.maxPosition, mat = target.worldMatrix, tmp = new Vec3();
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        for (let i = 0; i < 8; i++) {
+            tmp.set(i & 1 ? hi.x : lo.x, i & 2 ? hi.y : lo.y, i & 4 ? hi.z : lo.z);
+            Vec3.transformMat4(tmp, tmp, mat);
+            cam.worldToScreen(tmp, tmp);
+            minX = Math.min(minX, tmp.x); maxX = Math.max(maxX, tmp.x);
+            minY = Math.min(minY, tmp.y); maxY = Math.max(maxY, tmp.y);
+        }
+        return new Vec3((minX + maxX) / 2, (minY + maxY) / 2, 0);
     }
 
     static setLayerRecursive(n: Node, layer: number) {

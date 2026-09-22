@@ -1,7 +1,7 @@
-import { _decorator, Component, Node } from "cc";
-import playableHelper from "./h5-helper";
-import { PREVIEW } from "cc/env";
+import { _decorator, assetManager, Component, Font, Node } from "cc";
 const { ccclass, property } = _decorator;
+
+// openFullscreen();
 
 export var gc: GameController;
 
@@ -13,39 +13,22 @@ export class GameController extends Component {
   }
   
   start() {
-    playableHelper.gameStart();
-
-    // <!--https://play.google.com/store/apps/details?id=com.vs.antflow
-    // -->
-    // <!--IOSLink
-    // -->
-
-    const androidUrl = "https://play.google.com/store/apps/details?id=com.vs.antflow";
-    const iosUrl = "https://play.google.com/store/apps/details?id=com.vs.antflow";
-    playableHelper.setStoreUrl(iosUrl, androidUrl); // this section only needs for Google and Unity channel
-  }
-  setHandleVolumeChange(funct: Function) {
-    playableHelper.handleVolumeChange(funct);
   }
 
   update(deltaTime: number) {}
 
  
 
-  @property({ tooltip: 'Chỉ khi Preview trong editor: hỏi trước khi mở store (tránh nhảy trang khi đang test)' })
-  storeDialogMessage = 'Mở store? (chỉ hỏi khi Preview)';
-
-  redirectToStore() {
-    if (PREVIEW && typeof window !== 'undefined') {
-      const shouldOpenStore = window.confirm(this.storeDialogMessage);
-      console.log('[GameController] redirectToStore (preview) → confirm =', shouldOpenStore);
-      if (!shouldOpenStore) return;
+  redirectToStore() {    
+    try {
+      PlayableSDK.download();
+      PlayableSDK.game_end();            
+    } catch (error) {
+      
     }
-    console.log('[GameController] redirectToStore');
-    playableHelper.gameEnd();
-    playableHelper.redirect();
   }
 }
+
 
 
 type GameLoad = {
@@ -59,23 +42,89 @@ type GameLoad = {
   lineWidth: number;
   textBaseline: CanvasTextBaseline;
   textAlign: CanvasTextAlign;
+  callback?: Function;
 };
 
+var loaded = false;
+
 const gameLoad: GameLoad = {
-    gameName: "Bus Escape: Traffic Jam",
+    gameName: " Pixel Bus Sort ",
     font: "Arial",
-    customScale: 3,
+    customScale: 1.5,
     customHeight: 100,
-    customTop: 70,
+    customTop: 30,
     fillStyle: "#ffffff",
     strokeStyle: "#000000",
     lineWidth: 3,
     textBaseline: "top",
     textAlign: "center",
+    callback: async (sp: any) => {
+
+      if(loaded) return;
+      loaded = true;
+      const fontName = "DVN-Fredoka-Bold"; 
+      const fontUuid = "cejhIaZllGjbSR0e8PaJLH";
+      assetManager.loadAny(fontUuid, async (err, asset: Font) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        gameLoad.font = fontName;
+
+        // Build single-file (mini-game adapter) đã tự add font vào document.fonts
+        // ngay trong lúc load asset (dùng data embedded, không fetch mạng). Chạy
+        // trên localhost (web build thường) thì chưa có, nên phải tự add bằng
+        // FontFace + asset.nativeUrl (lúc này nativeUrl là URL fetch được thật).
+        // const isRegistered = document.fonts.check(`12px "${fontName}"`);
+        // if (!isRegistered) 
+        {
+          try {
+            const fontFace = new FontFace(fontName, `url(${asset.nativeUrl})`);
+            await fontFace.load();
+            document.fonts.add(fontFace);
+          } catch (e) {
+            console.warn('Add font to document failed:', e);
+          }
+        }
+
+        sp.initWaterMark();
+      });
+    },
   };
 
 try {
   //@ts-ignore
   window.gameLoad = gameLoad;
+  //@ts-ignore ms
+  window.totalTime = 1000;
 } catch (error) {  
 }
+
+
+
+
+// full screen
+
+function openFullscreen() {
+  let fullscreenRequested = false;
+
+  async function enterFullscreen() {
+      if (fullscreenRequested) return;
+
+      fullscreenRequested = true;
+
+      try {
+          if (!document.fullscreenElement) {
+              await document.documentElement.requestFullscreen();
+          }
+      } catch (e) {
+          console.warn('Fullscreen failed:', e);
+      }
+  }
+
+  document.addEventListener('pointerdown', enterFullscreen, { once: true });
+}
+
+
+

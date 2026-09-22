@@ -94,10 +94,8 @@
             "7.Scripts\\Sand\\SandSimulation.ts",
             "7.Scripts\\Tool\\AppLovinAnalytics.ts",
             "7.Scripts\\Tool\\GameController.ts",
-            "7.Scripts\\Tool\\h5-helper.ts",
             "7.Scripts\\Tool\\PlayableSDK.d.ts",
             "7.Scripts\\MyScript\\Config\\TrayConfig.ts",
-            "7.Scripts\\MyScript\\Item\\BarClipCamera.ts",
             "7.Scripts\\MyScript\\Item\\BottomBar.ts",
             "7.Scripts\\MyScript\\Item\\BoxBg.ts",
             "7.Scripts\\MyScript\\Item\\FitInBox.ts",
@@ -178,11 +176,9 @@
             "1.Animations\\Base\\Scale.anim",
             "1.Animations\\Base\\Win.anim",
             "1.Animations\\BlinkEffect\\BlinkEffect.anim",
-            "1.Animations\\Gameplay\\auto-atlas.pac",
             "1.Animations\\handHint\\handClick.anim",
             "1.Animations\\Install\\Install.anim",
             "1.Animations\\TapToDecor\\TapToDecor.anim",
-            "3.Sprites\\Base\\auto-atlas.pac",
             "3.Sprites\\Base\\Bttn_green.png",
             "3.Sprites\\Base\\hand.png",
             "3.Sprites\\Base\\hand_pointing_2.png",
@@ -212,7 +208,6 @@
             "5.Prefabs\\Misc\\SplineLineRenderer.prefab",
             "8.Models\\Textures\\Texuture Wood.png",
             "8.Models\\Textures\\Txt_All.png",
-            "3.Sprites\\Gameplay\\Misc\\auto-atlas.pac",
             "3.Sprites\\Gameplay\\Misc\\BG.png",
             "3.Sprites\\Gameplay\\Misc\\BG_gameplay_2.png",
             "3.Sprites\\Gameplay\\Misc\\booster_bar.png",
@@ -349,7 +344,9 @@
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Floor.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Texture.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_tex_metal.mtl",
-            "8.Models\\Materials\\Misc\\BlinkMat.mtl"
+            "8.Models\\Materials\\Misc\\BlinkMat.mtl",
+            "8.Models\\Shaders\\dcc-specular-glossiness-clip.effect",
+            "8.Models\\Shaders\\unlit-clip.effect"
         ]
     }
 }

@@ -1,9 +1,9 @@
-import { _decorator, Camera, Component, director, EventTouch, Input, input, instantiate, Layers, MeshRenderer, Node, Prefab, Quat, tween, UITransform, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Component, director, EventTouch, Input, input, instantiate, Layers, MeshRenderer, Node, Prefab, Quat, tween, UITransform, Vec2, Vec3, Vec4 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { BottomBar } from '../Item/BottomBar';
-import { BarClipCamera } from '../Item/BarClipCamera';
 import { ItemCallbacks, ItemController } from '../Item/ItemController';
+import { ItemGraphic } from '../Item/ItemGraphic';
 import { ReleaseResult } from '../Item/ItemMovement';
 import { CELL_PX, CULL_PAD_PX, EDGE_PAD_PX, ICON_FILL, SPACING_PX, px } from '../Config/TrayConfig';
 import { GameManager } from './GameManager';
@@ -29,11 +29,8 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ type: BottomBar, tooltip: 'Thanh dưới màn hình' })
     bar: BottomBar | null = null;
 
-    @property({ type: Node, tooltip: 'Node rỗng trong world để cắm icon khi kéo (Gameplay/DragGhost). Layer = TRAY để BarCam vẽ' })
+    @property({ type: Node, tooltip: 'Node rỗng trong world để cắm icon khi kéo (Gameplay/DragGhost). Layer = TRAY (đèn chiếu layer này)' })
     ghostRoot: Node | null = null;
-
-    @property({ type: BarClipCamera, tooltip: 'BarCam: khi kéo item sẽ mở viewport cả màn → ghost (layer TRAY) vẽ đè lên map + CountLabel' })
-    clipCam: BarClipCamera | null = null;
 
     @property({ type: Camera, tooltip: 'Camera vẽ map. Để trống → ui.wCamera' })
     cam: Camera | null = null;
@@ -90,7 +87,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ group: 'Snap Animation', tooltip: 'Thời gian target thu về scale gốc (giây)' })
     snapScaleDownDuration = 0.18;
 
-    /** Layer riêng cho thẻ + icon trong thanh → BarClipCamera vẽ & cắt theo vùng thanh */
+    /** Layer riêng cho thẻ + icon trong thanh (đèn chiếu, phân biệt với map). Cắt theo vùng thanh do shader clipRect lo */
     static readonly TRAY_LAYER_NAME = 'TRAY';
     static readonly TRAY_LAYER_BIT = 0;
     static get trayLayer() { return 1 << ItemManager.TRAY_LAYER_BIT; }
@@ -130,6 +127,9 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     // ---- nội bộ ----
     private dragging: ItemController | null = null;   // item đang được kéo
+    /** Vùng thanh trên màn hình (0..1) → clipRect cho shader icon/thẻ; item ngoài vùng bị cắt */
+    private barRect = new Vec4(0, 0, 1, 1);
+    private _tmpRect = new Vec4();
     get isDragging() { return !!this.dragging; }
     private touchId = -1;
     /** nửa độ dài thanh theo trục xếp (local px): ngang = width/2, dọc = height/2 */
@@ -175,6 +175,22 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.syncIconRotation();          // chạy cả trong editor: xoay model root là icon xoay theo ngay
         if (EDITOR) return;
         this.updateVisibility();
+    }
+
+    lateUpdate() {
+        if (EDITOR) return;
+        this.updateClip();
+    }
+
+    /** Thanh đổi vị trí/kích thước (resize, xoay ngang) → cập nhật clipRect cho mọi item đang nằm trong thanh */
+    private updateClip() {
+        if (!this.bar || !this.bar.screenRect01(this._tmpRect)) return;
+        if (Vec4.equals(this.barRect, this._tmpRect, 1e-4)) return;
+        this.barRect.set(this._tmpRect);
+        for (const item of this.items) {
+            if (item === this.dragging) continue;          // ghost đang kéo: không cắt
+            item.graphic?.setClip(this.barRect);
+        }
     }
 
     /** Target xoay (ModelRotate xoay node nào cũng được, hoặc xoay tay trong editor) → icon trong thanh xoay theo */
@@ -265,6 +281,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.setLayout(this.remain);
         this.refreshCount();
         this.updateVisibility();
+        this.barRect.set(-1, -1, -1, -1);              // ép updateClip() gán clipRect cho item mới ở lateUpdate
         console.log(`[ItemManager] ${this.total} items`);
     }
 
@@ -347,15 +364,15 @@ export class ItemManager extends Component implements ItemCallbacks {
 
         this.dragging = item;
         this.touchId = -2;                 // chờ TOUCH_MOVE đầu tiên để lấy id thật
-        if (this.clipCam) this.clipCam.fullScreen = true;   // ghost nổi trên map + label
+        item.graphic?.setClip(ItemGraphic.CLIP_NONE);   // ghost nổi trên map + label, không bị cắt theo thanh
         item.onSelect(startPos);
     }
 
-    /** Kết thúc kéo (thả / huỷ): đóng viewport BarCam về vùng thanh */
+    /** Kết thúc kéo (thả / huỷ): icon về ô → cắt lại theo vùng thanh */
     private endDrag() {
+        this.dragging?.graphic?.setClip(this.barRect);
         this.dragging = null;
         this.touchId = -1;
-        if (this.clipCam) this.clipCam.fullScreen = false;
     }
 
     /** Ô nào đang nằm dưới ngón tay (so trên màn hình, nửa ô = cellPx/2) */
