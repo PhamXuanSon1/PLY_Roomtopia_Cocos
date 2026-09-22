@@ -629,6 +629,16 @@
       "__uuid__": "520c7020-802b-4bf2-b38c-dbe7ef07d527",
       "__expectedType__": "cc.Material"
     },
+    "blinkOnDrag": true,
+    "blinkColor": {
+      "__type__": "cc.Color",
+      "r": 118,
+      "g": 255,
+      "b": 112,
+      "a": 184
+    },
+    "blinkCycle": 0.6,
+    "blinkIdle": 0.7,
     "_id": "7bKh4/7uJEHbx1lXYsgnCE"
   },
   {

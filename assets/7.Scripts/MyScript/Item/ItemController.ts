@@ -66,6 +66,7 @@ export class ItemController extends Component {
         // ẩn thẻ Cell của ô này khi đang kéo (ô trống)
         const cell = this.graphic!.cell;
         if (cell) { this._cellWasActive = cell.active; cell.active = false; }
+        this.graphic!.startBlink();                 // target trong map nhấp nháy chỉ chỗ cần thả
         this.movement!.begin(screenPos);
     }
 
@@ -84,6 +85,7 @@ export class ItemController extends Component {
         if (this.state !== ItemState.Dragging) return;
         const ghostPos = this.movement!.release();
         const snap = !!ghostPos && !!this._cb?.judgeSnap(this, ghostPos);
+        this.graphic!.stopBlink();
         if (snap) {
             this.complete();
         } else {
@@ -96,6 +98,7 @@ export class ItemController extends Component {
     onCancel() {
         if (this.state !== ItemState.Dragging) return;
         this.movement!.cancel();
+        this.graphic!.stopBlink();
         this.state = ItemState.InTray;
         this.restoreCell();
         this._cb?.onReturned(this, 'miss');
@@ -106,6 +109,7 @@ export class ItemController extends Component {
     complete() {
         if (this.state === ItemState.Completed) return;
         this.state = ItemState.Completed;
+        this.graphic!.stopBlink();
         this.graphic!.restore();
         this.graphic!.punchTarget(this._snapScale, this._snapScaleUpDuration, this._snapScaleDownDuration);
         this.graphic!.setVisible(false);

@@ -131,6 +131,10 @@ export class HandHintManager extends Component {
         }
         if (this.rotate?.rotatedOnce) this.rotateHintDone = true;
 
+        // đang kéo item → ẩn tay, giữ idle = 0. Suốt cú kéo không có TOUCH_START mới nên
+        // onUserTouch() không bắn lần nữa, để idle chạy tiếp là tay hiện đè lên lúc đang kéo.
+        if (im.isDragging) { this.notify(); return; }
+
         if (this.showing) {
             // item đang hint bị gỡ / trượt ra ngoài màn → hint lại item khác
             if (this.mode === 'drag' && (!this.hintItem || this.hintItem.isCompleted || !this.fullyOnScreen(this.hintItem))) this.restart();

@@ -556,7 +556,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 1196915.0185,
+      "mTimestamp": 2056378.0282,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -14366,7 +14366,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/GameManager.ts": {
       "mTimestamp": {
-        "mtime": 1789956013364.3247,
+        "mtime": 1790041843732.698,
         "uuid": "a9e3360b-7b4f-4977-9b43-8814d6e1b484"
       },
       "chunkId": "dc9ed07e38b65a2b34ed9306163054286bc5f2cd",
@@ -14382,11 +14382,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 54
+              "column": 61
             },
             "end": {
               "line": 1,
-              "column": 58
+              "column": 65
             }
           }
         }
@@ -14418,7 +14418,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ItemManager.ts": {
       "mTimestamp": {
-        "mtime": 1790040989862.3574,
+        "mtime": 1790041859948.501,
         "uuid": "27753742-fc6e-4a91-b9eb-7f580355c2a0"
       },
       "chunkId": "cf70c018604b6a9c1e438bf8798003ebbaf7b0d6",
@@ -14940,7 +14940,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/ItemController.ts": {
       "mTimestamp": {
-        "mtime": 1789985093488.0547,
+        "mtime": 1790041660894.511,
         "uuid": "ed299cb6-f79f-4900-8d42-f5c34f39a1af"
       },
       "chunkId": "556ec74c7738d5387376beefddca68e4fa45f058",
@@ -15045,7 +15045,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/ItemGraphic.ts": {
       "mTimestamp": {
-        "mtime": 1789985093488.0547,
+        "mtime": 1790041843733.6992,
         "uuid": "edafe2cf-8e9d-41c2-a0b7-ff4c517f522c"
       },
       "chunkId": "930b50fe3dce78a017ff0dff251ffee06982848f",
@@ -15065,11 +15065,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 134
+              "column": 141
             },
             "end": {
               "line": 1,
-              "column": 138
+              "column": 145
             }
           }
         },
@@ -15746,7 +15746,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/HandHintManager.ts": {
       "mTimestamp": {
-        "mtime": 1789986871892.9868,
+        "mtime": 1790041780937.2598,
         "uuid": "a7c3d9e1-4b52-4f8e-9d31-7e2f6a1c5b08"
       },
       "chunkId": "f54e95776b2771e28a4371773b27a38f6ed072de",

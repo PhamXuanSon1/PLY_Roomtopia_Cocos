@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, instantiate, Material, MeshRenderer, Node, primitives, Quat, Tween, tween, utils, Vec3 } from 'cc';
+import { _decorator, Camera, Color, Component, instantiate, Material, MeshRenderer, Node, primitives, Quat, Tween, tween, utils, Vec3 } from 'cc';
 import { CELL_PX, ICON_FILL } from '../Config/TrayConfig';
 const { ccclass, property } = _decorator;
 
@@ -221,11 +221,13 @@ export class ItemGraphic extends Component {
 
     // =========================================================== target trong map
     setGray(gray: Material) {
+        this.stopBlink();                          // bản material riêng khi nháy sẽ bị thay ở dưới
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats.map(() => gray);
     }
 
     restore() {
+        this.stopBlink();
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats;
     }
@@ -233,6 +235,68 @@ export class ItemGraphic extends Component {
     setHintMat(hint: Material) {
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats.map(() => hint);
+    }
+
+    // ---- nhấp nháy target khi đang kéo item (config lấy từ GameManager, ItemManager gán lúc build) ----
+    /** Màu fade tới; null = tắt nhấp nháy */
+    blinkColor: Color | null = null;
+    /** Thời gian 1 chu kỳ fade đi-về (giây) */
+    blinkCycle = 0.6;
+    /** Nghỉ ở màu gốc bao lâu giữa 2 chu kỳ (giây) */
+    blinkIdle = 0.4;
+    /** Bản RIÊNG của material target khi đang nháy (grayMat dùng chung cả map, đổi thẳng là nháy cả map) */
+    private blinkMats: Material[] = [];
+    /** mainColor ban đầu của từng material, để trả về khi thôi nháy */
+    private blinkBase: Color[] = [];
+    /** Giây trong chu kỳ hiện tại; < 0 = đang không nháy */
+    private blinkTime = -1;
+    /** Đã ghi màu gốc cho quãng nghỉ rồi → khỏi ghi lại mỗi frame */
+    private blinkIdleDone = false;
+    private static readonly BLINK_PROP = 'mainColor';
+    private static tmpColor = new Color();
+
+    /** Bắt đầu fade màu target. Gọi khi nhấc item lên kéo. */
+    startBlink() {
+        const r = this.targetRenderer;
+        if (!r || !this.blinkColor) return;
+        this.stopBlink();
+        for (let i = 0; i < r.sharedMaterials.length; i++) {
+            const m = r.getMaterialInstance(i);          // tách bản riêng → chỉ target này đổi màu
+            if (!m) continue;
+            const c = m.getProperty(ItemGraphic.BLINK_PROP, 0) as Color | undefined;
+            this.blinkMats.push(m);
+            this.blinkBase.push(c ? c.clone() : Color.WHITE.clone());
+        }
+        this.blinkTime = 0;
+        this.blinkIdleDone = false;
+    }
+
+    /** Thôi nháy, trả mainColor về như cũ */
+    stopBlink() {
+        if (this.blinkTime < 0) return;
+        this.blinkTime = -1;
+        for (let i = 0; i < this.blinkMats.length; i++) {
+            this.blinkMats[i].setProperty(ItemGraphic.BLINK_PROP, this.blinkBase[i]);
+        }
+        this.blinkMats.length = 0;
+        this.blinkBase.length = 0;
+    }
+
+    update(dt: number) {
+        if (this.blinkTime < 0) return;
+        const cycle = Math.max(this.blinkCycle, 0.05);
+        const idle = Math.max(this.blinkIdle, 0);
+        this.blinkTime = (this.blinkTime + dt) % (cycle + idle);
+        // trong cycle: ping-pong mượt 0 → 1 → 0. Hết cycle: nằm yên ở màu gốc suốt blinkIdle giây
+        const k = this.blinkTime < cycle
+            ? 0.5 - 0.5 * Math.cos(this.blinkTime / cycle * Math.PI * 2)
+            : 0;
+        if (k === 0 && this.blinkIdleDone) return;          // đang nghỉ, màu đã về gốc → khỏi ghi lại mỗi frame
+        this.blinkIdleDone = k === 0;
+        for (let i = 0; i < this.blinkMats.length; i++) {
+            Color.lerp(ItemGraphic.tmpColor, this.blinkBase[i], this.blinkColor!, k);
+            this.blinkMats[i].setProperty(ItemGraphic.BLINK_PROP, ItemGraphic.tmpColor);
+        }
     }
 
     /** Target phóng to rồi thu về scale gốc khi snap đúng */

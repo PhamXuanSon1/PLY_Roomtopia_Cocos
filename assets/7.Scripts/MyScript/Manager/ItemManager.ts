@@ -252,6 +252,9 @@ export class ItemManager extends Component implements ItemCallbacks {
                 this.snapScaleUpDuration,
                 this.snapScaleDownDuration,
             );
+            item.graphic!.blinkColor = gm.blinkOnDrag ? gm.blinkColor : null;   // fade màu target khi kéo
+            item.graphic!.blinkCycle = gm.blinkCycle;
+            item.graphic!.blinkIdle = gm.blinkIdle;
             this.setCellActive(item, this.showCells);
             ItemManager.setTrayLayer(item.node);
             this.items.push(item);
