@@ -1356,6 +1356,18 @@
       "scenes": [
         "4f698256-e021-4611-aa04-7b9104147a28@a3516"
       ]
+    },
+    "meshCompress": {
+      "enable": true,
+      "quantize": true,
+      "compress": true,
+      "encode": true
+    },
+    "meshOptimize": {
+      "enable": true,
+      "vertexCache": true,
+      "vertexFetch": true,
+      "overdraw": true
     }
   }
 }
