@@ -32,8 +32,8 @@
         "progress": 1,
         "state": "success",
         "stage": "build",
-        "message": "9-22-2026 10:38:57 build success in 14 s!",
-        "detailMessage": "[playable-ads-builder]\r[generateZip] 1/1\r",
+        "message": "9-22-2026 10:46:43 build success in 16 s!",
+        "detailMessage": "[playable-ads-builder]\r[processFiles] 1/1\r",
         "options": {
           "name": "Cocos_DreamyRoom_PLY43",
           "server": "",
@@ -94,7 +94,7 @@
             "enable": false
           }
         },
-        "time": "9-22-2026 10:38:43",
+        "time": "9-22-2026 10:46:26",
         "dirty": false
       },
       "1790045293778": {

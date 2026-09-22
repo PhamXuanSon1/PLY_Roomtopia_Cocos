@@ -266,6 +266,20 @@ export class ItemGraphic extends Component {
         return new Vec3((minX + maxX) / 2, (minY + maxY) / 2, 0);
     }
 
+    /** Tâm bbox của mesh target trong WORLD. Không có mesh bounds → pivot. */
+    static worldCenter(target: Node, out = new Vec3()): Vec3 {
+        const st = target.getComponent(MeshRenderer)?.mesh?.struct;
+        if (!st?.minPosition || !st.maxPosition) return out.set(target.worldPosition);
+        const lo = st.minPosition, hi = st.maxPosition, mat = target.worldMatrix, tmp = new Vec3();
+        const min = new Vec3(Infinity, Infinity, Infinity), max = new Vec3(-Infinity, -Infinity, -Infinity);
+        for (let i = 0; i < 8; i++) {
+            tmp.set(i & 1 ? hi.x : lo.x, i & 2 ? hi.y : lo.y, i & 4 ? hi.z : lo.z);
+            Vec3.transformMat4(tmp, tmp, mat);
+            Vec3.min(min, min, tmp); Vec3.max(max, max, tmp);
+        }
+        return Vec3.add(out, min, max).multiplyScalar(0.5);
+    }
+
     static setLayerRecursive(n: Node, layer: number) {
         n.layer = layer;
         for (const ch of n.children) ItemGraphic.setLayerRecursive(ch, layer);

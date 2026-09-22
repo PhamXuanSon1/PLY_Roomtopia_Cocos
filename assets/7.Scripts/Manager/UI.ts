@@ -109,6 +109,17 @@ export class UI extends Component {
         ui = this;
     }
 
+
+    start() {
+        try{
+            if(PlayableSDK.channel == "Google") {
+                this.offButtons.forEach(button => { if (button) button.active = false; });
+            }
+        } catch(error){
+
+        }
+    }
+
     bindingToStore() {
         pc.unBindingEvent();
         pc.onStore();

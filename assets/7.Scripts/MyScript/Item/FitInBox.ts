@@ -61,7 +61,9 @@ export class FitInBox extends Component {
         this.node.getComponentsInChildren(MeshRenderer).forEach(mr => {
             const st = mr.mesh?.struct;
             if (!st || !st.minPosition || !st.maxPosition) return;
-            this.meshes.push({ node: mr.node, min: st.minPosition.clone(), max: st.maxPosition.clone() });
+            // minPosition/maxPosition đôi khi không phải instance Vec3 thật (vd mesh qua meshopt/quantization) → không có .clone()
+            const mn = st.minPosition, mx = st.maxPosition;
+            this.meshes.push({ node: mr.node, min: v3(mn.x, mn.y, mn.z), max: v3(mx.x, mx.y, mx.z) });
         });
     }
 

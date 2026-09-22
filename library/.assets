@@ -166,7 +166,6 @@
             "4.Sounds\\WaterDrop.mp3",
             "4.Sounds\\Window.mp3",
             "4.Sounds\\WoodenDoor Small.mp3",
-            "5.Prefabs\\BlinkEffect.prefab",
             "5.Prefabs\\BottomBar.prefab",
             "5.Prefabs\\Star.prefab",
             "6.Scenes\\PlayScene.scene",
@@ -341,11 +340,8 @@
             "8.Models\\Materials\\Misc\\BlinkMat.mtl",
             "8.Models\\Shaders\\dcc-specular-glossiness-clip.effect",
             "8.Models\\Shaders\\unlit-clip.effect",
-            "8.Models\\Meshs\\Lv50_Bathroom\\NewFBXRoom",
-            "8.Models\\Meshs\\Lv50_Bathroom\\NewFBXRoom\\Materials_Lv50_Bathroom_Root",
-            "8.Models\\Meshs\\Lv50_Bathroom\\NewFBXRoom\\Materials_Lv50_Bathroom_Root\\M_Floor.mtl",
-            "8.Models\\Meshs\\Lv50_Bathroom\\NewFBXRoom\\Materials_Lv50_Bathroom_Root\\Ma_Texture_Tranparent.mtl",
-            "8.Models\\Meshs\\Lv50_Bathroom\\NewFBXRoom\\Materials_Lv50_Bathroom_Root\\M_tex_metal.mtl"
+            "7.Scripts\\MyScript\\Manager\\SnapEffect.ts",
+            "5.Prefabs\\BlinkEffect3D.prefab"
         ]
     }
 }

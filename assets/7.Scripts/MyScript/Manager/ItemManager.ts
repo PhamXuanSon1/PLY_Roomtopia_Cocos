@@ -7,6 +7,7 @@ import { ItemGraphic } from '../Item/ItemGraphic';
 import { ReleaseResult } from '../Item/ItemMovement';
 import { CELL_PX, CULL_PAD_PX, EDGE_PAD_PX, ICON_FILL, SPACING_PX, px } from '../Config/TrayConfig';
 import { GameManager } from './GameManager';
+import { SnapEffect } from './SnapEffect';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -34,6 +35,9 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     @property({ type: Camera, tooltip: 'Camera vẽ map. Để trống → ui.wCamera' })
     cam: Camera | null = null;
+
+    @property({ type: SnapEffect, tooltip: 'Effect nổ tại target khi thả đúng (để trống = không có)' })
+    snapEffect: SnapEffect | null = null;
 
     @property({ type: [Node], tooltip: 'Các mesh được chơi, thứ tự = thứ tự ô trong thanh. Để trống → tất cả mesh trong map' })
     pickTargets: Node[] = [];
@@ -456,6 +460,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     }
 
     onSnapped(item: ItemController) {
+        if (item.target) this.snapEffect?.play(item.target);
         this.collected++;
         this.refreshCount();
         this.removeAndCompact(item);

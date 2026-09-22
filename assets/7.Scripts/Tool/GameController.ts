@@ -1,4 +1,5 @@
 import { _decorator, assetManager, Component, Font, Node } from "cc";
+import { PREVIEW } from "cc/env";
 const { ccclass, property } = _decorator;
 
 // openFullscreen();
@@ -8,23 +9,33 @@ export var gc: GameController;
 @ccclass("GameController")
 export class GameController extends Component {
 
+  @property({ tooltip: 'Preview web (localhost): hỏi xác nhận trước khi giả lập redirect store' })
+  showStoreDialogInWebPreview = true;
+
+  @property({ tooltip: 'Nội dung hỏi xác nhận khi ở Preview web' })
+  storeDialogMessage = 'Redirect to store?';
+
   onLoad() {
     gc = this;
   }
-  
+
   start() {
   }
 
   update(deltaTime: number) {}
 
- 
 
-  redirectToStore() {    
+
+  redirectToStore() {
+    if (PREVIEW && this.showStoreDialogInWebPreview && typeof window !== 'undefined') {
+      const shouldOpenStore = window.confirm(this.storeDialogMessage);
+      if (!shouldOpenStore) return;
+    }
     try {
       PlayableSDK.download();
-      PlayableSDK.game_end();            
+      PlayableSDK.game_end();
     } catch (error) {
-      
+
     }
   }
 }
