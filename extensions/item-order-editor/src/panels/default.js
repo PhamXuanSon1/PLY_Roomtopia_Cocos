@@ -110,6 +110,11 @@ exports.methods = {
             return;
         }
         state.parent = res.parent;
+        // chụp ảnh màu thật (scene script); thất bại thì giữ ảnh xám của editor
+        try {
+            const thumbs = await Editor.Message.request(PKG, 'capture-thumbs', res.items.map((it) => it.uuid), 256);
+            for (const it of res.items) if (thumbs && thumbs[it.uuid]) it.thumb = thumbs[it.uuid] + '?t=' + Date.now();
+        } catch (e) { /* giữ ảnh cũ */ }
         state.columns = this.splitColumns(res.items);
         state.picked = null;
         state.dirty = false;

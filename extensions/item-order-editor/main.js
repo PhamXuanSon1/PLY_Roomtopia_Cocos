@@ -214,5 +214,27 @@ exports.methods = {
     },
 };
 
+/**
+ * Chụp ảnh màu thật cho các item (scene script captureNode) → trả map uuid → file png.
+ * Lỗi từng item thì bỏ qua (panel giữ ảnh xám).
+ */
+exports.methods.captureThumbs = async function (uuids, size) {
+    const path = require('path');
+    const outDir = path.join(Editor.Project.path, 'temp', PKG, 'thumbs');
+    const result = {};
+    for (const uuid of uuids) {
+        try {
+            const r = await Editor.Message.request('scene', 'execute-scene-script', {
+                name: PKG, method: 'captureNode', args: [uuid, outDir, size || 256],
+            });
+            if (r && r.ok) result[uuid] = r.file;
+            else log('capture ' + uuid + ' failed: ' + (r && r.error));
+        } catch (e) {
+            log('capture ' + uuid + ' error: ' + e);
+        }
+    }
+    return result;
+};
+
 exports.load = function () {};
 exports.unload = function () {};

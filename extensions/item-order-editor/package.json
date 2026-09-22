@@ -21,14 +21,46 @@
   },
   "contributions": {
     "menu": [
-      { "path": "Tool", "label": "Item Order Editor", "message": "open-panel" },
-      { "path": "i18n:menu.panel/Item Order Editor", "label": "Open Panel", "message": "open-panel" }
+      {
+        "path": "Tool",
+        "label": "Item Order Editor",
+        "message": "open-panel"
+      },
+      {
+        "path": "i18n:menu.panel/Item Order Editor",
+        "label": "Open Panel",
+        "message": "open-panel"
+      }
     ],
     "messages": {
-      "open-panel": { "methods": ["openPanel"] },
-      "get-selected-node": { "methods": ["getSelectedNode"] },
-      "load-children": { "methods": ["loadChildren"] },
-      "apply-order": { "methods": ["applyOrder"] }
+      "open-panel": {
+        "methods": [
+          "openPanel"
+        ]
+      },
+      "get-selected-node": {
+        "methods": [
+          "getSelectedNode"
+        ]
+      },
+      "load-children": {
+        "methods": [
+          "loadChildren"
+        ]
+      },
+      "apply-order": {
+        "methods": [
+          "applyOrder"
+        ]
+      },
+      "capture-thumbs": {
+        "methods": [
+          "captureThumbs"
+        ]
+      }
+    },
+    "scene": {
+      "script": "./scene.js"
     }
   }
 }

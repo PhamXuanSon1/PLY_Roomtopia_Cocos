@@ -1,6 +1,7 @@
 import { _decorator, Camera, Component, EventTouch, Input, input, instantiate, Label, Mat4, math, Node, Prefab, screen, Size, Sprite, UITransform, Vec2, Vec3, Vec4, view } from 'cc';
 import { ui } from '../../Manager/UI';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
+import { BoxBg } from './BoxBg';
 const { ccclass, property } = _decorator;
 
 /**
@@ -75,14 +76,14 @@ export class BottomBar extends Component {
     @property({ group: 'Skin', tooltip: 'Tab dịch dọc so với MÉP TRÊN nền (local px). Âm = lún xuống đè lên nền (như scene cũ: -29)' })
     tabOffsetY = -29;
 
-    @property({ group: 'Skin', tooltip: 'Màn ngang (panel dọc): có hiện tab không (đặt sát mép trên panel, phía trong)' })
-    tabInLandscape = true;
-
     @property({ group: 'Skin', tooltip: 'Độ sâu (local z) của Bg; Tab = +50. Âm = lùi ra SAU icon để mesh item luôn nằm trên nền/tab (icon ở Content z≈20, dày tới ±150)' })
     skinZ = -200;
 
     @property({ group: 'Skin', tooltip: 'Chuyển countLabel vào giữa Tab (tắt khung đếm cũ của BoxBg nếu label đang nằm trong đó)' })
     countLabelInTab = true;
+
+    @property({ group: 'Skin', type: Node, tooltip: 'Khung đếm cũ của BoxBg (CountFrame) — màn NGANG label quay về đây (góc dưới-phải vùng chơi như cũ). Để trống → tự lấy BoxBg.countLabel' })
+    countFrame: Node | null = null;
 
     @property({ group: 'Skin', tooltip: 'Thanh ngang: Content đặt vào GIỮA Bg theo chiều dọc và hitHeight = cao Bg − 2·contentPadY → ô icon (ItemManager.cellSize = 0) luôn nằm trong Bg, cân trên dưới' })
     fitContentToBg = true;
@@ -96,6 +97,7 @@ export class BottomBar extends Component {
 
     private _bg: Node | null = null;
     private _tab: Node | null = null;
+    private _countFrame: Node | null = null;
     private _layoutBg = false;    // chỉ tự layout khi Bg/Tab do code instantiate; node đặt sẵn trong scene giữ nguyên
     private _layoutTab = false;
 
@@ -180,15 +182,34 @@ export class BottomBar extends Component {
         // countLabel vào giữa Tab (bỏ qua nếu đã nằm sẵn trong Tab từ scene).
         // Label đang nằm trong khung đếm của BoxBg (Sprite pill) → ẩn khung đó đi
         if (this.countLabelInTab && this._tab && this.countLabel && this.countLabel.node.parent !== this._tab) {
-            const ln = this.countLabel.node;
-            const oldFrame = ln.parent;
-            const th = this._tab.getComponent(UITransform)?.contentSize.height ?? 70;
-            ln.setParent(this._tab, false);
-            ln.layer = this._tab.layer;
-            ln.setPosition(0, th / 2, 1);
-            ln.setRotationFromEuler(0, 0, 0);
-            if (oldFrame && oldFrame !== this.node && oldFrame.getComponent(Sprite)) oldFrame.active = false;
+            const oldFrame = this.countLabel.node.parent;
+            if (oldFrame && oldFrame !== this.node && oldFrame.getComponent(Sprite)) this._countFrame = oldFrame;
+            this.labelToTab();
         }
+        if (!this._countFrame) this._countFrame = this.countFrame ?? this.camera()?.node.getComponentInChildren(BoxBg)?.countLabel ?? null;
+    }
+
+    /** Label đếm vào giữa Tab; khung đếm cũ (BoxBg) tắt */
+    private labelToTab() {
+        const ln = this.countLabel?.node, tab = this._tab;
+        if (!ln || !tab) return;
+        const th = tab.getComponent(UITransform)?.contentSize.height ?? 70;
+        if (ln.parent !== tab) ln.setParent(tab, false);
+        ln.layer = tab.layer;
+        ln.setPosition(0, th / 2, 1);
+        ln.setRotationFromEuler(0, 0, 0);
+        if (this._countFrame) this._countFrame.active = false;
+    }
+
+    /** Màn ngang: label về khung đếm cũ của BoxBg (BoxBg tự đặt góc dưới-phải vùng chơi), Bg/Tab ẩn */
+    private labelToFrame() {
+        const ln = this.countLabel?.node, f = this._countFrame;
+        if (!ln || !f) return;
+        f.active = true;
+        if (ln.parent !== f) ln.setParent(f, false);
+        ln.layer = f.layer;
+        ln.setPosition(0, 0, 1);
+        ln.setScale(1, 1, 1);
     }
 
     /**
@@ -202,23 +223,29 @@ export class BottomBar extends Component {
         if (!ut) return;
         const { width: w, height: h } = ut.contentSize;
         if (!isFinite(w) || !isFinite(h) || w <= 0 || h <= 0) return;   // view chưa có size (frame đầu / pane 0px) → đợi lần fit sau
+
+        // Màn NGANG giữ nguyên thiết kế cũ: không Bg/Tab, cell hiện, label đếm ở khung BoxBg (góc dưới-phải vùng chơi), cellSize theo ItemManager
+        if (this._vertical) {
+            if (this._bg) this._bg.active = false;
+            if (this._tab) this._tab.active = false;
+            if (this.countLabelInTab) this.labelToFrame();
+            this._cellFromBg = 0;
+            return;
+        }
+        if (this._bg) this._bg.active = true;
+        if (this._tab) this._tab.active = true;
+        if (this.countLabelInTab) this.labelToTab();
         let bgTop = h;
         if (this._bg && this._layoutBg) {
             const but = this._bg.getComponent(UITransform)!;
-            const bh = this._vertical || this.bgHeight <= 0 ? h : this.bgHeight;
+            const bh = this.bgHeight <= 0 ? h : this.bgHeight;
             but.setContentSize(w, bh);
             this._bg.setPosition(0, 0, this.skinZ);
             bgTop = bh;
         }
         if (this._tab && this._layoutTab) {
-            const on = !this._vertical || this.tabInLandscape;
-            this._tab.active = on;
-            if (on) {
-                const th = this._tab.getComponent(UITransform)?.contentSize.height ?? 70;
-                // ngang: nhô trên mép Bg (tabOffsetY âm = lún xuống). dọc: nằm gọn phía trong mép trên panel
-                const y = this._vertical ? h - th + this.tabOffsetY : bgTop + this.tabOffsetY;
-                this._tab.setPosition(0, y, this.skinZ + 50);
-            }
+            // nhô trên mép Bg (tabOffsetY âm = lún xuống đè lên nền)
+            this._tab.setPosition(0, bgTop + this.tabOffsetY, this.skinZ + 50);
         }
         // Ô icon nằm gọn trong Bg, cân trên dưới: Content ở giữa Bg, hitHeight (= cellPx khi ItemManager.cellSize = 0) = cao Bg − 2·pad
         if (this.fitContentToBg && this._bg && this.content && !this._vertical) {

@@ -133,7 +133,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     showCellsInPlay = false;
 
     /** Cell có hiện không ở ngữ cảnh hiện tại (editor theo showCells, Play cần thêm showCellsInPlay) */
-    private get cellsVisible() { return this._showCells && (EDITOR || this.showCellsInPlay); }
+    private get cellsVisible() { return this._showCells && (EDITOR || this.showCellsInPlay || !!this.bar?.vertical); }   // màn ngang giữ cell như cũ
 
     // ---- nút xem trước trong editor (tick = chạy, tự bỏ tick) ----
     @property({ displayName: '▶ Preview items', tooltip: 'Sinh item vào Content theo pickTargets (lưu vào scene, Play dùng lại). Bấm lại = sinh lại từ đầu' })
@@ -199,6 +199,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     onEnable() {
         if (EDITOR) return;
         this.bar?.node.on(BottomBar.EVENT_LIFT, this.onLift, this);
+        this.bar?.node.on(BottomBar.EVENT_LAYOUT, this.onBarLayout, this);
         input.on(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
         input.on(Input.EventType.TOUCH_END, this.onTouchEnd, this);
         input.on(Input.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
@@ -207,6 +208,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     onDisable() {
         if (EDITOR) return;
         this.bar?.node.off(BottomBar.EVENT_LIFT, this.onLift, this);
+        this.bar?.node.off(BottomBar.EVENT_LAYOUT, this.onBarLayout, this);
         input.off(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
         input.off(Input.EventType.TOUCH_END, this.onTouchEnd, this);
         input.off(Input.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
@@ -696,6 +698,18 @@ export class ItemManager extends Component implements ItemCallbacks {
         for (const it of content.getComponentsInChildren(ItemController)) {
             const cell = it.graphic?.cell ?? it.node.getChildByName('Cell');
             if (cell) this.resizeCell(cell);
+        }
+    }
+
+    /** Thanh đổi ngang ↔ dọc: cellPx đổi (dọc theo cellSize, ngang theo Bg) → đo lại icon, thẻ Cell, ẩn/hiện cell */
+    private onBarLayout() {
+        const content = this.bar?.content;
+        if (!content) return;
+        const px = this.cellPx();
+        for (const it of content.getComponentsInChildren(ItemController)) {
+            const g = it.graphic;
+            if (g) { g.cellPx = px; g.putIconInCell(); }
+            this.setCellActive(it, this.cellsVisible);
         }
     }
 

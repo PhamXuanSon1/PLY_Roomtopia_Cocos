@@ -6,8 +6,8 @@ import { ui } from '../../Manager/UI';
 const { ccclass, property } = _decorator;
 
 /**
- * SnapEffect: thả item ĐÚNG chỗ → spawn prefab particle 3D (BlinkEffect3D) tại ĐỈNH bbox target trong map
- * (không spawn ở tâm vì sẽ lọt trong mesh), xoay theo camera (để mặt phẳng bắn hạt dàn ngang đúng theo màn hình),
+ * SnapEffect: thả item ĐÚNG chỗ → spawn prefab particle 3D (BlinkEffect3D) tại TÂM bbox target (ItemGraphic.worldCenter — đúng chỗ snap,
+ * particle tắt depth-test nên không bị mesh che), xoay theo camera (để mặt phẳng bắn hạt dàn ngang đúng theo màn hình),
  * nổ 1 phát (loop = false trong prefab) rồi tự huỷ.
  *
  *  - Prefab: cc.ParticleSystem billboard, burst 1 lần lúc t=0, alpha fade về 0.
@@ -33,8 +33,8 @@ export class SnapEffect extends Component {
     @property({ tooltip: 'Nhân thêm scale cho effect (1 = như prefab)' })
     scale = 1;
 
-    @property({ tooltip: 'Dịch effect lên trên (world Y) bấy nhiêu unit so với ĐỈNH bbox target' })
-    offsetY = 0.1;
+    @property({ tooltip: 'Dịch effect lên trên (world Y) bấy nhiêu unit so với TÂM bbox target (vị trí snap)' })
+    offsetY = 0;
 
     @property({ group: 'WinReact', type: Prefab, tooltip: 'Prefab chữ phản hồi (WinReact, UI 2D). Để trống = không hiện' })
     reactPrefab: Prefab | null = null;
@@ -79,9 +79,9 @@ export class SnapEffect extends Component {
         n.setParent(cam.node, false);
         n.layer = cam.node.layer;
         const c = n.addComponent(Camera);
-        c.priority = cam.priority + 1;
+        c.priority = cam.priority + 2;              // sau WCam (+0) và RoomCam (+1, FitInBox.clipToBox) → effect nổi trên room
         c.visibility = SnapEffect.fxLayer;
-        c.clearFlags = Camera.ClearFlag.DONT_CLEAR;
+        c.clearFlags = Camera.ClearFlag.DEPTH_ONLY;   // xoá depth của map → hạt nằm trong mesh vẫn hiện trọn (không bị depth test che)
         this.fxCam = c;
         this.syncFxCam(cam);
         return c;
@@ -113,7 +113,7 @@ export class SnapEffect extends Component {
         // dàn thành hàng ngang đúng theo góc nhìn màn hình thay vì lệch theo trục world.
         if (cam) fx.setWorldRotation(cam.node.worldRotation);
         else fx.setWorldRotation(0, 0, 0, 1);
-        fx.setWorldPosition(ItemGraphic.worldTop(target).add3f(0, this.offsetY, 0));
+        fx.setWorldPosition(ItemGraphic.worldCenter(target).add3f(0, this.offsetY, 0));   // tâm bbox target = đúng chỗ snap (như bản 1c62485)
 
         if (cam) {
             this.ensureFxCam(cam);

@@ -1,5 +1,6 @@
-import { _decorator, Camera, Component, Mat4, MeshRenderer, Node, v3, Vec3, view } from 'cc';
+import { _decorator, Camera, Component, DirectionalLight, Layers, Mat4, MeshRenderer, Node, Rect, SphereLight, SpotLight, v3, Vec3, view } from 'cc';
 import { BoxBg } from './BoxBg';
+import { EDITOR } from 'cc/env';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -51,6 +52,15 @@ export class FitInBox extends Component {
     @property({ group: 'Landscape', range: [0.5, 2, 0.05], slide: true, tooltip: 'Màn NGANG: nhân thêm scale sau khi fit' })
     landscapeScale = 1;
 
+    @property({ group: 'Clip', tooltip: 'Room chỉ hiện trong vùng BoxBg: room chuyển sang layer ROOM và vẽ bằng camera phụ RoomCam có viewport = rect hộp (crop cứng, không lòi ra ngoài)' })
+    clipToBox = true;
+
+    static readonly ROOM_LAYER_NAME = 'ROOM';
+    static readonly ROOM_LAYER_BIT = 2;
+    static get roomLayer() { return 1 << FitInBox.ROOM_LAYER_BIT; }
+
+    private roomCam: Camera | null = null;
+
     private baseScale = 1;
     private _key = '';
     private meshes: { node: Node; min: Vec3; max: Vec3 }[] = [];
@@ -62,6 +72,60 @@ export class FitInBox extends Component {
     onLoad() {
         this.baseScale = this.node.scale.x || 1;
         this.collect();
+        if (this.clipToBox && !EDITOR) {
+            const existing = Layers.nameToLayer(FitInBox.ROOM_LAYER_NAME);
+            if (existing === undefined || existing < 0) Layers.addLayer(FitInBox.ROOM_LAYER_NAME, FitInBox.ROOM_LAYER_BIT);
+            FitInBox.setLayerRecursive(this.node, FitInBox.roomLayer);
+            // Đèn có mask visibility riêng (scene: DEFAULT|TRAY) → model ở layer ROOM sẽ bị receiveDirLight = false.
+            // Thêm ROOM vào mask mọi đèn để room vẫn nhận sáng/bóng như khi còn ở DEFAULT.
+            const scene = this.node.scene;
+            if (scene) {
+                for (const l of scene.getComponentsInChildren(DirectionalLight)) l.visibility |= FitInBox.roomLayer;
+                for (const l of scene.getComponentsInChildren(SphereLight)) l.visibility |= FitInBox.roomLayer;
+                for (const l of scene.getComponentsInChildren(SpotLight)) l.visibility |= FitInBox.roomLayer;
+            }
+        }
+    }
+
+    static setLayerRecursive(n: Node, layer: number) {
+        n.layer = layer;
+        for (const c of n.children) FitInBox.setLayerRecursive(c, layer);
+    }
+
+    /** Camera phụ vẽ layer ROOM, con của WCam. Viewport + orthoHeight + offset = đúng rect hộp → phần room ngoài hộp bị cắt */
+    private syncRoomCam(cam: Camera, box: BoxBg) {
+        if (EDITOR || !this.clipToBox) return;
+        if (!this.roomCam?.isValid) {
+            const n = new Node('RoomCam');
+            n.setParent(cam.node, false);
+            n.layer = cam.node.layer;
+            const c = n.addComponent(Camera);
+            c.priority = cam.priority + 1;              // sau WCam (nền BoxBg đã vẽ), trước FxCam (+2)
+            // ROOM + DEFAULT: pipeline chỉ dựng shadow map cho camera có bit DEFAULT trong visibility (engine check
+            // `camera.visibility & DEFAULT`), thiếu nó room mất bóng. Object DEFAULT lọt trong viewport hộp (BoxBg, viền...)
+            // bị vẽ lại y hệt (depth-test với room) — vô hại; thanh item nằm ngoài viewport nên bị cắt.
+            c.visibility = FitInBox.roomLayer | Layers.Enum.DEFAULT;
+            c.clearFlags = Camera.ClearFlag.DONT_CLEAR;
+            this.roomCam = c;
+            // WCam không vẽ layer ROOM nữa (tránh vẽ 2 lần / lòi ra ngoài hộp)
+            cam.visibility &= ~FitInBox.roomLayer;
+        }
+        const c = this.roomCam!;
+        const size = view.getVisibleSize();
+        const halfH = cam.orthoHeight, halfW = halfH * size.width / size.height;
+        const r = box.getCamRect(cam.orthoHeight, true, true);        // vùng chơi (đã cắt theo màn, màn ngang trừ panel)
+        const w = r.right - r.left, h = r.top - r.bottom;
+        if (w <= 0 || h <= 0) { c.enabled = false; return; }
+        c.enabled = true;
+        c.projection = cam.projection;
+        c.fovAxis = cam.fovAxis;
+        c.fov = cam.fov;
+        c.near = cam.near;
+        c.far = cam.far;
+        c.targetTexture = cam.targetTexture;
+        c.orthoHeight = h / 2;
+        c.node.setPosition((r.left + r.right) / 2, (r.top + r.bottom) / 2, 0);   // cam-space offset = tâm hộp
+        c.rect = new Rect((r.left + halfW) / (2 * halfW), (r.bottom + halfH) / (2 * halfH), w / (2 * halfW), h / (2 * halfH));
     }
 
     /** Gom mesh con 1 lần (mesh đặt thêm sau vẫn nằm trong phòng nên không cần gom lại) */
@@ -84,6 +148,7 @@ export class FitInBox extends Component {
         if (key === this._key) return;
         this._key = key;
         this.fit();
+        this.syncRoomCam(cam, box);
     }
 
     /** Bounds (cam space) của map ở góc xoay HIỆN TẠI, cộng dồn vào b */
