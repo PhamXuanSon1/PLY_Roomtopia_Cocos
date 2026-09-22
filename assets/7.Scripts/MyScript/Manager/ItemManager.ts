@@ -7,7 +7,7 @@ import { ItemGraphic } from '../Item/ItemGraphic';
 import { ReleaseResult } from '../Item/ItemMovement';
 import { CELL_PX, CULL_PAD_PX, EDGE_PAD_PX, ICON_FILL, SPACING_PX, px } from '../Config/TrayConfig';
 import { GameManager } from './GameManager';
-import { SnapEffect } from './SnapEffect';
+import { SnapEffect } from '../Utils/SnapEffect';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
