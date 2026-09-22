@@ -3,6 +3,7 @@ import { EDITOR } from 'cc/env';
 import { pc, PointerController } from './PointerController';
 import { sm, SoundType } from './SoundManager';
 import { gc } from '../Tool/GameController';
+import { AppLovinAnalytics } from '../Tool/AppLovinAnalytics';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 export enum BindUIType {
@@ -128,6 +129,7 @@ export class UI extends Component {
     openStore(...args: any) {
         sm.stopAll();
         console.log('openStore');        
+        AppLovinAnalytics.ctaClicked();
         gc.redirectToStore();
     }
 
@@ -143,6 +145,8 @@ export class UI extends Component {
 
     onLose() {
         // if(this.win.active || this.fail.active) return;
+        AppLovinAnalytics.challengeFailed();
+        AppLovinAnalytics.endcardShown();
         this.fail.active = true;
         this.bindingToStore();     
         sm.playSound(SoundType.Lose);   
@@ -153,6 +157,7 @@ export class UI extends Component {
 
     onWin() {
         if(this.win.active || this.fail.active) return;
+        AppLovinAnalytics.endcardShown();
         this.win.active = true;
         this.bindingToStore();     
         sm.playSound(SoundType.Win);

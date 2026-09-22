@@ -21,7 +21,7 @@
       },
       "depthStencilState": {
         "depthTest": true,
-        "depthWrite": true
+        "depthWrite": false
       },
       "blendState": {
         "targets": [

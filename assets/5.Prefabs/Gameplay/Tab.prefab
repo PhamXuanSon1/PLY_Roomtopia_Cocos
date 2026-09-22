@@ -18,7 +18,7 @@
     "__editorExtras__": {},
     "_parent": null,
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 2
@@ -114,6 +114,23 @@
       "a": 255
     },
     "cornerRadius": 0,
+    "gradient": false,
+    "gradientMode": 1,
+    "colorTop": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "colorBottom": {
+      "__type__": "cc.Color",
+      "r": 215,
+      "g": 220,
+      "b": 230,
+      "a": 255
+    },
+    "radialInner": 0.3,
     "cornerSegments": 6,
     "_id": ""
   },
@@ -188,6 +205,7 @@
       "__id__": 0
     },
     "fileId": "OcApfTfQv7TXptgVQw6IaL",
+    "instance": null,
     "targetOverrides": null
   }
 ]

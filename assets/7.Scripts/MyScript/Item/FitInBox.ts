@@ -42,6 +42,15 @@ export class FitInBox extends Component {
     @property({ range: [0, 1, 0.01], slide: true, tooltip: 'Vị trí dọc trong hộp: 0 = sát đáy, 0.5 = giữa, 1 = sát đỉnh' })
     anchorY = 0.5;
 
+    @property({ group: 'Portrait', range: [0.5, 2, 0.05], slide: true, tooltip: 'Màn DỌC: nhân thêm scale sau khi fit (1 = vừa hộp theo bounds mọi góc xoay; >1 = to hơn, chấp nhận lòi hộp ở vài góc xoay)' })
+    portraitScale = 1;
+
+    @property({ group: 'Portrait', tooltip: 'Màn DỌC: chỉ fit theo góc xoay HIỆN TẠI thay vì hợp mọi góc xoay → room to hơn (bounds hợp mọi góc là hình vuông rộng hơn góc nhìn thật)' })
+    portraitFitCurrentRotation = true;
+
+    @property({ group: 'Landscape', range: [0.5, 2, 0.05], slide: true, tooltip: 'Màn NGANG: nhân thêm scale sau khi fit' })
+    landscapeScale = 1;
+
     private baseScale = 1;
     private _key = '';
     private meshes: { node: Node; min: Vec3; max: Vec3 }[] = [];
@@ -71,7 +80,7 @@ export class FitInBox extends Component {
         const cam = this.cam, box = this.box;
         if (!cam || !box) return;
         const size = view.getVisibleSize();
-        const key = `${size.width}|${size.height}|${cam.orthoHeight}|${box.heightPercent}|${box.sideMargin}|${this.padding}`;
+        const key = `${size.width}|${size.height}|${cam.orthoHeight}|${box.heightPercent}|${box.sideMargin}|${this.padding}|${this.portraitScale}|${this.landscapeScale}|${this.portraitFitCurrentRotation}`;
         if (key === this._key) return;
         this._key = key;
         this.fit();
@@ -100,7 +109,8 @@ export class FitInBox extends Component {
         const inv = Mat4.invert(FitInBox._inv, cam.node.worldMatrix);
         const b = { minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity };
         const rot = this.rotator;
-        if (rot && this.rotationSamples > 1) {
+        const sampleRot = !(this.portraitFitCurrentRotation && !box.landscape);
+        if (rot && this.rotationSamples > 1 && sampleRot) {
             const e = rot.eulerAngles.clone();
             for (let i = 0; i < this.rotationSamples; i++) {
                 rot.setRotationFromEuler(e.x, i * 360 / this.rotationSamples, e.z);
@@ -124,6 +134,7 @@ export class FitInBox extends Component {
         let s = s0 * Math.min(bw / (maxX - minX), bh / (maxY - minY));
         const upscale = this.allowUpscale || (this.landscapeUpscale && box.landscape);
         if (!upscale) s = Math.min(s, this.baseScale);
+        s *= box.landscape ? this.landscapeScale : this.portraitScale;
         const k = s / s0;
 
         const o = Vec3.transformMat4(FitInBox._p, this.node.worldPosition, inv);   // gốc node trong cam space

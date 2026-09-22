@@ -8,6 +8,7 @@ import { ReleaseResult } from '../Item/ItemMovement';
 import { CELL_PX, CULL_PAD_PX, EDGE_PAD_PX, ICON_FILL, SPACING_PX, px } from '../Config/TrayConfig';
 import { GameManager } from './GameManager';
 import { SnapEffect } from '../Utils/SnapEffect';
+import { AppLovinAnalytics } from '../../Tool/AppLovinAnalytics';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -124,9 +125,15 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ serializable: true, visible: false })
     private _showCells = true;
 
-    @property({ tooltip: 'Hiện thẻ Cell (ô trắng bo góc) dưới icon. Áp cho mọi item cả editor lẫn khi Play' })
+    @property({ tooltip: 'Hiện thẻ Cell (ô trắng bo góc) dưới icon trong EDITOR (để xem layout). Khi Play xem thêm showCellsInPlay' })
     get showCells() { return this._showCells; }
     set showCells(v: boolean) { this._showCells = v; this.applyShowCells(); }
+
+    @property({ tooltip: 'Khi Play có hiện thẻ Cell không (mặc định tắt: icon nằm thẳng trên nền Bg của thanh)' })
+    showCellsInPlay = false;
+
+    /** Cell có hiện không ở ngữ cảnh hiện tại (editor theo showCells, Play cần thêm showCellsInPlay) */
+    private get cellsVisible() { return this._showCells && (EDITOR || this.showCellsInPlay); }
 
     // ---- nút xem trước trong editor (tick = chạy, tự bỏ tick) ----
     @property({ displayName: '▶ Preview items', tooltip: 'Sinh item vào Content theo pickTargets (lưu vào scene, Play dùng lại). Bấm lại = sinh lại từ đầu' })
@@ -141,6 +148,13 @@ export class ItemManager extends Component implements ItemCallbacks {
     get shuffleItems() { return false; }
     set shuffleItems(v: boolean) { if (v) EDITOR ? this.shufflePreview() : this.shuffle(); }
 
+    @property({ group: 'Order', tooltip: 'Thứ tự ô lấy theo thứ tự node trong Hierarchy của Content (kéo thả node để sắp). Tắt = theo vị trí x hiện tại' })
+    orderByHierarchy = true;
+
+    @property({ group: 'Order', displayName: '↕ Apply order', tooltip: 'Editor: xếp lại các item đã preview theo thứ tự trong Hierarchy (không sinh lại, giữ mọi chỉnh tay)' })
+    get applyOrder() { return false; }
+    set applyOrder(v: boolean) { if (v && EDITOR) this.applyOrderPreview(); }
+
     /** Tất cả item, theo thứ tự trong thanh */
     items: ItemController[] = [];
     collected = 0;
@@ -149,6 +163,13 @@ export class ItemManager extends Component implements ItemCallbacks {
     get remain() { return this.items.length - this.collected; }
 
     // ---- nội bộ ----
+    // ---- analytics (AppLovin) ----
+    /** CHALLENGE_STARTED đã bắn (lần nhấc item đầu tiên) */
+    private startedSent = false;
+    /** Số mốc 25/50/75 đã bắn (0..3), bắn theo thứ tự, mỗi mốc 1 lần */
+    private milestonesSent = 0;
+    private solvedSent = false;
+
     private dragging: ItemController | null = null;   // item đang được kéo
     /** Vùng thanh trên màn hình (0..1) → clipRect cho shader icon/thẻ; item ngoài vùng bị cắt */
     private barRect = new Vec4(0, 0, 1, 1);
@@ -239,7 +260,9 @@ export class ItemManager extends Component implements ItemCallbacks {
 
         // item có sẵn trong Content (sinh từ Preview trong editor) → dùng lại, KHÔNG sinh thêm
         const existing = content.getComponentsInChildren(ItemController)
-            .sort((a, b) => a.node.position.x - b.node.position.x);
+            .sort((a, b) => this.orderByHierarchy
+                ? a.node.getSiblingIndex() - b.node.getSiblingIndex()      // thứ tự trong Hierarchy = thứ tự ô
+                : a.node.position.x - b.node.position.x);
         // tìm target cho item cũ: ItemController.target → ItemGraphic.target → theo tên "Item_<tên mesh>"
         for (const it of existing) {
             if (it.target?.isValid) continue;
@@ -294,7 +317,7 @@ export class ItemManager extends Component implements ItemCallbacks {
             item.graphic!.blinkColor = gm.blinkOnDrag ? gm.blinkColor : null;   // fade màu target khi kéo
             item.graphic!.blinkCycle = gm.blinkCycle;
             item.graphic!.blinkIdle = gm.blinkIdle;
-            this.setCellActive(item, this.showCells);
+            this.setCellActive(item, this.cellsVisible);
             ItemManager.setTrayLayer(item.node);
             this.items.push(item);
         });
@@ -386,6 +409,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         const item = this.pick(startPos);
         if (!item) return;
 
+        if (!this.startedSent) { this.startedSent = true; AppLovinAnalytics.challengeStarted(); }
         this.dragging = item;
         this.touchId = -2;                 // chờ TOUCH_MOVE đầu tiên để lấy id thật
         item.graphic?.setClip(ItemGraphic.CLIP_NONE);   // ghost nổi trên map + label, không bị cắt theo thanh
@@ -485,12 +509,41 @@ export class ItemManager extends Component implements ItemCallbacks {
         if (item.target) this.snapEffect?.play(item.target);
         this.collected++;
         this.refreshCount();
+        this.trackProgress();              // trước store/win để CHALLENGE_SOLVED đi trước ENDCARD_SHOWN
         this.removeAndCompact(item);
 
         if (this.collected >= this.total) {
             ui?.onWin?.();
         } else if (this.storeAfterItems > 0 && this.collected >= this.storeAfterItems) {
             this.enterStoreMode();
+        }
+    }
+
+    /** Số item tính là "xong challenge": storeAfterItems nếu có, không thì tổng item */
+    private challengeMax() {
+        return this.storeAfterItems > 0 ? Math.min(this.storeAfterItems, this.total) : this.total;
+    }
+
+    /**
+     * Bắn CHALLENGE_PASS_25/50/75 + CHALLENGE_SOLVED theo collected / challengeMax.
+     * Mỗi mốc đúng 1 lần, theo thứ tự — max nhỏ (vd 3 item) thì 1 snap có thể nhảy qua 2 mốc, bắn cả 2.
+     */
+    private trackProgress() {
+        const max = this.challengeMax();
+        if (max <= 0) return;
+        const pct = this.collected / max;
+        const steps: [number, () => void][] = [
+            [0.25, () => AppLovinAnalytics.challenge25()],
+            [0.50, () => AppLovinAnalytics.challenge50()],
+            [0.75, () => AppLovinAnalytics.challenge75()],
+        ];
+        while (this.milestonesSent < steps.length && pct >= steps[this.milestonesSent][0]) {
+            steps[this.milestonesSent][1]();
+            this.milestonesSent++;
+        }
+        if (!this.solvedSent && this.collected >= max) {
+            this.solvedSent = true;
+            AppLovinAnalytics.challengeSolved();
         }
     }
 
@@ -591,6 +644,20 @@ export class ItemManager extends Component implements ItemCallbacks {
         for (const c of n.children) ItemManager.unlinkPrefab(c);
     }
 
+    /** Xếp lại item preview theo thứ tự node trong Hierarchy của Content (editor). Không sinh lại item. */
+    private applyOrderPreview() {
+        const content = this.bar?.content;
+        if (!content) return;
+        const list = content.getComponentsInChildren(ItemController)
+            .sort((a, b) => a.node.getSiblingIndex() - b.node.getSiblingIndex());
+        if (!list.length) return;
+        this.barHalfW = this.barHalfLen();
+        this.loop = this.contentWidth(list.length) > this.barHalfW * 2;
+        this.period = Math.max(list.length * this.spacing, this.barHalfW * 2 + this.spacing);
+        list.forEach((it, i) => this.placeSlot(it, this.slotX(i, list.length)));
+        console.log('[ItemManager] order:', list.map(it => it.target?.name ?? it.node.name).join(' → '));
+    }
+
     /** Xáo thứ tự item preview trong Content (editor) → thứ tự ô lúc Play cũng theo đó */
     private shufflePreview() {
         const content = this.bar?.content;
@@ -636,7 +703,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     private applyShowCells() {
         const content = this.bar?.content;
         if (!content) return;
-        for (const it of content.getComponentsInChildren(ItemController)) this.setCellActive(it, this._showCells);
+        for (const it of content.getComponentsInChildren(ItemController)) this.setCellActive(it, this.cellsVisible);
     }
 
     /** Xoá mọi con của Content */
@@ -653,6 +720,8 @@ export class ItemManager extends Component implements ItemCallbacks {
     // =========================================================== helpers
     /** Ô vuông chứa icon: cellSize, hoặc (=0) chiều cao dải content của BottomBar */
     private cellPx(): number {
+        const fromBg = this.bar?.cellFromBg ?? 0;        // thanh có Bg + fitContentToBg → ô luôn vừa trong Bg, cân trên dưới
+        if (fromBg > 0) return fromBg;
         if (this._cellSize > 0) return this._cellSize;
         return this.bar?.hitHeight ?? CELL_PX;
     }

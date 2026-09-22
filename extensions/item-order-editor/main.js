@@ -67,6 +67,39 @@ async function thumbnailOf(spriteFrameUuid) {
     return '';
 }
 
+/** Ảnh preview editor tự sinh cho mesh sub-asset: temp/asset-db/assets/xx/<uuid>/<uuid>.png */
+function meshPreviewPath(meshUuid) {
+    if (!meshUuid) {
+        return '';
+    }
+    const fs = require('fs');
+    const path = require('path');
+    const id = String(meshUuid);
+    const file = path.join(Editor.Project.path, 'temp', 'asset-db', 'assets', id.slice(0, 2), id, id + '.png');
+    return fs.existsSync(file) ? file : '';
+}
+
+/** Tìm mesh uuid trên node hoặc node con (item 3D: Icon/IconMesh có MeshRenderer). Bỏ qua quad Cell/Shadow. */
+async function findMesh(treeNode, depth) {
+    const dump = await queryNode(treeNode.uuid);
+    const mr = findComp(dump, 'cc.MeshRenderer');
+    const mesh = compProp(mr, 'mesh');
+    // mesh của FBX là sub-asset "xxx@yyyyy"; quad tạo runtime không có uuid → bỏ qua
+    if (mesh && mesh.uuid && String(mesh.uuid).includes('@')) {
+        return mesh.uuid;
+    }
+    if (depth <= 0) {
+        return '';
+    }
+    for (const child of treeNode.children || []) {
+        const found = await findMesh(child, depth - 1);
+        if (found) {
+            return found;
+        }
+    }
+    return '';
+}
+
 /** Tìm spriteFrame uuid trên node hoặc node con (tối đa depth cấp). */
 async function findSpriteFrame(treeNode, depth) {
     const dump = await queryNode(treeNode.uuid);
@@ -120,13 +153,17 @@ exports.methods = {
             const ut = findComp(dump, 'cc.UITransform');
             const size = compProp(ut, 'contentSize') || {};
             const sfUuid = await findSpriteFrame(child, 2);
+            let thumb = await thumbnailOf(sfUuid);
+            if (!thumb) {
+                thumb = meshPreviewPath(await findMesh(child, 3));      // item 3D (mesh clone trong Icon)
+            }
             items.push({
                 uuid: child.uuid,
-                name: child.name,
+                name: child.name.replace(/^Item_(Bathroom_)?/, ''),   // tên ngắn cho dễ đọc
                 active: child.active !== false,
                 width: Number(size.width) || 0,
                 height: Number(size.height) || 0,
-                thumb: await thumbnailOf(sfUuid),
+                thumb,
             });
         }
         return { ok: true, parent: { uuid: tree.uuid, name: tree.name }, items };

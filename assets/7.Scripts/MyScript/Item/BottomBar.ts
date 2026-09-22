@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, EventTouch, Input, input, Label, Mat4, math, Node, screen, Size, UITransform, Vec2, Vec3, Vec4, view } from 'cc';
+import { _decorator, Camera, Component, EventTouch, Input, input, instantiate, Label, Mat4, math, Node, Prefab, screen, Size, Sprite, UITransform, Vec2, Vec3, Vec4, view } from 'cc';
 import { ui } from '../../Manager/UI';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
 const { ccclass, property } = _decorator;
@@ -57,6 +57,48 @@ export class BottomBar extends Component {
     @property({ tooltip: 'Vùng cắt item (clipRect) nới thêm bấy nhiêu px màn hình mỗi bên (0 = sát mép thanh)' })
     clipPaddingPx = 0;
 
+    @property({ group: 'Skin', type: Node, tooltip: 'Node nền có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0). Để trống → instantiate bgPrefab lúc chạy' })
+    bgNode: Node | null = null;
+
+    @property({ group: 'Skin', type: Node, tooltip: 'Node tab có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0; chứa CountLabel). Để trống → instantiate tabPrefab lúc chạy' })
+    tabNode: Node | null = null;
+
+    @property({ group: 'Skin', type: Prefab, tooltip: 'Fallback khi bgNode trống: nền thanh (Gameplay/Bg.prefab). Để trống = không nền' })
+    bgPrefab: Prefab | null = null;
+
+    @property({ group: 'Skin', tooltip: 'Chiều cao nền khi thanh NGANG (local px). 0 = bằng chiều cao thanh (UITransform, 344) → Tab nằm trên hàng icon' })
+    bgHeight = 0;
+
+    @property({ group: 'Skin', type: Prefab, tooltip: 'Fallback khi tabNode trống: tab trên mép nền (Gameplay/Tab.prefab). Để trống = không tab' })
+    tabPrefab: Prefab | null = null;
+
+    @property({ group: 'Skin', tooltip: 'Tab dịch dọc so với MÉP TRÊN nền (local px). Âm = lún xuống đè lên nền (như scene cũ: -29)' })
+    tabOffsetY = -29;
+
+    @property({ group: 'Skin', tooltip: 'Màn ngang (panel dọc): có hiện tab không (đặt sát mép trên panel, phía trong)' })
+    tabInLandscape = true;
+
+    @property({ group: 'Skin', tooltip: 'Độ sâu (local z) của Bg; Tab = +50. Âm = lùi ra SAU icon để mesh item luôn nằm trên nền/tab (icon ở Content z≈20, dày tới ±150)' })
+    skinZ = -200;
+
+    @property({ group: 'Skin', tooltip: 'Chuyển countLabel vào giữa Tab (tắt khung đếm cũ của BoxBg nếu label đang nằm trong đó)' })
+    countLabelInTab = true;
+
+    @property({ group: 'Skin', tooltip: 'Thanh ngang: Content đặt vào GIỮA Bg theo chiều dọc và hitHeight = cao Bg − 2·contentPadY → ô icon (ItemManager.cellSize = 0) luôn nằm trong Bg, cân trên dưới' })
+    fitContentToBg = true;
+
+    @property({ group: 'Skin', tooltip: 'Lề trên/dưới (local px) giữa ô icon và mép Bg khi fitContentToBg' })
+    contentPadY = 30;
+
+    /** Cạnh ô icon suy từ Bg khi fitContentToBg (0 = không áp). ItemManager ưu tiên giá trị này hơn cellSize */
+    get cellFromBg() { return this._cellFromBg; }
+    private _cellFromBg = 0;
+
+    private _bg: Node | null = null;
+    private _tab: Node | null = null;
+    private _layoutBg = false;    // chỉ tự layout khi Bg/Tab do code instantiate; node đặt sẵn trong scene giữ nguyên
+    private _layoutTab = false;
+
     /** node.emit(EVENT_LIFT, startPos: Vec2) khi người chơi kéo item RA KHỎI thanh */
     static readonly EVENT_LIFT = 'bottombar-lift';
     /** node.emit(EVENT_LAYOUT, vertical: boolean) khi thanh đổi ngang ↔ dọc */
@@ -108,7 +150,88 @@ export class BottomBar extends Component {
         this._homeContentPos.set(this.content.position);
         const cs = this.getComponent(UITransform)?.contentSize;
         if (cs) this._homeSize.set(cs.width, cs.height);
+        this.spawnSkin();
         if (this.fitWidthToScreen) this.fitLayout();
+        else this.layoutSkin();
+    }
+
+    /** Bg/Tab: dùng node có sẵn trong scene (bgNode/tabNode); thiếu thì instantiate prefab làm con, xếp TRƯỚC Content (Bg → Tab → Content) */
+    private spawnSkin() {
+        const make = (prefab: Prefab | null, name: string) => {
+            if (!prefab) return null;
+            const n = instantiate(prefab);
+            n.name = name;
+            n.layer = this.node.layer;
+            n.setParent(this.node);
+            return n;
+        };
+        // Node có sẵn trong hierarchy (gán Inspector hoặc con tên "Bg"/"Tab") → dùng NGUYÊN như đặt trong scene, không đụng size/vị trí.
+        // Không có thì mới instantiate prefab và tự layout theo thanh.
+        const sceneBg = this.bgNode ?? this.node.getChildByName('Bg');
+        const sceneTab = this.tabNode ?? this.node.getChildByName('Tab');
+        this._bg = sceneBg ?? make(this.bgPrefab, 'Bg');
+        this._tab = sceneTab ?? make(this.tabPrefab, 'Tab');
+        this._layoutBg = !sceneBg && !!this._bg;
+        this._layoutTab = !sceneTab && !!this._tab;
+        let i = 0;
+        if (this._bg && this._layoutBg) this._bg.setSiblingIndex(i++);
+        if (this._tab && this._layoutTab) this._tab.setSiblingIndex(i++);
+
+        // countLabel vào giữa Tab (bỏ qua nếu đã nằm sẵn trong Tab từ scene).
+        // Label đang nằm trong khung đếm của BoxBg (Sprite pill) → ẩn khung đó đi
+        if (this.countLabelInTab && this._tab && this.countLabel && this.countLabel.node.parent !== this._tab) {
+            const ln = this.countLabel.node;
+            const oldFrame = ln.parent;
+            const th = this._tab.getComponent(UITransform)?.contentSize.height ?? 70;
+            ln.setParent(this._tab, false);
+            ln.layer = this._tab.layer;
+            ln.setPosition(0, th / 2, 1);
+            ln.setRotationFromEuler(0, 0, 0);
+            if (oldFrame && oldFrame !== this.node && oldFrame.getComponent(Sprite)) oldFrame.active = false;
+        }
+    }
+
+    /**
+     * Chỉ áp cho Bg/Tab do code instantiate từ prefab (node đặt sẵn trong hierarchy giữ nguyên như scene).
+     * Đặt kích thước/vị trí theo thanh hiện tại (gốc thanh = giữa-đáy, anchor 0.5,0):
+     *  - ngang: Bg rộng = thanh, cao = bgHeight (0 → cao prefab), sát đáy; Tab giữa mép trên Bg + tabOffsetY.
+     *  - dọc  : Bg = cả panel; Tab (nếu bật) giữa mép trên panel + tabOffsetY.
+     */
+    private layoutSkin() {
+        const ut = this.getComponent(UITransform);
+        if (!ut) return;
+        const { width: w, height: h } = ut.contentSize;
+        if (!isFinite(w) || !isFinite(h) || w <= 0 || h <= 0) return;   // view chưa có size (frame đầu / pane 0px) → đợi lần fit sau
+        let bgTop = h;
+        if (this._bg && this._layoutBg) {
+            const but = this._bg.getComponent(UITransform)!;
+            const bh = this._vertical || this.bgHeight <= 0 ? h : this.bgHeight;
+            but.setContentSize(w, bh);
+            this._bg.setPosition(0, 0, this.skinZ);
+            bgTop = bh;
+        }
+        if (this._tab && this._layoutTab) {
+            const on = !this._vertical || this.tabInLandscape;
+            this._tab.active = on;
+            if (on) {
+                const th = this._tab.getComponent(UITransform)?.contentSize.height ?? 70;
+                // ngang: nhô trên mép Bg (tabOffsetY âm = lún xuống). dọc: nằm gọn phía trong mép trên panel
+                const y = this._vertical ? h - th + this.tabOffsetY : bgTop + this.tabOffsetY;
+                this._tab.setPosition(0, y, this.skinZ + 50);
+            }
+        }
+        // Ô icon nằm gọn trong Bg, cân trên dưới: Content ở giữa Bg, hitHeight (= cellPx khi ItemManager.cellSize = 0) = cao Bg − 2·pad
+        if (this.fitContentToBg && this._bg && this.content && !this._vertical) {
+            const but = this._bg.getComponent(UITransform);
+            const bh = but?.contentSize.height ?? 0;
+            const ay = but?.anchorY ?? 0;
+            if (bh > 0) {
+                const cy = this._bg.position.y + (0.5 - ay) * bh;        // tâm Bg theo trục Y (local thanh)
+                this.content.setPosition(this.content.position.x, cy, this.content.position.z);
+                this.hitHeight = Math.max(1, bh - 2 * this.contentPadY);
+                this._cellFromBg = this.hitHeight;
+            }
+        }
     }
 
     onEnable() {
@@ -279,6 +402,7 @@ export class BottomBar extends Component {
             this.content.setPosition(this._homeContentPos);
             this.node.setPosition(this._homePos);
         }
+        this.layoutSkin();
         if (changed) {
             this.resetScroll();
             this._touchId = -1; this._dragging = false;
