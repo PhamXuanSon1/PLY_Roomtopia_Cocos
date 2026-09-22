@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, director, EventTouch, Input, input, instantiate, Layers, MeshRenderer, Node, Prefab, Quat, tween, UITransform, Vec2, Vec3, Vec4 } from 'cc';
+import { _decorator, AudioClip, AudioSource, Camera, Component, director, EventTouch, Input, input, instantiate, Layers, MeshRenderer, Node, Prefab, Quat, tween, UITransform, Vec2, Vec3, Vec4 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { BottomBar } from '../Item/BottomBar';
@@ -74,6 +74,25 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     @property({ group: 'Snap', tooltip: 'Target của item phải là target GẦN NHẤT dưới ngón tay; thả lên vật khác = trượt dù trong ngưỡng' })
     requireNearest = true;
+
+    // ---- sound ----
+    @property({ group: 'Sound', type: AudioClip, tooltip: 'Phát khi nhấc item khỏi thanh' })
+    pickSound: AudioClip | null = null;
+
+    @property({ group: 'Sound', type: [AudioClip], tooltip: 'Phát ngẫu nhiên 1 clip khi thả đúng (snap)' })
+    dropSounds: AudioClip[] = [];
+
+    @property({ group: 'Sound', range: [0, 1, 0.05], slide: true })
+    sfxVolume = 1;
+
+    private audio: AudioSource | null = null;
+
+    /** Phát 1 clip (one-shot) qua AudioSource trên node này */
+    private playClip(clip: AudioClip | null) {
+        if (!clip) return;
+        if (!this.audio) this.audio = this.getComponent(AudioSource) ?? this.addComponent(AudioSource)!;
+        this.audio.playOneShot(clip, this.sfxVolume);
+    }
 
     @property({ group: 'Store', tooltip: 'Sau khi gom đủ N item → mọi chạm/kéo/xoay đều mở store (0 = tắt, chỉ mở store khi win)' })
     storeAfterItems = 0;
@@ -281,6 +300,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         });
 
         this.collected = 0;
+        this.snapEffect?.resetCount();
         this.bar!.resetScroll();
         this.setLayout(this.remain);
         this.refreshCount();
@@ -370,6 +390,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.touchId = -2;                 // chờ TOUCH_MOVE đầu tiên để lấy id thật
         item.graphic?.setClip(ItemGraphic.CLIP_NONE);   // ghost nổi trên map + label, không bị cắt theo thanh
         item.onSelect(startPos);
+        this.playClip(this.pickSound);
     }
 
     /** Kết thúc kéo (thả / huỷ): icon về ô → cắt lại theo vùng thanh */
@@ -460,6 +481,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     }
 
     onSnapped(item: ItemController) {
+        if (this.dropSounds.length) this.playClip(this.dropSounds[Math.floor(Math.random() * this.dropSounds.length)]);
         if (item.target) this.snapEffect?.play(item.target);
         this.collected++;
         this.refreshCount();

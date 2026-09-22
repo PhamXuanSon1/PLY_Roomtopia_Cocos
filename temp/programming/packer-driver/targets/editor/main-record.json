@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 19416924.8697,
+      "mTimestamp": 20705291.8528,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -14827,7 +14827,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/ItemManager.ts": {
       "mTimestamp": {
-        "mtime": 1790051339110.1958,
+        "mtime": 1790059718686.51,
         "uuid": "27753742-fc6e-4a91-b9eb-7f580355c2a0"
       },
       "chunkId": "cf70c018604b6a9c1e438bf8798003ebbaf7b0d6",
@@ -14847,11 +14847,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 175
+              "column": 199
             },
             "end": {
               "line": 1,
-              "column": 179
+              "column": 203
             }
           }
         },
@@ -16385,7 +16385,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/SnapEffect.ts": {
       "mTimestamp": {
-        "mtime": 1790059101057.9697,
+        "mtime": 1790060229037.6086,
         "uuid": "b20530d8-e1d2-477a-8802-6ad83263fcf2"
       },
       "chunkId": "7c61707e63e344083880ee453cebfd6ec17ef890",
@@ -16405,38 +16405,66 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 103
+              "column": 121
             },
             "end": {
               "line": 1,
-              "column": 107
+              "column": 125
+            }
+          }
+        },
+        {
+          "value": "./WinReact",
+          "resolved": "__unresolved_1",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 25
+            },
+            "end": {
+              "line": 2,
+              "column": 37
+            }
+          }
+        },
+        {
+          "value": "../Manager/GameManager",
+          "resolved": "__unresolved_2",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 28
+            },
+            "end": {
+              "line": 3,
+              "column": 52
             }
           }
         },
         {
           "value": "../Item/ItemGraphic",
-          "resolved": "__unresolved_1",
+          "resolved": "__unresolved_3",
           "loc": {
             "start": {
-              "line": 2,
+              "line": 4,
               "column": 28
             },
             "end": {
-              "line": 2,
+              "line": 4,
               "column": 49
             }
           }
         },
         {
           "value": "../../Manager/UI",
-          "resolved": "__unresolved_2",
+          "resolved": "__unresolved_4",
           "loc": {
             "start": {
-              "line": 3,
+              "line": 5,
               "column": 19
             },
             "end": {
-              "line": 3,
+              "line": 5,
               "column": 37
             }
           }
@@ -16475,6 +16503,20 @@
         {
           "resolved": {
             "type": "module",
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/WinReact.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Manager/GameManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
             "url": "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Item/ItemGraphic.ts"
           },
           "messages": []
@@ -16490,7 +16532,7 @@
     },
     "file:///F:/CocosProject/PLY_Roomtopia_Cocos/assets/7.Scripts/MyScript/Utils/WinReact.ts": {
       "mTimestamp": {
-        "mtime": 1790059187853.95,
+        "mtime": 1790060511253.7947,
         "uuid": "d3919d87-3003-400e-a540-614c4ed5ec08"
       },
       "chunkId": "083af8aebedccc6c87b0ac360bc5ac5d4dad8cc2",
@@ -16506,11 +16548,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 106
+              "column": 99
             },
             "end": {
               "line": 1,
-              "column": 110
+              "column": 103
             }
           }
         }

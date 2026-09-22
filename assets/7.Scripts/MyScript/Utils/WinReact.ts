@@ -1,44 +1,27 @@
-import { _decorator, CCString, Component, instantiate, Label, Node, Prefab, tween, UIOpacity, Vec3 } from 'cc';
+import { _decorator, Animation, CCString, Component, instantiate, Label, Node, Prefab, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
- * WinReact: chữ phản hồi ("Great!", "Perfect!"...) nảy lên rồi mờ dần — không dùng particle.
+ * WinReact: chữ phản hồi ("Great!", "Perfect!"...) — animation làm bằng AnimationClip của Cocos
+ * (assets/1.Animations/WinReact.anim: scale nảy + fade opacity + trôi lên, đánh vào node con "Text"),
+ * script chỉ: chọn chữ → play clip → hết clip thì destroy node.
  *
- *  Timeline: scale 0 → popScale (backOut) → 1, giữ holdTime, rồi fade opacity về 0 + trôi lên riseY, xong tự destroy.
  *  Prefab dựng theo px (font ~80). Node cha là UI 2D tính theo world unit → spawner đặt scale (vd 0.003 như HandSprite).
- *
  *  Dùng: WinReact.spawn(prefab, parent, worldPos, scale) hoặc kéo prefab vào scene (autoPlay chạy ở start()).
  */
 @ccclass('WinReact')
 export class WinReact extends Component {
-    @property({ type: Label, tooltip: 'Label hiện chữ. Để trống → Label trên node này' })
+    @property({ type: Label, tooltip: 'Label hiện chữ (node con Text). Để trống → Label trong con' })
     label: Label | null = null;
+
+    @property({ type: Animation, tooltip: 'Animation chứa clip WinReact. Để trống → Animation trên node này' })
+    anim: Animation | null = null;
 
     @property({ type: [CCString], tooltip: 'Chọn ngẫu nhiên 1 chữ mỗi lần play (để trống = giữ chữ trong prefab)' })
     texts: string[] = ['Great!', 'Nice!', 'Perfect!'];
 
     @property({ tooltip: 'Tự chạy khi start()' })
     autoPlay = true;
-
-    @property({ group: 'Scale', tooltip: 'Nảy quá scale gốc bao nhiêu lần trước khi về 1' })
-    popScale = 1.3;
-
-    @property({ group: 'Scale', tooltip: 'Thời gian nảy từ 0 lên popScale (s)' })
-    popTime = 0.25;
-
-    @property({ group: 'Scale', tooltip: 'Thời gian co từ popScale về 1 (s)' })
-    settleTime = 0.1;
-
-    @property({ group: 'Fade', tooltip: 'Giữ nguyên bao lâu trước khi mờ (s)' })
-    holdTime = 0.4;
-
-    @property({ group: 'Fade', tooltip: 'Thời gian mờ dần về 0 (s)' })
-    fadeTime = 0.35;
-
-    @property({ group: 'Fade', tooltip: 'Trôi lên bấy nhiêu px (local, nhân với scale node) trong lúc mờ' })
-    riseY = 60;
-
-    private baseScale = new Vec3(1, 1, 1);
 
     /** Spawn prefab tại worldPos (dưới parent UI 2D), tự play + tự huỷ */
     static spawn(prefab: Prefab, parent: Node, worldPos: Vec3, scale = 0.003, text?: string): WinReact | null {
@@ -56,29 +39,13 @@ export class WinReact extends Component {
     }
 
     play(text?: string) {
-        const label = this.label ?? this.getComponent(Label);
+        const label = this.label ?? this.getComponentInChildren(Label);
         const t = text ?? (this.texts.length ? this.texts[Math.floor(Math.random() * this.texts.length)] : undefined);
         if (label && t !== undefined) label.string = t;
 
-        const op = this.getComponent(UIOpacity) ?? this.addComponent(UIOpacity)!;
-        this.baseScale.set(this.node.scale);
-        const n = this.node;
-        op.opacity = 255;
-        n.setScale(0, 0, 0);
-
-        const pop = Vec3.multiplyScalar(new Vec3(), this.baseScale, this.popScale);
-        const rise = n.position.clone().add3f(0, this.riseY * this.baseScale.y, 0);
-
-        tween(n)
-            .to(this.popTime, { scale: pop }, { easing: 'backOut' })
-            .to(this.settleTime, { scale: this.baseScale.clone() })
-            .delay(this.holdTime)
-            .to(this.fadeTime, { position: rise }, { easing: 'sineOut' })
-            .call(() => { if (n.isValid) n.destroy(); })
-            .start();
-        tween(op)
-            .delay(this.popTime + this.settleTime + this.holdTime)
-            .to(this.fadeTime, { opacity: 0 })
-            .start();
+        const anim = this.anim ?? this.getComponent(Animation);
+        if (!anim || !anim.defaultClip) { this.node.destroy(); return; }
+        anim.once(Animation.EventType.FINISHED, () => { if (this.node.isValid) this.node.destroy(); });
+        anim.play();
     }
 }

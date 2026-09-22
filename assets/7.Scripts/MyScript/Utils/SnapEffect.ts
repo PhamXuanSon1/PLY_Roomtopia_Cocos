@@ -1,4 +1,6 @@
-import { _decorator, Camera, Component, instantiate, Layers, Node, ParticleSystem, Prefab, Vec3 } from 'cc';
+import { _decorator, Camera, Component, instantiate, Layers, MeshRenderer, Node, ParticleSystem, Prefab, v3, Vec3 } from 'cc';
+import { WinReact } from './WinReact';
+import { GameManager } from '../Manager/GameManager';
 import { ItemGraphic } from '../Item/ItemGraphic';
 import { ui } from '../../Manager/UI';
 const { ccclass, property } = _decorator;
@@ -33,6 +35,30 @@ export class SnapEffect extends Component {
 
     @property({ tooltip: 'Dịch effect lên trên (world Y) bấy nhiêu unit so với ĐỈNH bbox target' })
     offsetY = 0.1;
+
+    @property({ group: 'WinReact', type: Prefab, tooltip: 'Prefab chữ phản hồi (WinReact, UI 2D). Để trống = không hiện' })
+    reactPrefab: Prefab | null = null;
+
+    @property({ group: 'WinReact', type: Node, tooltip: 'Node cha UI 2D (UICam vẽ). Để trống → node cha của UICam' })
+    reactRoot: Node | null = null;
+
+    @property({ group: 'WinReact', tooltip: 'Scale chữ (UI ở đây tính world unit, ~0.003 như HandSprite)' })
+    reactScale = 0.003;
+
+    @property({ group: 'WinReact', type: Node, tooltip: 'Chữ hiện tại vị trí (world) của node này. Để trống → GameManager.model (Lv50_Bathroom_Root)' })
+    reactAnchor: Node | null = null;
+
+    @property({ group: 'WinReact', tooltip: 'true = tâm bbox (world) của mọi mesh trong anchor = chính giữa room nhìn thấy. false = đúng pivot của anchor (pivot FBX room nằm cao, có thể ngoài màn)' })
+    reactAtBoundsCenter = true;
+
+    @property({ group: 'WinReact', tooltip: 'Dịch chữ lên bấy nhiêu px màn hình so với vị trí anchor' })
+    reactOffsetPx = 0;
+
+    @property({ group: 'WinReact', min: 1, step: 1, tooltip: 'Cứ thả đúng bấy nhiêu item thì hiện chữ 1 lần (1 = mỗi lần)' })
+    reactEvery = 3;
+
+    /** Số item đã thả đúng từ đầu ván (đếm cho reactEvery) */
+    private snapCount = 0;
 
     private fxCam: Camera | null = null;
 
@@ -97,9 +123,6 @@ export class SnapEffect extends Component {
         let maxEnd = 0;
         for (const ps of fx.getComponentsInChildren(ParticleSystem)) {
             ps.loop = false;
-            // gravityModifier mô phỏng ở LOCAL space; sau khi xoay theo camera, local -Y ≈ hướng xuống màn hình
-            // → hạt "rơi". Tắt hẳn để hạt chỉ toả ra và fade.
-            ps.gravityModifier.constant = 0;
             ps.play();
             // Tắt depth-test: hạt bay vào sau mesh (cone bắn theo -Z local = vào sâu scene) vẫn hiện.
             // Prefab không gán material → getMaterialInstance(0) = null, phải override lên default material của processor.
@@ -108,5 +131,35 @@ export class SnapEffect extends Component {
             maxEnd = Math.max(maxEnd, ps.duration + ps.startLifetime.getMax() + (ps.startDelay?.getMax() ?? 0));
         }
         this.scheduleOnce(() => { if (fx.isValid) fx.destroy(); }, maxEnd + 0.1);
+        this.snapCount++;
+        if (cam && this.reactEvery > 0 && this.snapCount % this.reactEvery === 0) this.playReact(target, cam);
+    }
+
+    /** Tâm AABB world của mọi MeshRenderer đang active trong node (không có mesh → worldPosition) */
+    static boundsCenter(n: Node, out = new Vec3()): Vec3 {
+        const min = new Vec3(Infinity, Infinity, Infinity), max = new Vec3(-Infinity, -Infinity, -Infinity);
+        for (const r of n.getComponentsInChildren(MeshRenderer)) {
+            const b = r.model?.worldBounds;
+            if (!b || !r.node.activeInHierarchy) continue;
+            Vec3.min(min, min, Vec3.subtract(out, b.center, b.halfExtents));
+            Vec3.max(max, max, Vec3.add(out, b.center, b.halfExtents));
+        }
+        if (!isFinite(min.x)) return out.set(n.worldPosition);
+        return Vec3.add(out, min, max).multiplyScalar(0.5);
+    }
+
+    /** Reset đếm khi chơi lại */
+    resetCount() { this.snapCount = 0; }
+
+    /** Chữ WinReact (UI 2D) tại vị trí anchor (gốc room): world → px màn hình (WCam) → toạ độ UI (UICam) */
+    private playReact(_target: Node, wCam: Camera) {
+        const uiCam = ui?.uiCamera;
+        const root = this.reactRoot ?? uiCam?.node.parent ?? null;
+        const anchor = this.reactAnchor ?? GameManager.inst?.model ?? null;
+        if (!this.reactPrefab || !uiCam || !root || !anchor) return;
+        const s = wCam.worldToScreen(this.reactAtBoundsCenter ? SnapEffect.boundsCenter(anchor) : anchor.worldPosition, new Vec3());
+        const w = uiCam.screenToWorld(v3(s.x, s.y + this.reactOffsetPx, 0), new Vec3());
+        w.z = root.worldPosition.z - 1;                 // trước UICam một chút, như tay hướng dẫn
+        WinReact.spawn(this.reactPrefab, root, w, this.reactScale);
     }
 }

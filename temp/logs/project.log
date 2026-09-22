@@ -2058,3 +2058,59 @@ Class ID: "a7c3dnhS1JPjp0xfi9qHFsI"
 9-22-2026 13:40:24 - log: [Scene] LOADING
 9-22-2026 13:40:24 - log: [Scene] LOADED
 9-22-2026 13:40:24 - log: [Scene] DISPLAYED
+9-22-2026 13:46:58 - log: [Scene] LOADING
+9-22-2026 13:46:58 - log: [Scene] LOADED
+9-22-2026 13:46:58 - log: [Scene] DISPLAYED
+9-22-2026 13:47:48 - log: [Scene] LOADING
+9-22-2026 13:47:48 - log: [Scene] LOADED
+9-22-2026 13:47:48 - log: [Scene] DISPLAYED
+9-22-2026 13:48:20 - log: [Scene] LOADING
+9-22-2026 13:48:20 - log: [Scene] LOADED
+9-22-2026 13:48:20 - log: [Scene] DISPLAYED
+9-22-2026 13:48:22 - error: UNKNOWN: unknown error, open 'F:\CocosProject\PLY_Roomtopia_Cocos\profiles\v2\packages\scene.json'Error: UNKNOWN: unknown error, open 'F:\CocosProject\PLY_Roomtopia_Cocos\profiles\v2\packages\scene.json'
+    at Object.openSync (node:fs:573:18)
+    at Object.func [as openSync] (node:electron/js2c/node_init:2:2559)
+    at Object.writeFileSync (node:fs:2381:35)
+    at Object.writeFileSync (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\jsonfile\index.js:117:13)
+    at Object.outputJsonSync (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-profile\node_modules\fs-extra\lib\json\output-json-sync.ccc:15:12)
+    at Object.save (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-profile\lib\browser\data.ccc:1:667)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-profile\lib\browser\index.js:1:1374
+    at Profile.save (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-profile\lib\browser\profile.ccc:1:1079)
+    at Object.setConfig (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\creator\dist\profile\protected\browser\index.ccc:1:1658)
+    at EventEmitter.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\creator\dist\profile\protected\browser\index.ccc:1:6364)
+9-22-2026 13:48:22 - error: [Window] UNKNOWN: unknown error, open 'F:\CocosProject\PLY_Roomtopia_Cocos\profiles\v2\packages\scene.json'Error: UNKNOWN: unknown error, open 'F:\CocosProject\PLY_Roomtopia_Cocos\profiles\v2\packages\scene.json'
+    at Object.openSync (node:fs:573:18)
+    at Object.func [as openSync] (node:electron/js2c/node_init:2:2559)
+    at Object.writeFileSync (node:fs:2381:35)
+    at Object.writeFileSync (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\jsonfile\index.js:117:13)
+    at Object.outputJsonSync (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-profile\node_modules\fs-extra\lib\json\output-json-sync.ccc:15:12)
+    at Object.save (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-profile\lib\browser\data.ccc:1:667)
+    at C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-profile\lib\browser\index.js:1:1374
+    at Profile.save (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@base\electron-profile\lib\browser\profile.ccc:1:1079)
+    at Object.setConfig (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\creator\dist\profile\protected\browser\index.ccc:1:1658)
+    at EventEmitter.<anonymous> (C:\ProgramData\cocos\editors\Creator\3.8.8\resources\app.asar\node_modules\@editor\creator\dist\profile\protected\browser\index.ccc:1:6364)
+9-22-2026 13:48:43 - log: [Scene] LOADING
+9-22-2026 13:48:44 - log: [Scene] LOADED
+9-22-2026 13:48:44 - log: [Scene] DISPLAYED
+9-22-2026 13:53:45 - log: [Scene] LOADING
+9-22-2026 13:53:45 - log: [Scene] LOADED
+9-22-2026 13:53:45 - log: [Scene] DISPLAYED
+9-22-2026 13:54:49 - log: [Scene] LOADING
+9-22-2026 13:54:49 - log: [Scene] LOADED
+9-22-2026 13:54:50 - log: [Scene] DISPLAYED
+9-22-2026 13:57:10 - log: [Scene] LOADING
+9-22-2026 13:57:10 - log: [Scene] LOADED
+9-22-2026 13:57:10 - log: [Scene] DISPLAYED
+9-22-2026 14:01:53 - log: [Scene] LOADING
+9-22-2026 14:01:53 - log: [Scene] LOADED
+9-22-2026 14:01:53 - log: [Scene] DISPLAYED
+9-22-2026 14:12:28 - log: [Scene] meshopt wasm decoder initialized
+9-22-2026 14:12:28 - log: [Scene] [bullet]:bullet wasm lib loaded.
+9-22-2026 14:12:28 - log: [Scene] [box2d]:box2d wasm lib loaded.
+9-22-2026 14:12:28 - log: [Scene] [PHYSICS]: using builtin.
+9-22-2026 14:12:29 - log: [Scene] Cocos Creator v3.8.8
+9-22-2026 14:12:30 - log: [Scene] LOADING
+9-22-2026 14:12:30 - log: [Scene] Using custom pipeline: Builtin
+9-22-2026 14:12:30 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
+9-22-2026 14:12:32 - log: [Scene] LOADED
+9-22-2026 14:12:32 - log: [Scene] DISPLAYED

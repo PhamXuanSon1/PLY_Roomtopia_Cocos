@@ -51024,6 +51024,25 @@
     "snapPx": 50,
     "snapByBounds": true,
     "requireNearest": true,
+    "pickSound": {
+      "__uuid__": "cf290993-bd80-4b5d-9467-489786c65616",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "dropSounds": [
+      {
+        "__uuid__": "8dd9bf20-f590-489e-bff3-13ca6ad65b02",
+        "__expectedType__": "cc.AudioClip"
+      },
+      {
+        "__uuid__": "3659ecbf-f977-4d53-af50-43c8913f2620",
+        "__expectedType__": "cc.AudioClip"
+      },
+      {
+        "__uuid__": "c3087554-976d-4f54-a12a-585aa2b8c905",
+        "__expectedType__": "cc.AudioClip"
+      }
+    ],
+    "sfxVolume": 1,
     "storeAfterItems": 15,
     "snapScale": 1.1,
     "snapScaleUpDuration": 0.12,
@@ -51099,6 +51118,18 @@
     "cam": null,
     "scale": 1,
     "offsetY": 0,
+    "reactPrefab": {
+      "__uuid__": "7b3c6daf-dd61-4c27-9baf-c94548450830",
+      "__expectedType__": "cc.Prefab"
+    },
+    "reactRoot": {
+      "__id__": 22
+    },
+    "reactScale": 0.003,
+    "reactAnchor": null,
+    "reactAtBoundsCenter": true,
+    "reactOffsetPx": 0,
+    "reactEvery": 3,
     "_id": "73+BxkOHlNIK3sv9P+qrr0"
   },
   {
@@ -51318,10 +51349,13 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_clip": null,
-    "_loop": false,
+    "_clip": {
+      "__uuid__": "ad16d418-62a5-4f93-af24-ba2c512d83b2",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "_loop": true,
     "_playOnAwake": true,
-    "_volume": 1,
+    "_volume": 0.5,
     "_id": "c2oApXiP5Di619ch3LV4p+"
   },
   {

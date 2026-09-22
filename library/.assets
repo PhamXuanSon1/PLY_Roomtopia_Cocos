@@ -330,7 +330,11 @@
             "2.Fonts\\Nunito-Black.ttf",
             "4.Sounds\\PickItem.mp3",
             "7.Scripts\\MyScript\\Utils\\WinReact.ts",
-            "5.Prefabs\\WinReact.prefab"
+            "5.Prefabs\\WinReact.prefab",
+            "8.Models\\Materials\\Misc\\FxSparkAdd.mtl",
+            "8.Models\\Materials\\Misc\\FxSparkleAdd.mtl",
+            "1.Animations\\WinReact.anim",
+            "4.Sounds\\BGM\\2026-09-22 14-07-25 (mp3cut.net).mp3"
         ]
     }
 }
