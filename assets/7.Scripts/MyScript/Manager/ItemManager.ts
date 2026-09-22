@@ -515,18 +515,33 @@ export class ItemManager extends Component implements ItemCallbacks {
 
         targets.forEach((target, i) => {
             const node = instantiate(this.itemPrefab!);
+            ItemManager.unlinkPrefab(node);                       // cắt link prefab TRƯỚC khi bind (xem hàm)
             node.name = `Item_${target.name}`;
             node.setParent(content);                              // LƯU vào scene → Play dùng lại
             const item = node.getComponent(ItemController)!;
             this.placeSlot(item, this.slotX(i, targets.length));
             item.target = target;
             item.graphic!.bind(target, this.bar!.cam ?? this.cam, this.cellPx(), this.iconFill);   // chỉ hình, không gray
+            ItemManager.unlinkPrefab(node);                       // icon clone vừa sinh (clone mesh FBX) cũng phải cắt
             ItemManager.setTrayLayer(node);
         });
         this.applyShowCells();
         this.collected = 0;
         this.refreshCount(targets.length);           // label trong editor cũng hiện 0/max
         console.log(`[ItemManager] preview ${targets.length} items`);
+    }
+
+    /**
+     * Cắt liên kết prefab của node vừa instantiate (và toàn bộ con).
+     *
+     * Prefab instance khi lưu scene chỉ ghi `propertyOverrides` — mà override chỉ sinh ra khi
+     * property bị đổi qua Inspector / Editor.Message. Gán bằng script trong editor KHÔNG đánh dấu
+     * dirty → `ItemController.target` / `ItemGraphic.target` không được lưu, reload là mất (null).
+     * Bỏ `_prefab` → node serialize đầy đủ vào scene như node thường, mọi property giữ nguyên.
+     */
+    static unlinkPrefab(n: Node) {
+        (n as any)._prefab = null;
+        for (const c of n.children) ItemManager.unlinkPrefab(c);
     }
 
     /** Xáo thứ tự item preview trong Content (editor) → thứ tự ô lúc Play cũng theo đó */
