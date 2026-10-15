@@ -103,6 +103,7 @@
             "7.Scripts\\MyScript\\Item\\ItemGraphic.ts",
             "7.Scripts\\MyScript\\Item\\ItemMovement.ts",
             "7.Scripts\\MyScript\\Item\\QuadImage.ts",
+            "7.Scripts\\MyScript\\Item\\ZoomSlider.ts",
             "7.Scripts\\MyScript\\Manager\\GameManager.ts",
             "7.Scripts\\MyScript\\Manager\\HandHintManager.ts",
             "7.Scripts\\MyScript\\Manager\\ItemManager.ts",
@@ -208,6 +209,10 @@
             "3.Sprites\\Gameplay\\Misc\\RoundBox.png",
             "3.Sprites\\Gameplay\\Misc\\SolidBox.png",
             "3.Sprites\\Gameplay\\Misc\\x2.png",
+            "3.Sprites\\Gameplay\\Misc\\zoom_handle.png",
+            "3.Sprites\\Gameplay\\Misc\\zoom_minus.png",
+            "3.Sprites\\Gameplay\\Misc\\zoom_plus.png",
+            "3.Sprites\\Gameplay\\Misc\\zoom_track.png",
             "7.Scripts\\MyScript\\ScriptTemplate\\Unity_vs_Cocos_CheatSheet.md",
             "8.Models\\Materials\\Bee\\0Red.mtl",
             "8.Models\\Materials\\Bee\\10Brown.mtl",
@@ -333,11 +338,8 @@
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Floor.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Texture.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_tex_metal.mtl",
-            "3.Sprites\\Gameplay\\Misc\\zoom_handle.png",
-            "3.Sprites\\Gameplay\\Misc\\zoom_minus.png",
-            "3.Sprites\\Gameplay\\Misc\\zoom_plus.png",
-            "3.Sprites\\Gameplay\\Misc\\zoom_track.png",
-            "7.Scripts\\MyScript\\Item\\ZoomSlider.ts"
+            "7.Scripts\\MyScript\\Utils\\PreviewScreen.ts",
+            "7.Scripts\\MyScript\\Utils\\EditorPreview.ts"
         ]
     }
 }
