@@ -671,8 +671,8 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -0.10519392058240351,
-      "y": 3.276741943304615,
-      "z": -1.3411433483952022
+      "y": 3.9197735712660022,
+      "z": -1.6061818597984399
     },
     "_lrot": {
       "__type__": "cc.Quat",
@@ -52100,7 +52100,7 @@
       }
     ],
     "sfxVolume": 1,
-    "storeAfterItems": 20,
+    "storeAfterItems": 15,
     "snapScale": 1.1,
     "snapScaleUpDuration": 0.12,
     "snapScaleDownDuration": 0.18,

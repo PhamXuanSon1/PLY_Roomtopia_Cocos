@@ -39,13 +39,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * Lý do tồn tại file này: hook build của Cocos Creator luôn chạy trong 1 renderer process của
  * Electron (đã xác nhận qua stack trace thật đi qua node:electron/js2c/renderer_init). Trong đúng
- * process đó:
- *   - native addon "sharp" (phụ thuộc libvips-42.dll) load lỗi ERR_DLOPEN_FAILED (xung đột DLL
- *     với Chromium/Electron đã nạp sẵn).
- *   - codec WASM (@jsquash) crash cứng cả tiến trình với exit code 0x80000003 (STATUS_BREAKPOINT -
- *     dấu hiệu Rust panic/"unreachable" trap, khả năng do renderer restricted không hỗ trợ đủ tính
- *     năng WASM mà codec cần, ví dụ SIMD).
- * Cả 2 hướng nén NGAY TRONG tiến trình hook đều không dùng được.
+ * process đó, native addon "sharp" (phụ thuộc libvips-42.dll) load lỗi ERR_DLOPEN_FAILED (xung đột
+ * DLL với Chromium/Electron đã nạp sẵn) - lỗi này bắt được bằng try/catch bình thường, không phải
+ * crash cứng, nhưng vẫn khiến nén ảnh không chạy được ngay trong tiến trình đó.
  *
  * Giải pháp: build-engine.ts spawn CHÍNH CocosCreator.exe (qua process.execPath - không cần cài
  * Node riêng trên máy) kèm biến môi trường ELECTRON_RUN_AS_NODE=1, chạy file này như 1 script Node

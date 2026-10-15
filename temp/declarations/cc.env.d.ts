@@ -110,6 +110,21 @@ declare module 'cc/env'{
 	export const COCOS_RUNTIME: boolean;
 
 	/**
+	 * Running in the sud's quick game.
+	 */
+	export const SUD: boolean;
+
+	/**
+	 * Running in the sud v2's quick game.
+	 */
+	export const SUDV2: boolean;
+
+	/**
+	 * Running in the Node.js environment.
+	 */
+	export const NODEJS: boolean;
+
+	/**
 	 * Running in the editor.
 	 */
 	export const EDITOR: boolean;
