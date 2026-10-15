@@ -1,7 +1,7 @@
 import { _decorator, Camera, Component, EventTouch, math, MeshRenderer, Node, UITransform, Vec3 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
-const { ccclass, property } = _decorator;
+const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
  * ZoomSlider: thanh trượt dọc (+ trên, − dưới) phóng to / thu nhỏ phòng.
@@ -14,8 +14,10 @@ const { ccclass, property } = _decorator;
  *    UI ở đây vẽ bằng UICam ortho riêng nên progress nhảy thẳng min→max). Touch chuyển qua uiCam.screenToWorld
  *    → local của node → progress theo trục Y của UITransform. Kéo/chạm bất kỳ đâu trên thanh đều được.
  *  - Handle chỉ là Sprite (không Button, để touch lọt xuống node thanh), tự đặt y theo progress.
+ *  - Editor: handle tự nằm đúng chỗ của startZoom (đổi min/max/start là thấy ngay). Không đụng scale phòng trong editor.
  */
 @ccclass('ZoomSlider')
+@executeInEditMode
 export class ZoomSlider extends Component {
     @property({ type: Node, tooltip: 'Root phòng (Gameplay/Lv50_Bathroom_Root)' })
     model: Node | null = null;
@@ -26,16 +28,16 @@ export class ZoomSlider extends Component {
     @property({ type: Camera, tooltip: 'UICam vẽ thanh này (đổi touch → toạ độ UI). Để trống → ui.uiCamera' })
     uiCam: Camera | null = null;
 
-    @property({ tooltip: 'Zoom nhỏ nhất (handle ở đáy)' })
+    @property({ group: 'Zoom', tooltip: 'Zoom nhỏ nhất (handle ở đáy)' })
     minZoom = 0.8;
 
-    @property({ tooltip: 'Zoom lớn nhất (handle ở đỉnh)' })
+    @property({ group: 'Zoom', tooltip: 'Zoom lớn nhất (handle ở đỉnh)' })
     maxZoom = 1.2;
 
-    @property({ tooltip: 'Mỗi lần bấm +/− đổi bấy nhiêu zoom' })
+    @property({ group: 'Zoom', tooltip: 'Mỗi lần bấm +/− đổi bấy nhiêu zoom' })
     step = 0.1;
 
-    @property({ tooltip: 'Zoom lúc vào game (1 = scale gốc). Handle tự nằm đúng tỉ lệ trên thanh (0.8→1.2, start 1 → giữa)' })
+    @property({ group: 'Zoom', tooltip: 'Zoom lúc vào game (1 = scale gốc). Handle tự nằm đúng tỉ lệ trên thanh (0.8→1.2, start 1 → giữa) — thấy ngay trong editor' })
     startZoom = 1;
 
     private _zoom = 1;
@@ -47,13 +49,14 @@ export class ZoomSlider extends Component {
     private _tmp = new Vec3();
     private _tmp2 = new Vec3();
     private _touchId = -1;
+    private _editorKey = '';
 
     get zoom() { return this._zoom; }
     get progress() { return this.maxZoom > this.minZoom ? (this._zoom - this.minZoom) / (this.maxZoom - this.minZoom) : 0; }
 
     onLoad() {
-        if (EDITOR) return;
         if (!this.handle) this.handle = this.node.getChildByName('Handle');     // chưa gán trong Inspector → lấy con "Handle"
+        if (EDITOR) return;
         if (this.model) { this._base = this.model.scale.x; this._lastSet = NaN; }
         this.setZoom(this.startZoom);
     }
@@ -73,6 +76,16 @@ export class ZoomSlider extends Component {
         this.node.off(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         this.node.off(Node.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
         this._touchId = -1;
+    }
+
+    /** Editor: handle theo startZoom (chỉ đặt lại khi min/max/start/kích thước thanh đổi) */
+    update() {
+        if (!EDITOR) return;
+        const ut = this.getComponent(UITransform);
+        const key = `${this.minZoom}|${this.maxZoom}|${this.startZoom}|${ut?.height}|${ut?.anchorY}|${this.handle?.uuid}`;
+        if (key === this._editorKey) return;
+        this._editorKey = key;
+        this.setZoom(this.startZoom);
     }
 
     lateUpdate() {

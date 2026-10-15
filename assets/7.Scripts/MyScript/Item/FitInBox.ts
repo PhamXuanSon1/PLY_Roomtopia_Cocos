@@ -1,6 +1,7 @@
-import { _decorator, Camera, Component, DirectionalLight, Layers, Mat4, MeshRenderer, Node, Rect, SphereLight, SpotLight, v3, Vec3, view } from 'cc';
+import { _decorator, Camera, Component, DirectionalLight, Layers, Mat4, MeshRenderer, Node, Rect, SphereLight, SpotLight, v3, Vec3 } from 'cc';
 import { BoxBg } from './BoxBg';
 import { EDITOR } from 'cc/env';
+import { PreviewScreen } from '../Utils/PreviewScreen';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -25,7 +26,7 @@ export class FitInBox extends Component {
     @property({ type: Node, tooltip: 'Node bị ModelRotate xoay quanh Y. Bounds lấy hợp mọi góc xoay của node này' })
     rotator: Node | null = null;
 
-    @property({ tooltip: 'Số góc xoay lấy mẫu để tính bounds (càng nhiều càng chính xác)' })
+    @property({ tooltip: 'Số góc xoay lấy mẫu để tính bounds (càng nhiều càng chính xác)', visible(this: FitInBox) { return !!this.rotator; } })
     rotationSamples = 24;
 
     @property({ tooltip: 'Lề trong hộp (world unit)' })
@@ -111,7 +112,7 @@ export class FitInBox extends Component {
             cam.visibility &= ~FitInBox.roomLayer;
         }
         const c = this.roomCam!;
-        const size = view.getVisibleSize();
+        const size = PreviewScreen.visibleSize();
         const halfH = cam.orthoHeight, halfW = halfH * size.width / size.height;
         const r = box.getCamRect(cam.orthoHeight, true, true);        // vùng chơi (đã cắt theo màn, màn ngang trừ panel)
         const w = r.right - r.left, h = r.top - r.bottom;
@@ -143,12 +144,22 @@ export class FitInBox extends Component {
     lateUpdate() {
         const cam = this.cam, box = this.box;
         if (!cam || !box) return;
-        const size = view.getVisibleSize();
-        const key = `${size.width}|${size.height}|${cam.orthoHeight}|${box.heightPercent}|${box.sideMargin}|${this.padding}|${this.portraitScale}|${this.landscapeScale}|${this.portraitFitCurrentRotation}`;
+        const size = PreviewScreen.visibleSize();
+        // đổi bất kỳ thông số nào → fit lại ngay (editor thấy liền, không cần Play)
+        const key = `${size.width}|${size.height}|${cam.orthoHeight}|${box.heightPercent}|${box.sideMargin}|${box.topOverflow}|${box.landscapeFullScreen}|${box.landscapeBottomMargin}|${box.landscapePanelFrac}`
+            + `|${this.padding}|${this.portraitScale}|${this.landscapeScale}|${this.portraitFitCurrentRotation}|${this.anchorX}|${this.anchorY}|${this.allowUpscale}|${this.landscapeUpscale}|${this.rotationSamples}`;
         if (key === this._key) return;
         this._key = key;
         this.fit();
         this.syncRoomCam(cam, box);
+    }
+
+    /** Bounds (cam space của `cam`) của map ở góc xoay hiện tại — EditorPreview vẽ gizmo. null = chưa có mesh/camera */
+    currentBounds(): { minX: number; maxX: number; minY: number; maxY: number } | null {
+        if (!this.cam || !this.meshes.length) return null;
+        const b = { minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity };
+        this.accumBounds(Mat4.invert(FitInBox._inv, this.cam.node.worldMatrix), b);
+        return isFinite(b.minX) ? b : null;
     }
 
     /** Bounds (cam space) của map ở góc xoay HIỆN TẠI, cộng dồn vào b */

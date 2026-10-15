@@ -1,5 +1,6 @@
-import { _decorator, Camera, Component, Label, Layers, Mat4, Node, UITransform, v3, Vec2, Vec3, view } from 'cc';
+import { _decorator, Camera, Component, Label, Layers, Mat4, Node, UITransform, v3, Vec2, Vec3 } from 'cc';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
+import { PreviewScreen } from '../Utils/PreviewScreen';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -18,7 +19,7 @@ export class BoxBg extends Component {
     @property({ type: Camera, tooltip: 'Camera vẽ map (WCam). Để trống → Camera trên node cha' })
     cam: Camera | null = null;
 
-    @property({ range: [0, 100, 1], slide: true, tooltip: 'Hộp chiếm bao nhiêu % chiều cao màn hình, tính từ mép trên' })
+    @property({ range: [0, 100, 1], slide: true, tooltip: 'Hộp chiếm bao nhiêu % chiều cao màn hình, tính từ mép trên (chỉ dùng khi không gán frame)', visible(this: BoxBg) { return !this.frame; } })
     heightPercent = 60;
 
     @property({ tooltip: 'Lề trái/phải (px, 100px = 1 world unit). Âm = tràn ra ngoài để giấu góc bo' })
@@ -51,13 +52,13 @@ export class BoxBg extends Component {
     @property({ group: 'Border', type: Node, tooltip: 'Sprite viền (em đứng TRƯỚC BoxBg dưới WCam, scale 0.01). Tự đặt to hơn hộp borderPx mỗi bên, nằm sau hộp → thành viền' })
     borderNode: Node | null = null;
 
-    @property({ group: 'Border', tooltip: 'Độ dày viền (px local, 100 px = 1 world unit). 0 = ẩn viền' })
+    @property({ group: 'Border', tooltip: 'Độ dày viền (px local, 100 px = 1 world unit). 0 = ẩn viền', visible(this: BoxBg) { return !!this.borderNode; } })
     borderPx = 10;
 
-    @property({ tooltip: 'Label cách đáy hộp bao nhiêu px (local, 100 px = 1 world unit)' })
+    @property({ tooltip: 'Label cách đáy hộp bao nhiêu px (local, 100 px = 1 world unit)', visible(this: BoxBg) { return !!this.countLabel; } })
     labelBottomPx = 60;
 
-    @property({ tooltip: 'countLabel là KHUNG (Sprite) chứa Label con → khung tự ôm theo chữ + lề này (px ngang, dọc). 0,0 = giữ size trong editor' })
+    @property({ tooltip: 'countLabel là KHUNG (Sprite) chứa Label con → khung tự ôm theo chữ + lề này (px ngang, dọc). 0,0 = giữ size trong editor', visible(this: BoxBg) { return !!this.countLabel; } })
     labelFramePad = new Vec2(40, 24);
 
     @property({ group: 'Landscape', tooltip: 'Màn ngang: label nằm góc DƯỚI-PHẢI vùng chơi, cách mép phải bấy nhiêu px (local). Màn dọc vẫn căn giữa' })
@@ -103,7 +104,8 @@ export class BoxBg extends Component {
         const w = (r.right - r.left) * k, h = (r.top - r.bottom) * k;
         const cx = (r.left + r.right) / 2, cy = (r.top + r.bottom) / 2;
 
-        const key = `${w.toFixed(2)}|${h.toFixed(2)}|${cx.toFixed(3)}|${cy.toFixed(3)}|${this.labelBottomPx}|${this.countLabel?.uuid}|${this.borderPx}|${this.borderNode?.uuid}|${this.landscape}|${this.landscapeLabelRightPx}|${this.landscapeLabelBottomPx}|${this.landscapeLabelScale}`;
+        const key = `${w.toFixed(2)}|${h.toFixed(2)}|${cx.toFixed(3)}|${cy.toFixed(3)}|${this.labelBottomPx}|${this.countLabel?.uuid}|${this.borderPx}|${this.borderNode?.uuid}|${this.landscape}|${this.landscapeLabelRightPx}|${this.landscapeLabelBottomPx}|${this.landscapeLabelScale}`
+            + `|${this.landscapeOverflow}|${this.landscapePanelFrac}|${this.panelBg?.uuid}|${cam.orthoHeight}`;
         if (key === this._key) return;
         this._key = key;
 
@@ -136,7 +138,7 @@ export class BoxBg extends Component {
         const on = this.landscape && this.landscapePanelFrac > 0;
         bg.active = on;
         if (!on) return;
-        const size = view.getVisibleSize();
+        const size = PreviewScreen.visibleSize();
         const halfH = orthoHeight, halfW = halfH * size.width / size.height, o = this.landscapeOverflow / k;
         const left = halfW - 2 * halfW * this.landscapePanelFrac, right = halfW + o, top = halfH + o, bottom = -halfH - o;
         bg.layer = this.node.layer;
@@ -172,8 +174,7 @@ export class BoxBg extends Component {
 
     /** Màn ngang? */
     get landscape() {
-        const size = view.getVisibleSize();
-        return size.width > size.height;
+        return PreviewScreen.landscape;
     }
 
     /**
@@ -185,7 +186,7 @@ export class BoxBg extends Component {
      *  playArea = true → màn ngang trừ thêm panel item bên phải (vùng đặt room / label).
      */
     getCamRect(orthoHeight: number, clipToScreen = true, playArea = false) {
-        const size = view.getVisibleSize();
+        const size = PreviewScreen.visibleSize();
         const k = 1 / (this.node.scale.x || 0.01);
         const halfH = orthoHeight;
         const halfW = halfH * size.width / size.height;

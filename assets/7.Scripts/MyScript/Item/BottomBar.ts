@@ -1,8 +1,10 @@
-import { _decorator, Camera, Component, EventTouch, Input, input, instantiate, Label, Mat4, math, Node, Prefab, screen, Size, Sprite, UITransform, Vec2, Vec3, Vec4, view } from 'cc';
+import { _decorator, Camera, Component, EventTouch, Input, input, instantiate, Label, Mat4, math, Node, Prefab, screen, Size, Sprite, UITransform, Vec2, Vec3, Vec4 } from 'cc';
+import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
+import { PreviewScreen } from '../Utils/PreviewScreen';
 import { BoxBg } from './BoxBg';
-const { ccclass, property } = _decorator;
+const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
  * Thanh bar chứa item (BottomBar).
@@ -13,8 +15,12 @@ const { ccclass, property } = _decorator;
  *    Thả tay → trượt tiếp theo quán tính (`inertia`), chạm lại thì dừng.
  *    ItemManager đọc `offset` + `vertical` mỗi frame để xếp item theo vòng lặp.
  *  - Chỉ kéo được khi ItemManager gọi setScrollable(true) (item tràn thanh).
+ *  - Layout (fit theo màn, Content giữa Bg, Tab, label) chạy CẢ trong editor → Scene editor thấy y như lúc Play.
+ *    Vị trí/kích thước "nhà" (thanh ngang) được LƯU vào scene: chỉnh tay thanh khi xem màn dọc = chỉnh nhà;
+ *    xem trước màn ngang (EditorPreview) rồi lưu scene cũng không làm lệch màn dọc lúc chạy.
  */
 @ccclass('BottomBar')
+@executeInEditMode
 export class BottomBar extends Component {
     @property(Label)
     countLabel: Label | null = null;
@@ -25,58 +31,58 @@ export class BottomBar extends Component {
     @property({ type: Camera, tooltip: 'Camera render thanh này. Để trống → ui.wCamera' })
     cam: Camera | null = null;
 
-    @property({ tooltip: 'Cho phép kéo scroll' })
+    @property({ group: 'Scroll', tooltip: 'Cho phép kéo scroll' })
     scrollEnabled = true;
 
     @property({ tooltip: 'Tự đặt kích thước thanh theo màn hình (ngang: rộng = màn; dọc: cao = màn, rộng = panelFrac)' })
     fitWidthToScreen = true;
 
-    @property({ tooltip: 'Chiều cao (local px) của dải content quanh content.y — chỉ chạm trong dải này mới kéo được (thanh ngang)' })
+    @property({ group: 'Scroll', tooltip: 'Chiều cao (local px) của dải chạm quanh content.y (thanh ngang). Bật fitContentToBg thì tự tính = cao Bg − 2·contentPadY', visible(this: BottomBar) { return !this.fitContentToBg; } })
     hitHeight = 250;
 
-    @property({ tooltip: 'Ngón tay phải đi quá số px này mới tính là kéo' })
+    @property({ group: 'Scroll', tooltip: 'Ngón tay phải đi quá số px này mới tính là kéo' })
     dragThresholdPx = 8;
 
-    @property({ tooltip: 'Tốc độ mượt khi content đuổi theo ngón tay (0 = bám sát)' })
+    @property({ group: 'Scroll', tooltip: 'Tốc độ mượt khi content đuổi theo ngón tay (0 = bám sát)' })
     followLerp = 12;
 
-    @property({ tooltip: 'Kéo lệch so với hướng NHẤC dưới góc này (độ) = NHẤC item, không scroll' })
+    @property({ group: 'Scroll', tooltip: 'Kéo lệch so với hướng NHẤC dưới góc này (độ) = NHẤC item, không scroll' })
     liftAngle = 70;
 
-    @property({ range: [0, 0.99, 0.01], slide: true, tooltip: 'Quán tính sau khi thả (0 = dừng ngay, 0.9 = trượt lâu)' })
+    @property({ group: 'Scroll', range: [0, 0.99, 0.01], slide: true, tooltip: 'Quán tính sau khi thả (0 = dừng ngay, 0.9 = trượt lâu)' })
     inertia = 0.9;
 
     @property({ group: 'Landscape', tooltip: 'Màn ngang → tự chuyển thành panel dọc bên phải' })
     autoVertical = true;
 
-    @property({ group: 'Landscape', range: [0.05, 0.6, 0.01], slide: true, tooltip: 'Panel dọc chiếm bao nhiêu phần bề ngang màn' })
+    @property({ group: 'Landscape', range: [0.05, 0.6, 0.01], slide: true, tooltip: 'Panel dọc chiếm bao nhiêu phần bề ngang màn', visible(this: BottomBar) { return this.autoVertical; } })
     panelFrac = LANDSCAPE_PANEL_FRAC;
 
-    @property({ group: 'Landscape', tooltip: 'Panel dọc: kéo về hướng này (màn hình) = NHẤC item. (-1,0) = sang trái vào phòng' })
+    @property({ group: 'Landscape', tooltip: 'Panel dọc: kéo về hướng này (màn hình) = NHẤC item. (-1,0) = sang trái vào phòng', visible(this: BottomBar) { return this.autoVertical; } })
     verticalLiftDir = new Vec2(-1, 0);
 
-    @property({ tooltip: 'Vùng cắt item (clipRect) nới thêm bấy nhiêu px màn hình mỗi bên (0 = sát mép thanh)' })
+    @property({ group: 'Scroll', tooltip: 'Vùng cắt item (clipRect) nới thêm bấy nhiêu px màn hình mỗi bên (0 = sát mép thanh)' })
     clipPaddingPx = 0;
 
-    @property({ group: 'Skin', type: Node, tooltip: 'Node nền có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0). Để trống → instantiate bgPrefab lúc chạy' })
+    @property({ group: 'Skin', type: Node, tooltip: 'Node nền có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0). Để trống → lấy con tên "Bg", không có nữa thì instantiate bgPrefab lúc chạy' })
     bgNode: Node | null = null;
 
-    @property({ group: 'Skin', type: Node, tooltip: 'Node tab có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0; chứa CountLabel). Để trống → instantiate tabPrefab lúc chạy' })
+    @property({ group: 'Skin', type: Node, tooltip: 'Node tab có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0; chứa CountLabel). Để trống → lấy con tên "Tab", không có nữa thì instantiate tabPrefab lúc chạy' })
     tabNode: Node | null = null;
 
-    @property({ group: 'Skin', type: Prefab, tooltip: 'Fallback khi bgNode trống: nền thanh (Gameplay/Bg.prefab). Để trống = không nền' })
+    @property({ group: 'Skin', type: Prefab, tooltip: 'Fallback khi không có Bg trong scene: nền thanh (Gameplay/Bg.prefab). Để trống = không nền', visible(this: BottomBar) { return !this.sceneBg(); } })
     bgPrefab: Prefab | null = null;
 
-    @property({ group: 'Skin', tooltip: 'Chiều cao nền khi thanh NGANG (local px). 0 = bằng chiều cao thanh (UITransform, 344) → Tab nằm trên hàng icon' })
+    @property({ group: 'Skin', tooltip: 'Chiều cao nền (prefab) khi thanh NGANG (local px). 0 = bằng chiều cao thanh. Bg có sẵn trong scene thì chỉnh thẳng UITransform của nó', visible(this: BottomBar) { return !this.sceneBg(); } })
     bgHeight = 0;
 
-    @property({ group: 'Skin', type: Prefab, tooltip: 'Fallback khi tabNode trống: tab trên mép nền (Gameplay/Tab.prefab). Để trống = không tab' })
+    @property({ group: 'Skin', type: Prefab, tooltip: 'Fallback khi không có Tab trong scene: tab trên mép nền (Gameplay/Tab.prefab). Để trống = không tab', visible(this: BottomBar) { return !this.sceneTab(); } })
     tabPrefab: Prefab | null = null;
 
-    @property({ group: 'Skin', tooltip: 'Tab dịch dọc so với MÉP TRÊN nền (local px). Âm = lún xuống đè lên nền (như scene cũ: -29)' })
+    @property({ group: 'Skin', tooltip: 'Tab (prefab) dịch dọc so với MÉP TRÊN nền (local px). Âm = lún xuống đè lên nền. Tab có sẵn trong scene thì kéo thẳng node', visible(this: BottomBar) { return !this.sceneTab(); } })
     tabOffsetY = -29;
 
-    @property({ group: 'Skin', tooltip: 'Độ sâu (local z) của Bg; Tab = +50. Âm = lùi ra SAU icon để mesh item luôn nằm trên nền/tab (icon ở Content z≈20, dày tới ±150)' })
+    @property({ group: 'Skin', tooltip: 'Độ sâu (local z) của Bg prefab; Tab = +50. Âm = lùi ra SAU icon để mesh item luôn nằm trên nền/tab', visible(this: BottomBar) { return !this.sceneBg() || !this.sceneTab(); } })
     skinZ = -200;
 
     @property({ group: 'Skin', tooltip: 'Chuyển countLabel vào giữa Tab (tắt khung đếm cũ của BoxBg nếu label đang nằm trong đó)' })
@@ -88,7 +94,7 @@ export class BottomBar extends Component {
     @property({ group: 'Skin', tooltip: 'Thanh ngang: Content đặt vào GIỮA Bg theo chiều dọc và hitHeight = cao Bg − 2·contentPadY → ô icon (ItemManager.cellSize = 0) luôn nằm trong Bg, cân trên dưới' })
     fitContentToBg = true;
 
-    @property({ group: 'Skin', tooltip: 'Lề trên/dưới (local px) giữa ô icon và mép Bg khi fitContentToBg' })
+    @property({ group: 'Skin', tooltip: 'Lề trên/dưới (local px) giữa ô icon và mép Bg khi fitContentToBg', visible(this: BottomBar) { return this.fitContentToBg; } })
     contentPadY = 30;
 
     /** Cạnh ô icon suy từ Bg khi fitContentToBg (0 = không áp). ItemManager ưu tiên giá trị này hơn cellSize */
@@ -133,34 +139,57 @@ export class BottomBar extends Component {
     private _targetOffset = 0;
     private _scrollable = false;
     private _velocity = 0;       // local px / frame, quán tính sau khi thả
+    /** LƯU vào scene: editor đang xem màn ngang lúc lưu → lần mở sau biết thanh đang ở chỗ panel dọc, không lấy nhầm làm "nhà" */
+    @property({ serializable: true, visible: false })
     private _vertical = false;
     private _tmpA = new Vec3();
     private _tmpB = new Vec3();
     private _fitKey = '';
-    // trạng thái "nhà" (thanh ngang, như đặt trong scene) để trả lại khi về màn dọc
+    private _skinKey = '';
+    // trạng thái "nhà" (thanh ngang, màn dọc) để trả lại khi về màn dọc. LƯU vào scene: editor xem trước màn ngang
+    // (thanh dời sang phải) rồi lưu scene thì lúc chạy vẫn biết chỗ cũ của thanh
+    @property({ serializable: true, visible: false })
     private _homePos = new Vec3();
+    @property({ serializable: true, visible: false })
     private _homeContentPos = new Vec3();
+    @property({ serializable: true, visible: false })
     private _homeSize = new Size(1080, 344);
+    @property({ serializable: true, visible: false })
+    private _homeSaved = false;
 
     onLoad() {
         if (!this.content) {
+            if (EDITOR) { console.warn('[BottomBar] chưa gán content'); return; }   // editor không tự sinh node (sẽ bị lưu vào scene)
             this.content = new Node('Content');
             this.content.layer = this.node.layer;
             this.content.setParent(this.node);
         }
-        this._homePos.set(this.node.position);
-        this._homeContentPos.set(this.content.position);
-        const cs = this.getComponent(UITransform)?.contentSize;
-        if (cs) this._homeSize.set(cs.width, cs.height);
+        // scene cũ chưa lưu "nhà" → lấy như đặt trong scene; editor đang xem màn dọc → trạng thái scene chính là "nhà".
+        // PHẢI trước fitLayout, không thì fitLayout đặt thanh về "nhà" mặc định (0,0,0 / 1080×344)
+        if (!this._homeSaved || (EDITOR && !this._vertical)) this.captureHome();
         this.spawnSkin();
         if (this.fitWidthToScreen) this.fitLayout();
         else this.layoutSkin();
     }
 
+    /** Ghi "nhà" = trạng thái thanh hiện tại (chỉ gọi khi đang là thanh NGANG) */
+    private captureHome() {
+        if (!this.content) return;
+        this._homePos.set(this.node.position);
+        this._homeContentPos.set(this.content.position);
+        const cs = this.getComponent(UITransform)?.contentSize;
+        if (cs) this._homeSize.set(cs.width, cs.height);
+        this._homeSaved = true;
+    }
+
+    /** Bg/Tab đặt sẵn trong hierarchy (gán Inspector hoặc con tên "Bg"/"Tab") */
+    private sceneBg() { return this.bgNode ?? this.node.getChildByName('Bg'); }
+    private sceneTab() { return this.tabNode ?? this.node.getChildByName('Tab'); }
+
     /** Bg/Tab: dùng node có sẵn trong scene (bgNode/tabNode); thiếu thì instantiate prefab làm con, xếp TRƯỚC Content (Bg → Tab → Content) */
     private spawnSkin() {
         const make = (prefab: Prefab | null, name: string) => {
-            if (!prefab) return null;
+            if (!prefab || EDITOR) return null;            // editor không sinh prefab (sẽ bị lưu vào scene) → đặt Bg/Tab sẵn trong hierarchy
             const n = instantiate(prefab);
             n.name = name;
             n.layer = this.node.layer;
@@ -169,8 +198,8 @@ export class BottomBar extends Component {
         };
         // Node có sẵn trong hierarchy (gán Inspector hoặc con tên "Bg"/"Tab") → dùng NGUYÊN như đặt trong scene, không đụng size/vị trí.
         // Không có thì mới instantiate prefab và tự layout theo thanh.
-        const sceneBg = this.bgNode ?? this.node.getChildByName('Bg');
-        const sceneTab = this.tabNode ?? this.node.getChildByName('Tab');
+        const sceneBg = this.sceneBg();
+        const sceneTab = this.sceneTab();
         this._bg = sceneBg ?? make(this.bgPrefab, 'Bg');
         this._tab = sceneTab ?? make(this.tabPrefab, 'Tab');
         this._layoutBg = !sceneBg && !!this._bg;
@@ -224,6 +253,13 @@ export class BottomBar extends Component {
         const { width: w, height: h } = ut.contentSize;
         if (!isFinite(w) || !isFinite(h) || w <= 0 || h <= 0) return;   // view chưa có size (frame đầu / pane 0px) → đợi lần fit sau
 
+        // chỉ làm lại khi có gì đổi (editor gọi mỗi frame: đổi Inspector / kéo Bg là thấy ngay, không set node thừa)
+        const but0 = this._bg?.getComponent(UITransform);
+        const key = `${w}|${h}|${this._vertical}|${this.bgHeight}|${this.tabOffsetY}|${this.skinZ}|${this.countLabelInTab}|${this.fitContentToBg}|${this.contentPadY}`
+            + `|${this._bg?.position.y}|${but0?.height}|${but0?.anchorY}|${this._tab?.uuid}|${this.countLabel?.node.parent?.uuid}`;
+        if (key === this._skinKey) return;
+        this._skinKey = key;
+
         // Màn NGANG giữ nguyên thiết kế cũ: không Bg/Tab, cell hiện, label đếm ở khung BoxBg (góc dưới-phải vùng chơi), cellSize theo ItemManager
         if (this._vertical) {
             if (this._bg) this._bg.active = false;
@@ -262,6 +298,7 @@ export class BottomBar extends Component {
     }
 
     onEnable() {
+        if (EDITOR) return;
         input.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
         input.on(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
         input.on(Input.EventType.TOUCH_END, this.onTouchEnd, this);
@@ -269,6 +306,7 @@ export class BottomBar extends Component {
     }
 
     onDisable() {
+        if (EDITOR) return;
         input.off(Input.EventType.TOUCH_START, this.onTouchStart, this);
         input.off(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
         input.off(Input.EventType.TOUCH_END, this.onTouchEnd, this);
@@ -370,6 +408,13 @@ export class BottomBar extends Component {
     }
 
     update(dt: number) {
+        if (EDITOR) {
+            if (!this.content) return;
+            if (!this._vertical) this.captureHome();       // đang xem màn dọc: chỉnh tay thanh / Content = chỉnh "nhà"
+            if (this.fitWidthToScreen) this.fitLayout();
+            this.layoutSkin();                             // có key, chỉ chạy khi có gì đổi
+            return;
+        }
         if (this.fitWidthToScreen) this.fitLayout();
         if (!this._dragging && this._scrollable && Math.abs(this._velocity) >= 0.01) {
             this._targetOffset += this._velocity;   // trượt theo quán tính
@@ -389,7 +434,7 @@ export class BottomBar extends Component {
     screenWidthLocal(): number {
         const cam = this.camera();
         if (!cam) return this.getComponent(UITransform)?.contentSize.width ?? 1080;
-        const size = view.getVisibleSize();
+        const size = PreviewScreen.visibleSize();
         const worldW = 2 * cam.orthoHeight * (size.width / size.height);
         return worldW / (this.node.worldScale.x || 1);
     }
@@ -410,7 +455,7 @@ export class BottomBar extends Component {
         const cam = this.camera();
         const ut = this.getComponent(UITransform);
         if (!cam || !ut || !this.content) return;
-        const size = view.getVisibleSize();
+        const size = PreviewScreen.visibleSize();
         const vertical = this.autoVertical && size.width > size.height;
         const key = `${cam.orthoHeight}|${size.width}|${size.height}|${this.node.worldScale.x}|${vertical}|${this.panelFrac}`;
         if (key === this._fitKey) return;
@@ -429,6 +474,7 @@ export class BottomBar extends Component {
             this.content.setPosition(this._homeContentPos);
             this.node.setPosition(this._homePos);
         }
+        this._skinKey = '';                        // Content vừa về "nhà" → phải căn lại giữa Bg
         this.layoutSkin();
         if (changed) {
             this.resetScroll();
@@ -439,7 +485,7 @@ export class BottomBar extends Component {
 
     /** Đặt gốc thanh (anchor 0.5,0 = giữa-đáy) tại mép phải-đáy màn hình trong camera space, giữ nguyên độ sâu */
     private dockRight(cam: Camera, panelLocalW: number) {
-        const size = view.getVisibleSize();
+        const size = PreviewScreen.visibleSize();
         const halfH = cam.orthoHeight, halfW = halfH * size.width / size.height;
         const ws = this.node.worldScale.x || 1;
         const camMat = cam.node.worldMatrix;

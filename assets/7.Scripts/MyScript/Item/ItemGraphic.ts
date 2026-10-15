@@ -180,6 +180,19 @@ export class ItemGraphic extends Component {
         c.setPosition(this.iconBasePos);
     }
 
+    /** Đo lại scale + tâm icon cho ô cạnh cellPx, chiếm iconFill (editor: đổi iconFill / cellSize là thấy ngay) */
+    refit(cellPx: number, iconFill: number) {
+        const c = this.iconClone;
+        if (!c?.isValid || !this.target?.isValid || !this.icon) return;
+        this.cellPx = cellPx;
+        this.iconFill = iconFill;
+        this.iconScale = 1;
+        this.putIconInCell();
+        this.iconScale = this.fitScale();
+        c.setScale(this.iconScale, this.iconScale, this.iconScale);
+        c.setPosition(this.iconBasePos);
+    }
+
     /** Đặt iconClone về đúng chỗ trong ô (dùng lúc bind và khi thả trượt) */
     putIconInCell() {
         const c = this.iconClone!;
@@ -278,6 +291,27 @@ export class ItemGraphic extends Component {
             Vec3.min(min, min, tmp); Vec3.max(max, max, tmp);
         }
         return Vec3.add(out, min, max).multiplyScalar(0.5);
+    }
+
+    /**
+     * Kích thước bbox mesh target theo mặt phẳng màn hình của cam (world unit): w = theo trục ngang camera, h = trục dọc.
+     * Không có mesh bounds → 0,0.
+     */
+    static screenPlaneSize(target: Node, cam: Camera): { w: number; h: number } {
+        const st = target.getComponent(MeshRenderer)?.mesh?.struct;
+        if (!st?.minPosition || !st.maxPosition) return { w: 0, h: 0 };
+        const right = Vec3.transformQuat(new Vec3(), Vec3.RIGHT, cam.node.worldRotation);
+        const up = Vec3.transformQuat(new Vec3(), Vec3.UP, cam.node.worldRotation);
+        const lo = st.minPosition, hi = st.maxPosition, mat = target.worldMatrix, tmp = new Vec3();
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        for (let i = 0; i < 8; i++) {
+            tmp.set(i & 1 ? hi.x : lo.x, i & 2 ? hi.y : lo.y, i & 4 ? hi.z : lo.z);
+            Vec3.transformMat4(tmp, tmp, mat);
+            const x = Vec3.dot(tmp, right), y = Vec3.dot(tmp, up);
+            minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+        }
+        return { w: maxX - minX, h: maxY - minY };
     }
 
     /** Mép TRÊN bbox của mesh target trong WORLD (X/Z ở giữa, Y = đỉnh) → spawn effect phía trên, khỏi lọt trong mesh. Không có mesh bounds → pivot. */

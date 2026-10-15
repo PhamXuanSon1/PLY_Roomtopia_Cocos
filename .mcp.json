@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "cocos-ply-dreamyro-efc5f4": {
+    "cocos-ply-roomtopi-e353e0": {
       "type": "http",
-      "url": "http://127.0.0.1:27829/"
+      "url": "http://127.0.0.1:24947/"
     }
   }
 }

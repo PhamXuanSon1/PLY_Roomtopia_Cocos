@@ -4,6 +4,7 @@ import { pc, PointerController } from './PointerController';
 import { sm, SoundType } from './SoundManager';
 import { gc } from '../Tool/GameController';
 import { AppLovinAnalytics } from '../Tool/AppLovinAnalytics';
+import { PreviewScreen } from '../MyScript/Utils/PreviewScreen';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 export enum BindUIType {
@@ -414,14 +415,7 @@ export class UI extends Component {
         }, time);
         let max = 2;
         if (this.wCamera) {
-            let size = view.getVisibleSize();
-            let aspect = size.width / size.height;
-            const targetWidth = 6.6;
-            if (aspect < 1.2) {
-                this.wCamera.orthoHeight = Math.max(6.8, targetWidth / (2 * aspect));
-            } else {
-                this.wCamera.orthoHeight = 6.0;
-            }
+            this.wCamera.orthoHeight = PreviewScreen.worldOrthoHeight(view.getVisibleSize());   // công thức dùng chung với EditorPreview
         }
         if(this.width / this.height < 1.5) {
             scale = misc.clampf(scale, 1, max);

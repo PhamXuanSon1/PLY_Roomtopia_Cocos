@@ -1,9 +1,13 @@
-import { _decorator, Camera, Component, instantiate, Layers, MeshRenderer, Node, ParticleSystem, Prefab, v3, Vec3 } from 'cc';
+import { _decorator, Camera, Component, director, Enum, instantiate, Layers, math, MeshRenderer, Node, ParticleSystem, Prefab, v3, Vec3 } from 'cc';
 import { WinReact } from './WinReact';
 import { GameManager } from '../Manager/GameManager';
 import { ItemGraphic } from '../Item/ItemGraphic';
 import { ui } from '../../Manager/UI';
 const { ccclass, property } = _decorator;
+
+/** Lấy cạnh nào của bbox item (theo mặt phẳng màn hình) để scale effect */
+export enum FxFitMode { Mean = 0, Width = 1, Height = 2, Max = 3, Min = 4 }
+Enum(FxFitMode);
 
 /**
  * SnapEffect: thả item ĐÚNG chỗ → spawn prefab particle 3D (BlinkEffect3D) tại TÂM bbox target (ItemGraphic.worldCenter — đúng chỗ snap,
@@ -11,6 +15,8 @@ const { ccclass, property } = _decorator;
  * nổ 1 phát (loop = false trong prefab) rồi tự huỷ.
  *
  *  - Prefab: cc.ParticleSystem billboard, burst 1 lần lúc t=0, alpha fade về 0.
+ *  - Fit theo item: scale = clamp(cạnh bbox item trên màn hình × fitPadding / fitRefSize, fitMin, fitMax) × scale
+ *    → đồ to (sàn, tường) nổ to, đồ nhỏ (bàn chải, lọ) nổ nhỏ. Tắt fitToItem = scale cố định như cũ.
  *  - Effect vẽ bằng camera phụ FxCam (tự tạo lúc runtime, con của WCam, priority = WCam + 1, chỉ nhìn layer FX)
  *    → vẽ SAU toàn bộ WCam (map 3D + BoxBg/border/panel là Sprite đi qua UI phase, vẽ sau mọi object 3D nên
  *    priority/depth trên material không đủ để nổi lên trên BoxBg ở vùng ngoài room). UICam (priority 4) vẫn đè lên → endcard vẫn trên effect.
@@ -24,14 +30,32 @@ export class SnapEffect extends Component {
     @property({ type: Prefab, tooltip: 'Prefab particle 3D (BlinkEffect3D)' })
     prefab: Prefab | null = null;
 
-    @property({ type: Node, tooltip: 'Node cha để cắm effect. Để trống → node cha của target' })
+    @property({ type: Node, tooltip: 'Node cha để cắm effect (nên scale 1). Để trống → gốc scene (không bị scale của room ảnh hưởng)' })
     root: Node | null = null;
 
     @property({ type: Camera, tooltip: 'Camera map (để xoay effect theo + FxCam bám theo). Để trống → ui.wCamera' })
     cam: Camera | null = null;
 
-    @property({ tooltip: 'Nhân thêm scale cho effect (1 = như prefab)' })
+    @property({ tooltip: 'Nhân thêm scale cho effect (1 = như prefab / như kết quả fit)' })
     scale = 1;
+
+    @property({ group: 'Fit Item', tooltip: 'Effect to/nhỏ theo kích thước item trên màn hình' })
+    fitToItem = true;
+
+    @property({ group: 'Fit Item', type: FxFitMode, tooltip: 'Đo item theo: Mean = trung bình nhân rộng×cao (đồ dài như sàn không bị quá to), Width/Height/Max/Min', visible(this: SnapEffect) { return this.fitToItem; } })
+    fitMode = FxFitMode.Mean;
+
+    @property({ group: 'Fit Item', tooltip: 'Item có cạnh (world unit) bằng giá trị này → effect scale 1 (prefab dàn hạt ~1.8 unit)', visible(this: SnapEffect) { return this.fitToItem; } })
+    fitRefSize = 1.8;
+
+    @property({ group: 'Fit Item', tooltip: 'Effect to hơn item bấy nhiêu lần (1 = vừa khít)', visible(this: SnapEffect) { return this.fitToItem; } })
+    fitPadding = 1.2;
+
+    @property({ group: 'Fit Item', tooltip: 'Scale nhỏ nhất (đồ rất nhỏ vẫn thấy rõ effect)', visible(this: SnapEffect) { return this.fitToItem; } })
+    fitMin = 0.35;
+
+    @property({ group: 'Fit Item', tooltip: 'Scale lớn nhất (đồ rất to không nổ tràn màn)', visible(this: SnapEffect) { return this.fitToItem; } })
+    fitMax = 2;
 
     @property({ tooltip: 'Dịch effect lên trên (world Y) bấy nhiêu unit so với TÂM bbox target (vị trí snap)' })
     offsetY = 0;
@@ -99,16 +123,35 @@ export class SnapEffect extends Component {
         c.targetTexture = cam.targetTexture;
     }
 
+    /** Scale effect cho target: fit theo bbox trên màn hình (fitToItem) × scale */
+    fxScale(target: Node, cam: Camera | null): number {
+        if (!this.fitToItem || !cam) return this.scale;
+        const { w, h } = ItemGraphic.screenPlaneSize(target, cam);
+        if (w <= 0 || h <= 0) return this.scale;
+        let size: number;
+        switch (this.fitMode) {
+            case FxFitMode.Width: size = w; break;
+            case FxFitMode.Height: size = h; break;
+            case FxFitMode.Max: size = Math.max(w, h); break;
+            case FxFitMode.Min: size = Math.min(w, h); break;
+            default: size = Math.sqrt(w * h);
+        }
+        const k = size * this.fitPadding / (this.fitRefSize || 1);
+        return math.clamp(k, this.fitMin, this.fitMax) * this.scale;
+    }
+
     /** Nổ effect tại target. Gọi từ ItemManager.onSnapped */
     play(target: Node) {
-        const root = this.root ?? target.parent;
+        // gốc scene (scale 1): particle scaleSpace = Local → scale effect = đúng scale mình đặt, không nhân scale của room
+        const root = this.root ?? director.getScene();
         if (!this.prefab || !root) return;
 
         const cam = this.cam ?? ui.wCamera;
 
         const fx = instantiate(this.prefab);
         fx.setParent(root, false);
-        fx.setWorldScale(this.scale, this.scale, this.scale);
+        const s = this.fxScale(target, cam);
+        fx.setWorldScale(s, s, s);
         // Xoay theo camera (thay vì identity) → mặt phẳng bắn hạt (shape module) đối diện camera,
         // dàn thành hàng ngang đúng theo góc nhìn màn hình thay vì lệch theo trục world.
         if (cam) fx.setWorldRotation(cam.node.worldRotation);

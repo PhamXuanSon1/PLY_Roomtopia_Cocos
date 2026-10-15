@@ -43,15 +43,15 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ type: [Node], tooltip: 'Các mesh được chơi, thứ tự = thứ tự ô trong thanh. Để trống → tất cả mesh trong map' })
     pickTargets: Node[] = [];
 
-    // ---- layout (đơn vị local của BottomBar, 1080 = full width). Đổi xong tick Preview để áp ----
+    // ---- layout (đơn vị local của BottomBar, 1080 = full width). Đổi là thấy ngay trong editor ----
     @property({ serializable: true, visible: false })
     private _cellSize = CELL_PX;
 
-    @property({ group: 'Layout', tooltip: 'Cạnh ô vuông (thẻ Cell) chứa icon. Đổi là áp ngay cho thẻ; icon cần tick Preview để đo lại' })
+    @property({ group: 'Layout', tooltip: 'Cạnh ô vuông (thẻ Cell) khi thanh KHÔNG tự tính ô theo Bg (màn ngang / tắt BottomBar.fitContentToBg). Đổi là đo lại icon ngay' })
     get cellSize() { return this._cellSize; }
     set cellSize(v: number) { this._cellSize = v; this.applyCellSize(); }
 
-    @property({ group: 'Layout', range: [0.1, 1, 0.05], slide: true, tooltip: 'Icon chiếm bao nhiêu phần của ô' })
+    @property({ group: 'Layout', range: [0.1, 1, 0.05], slide: true, tooltip: 'Icon chiếm bao nhiêu phần của ô. Đổi là đo lại icon ngay trong editor' })
     iconFill = ICON_FILL;
 
     @property({ group: 'Layout', tooltip: 'Khoảng cách tâm 2 ô' })
@@ -60,11 +60,21 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ group: 'Layout', tooltip: 'Ô đầu cách mép trái thanh' })
     edgePad = EDGE_PAD_PX;
 
-    @property({ group: 'Layout', tooltip: 'Ô còn hiện khi tâm cách mép thanh ≤ giá trị này' })
+    @property({ group: 'Layout', tooltip: 'Ô còn hiện khi tâm cách mép thanh ≤ giá trị này (editor: ô ngoài vùng này bị ẩn như lúc Play)' })
     cullPad = CULL_PAD_PX;
 
     @property({ tooltip: 'Mesh KHÔNG có trong pickTargets cũng đổi sang xám' })
     grayOthers = true;
+
+    // ---- xem trước trong editor (không ảnh hưởng lúc chạy) ----
+    @property({ group: 'Editor Preview', range: [0, 1, 0.01], slide: true, tooltip: 'Editor: cuộn thanh để xem các item phía sau (0 = đầu thanh như lúc vào game)' })
+    previewScroll = 0;
+
+    @property({ group: 'Editor Preview', step: 1, tooltip: 'Editor: coi như đã gom xong N item đầu → ô dồn lên + label "N / tổng" như lúc chơi' })
+    previewCollected = 0;
+
+    @property({ group: 'Editor Preview', tooltip: 'Editor: hiện TẤT CẢ item xếp thẳng hàng (không cắt theo thanh) để dễ chọn / sắp xếp' })
+    showHiddenItems = false;
 
     // ---- snap (px quy về màn 393pt, xem px() trong TrayConfig) ----
     @property({ group: 'Snap', tooltip: 'Ghost lệch so với target (pt @393) dưới ngưỡng này = snap (ghost chồng khít target = 0)' })
@@ -125,33 +135,33 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ serializable: true, visible: false })
     private _showCells = true;
 
-    @property({ tooltip: 'Hiện thẻ Cell (ô trắng bo góc) dưới icon trong EDITOR (để xem layout). Khi Play xem thêm showCellsInPlay' })
+    @property({ group: 'Layout', tooltip: 'Hiện thẻ Cell (ô trắng bo góc) dưới icon trong EDITOR (để xem layout). Khi Play xem thêm showCellsInPlay' })
     get showCells() { return this._showCells; }
     set showCells(v: boolean) { this._showCells = v; this.applyShowCells(); }
 
-    @property({ tooltip: 'Khi Play có hiện thẻ Cell không (mặc định tắt: icon nằm thẳng trên nền Bg của thanh)' })
+    @property({ group: 'Layout', tooltip: 'Khi Play có hiện thẻ Cell không (mặc định tắt: icon nằm thẳng trên nền Bg của thanh)' })
     showCellsInPlay = false;
 
     /** Cell có hiện không ở ngữ cảnh hiện tại (editor theo showCells, Play cần thêm showCellsInPlay) */
     private get cellsVisible() { return this._showCells && (EDITOR || this.showCellsInPlay || !!this.bar?.vertical); }   // màn ngang giữ cell như cũ
 
     // ---- nút xem trước trong editor (tick = chạy, tự bỏ tick) ----
-    @property({ displayName: '▶ Preview items', tooltip: 'Sinh item vào Content theo pickTargets (lưu vào scene, Play dùng lại). Bấm lại = sinh lại từ đầu' })
+    @property({ group: 'Editor Preview', displayName: '▶ Preview items', tooltip: 'Sinh item vào Content theo pickTargets (lưu vào scene, Play dùng lại). Bấm lại = sinh lại từ đầu' })
     get previewItems() { return false; }
     set previewItems(v: boolean) { if (v && EDITOR) this.buildPreview(); }
 
-    @property({ displayName: '✖ Clear preview', tooltip: 'Xoá item đang xem trước' })
+    @property({ group: 'Editor Preview', displayName: '✖ Clear preview', tooltip: 'Xoá item đang xem trước' })
     get clearPreview() { return false; }
     set clearPreview(v: boolean) { if (v && EDITOR) this.clearContent(); }
 
-    @property({ displayName: '🔀 Shuffle items', tooltip: 'Xáo thứ tự item trong thanh. Editor: xáo item preview (lưu vào scene); Play: xáo ô chưa xong' })
+    @property({ group: 'Editor Preview', displayName: '🔀 Shuffle items', tooltip: 'Xáo thứ tự item trong thanh. Editor: xáo item preview (lưu vào scene); Play: xáo ô chưa xong' })
     get shuffleItems() { return false; }
     set shuffleItems(v: boolean) { if (v) EDITOR ? this.shufflePreview() : this.shuffle(); }
 
     @property({ group: 'Order', tooltip: 'Thứ tự ô lấy theo thứ tự node trong Hierarchy của Content (kéo thả node để sắp). Tắt = theo vị trí x hiện tại' })
     orderByHierarchy = true;
 
-    @property({ group: 'Order', displayName: '↕ Apply order', tooltip: 'Editor: xếp lại các item đã preview theo thứ tự trong Hierarchy (không sinh lại, giữ mọi chỉnh tay)' })
+    @property({ group: 'Order', displayName: '↕ Apply order', tooltip: 'Editor: xếp lại các item đã preview theo thứ tự trong Hierarchy (editor cũng tự xếp lại mỗi khi đổi thứ tự node)' })
     get applyOrder() { return false; }
     set applyOrder(v: boolean) { if (v && EDITOR) this.applyOrderPreview(); }
 
@@ -219,8 +229,73 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     update() {
         this.syncIconRotation();          // chạy cả trong editor: xoay model root là icon xoay theo ngay
-        if (EDITOR) return;
+        if (EDITOR) { this.editorLayout(); return; }
         this.updateVisibility();
+    }
+
+    private _editorKey = '';
+    private _editorFitKey = '';
+
+    /**
+     * Editor: xếp item preview Y NHƯ lúc Play (vòng lặp khi tràn thanh, ô ngoài thanh ẩn, item đã gom ẩn + dồn lên).
+     * Chỉ chạy lại khi có gì đổi (thứ tự node, Layout, kích thước / dọc-ngang của thanh, nhóm Editor Preview).
+     */
+    private editorLayout() {
+        const bar = this.bar, content = bar?.content;
+        if (!bar || !content) return;
+        const list = this.previewList();
+        // icon đo lại khi đổi iconFill / cellSize. Đổi dọc ↔ ngang thì KHÔNG đo lại (lúc chạy cũng giữ scale icon đã lưu)
+        const fitKey = `${this.iconFill}|${this._cellSize}`;
+        if (this._editorFitKey && fitKey !== this._editorFitKey) this.refitIcons(list);
+        this._editorFitKey = fitKey;
+
+        const cell = this.cellPx();
+        const key = `${list.map(it => it.node.uuid).join(',')}|${this.spacing}|${this.edgePad}|${this.cullPad}|${bar.length}|${bar.vertical}|${cell}`
+            + `|${this.previewScroll}|${this.previewCollected}|${this.showHiddenItems}|${this._showCells}`;
+        if (key === this._editorKey) return;
+        this._editorKey = key;
+
+        const n = list.length;
+        const done = Math.min(Math.max(0, Math.floor(this.previewCollected)), n);
+        const remain = n - done;
+        this.barHalfW = this.barHalfLen();
+        this.computeLoop(remain);
+        const off = -this.previewScroll * this.period;
+        const left = -this.barHalfW - this.cullPad, right = this.barHalfW + this.cullPad;
+        list.forEach((it, i) => {
+            if (this.showHiddenItems) {                   // xếp thẳng hàng hết, không cắt
+                this.placeSlot(it, -this.barHalfW + this.edgePad + this.spacing * i);
+                ItemManager.setPreviewVisible(it, true);
+                return;
+            }
+            if (i < done) { ItemManager.setPreviewVisible(it, false); return; }   // N item đầu coi như đã gom → các ô sau dồn lên
+            const x = this.slotX(i - done, remain, off);
+            this.placeSlot(it, x);
+            ItemManager.setPreviewVisible(it, x >= left && x <= right);
+        });
+        this.applyCellSize();
+        this.applyShowCells();
+        if (n > 0) bar.setCount(done, n);
+    }
+
+    /** Editor: item preview trong Content theo thứ tự Hierarchy */
+    private previewList(): ItemController[] {
+        const content = this.bar?.content;
+        if (!content) return [];
+        return content.getComponentsInChildren(ItemController)
+            .sort((a, b) => a.node.getSiblingIndex() - b.node.getSiblingIndex());
+    }
+
+    /** Editor: ẩn/hiện item preview (lúc chạy build() bật lại hết rồi tự cull) */
+    private static setPreviewVisible(it: ItemController, on: boolean) {
+        if (it.node.active !== on) it.node.active = on;
+    }
+
+    /** Editor: đo lại scale icon của mọi item theo cellPx / iconFill hiện tại */
+    private refitIcons(list: ItemController[]) {
+        const px = this.cellPx();
+        for (const it of list) it.graphic?.refit(px, this.iconFill);
+        this._editorKey = '';
     }
 
     lateUpdate() {
@@ -296,6 +371,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.items = [];
         targets.forEach((target, i) => {
             let item = existing[i];
+            if (item && !item.node.active) item.node.active = true;   // editor có thể đã ẩn (cull / previewCollected) → bật lại, cull làm lại bên dưới
             if (!item) {
                 const node = instantiate(this.itemPrefab!);
                 node.setParent(content);
@@ -350,11 +426,16 @@ export class ItemManager extends Component implements ItemCallbacks {
      *  - đủ chỗ     → căn giữa, khoá kéo
      */
     private setLayout(n: number) {
+        this.computeLoop(n);
+        this.bar!.setScrollable(this.loop);
+    }
+
+    /** loop + period cho n ô (không đụng thanh) */
+    private computeLoop(n: number) {
         const barW = this.barHalfW * 2;
         this.loop = this.contentWidth(n) > barW;
         // chu kỳ ≥ barW + 1 ô để không bao giờ phải vẽ 1 item ở 2 chỗ
         this.period = Math.max(n * this.spacing, barW + this.spacing);
-        this.bar!.setScrollable(this.loop);
     }
 
     /** Nửa độ dài thanh theo trục xếp item */
@@ -368,10 +449,9 @@ export class ItemManager extends Component implements ItemCallbacks {
         else item.node.setPosition(pos, 0, 0);
     }
 
-    /** toạ độ dọc trục thanh (local trong Content) của ô thứ i với offset hiện tại */
-    private slotX(i: number, n = this.remain) {
+    /** toạ độ dọc trục thanh (local trong Content) của ô thứ i với offset (mặc định = offset scroll của thanh) */
+    private slotX(i: number, n = this.remain, off = this.bar!.offset) {
         if (this.loop) {
-            const off = this.bar!.offset;
             // mod về [−SPACING, period − SPACING): ô vừa rời mép phải sẽ hiện lại từ mép trái
             let rel = (i * this.spacing + off + this.spacing) % this.period;
             if (rel < 0) rel += this.period;
@@ -612,8 +692,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         const allMeshes = gm.model.getComponentsInChildren(MeshRenderer).map(r => r.node);
         const targets = this.pickTargets.length > 0 ? this.pickTargets : allMeshes;
         this.barHalfW = this.barHalfLen();
-        this.loop = this.contentWidth(targets.length) > this.barHalfW * 2;
-        this.period = Math.max(targets.length * this.spacing, this.barHalfW * 2 + this.spacing);
+        this.computeLoop(targets.length);
 
         targets.forEach((target, i) => {
             const node = instantiate(this.itemPrefab!);
@@ -621,7 +700,7 @@ export class ItemManager extends Component implements ItemCallbacks {
             node.name = `Item_${target.name}`;
             node.setParent(content);                              // LƯU vào scene → Play dùng lại
             const item = node.getComponent(ItemController)!;
-            this.placeSlot(item, this.slotX(i, targets.length));
+            this.placeSlot(item, this.slotX(i, targets.length, 0));
             item.target = target;
             item.graphic!.bind(target, this.bar!.cam ?? this.cam, this.cellPx(), this.iconFill);   // chỉ hình, không gray
             ItemManager.unlinkPrefab(node);                       // icon clone vừa sinh (clone mesh FBX) cũng phải cắt
@@ -630,6 +709,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.applyShowCells();
         this.collected = 0;
         this.refreshCount(targets.length);           // label trong editor cũng hiện 0/max
+        this._editorKey = '';                        // editorLayout xếp/cull lại ở frame sau
         console.log(`[ItemManager] preview ${targets.length} items`);
     }
 
@@ -654,9 +734,9 @@ export class ItemManager extends Component implements ItemCallbacks {
             .sort((a, b) => a.node.getSiblingIndex() - b.node.getSiblingIndex());
         if (!list.length) return;
         this.barHalfW = this.barHalfLen();
-        this.loop = this.contentWidth(list.length) > this.barHalfW * 2;
-        this.period = Math.max(list.length * this.spacing, this.barHalfW * 2 + this.spacing);
-        list.forEach((it, i) => this.placeSlot(it, this.slotX(i, list.length)));
+        this.computeLoop(list.length);
+        list.forEach((it, i) => this.placeSlot(it, this.slotX(i, list.length, 0)));
+        this._editorKey = '';
         console.log('[ItemManager] order:', list.map(it => it.target?.name ?? it.node.name).join(' → '));
     }
 
@@ -671,24 +751,25 @@ export class ItemManager extends Component implements ItemCallbacks {
             [list[i], list[j]] = [list[j], list[i]];
         }
         this.barHalfW = this.barHalfLen();
-        this.loop = this.contentWidth(list.length) > this.barHalfW * 2;
-        this.period = Math.max(list.length * this.spacing, this.barHalfW * 2 + this.spacing);
+        this.computeLoop(list.length);
         list.forEach((it, i) => {
             it.node.setSiblingIndex(i);
-            this.placeSlot(it, this.slotX(i, list.length));
+            this.placeSlot(it, this.slotX(i, list.length, 0));
         });
+        this._editorKey = '';
     }
 
     /** Bật/tắt quad Cell của 1 item (fallback tìm con tên "Cell" cho item sinh từ prefab cũ) */
     private setCellActive(item: ItemController, on: boolean) {
         const cell = item.graphic?.cell ?? item.node.getChildByName('Cell');
-        if (cell) { cell.active = on; this.resizeCell(cell); }
+        if (cell) { if (cell.active !== on) cell.active = on; this.resizeCell(cell); }
     }
 
     /** Thẻ Cell = ô vuông cạnh cellPx (QuadImage tự dựng lại khi UITransform đổi) */
     private resizeCell(cell: Node) {
         const size = this.cellPx();
-        cell.getComponent(UITransform)?.setContentSize(size, size);
+        const ut = cell.getComponent(UITransform);
+        if (ut && (ut.width !== size || ut.height !== size)) ut.setContentSize(size, size);
     }
 
     /** Áp cellSize cho mọi item đang có trong Content */
@@ -733,7 +814,7 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     // =========================================================== helpers
     /** Ô vuông chứa icon: cellSize, hoặc (=0) chiều cao dải content của BottomBar */
-    private cellPx(): number {
+    cellPx(): number {
         const fromBg = this.bar?.cellFromBg ?? 0;        // thanh có Bg + fitContentToBg → ô luôn vừa trong Bg, cân trên dưới
         if (fromBg > 0) return fromBg;
         if (this._cellSize > 0) return this._cellSize;
@@ -743,5 +824,8 @@ export class ItemManager extends Component implements ItemCallbacks {
     private camera(): Camera {
         return this.cam ?? ui.wCamera;
     }
+
+    /** Nửa độ dài thanh + cullPad: ô có tâm ngoài khoảng này bị ẩn — EditorPreview vẽ gizmo */
+    get cullHalfLen() { return this.barHalfLen() + this.cullPad; }
 
 }
