@@ -115,6 +115,8 @@
             "7.Scripts\\MyScript\\ScriptTemplate\\Ply_SoundManager.ts",
             "7.Scripts\\MyScript\\ScriptTemplate\\Ply_Types.ts",
             "7.Scripts\\MyScript\\ScriptTemplate\\Yielders.ts",
+            "7.Scripts\\MyScript\\Utils\\EditorPreview.ts",
+            "7.Scripts\\MyScript\\Utils\\PreviewScreen.ts",
             "7.Scripts\\MyScript\\Utils\\SnapEffect.ts",
             "7.Scripts\\MyScript\\Utils\\WinReact.ts",
             "0.Spines",
@@ -338,8 +340,13 @@
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Floor.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_Texture.mtl",
             "8.Models\\Meshs\\Lv50_Bathroom\\Materials_Lv50_Bathroom_Root\\M_tex_metal.mtl",
-            "7.Scripts\\MyScript\\Utils\\PreviewScreen.ts",
-            "7.Scripts\\MyScript\\Utils\\EditorPreview.ts"
+            "7.Scripts\\MyScript\\Manager\\ItemSfx.ts",
+            "7.Scripts\\MyScript\\Manager\\SnapRules.ts",
+            "7.Scripts\\MyScript\\Manager\\TrayLayout.ts",
+            "7.Scripts\\MyScript\\Utils\\BlinkFx.ts",
+            "7.Scripts\\MyScript\\Manager\\LevelConfig.ts",
+            "5.Prefabs\\Levels",
+            "5.Prefabs\\Levels\\Level_Bathroom.prefab"
         ]
     }
 }
