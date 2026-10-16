@@ -14,11 +14,13 @@ export class PreviewScreen {
     /** Editor: kích thước màn đang xem trước (EditorPreview gán). null = theo view */
     static override: Size | null = null;
 
+    /** Trong editor ưu tiên kích thước xem trước; lúc chơi dùng vùng nhìn thực của view. */
     static visibleSize(): Size {
         if (EDITOR && PreviewScreen.override) return PreviewScreen.override;
         return view.getVisibleSize();
     }
 
+    /** Xác định màn ngang từ kích thước đang dùng cho bố cục, kể cả kích thước xem trước. */
     static get landscape(): boolean {
         const s = PreviewScreen.visibleSize();
         return s.width > s.height;

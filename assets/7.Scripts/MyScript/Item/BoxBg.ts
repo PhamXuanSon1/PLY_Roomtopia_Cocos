@@ -83,12 +83,14 @@ export class BoxBg extends Component {
 
     private _key = '';
 
+    /** Lấy camera cha nếu chưa gán và đặt nền về layer DEFAULT để WCam nhìn thấy. */
     onLoad() {
         if (!this.cam) this.cam = this.node.parent?.getComponent(Camera) ?? null;
         // luôn ở layer DEFAULT (WCam vẽ). Trước đây dùng layer BG riêng cho BgCam → scene cũ có thể còn lưu layer 4
         this.node.layer = Layers.Enum.DEFAULT;
     }
 
+    /** Cập nhật vùng nền và khung đếm theo bố cục hiện tại, kể cả trong editor. */
     update() {
         this.fit();
         this.fitLabelFrame();
@@ -106,6 +108,7 @@ export class BoxBg extends Component {
         if (Math.abs(ut.width - w) > 0.5 || Math.abs(ut.height - h) > 0.5) ut.setContentSize(w, h);
     }
 
+    /** Khớp nền với vùng camera rồi đặt nhãn, panel và viền khi thông số bố cục đổi. */
     fit() {
         const cam = this.cam;
         const ut = this.getComponent(UITransform);

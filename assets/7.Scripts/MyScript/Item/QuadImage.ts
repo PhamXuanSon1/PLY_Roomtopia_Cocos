@@ -24,12 +24,16 @@ export class QuadImage extends Component {
     @property({ tooltip: 'Màu nhân với texture (alpha = độ trong). Đổi ở đây, không cần sửa material' })
     color: Color = new Color(255, 255, 255, 255);
 
+    /** Đọc bản sao kích thước UITransform; thiếu component thì dùng cỡ 100×100. */
     @property({ tooltip: 'Kích thước quad (đơn vị local). Đồng bộ với UITransform của node' })
     get size(): Size { const ut = this.getComponent(UITransform); return ut ? ut.contentSize.clone() : new Size(100, 100); }
+    /** Đổi kích thước UITransform và dựng lại hình học quad ngay. */
     set size(v: Size) { this.getComponent(UITransform)?.setContentSize(v); this.rebuild(); }
 
+    /** Đọc điểm neo UITransform; mặc định ở giữa nếu component chưa có. */
     @property({ tooltip: 'Điểm neo (0.5,0.5 = giữa; 0.5,0 = đáy giữa)' })
     get anchor(): Vec2 { const ut = this.getComponent(UITransform); return ut ? new Vec2(ut.anchorX, ut.anchorY) : new Vec2(0.5, 0.5); }
+    /** Đổi điểm neo và dựng lại quad để các đỉnh dịch đúng theo gốc mới. */
     set anchor(v: Vec2) { this.getComponent(UITransform)?.setAnchorPoint(v); this.rebuild(); }
 
     @property({ tooltip: 'Bo tròn 4 góc (đơn vị local, 0 = vuông)' })
@@ -59,17 +63,20 @@ export class QuadImage extends Component {
     /** Rect màn hình 0..1 cho shader unlit-clip (thẻ trong tray); (0,0,1,1) = không cắt */
     private clipRect = new Vec4(0, 0, 1, 1);
 
+    /** Chuẩn bị MeshRenderer cho nền quad và tắt cả đổ bóng lẫn nhận bóng. */
     onLoad() {
         this.renderer = this.getComponent(MeshRenderer) ?? this.addComponent(MeshRenderer)!;
         this.renderer.shadowCastingMode = MeshRenderer.ShadowCastingMode.OFF;
         this.renderer.receiveShadow = MeshRenderer.ShadowReceivingMode.OFF;
     }
 
+    /** Dựng mesh sau onLoad của MeshRenderer để mesh không bị engine đặt lại. */
     start() {
         // dựng ở start (sau onLoad của MeshRenderer) — dựng trong onLoad mesh sẽ bị MeshRenderer reset
         this.rebuild();
     }
 
+    /** Dựng lại quad khi hình dạng/gradient đổi và cập nhật material khi màu nền đổi. */
     update() {
         // UITransform đổi size (fitBg) → dựng lại quad
         const ut = this.getComponent(UITransform)!;
@@ -79,6 +86,7 @@ export class QuadImage extends Component {
         if (!this.lastColor.equals(this.color)) { this.lastColor.set(this.color); this.applyMaterial(); }
     }
 
+    /** Sinh mesh quạt tam giác với góc bo, UV và màu đỉnh theo kiểu gradient đã chọn. */
     rebuild() {
         if (!this.renderer) return;
         const ut = this.getComponent(UITransform)!;
@@ -92,10 +100,12 @@ export class QuadImage extends Component {
 
         // đỉnh tâm (quạt tam giác) + viền: 4 góc bo, mỗi góc `seg` đoạn
         const cx0 = (x0 + x1) / 2, cy0 = (y0 + y1) / 2;
+        /** Thêm màu đỉnh nội suy từ màu dưới/viền tới màu trên/tâm theo t. */
         const mix = (t: number) => {                  // t: 0 = colorBottom (dưới/viền), 1 = colorTop (trên/tâm)
             const a = this.colorBottom, b = this.colorTop;
             colors.push((a.r + (b.r - a.r) * t) / 255, (a.g + (b.g - a.g) * t) / 255, (a.b + (b.b - a.b) * t) / 255, (a.a + (b.a - a.a) * t) / 255);
         };
+        /** Thêm vị trí, UV, pháp tuyến và màu gradient của một đỉnh quad. */
         const push = (x: number, y: number, tOverride?: number) => {
             positions.push(x, y, 0);
             uvs.push((x - x0) / w, 1 - (y - y0) / h);
@@ -128,6 +138,7 @@ export class QuadImage extends Component {
                 const rx = positions[i * 3], ry = positions[i * 3 + 1];
                 push(cx0 + (rx - cx0) * k, cy0 + (ry - cy0) * k, 1);
             }
+            /** Đổi chỉ số đỉnh viền sang đỉnh vòng trong tương ứng của gradient toả tâm. */
             const inner = (i: number) => rimCount + i;           // index đỉnh vòng trong thứ i (1..rimCount)
             for (let i = 1; i <= rimCount; i++) {
                 const j = i < rimCount ? i + 1 : 1;
@@ -158,6 +169,7 @@ export class QuadImage extends Component {
         this.applyClip();
     }
 
+    /** Ghi vùng cắt màn hình vào các pass material có hỗ trợ uniform clipRect. */
     private applyClip() {
         const inst = this.renderer?.material;
         if (!inst) return;

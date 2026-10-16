@@ -20,6 +20,7 @@ export class ComponentCache<T extends Component> {
     private cache: Map<Node, T | null> = new Map();
     private componentType: new (...args: any[]) => T;
 
+    /** Cố định loại component mà instance cache này sẽ tìm trên các node. */
     constructor(componentType: new (...args: any[]) => T) {
         this.componentType = componentType;
     }

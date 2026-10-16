@@ -335,7 +335,7 @@ export class UI extends Component {
     /**
      * Căn chỉnh node 3D theo mép nhìn của Camera 3D (wCamera)
      * Chỉ căn chỉnh trực tiếp vị trí của node cha (item), không bắt buộc các node con phải nằm ở mép camera.
-     * @param item Node 3D cần căn (ví dụ Lv50_Bathroom_Root)
+     * @param item Node 3D cần căn (ví dụ node gốc phòng của prefab Level)
      * @param type Hướng căn (Top, Bottom, Left, Right)
      * @param offset Khoảng cách từ vị trí node đến mép camera (đơn vị world)
      */

@@ -106,23 +106,27 @@ export class EditorPreview extends Component {
     private _b = new Vec3();
 
     // =========================================================== vòng đời
+    /** Tìm các component bố cục cần điều khiển khi xem trước trong editor. */
     onLoad() {
         if (!EDITOR) return;
         this.findRefs();
     }
 
+    /** Bỏ kích thước xem trước do instance này đặt và dọn hình gizmo khi tắt. */
     onDisable() {
         if (!EDITOR) return;
         if (PreviewScreen.override === this._size) PreviewScreen.override = null;
         this.destroyGizmo();
     }
 
+    /** Dọn kích thước ghi đè và gizmo để editor không giữ dữ liệu của preview đã huỷ. */
     onDestroy() {
         if (!EDITOR) return;
         if (PreviewScreen.override === this._size) PreviewScreen.override = null;
         this.destroyGizmo();
     }
 
+    /** Áp độ phân giải/hướng màn xem trước, đồng bộ camera và cập nhật gizmo đã chọn. */
     update() {
         if (!EDITOR) return;
         this.findRefs();
@@ -140,6 +144,7 @@ export class EditorPreview extends Component {
         else this.destroyGizmo();
     }
 
+    /** Lấy cỡ thiết bị, kích thước tự nhập hoặc design resolution để tính màn xem trước. */
     private portraitSize(): [number, number] {
         if (this.device === PreviewDevice.Custom) return [this.customSize.width || 1080, this.customSize.height || 1920];
         if (this.device === PreviewDevice.Design) {
@@ -149,6 +154,7 @@ export class EditorPreview extends Component {
         return DEVICE_SIZES[this.device] ?? [1080, 1920];
     }
 
+    /** Tìm lại các tham chiếu bố cục bị thiếu hoặc mất hiệu lực trong scene hiện tại. */
     private findRefs() {
         const scene = director.getScene();
         if (!scene) return;
@@ -158,11 +164,13 @@ export class EditorPreview extends Component {
         if (!this.items?.isValid) this.items = scene.getComponentInChildren(ItemManager);
     }
 
+    /** Ưu tiên camera gán riêng, sau đó lần lượt lấy từ nền, bộ fit phòng hoặc thanh. */
     private camera(): Camera | null {
         return this.wCam ?? this.box?.cam ?? this.fit?.cam ?? this.bar?.cam ?? null;
     }
 
     // =========================================================== gizmo
+    /** Gom đường viền màn hình, vùng chơi, phòng, thanh và snap rồi gửi sang mesh gizmo. */
     private drawGizmos(cam: Camera) {
         this._pos.length = 0;
         this._col.length = 0;
@@ -250,11 +258,13 @@ export class EditorPreview extends Component {
     }
 
     // ---- primitive (toạ độ camera space) ----
+    /** Thêm một đỉnh gizmo trong camera space và màu RGBA chuẩn hoá về 0..1. */
     private push(x: number, y: number, z: number, c: Color) {
         this._pos.push(x, y, z);
         this._col.push(c.r / 255, c.g / 255, c.b / 255, 1);
     }
 
+    /** Tạo bốn đoạn thẳng bao hình chữ nhật tại độ sâu z trong camera space. */
     private rectCam(l: number, r: number, b: number, t: number, z: number, c: Color) {
         this.push(l, b, z, c); this.push(r, b, z, c);
         this.push(r, b, z, c); this.push(r, t, z, c);
@@ -271,6 +281,7 @@ export class EditorPreview extends Component {
         this.push(b.x, b.y, b.z, c);
     }
 
+    /** Vẽ khung chữ nhật theo local của node, dùng lineLocal để đổi sang camera space. */
     private rectLocal(n: Node, l: number, r: number, b: number, t: number, c: Color) {
         this.lineLocal(n, l, b, r, b, c);
         this.lineLocal(n, r, b, r, t, c);
@@ -307,6 +318,7 @@ export class EditorPreview extends Component {
         if (old && old !== this._renderer.mesh) (old as Mesh).destroy();
     }
 
+    /** So sánh dữ liệu gizmo với sai số 0.0001 để tránh dựng lại mesh vì lệch số thực nhỏ. */
     private same(a: number[], b: number[]) {
         if (a.length !== b.length) return false;
         for (let i = 0; i < a.length; i++) if (Math.abs(a[i] - b[i]) > 1e-4) return false;
@@ -333,6 +345,7 @@ export class EditorPreview extends Component {
         return n;
     }
 
+    /** Huỷ node gizmo và xoá cache đỉnh/màu để lần xem trước sau dựng lại đầy đủ. */
     private destroyGizmo() {
         if (this._gizmo?.isValid) this._gizmo.destroy();
         this._gizmo = null;

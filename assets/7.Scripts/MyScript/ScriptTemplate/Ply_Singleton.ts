@@ -29,6 +29,7 @@ export class Ply_Singleton extends Component {
         Ply_Singleton._instances.set(className, this);
     }
 
+    /** Xoá đăng ký theo tên lớp nếu singleton bị huỷ chính là instance đang được giữ. */
     onDestroy() {
         const className = (this.constructor as any).name;
         if (Ply_Singleton._instances.get(className) === this) {

@@ -19,6 +19,7 @@ export const SCROLL_LERP = 8;
 export const DECISION_PX = 10;
 export const SELECT_ANGLE = 70;    // độ so với hướng lên; nhỏ hơn = nhấc item
 
-/** Constant pixel quy về màn 1080 wide để đồng nhất giữa thiết bị */
+/** Quy đổi pixel từ màn rộng 393pt sang bề ngang thực tế để đồng nhất giữa thiết bị. */
 export const px = (v: number) => v * screen.windowSize.width / 393;   // quy theo iPhone 14 Pro (393 pt)
+/** Ngưỡng thả đúng tương đương 100 pixel trên màn chuẩn rộng 393pt. */
 export const SNAP_PX = () => px(100);   // thả cách target dưới ngưỡng này = đúng

@@ -80,6 +80,7 @@ export class Ply_SoundManager extends Ply_Singleton {
 
     private isMute: boolean = false;
 
+    /** Đăng ký singleton qua lớp cha và công bố instance quản lý âm thanh. */
     onLoad() {
         super.onLoad();
         Ply_SoundManager.Ins = this;
@@ -127,6 +128,7 @@ export class Ply_SoundManager extends Ply_Singleton {
         this.playNextFxInSequence();
     }
 
+    /** Phát FX kế tiếp có clip, theo dõi đến khi hết tiếng rồi nối tiếp chuỗi. */
     private playNextFxInSequence(): void {
         if (this.isMute || this.sequenceIndex >= this.sequence.length) {
             this.stopFxSequence();
@@ -149,6 +151,7 @@ export class Ply_SoundManager extends Ply_Singleton {
         this.sequenceSource.volume = data.volume;
         this.sequenceSource.play();
 
+        /** Chờ FX hiện tại phát xong, gỡ lịch kiểm tra rồi chuyển sang FX kế tiếp. */
         const callback = () => {
             if (!this.sequenceSource?.playing) {
                 this.unschedule(callback);
@@ -212,6 +215,7 @@ export class Ply_SoundManager extends Ply_Singleton {
             this.unschedule(this.checkQueueCallback.bind(this, index));
         }
 
+        /** Khi nguồn hết tiếng thì phát lượt đang chờ hoặc gỡ lịch nếu hàng đợi đã rỗng. */
         const callback = () => {
             const source = this.fxSources[index];
             if (!source) {
@@ -234,6 +238,7 @@ export class Ply_SoundManager extends Ply_Singleton {
         this.schedule(callback, 0.016);
     }
 
+    /** Hàm giữ chỗ cho callback kiểm tra hàng đợi; hiện chưa thực hiện thao tác nào. */
     private checkQueueCallback(index: number) {
         // Callback giu tham chieu
     }
@@ -372,6 +377,7 @@ export class Ply_SoundManager extends Ply_Singleton {
         return audioNode.addComponent(AudioSource);
     }
 
+    /** Dừng chuỗi FX, huỷ đăng ký ở lớp cha và bỏ tham chiếu singleton âm thanh. */
     onDestroy() {
         this.stopFxSequence();
         super.onDestroy();

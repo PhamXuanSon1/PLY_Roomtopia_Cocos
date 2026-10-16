@@ -153,6 +153,7 @@ export class BottomBar extends Component {
     @property({ serializable: true, visible: false })
     private _homeSaved = false;
 
+    /** Chuẩn bị Content, lưu bố cục thanh ngang và dựng nền/tab theo kích thước màn hình. */
     onLoad() {
         if (!this.content) {
             if (EDITOR) { console.warn('[BottomBar] chưa gán content'); return; }   // editor không tự sinh node (sẽ bị lưu vào scene)
@@ -180,10 +181,12 @@ export class BottomBar extends Component {
 
     /** Bg/Tab đặt sẵn trong hierarchy (gán Inspector hoặc con tên "Bg"/"Tab") */
     private sceneBg() { return this.bgNode ?? this.node.getChildByName('Bg'); }
+    /** Lấy tab đã gán trong Inspector, nếu thiếu thì tìm node con tên Tab. */
     private sceneTab() { return this.tabNode ?? this.node.getChildByName('Tab'); }
 
     /** Bg/Tab: dùng node có sẵn trong scene (bgNode/tabNode); thiếu thì lấy prefab TrayBg/TrayTab từ Ply_Pool, xếp TRƯỚC Content (Bg → Tab → Content) */
     private spawnSkin() {
+        /** Tạo phần nền/tab từ pool khi chơi; editor chỉ dùng các node đã đặt sẵn. */
         const make = (type: PoolType, name: string) => {
             if (EDITOR) return null;                        // editor không sinh prefab (sẽ bị lưu vào scene) → đặt Bg/Tab sẵn trong hierarchy
             const n = Ply_Pool.create(type, this.node);
@@ -293,6 +296,7 @@ export class BottomBar extends Component {
         }
     }
 
+    /** Đăng ký sự kiện chạm để phân biệt cuộn thanh với nhấc item khi chơi. */
     onEnable() {
         if (EDITOR) return;
         input.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
@@ -301,6 +305,7 @@ export class BottomBar extends Component {
         input.on(Input.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
     }
 
+    /** Gỡ sự kiện chạm và xoá trạng thái kéo để thanh không giữ ngón tay cũ. */
     onDisable() {
         if (EDITOR) return;
         input.off(Input.EventType.TOUCH_START, this.onTouchStart, this);
@@ -345,6 +350,7 @@ export class BottomBar extends Component {
         }
     }
 
+    /** Đưa thanh về đầu và dừng cả độ trễ bám tay lẫn quán tính cuộn. */
     resetScroll() {
         this._offset = this._targetOffset = 0;
         this._velocity = 0;
@@ -352,6 +358,7 @@ export class BottomBar extends Component {
 
     // ------------------------------------------------------------ touch
 
+    /** Giữ một ngón tay bắt đầu trong thanh và dừng quán tính để nhận thao tác mới. */
     private onTouchStart(e: EventTouch) {
         if (!this.scrollEnabled || this._touchId !== -1) return;
         // không scroll được vẫn cần bắt touch để phát EVENT_LIFT
@@ -364,6 +371,7 @@ export class BottomBar extends Component {
         this._velocity = 0;                       // chạm lại → dừng trượt
     }
 
+    /** Xét hướng kéo để phát yêu cầu nhấc item hoặc cập nhật độ cuộn theo trục thanh. */
     private onTouchMove(e: EventTouch) {
         if (e.getID() !== this._touchId || !this.content) return;
         const cur = e.getLocation();
@@ -397,12 +405,14 @@ export class BottomBar extends Component {
         this._last.set(cur);
     }
 
+    /** Nhả ngón tay đang điều khiển; vận tốc còn lại được update dùng để cuộn tiếp. */
     private onTouchEnd(e: EventTouch) {
         if (e.getID() !== this._touchId) return;
         this._touchId = -1;
         this._dragging = false;
     }
 
+    /** Đồng bộ bố cục khi xem trước; lúc chơi cập nhật cuộn mượt và quán tính sau khi thả. */
     update(dt: number) {
         if (EDITOR) {
             if (!this.content) return;
@@ -502,6 +512,7 @@ export class BottomBar extends Component {
         if (this._vertical) return false;
         const ut = this.getComponent(UITransform);
         let top = ut ? (1 - ut.anchorY) * ut.height : 0;
+        /** Lấy mép trên local của nền/tab đang hiện để xác định đỉnh thanh. */
         const edge = (n: Node | null) => {
             const t = n?.activeInHierarchy ? n.getComponent(UITransform) : null;
             return n && t ? n.position.y + (1 - t.anchorY) * t.height : -Infinity;
@@ -514,6 +525,7 @@ export class BottomBar extends Component {
 
     // ------------------------------------------------------------ helpers
 
+    /** Ưu tiên camera của thanh, nếu chưa gán thì dùng camera world của UI. */
     private camera(): Camera | null {
         return this.cam ?? ui?.wCamera ?? null;
     }

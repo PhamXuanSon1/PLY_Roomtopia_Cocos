@@ -41,12 +41,14 @@ export class ItemMovement extends Component {
     private ray = new geometry.Ray();
     private floorPlane = new geometry.Plane();  // mặt phẳng z = 0 để "chiếu" ngón tay xuống world
 
+    /** Tạo mặt phẳng kéo tại dragZ để icon nằm trước thanh khi bám theo ngón tay. */
     onLoad() {
         // mặt phẳng z = dragZ, hướng theo trục Z (gần camera hơn thanh → item kéo luôn nổi trên thẻ)
         geometry.Plane.fromNormalAndPoint(this.floorPlane, new Vec3(0, 0, 1), new Vec3(0, 0, this.dragZ));
     }
 
     // =========================================================== 1. bắt đầu kéo
+    /** Đưa icon ra ghostRoot, khớp scale/góc target và căn tâm hình dưới ngón tay. */
     begin(fingerPos: Vec2) {
         const g = this.graphic!;
         const target = g.target!;
@@ -116,7 +118,7 @@ export class ItemMovement extends Component {
 
     // =========================================================== hàm phụ
     /**
-     * Ngón tay (pixel màn hình) -> điểm trong world trên mặt phẳng z = 0.
+     * Ngón tay (pixel màn hình) -> điểm trong world trên mặt phẳng z = dragZ.
      * Bắn 1 tia từ camera qua ngón tay, xem tia cắt mặt phẳng ở đâu.
      * (Camera đang nghiêng nên không dùng screenToWorld được.)
      */

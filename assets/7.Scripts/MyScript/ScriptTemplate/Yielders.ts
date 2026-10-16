@@ -47,6 +47,7 @@ export class Yielders {
     public static waitFrames(frameCount: number): Promise<void> {
         return new Promise<void>((resolve) => {
             let count = 0;
+            /** Đếm từng khung hình và hoàn tất Promise khi đủ số khung cần chờ. */
             const step = () => {
                 count++;
                 if (count >= frameCount) {
