@@ -31,6 +31,20 @@ function findByUuid(node, uuid) {
     return null;
 }
 
+/**
+ * Báo editor node đã đổi (như khi sửa qua Inspector). Gán property bằng script KHÔNG tự báo →
+ * lần reload script / undo editor dựng lại node từ bản ghi cũ và giá trị mới bị mất (vd ModelRotate.model).
+ */
+function touch(...nodes) {
+    const EE = globalThis.EditorExtends;
+    const seen = new Set();
+    for (const n of nodes) {
+        if (!n || !n.isValid || seen.has(n)) continue;
+        seen.add(n);
+        try { EE && EE.Node && EE.Node.emit('change', n); } catch (e) { /* editor cũ */ }
+    }
+}
+
 function unlinkPrefab(n) {
     n._prefab = null;
     for (const c of n.children) unlinkPrefab(c);
@@ -125,7 +139,8 @@ function relinkRefs(oldRoots, newRoot) {
     const oldRoot = oldRoots[0];
     let ok = 0;
     const lost = [];
-    if (!oldRoot) return { ok, lost };
+    const changed = [];
+    if (!oldRoot) return { ok, lost, changed };
     const map = (v, label) => {
         if (!(v instanceof Node) || !oldRoots.some((o) => isInside(v, o))) return v;
         const m = isInside(v, oldRoot) ? mapNode(v, oldRoot, newRoot) : null;
@@ -140,14 +155,14 @@ function relinkRefs(oldRoots, newRoot) {
             const label = (c.constructor.name || 'Component') + '.' + key.replace(/^_/, '') + ' (' + c.node.name + ')';
             if (v instanceof Node) {
                 const m = map(v, label);
-                if (m !== v) c[key] = m;
+                if (m !== v) { c[key] = m; changed.push(c.node); }
             } else if (Array.isArray(v) && v.some((x) => x instanceof Node)) {
                 const arr = v.map((x) => map(x, label)).filter((x) => x !== null);
-                if (arr.length !== v.length || arr.some((x, i) => x !== v[i])) c[key] = arr;
+                if (arr.length !== v.length || arr.some((x, i) => x !== v[i])) { c[key] = arr; changed.push(c.node); }
             }
         }
     }
-    return { ok, lost };
+    return { ok, lost, changed };
 }
 
 function roomMeshes(root) {
@@ -257,6 +272,7 @@ exports.methods = {
         }
         const zs = comp('ZoomSlider');
         if (zs) zs._editorKey = '';
+        touch(root, n, ...relinked.changed, im && im.node, fit && fit.node, zs && zs.node);
         return { ok: true, model: n.name, meshes: roomMeshes(root).length, relinked: relinked.ok, lost: relinked.lost };
     },
 
@@ -266,6 +282,7 @@ exports.methods = {
         if (!fit) return { ok: false, error: 'Không có FitInBox.' };
         for (const k of FIT_KEYS) if (values && values[k] !== undefined) fit[k] = values[k];
         fit._key = '';
+        touch(fit.node);
         return { ok: true };
     },
 
@@ -274,6 +291,7 @@ exports.methods = {
         const im = comp('ItemManager');
         if (!im) return { ok: false, error: 'Không có ItemManager.' };
         for (const k of ITEM_KEYS) if (values && values[k] !== undefined) im[k] = values[k];
+        touch(im.node);
         return { ok: true };
     },
 
@@ -290,6 +308,7 @@ exports.methods = {
         if (!nodes.length) return { ok: false, error: 'Chưa chọn mesh nào.' };
         im.pickTargets = nodes;
         im.previewItems = true;                // setter: xoá item cũ + sinh item mới theo pickTargets
+        touch(im.node, im.bar && im.bar.content);
         return { ok: true, count: nodes.length };
     },
 
@@ -401,6 +420,7 @@ exports.methods = {
         }
         const im = comp('ItemManager');
         if (im && v.showHiddenItems !== undefined) im.showHiddenItems = !!v.showHiddenItems;
+        touch(im && im.node, comp('EditorPreview') && comp('EditorPreview').node);
         // editor đứng yên thì không chạy update → vẽ lại vài frame cho layout áp ngay
         const E = globalThis.cce && globalThis.cce.Engine;
         for (let i = 0; i < 6 && E && E.repaintInEditMode; i++) {

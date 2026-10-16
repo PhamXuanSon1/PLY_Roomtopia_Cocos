@@ -27,13 +27,16 @@ export class SnapEffect extends Component {
     static readonly FX_LAYER_BIT = 1;
     static get fxLayer() { return 1 << SnapEffect.FX_LAYER_BIT; }
 
-    @property({ type: Prefab, tooltip: 'Prefab particle 3D (BlinkEffect3D)' })
+    @property({ serializable: false, displayName: '⚙ Hiện thông số nâng cao', tooltip: 'Hiện thêm các thông số ít khi phải chỉnh (node cha, camera, cách fit, vị trí chữ WinReact...)' })
+    showAdvanced = false;
+
+    @property({ type: Prefab, tooltip: 'Prefab particle 3D nổ khi thả đúng (BlinkEffect3D)' })
     prefab: Prefab | null = null;
 
-    @property({ type: Node, tooltip: 'Node cha để cắm effect (nên scale 1). Để trống → gốc scene (không bị scale của room ảnh hưởng)' })
+    @property({ visible(this: SnapEffect) { return this.showAdvanced; }, type: Node, tooltip: 'Node cha để cắm effect (nên scale 1). Để trống → gốc scene (không bị scale của room ảnh hưởng)' })
     root: Node | null = null;
 
-    @property({ type: Camera, tooltip: 'Camera map (để xoay effect theo + FxCam bám theo). Để trống → ui.wCamera' })
+    @property({ visible(this: SnapEffect) { return this.showAdvanced; }, type: Camera, tooltip: 'Camera map (để xoay effect theo + FxCam bám theo). Để trống → ui.wCamera' })
     cam: Camera | null = null;
 
     @property({ tooltip: 'Nhân thêm scale cho effect (1 = như prefab / như kết quả fit)' })
@@ -42,40 +45,40 @@ export class SnapEffect extends Component {
     @property({ group: 'Fit Item', tooltip: 'Effect to/nhỏ theo kích thước item trên màn hình' })
     fitToItem = true;
 
-    @property({ group: 'Fit Item', type: FxFitMode, tooltip: 'Đo item theo: Mean = trung bình nhân rộng×cao (đồ dài như sàn không bị quá to), Width/Height/Max/Min', visible(this: SnapEffect) { return this.fitToItem; } })
+    @property({ group: 'Fit Item', type: FxFitMode, tooltip: 'Đo item theo: Mean = trung bình nhân rộng×cao (đồ dài như sàn không bị quá to), Width/Height/Max/Min', visible(this: SnapEffect) { return this.showAdvanced && this.fitToItem; } })
     fitMode = FxFitMode.Mean;
 
-    @property({ group: 'Fit Item', tooltip: 'Item có cạnh (world unit) bằng giá trị này → effect scale 1 (prefab dàn hạt ~1.8 unit)', visible(this: SnapEffect) { return this.fitToItem; } })
+    @property({ group: 'Fit Item', tooltip: 'Item có cạnh (world unit) bằng giá trị này → effect scale 1 (prefab dàn hạt ~1.8 unit)', visible(this: SnapEffect) { return this.showAdvanced && this.fitToItem; } })
     fitRefSize = 1.8;
 
-    @property({ group: 'Fit Item', tooltip: 'Effect to hơn item bấy nhiêu lần (1 = vừa khít)', visible(this: SnapEffect) { return this.fitToItem; } })
+    @property({ group: 'Fit Item', tooltip: 'Effect to hơn item bấy nhiêu lần (1 = vừa khít)', visible(this: SnapEffect) { return this.showAdvanced && this.fitToItem; } })
     fitPadding = 1.2;
 
-    @property({ group: 'Fit Item', tooltip: 'Scale nhỏ nhất (đồ rất nhỏ vẫn thấy rõ effect)', visible(this: SnapEffect) { return this.fitToItem; } })
+    @property({ group: 'Fit Item', tooltip: 'Scale nhỏ nhất (đồ rất nhỏ vẫn thấy rõ effect)', visible(this: SnapEffect) { return this.showAdvanced && this.fitToItem; } })
     fitMin = 0.35;
 
-    @property({ group: 'Fit Item', tooltip: 'Scale lớn nhất (đồ rất to không nổ tràn màn)', visible(this: SnapEffect) { return this.fitToItem; } })
+    @property({ group: 'Fit Item', tooltip: 'Scale lớn nhất (đồ rất to không nổ tràn màn)', visible(this: SnapEffect) { return this.showAdvanced && this.fitToItem; } })
     fitMax = 2;
 
-    @property({ tooltip: 'Dịch effect lên trên (world Y) bấy nhiêu unit so với TÂM bbox target (vị trí snap)' })
+    @property({ visible(this: SnapEffect) { return this.showAdvanced; }, tooltip: 'Dịch effect lên trên (world Y) bấy nhiêu unit so với TÂM bbox target (vị trí snap)' })
     offsetY = 0;
 
     @property({ group: 'WinReact', type: Prefab, tooltip: 'Prefab chữ phản hồi (WinReact, UI 2D). Để trống = không hiện' })
     reactPrefab: Prefab | null = null;
 
-    @property({ group: 'WinReact', type: Node, tooltip: 'Node cha UI 2D (UICam vẽ). Để trống → node cha của UICam' })
+    @property({ visible(this: SnapEffect) { return this.showAdvanced; }, group: 'WinReact', type: Node, tooltip: 'Node cha UI 2D (UICam vẽ). Để trống → node cha của UICam' })
     reactRoot: Node | null = null;
 
-    @property({ group: 'WinReact', tooltip: 'Scale chữ (UI ở đây tính world unit, ~0.003 như HandSprite)' })
+    @property({ visible(this: SnapEffect) { return this.showAdvanced; }, group: 'WinReact', tooltip: 'Scale chữ (UI ở đây tính world unit, ~0.003 như HandSprite)' })
     reactScale = 0.003;
 
-    @property({ group: 'WinReact', type: Node, tooltip: 'Chữ hiện tại vị trí (world) của node này. Để trống → GameManager.model (Lv50_Bathroom_Root)' })
+    @property({ visible(this: SnapEffect) { return this.showAdvanced; }, group: 'WinReact', type: Node, tooltip: 'Chữ hiện tại vị trí (world) của node này. Để trống → GameManager.model (Lv50_Bathroom_Root)' })
     reactAnchor: Node | null = null;
 
-    @property({ group: 'WinReact', tooltip: 'true = tâm bbox (world) của mọi mesh trong anchor = chính giữa room nhìn thấy. false = đúng pivot của anchor (pivot FBX room nằm cao, có thể ngoài màn)' })
+    @property({ visible(this: SnapEffect) { return this.showAdvanced; }, group: 'WinReact', tooltip: 'true = tâm bbox (world) của mọi mesh trong anchor = chính giữa room nhìn thấy. false = đúng pivot của anchor (pivot FBX room nằm cao, có thể ngoài màn)' })
     reactAtBoundsCenter = true;
 
-    @property({ group: 'WinReact', tooltip: 'Dịch chữ lên bấy nhiêu px màn hình so với vị trí anchor' })
+    @property({ visible(this: SnapEffect) { return this.showAdvanced; }, group: 'WinReact', tooltip: 'Dịch chữ lên bấy nhiêu px màn hình so với vị trí anchor' })
     reactOffsetPx = 0;
 
     @property({ group: 'WinReact', min: 1, step: 1, tooltip: 'Cứ thả đúng bấy nhiêu item thì hiện chữ 1 lần (1 = mỗi lần)' })
