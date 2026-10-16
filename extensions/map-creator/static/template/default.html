@@ -62,8 +62,13 @@
             <button id="selNone" title="Bỏ chọn hết (chưa đổi scene cho tới khi bấm Build items)">Bỏ hết</button>
             <button id="rethumb" title="Chụp lại ảnh mesh (sau khi đổi material / model). Ảnh chụp màu thật theo góc camera game">📷</button>
         </div>
-        <div class="hint"><span id="pickCount">0</span> mesh được chọn — tick = thành 1 ô trong thanh, thứ tự từ trên xuống = thứ tự ô (▲▼ để đổi). Số W×H = kích thước mesh trên màn hình (world unit).</div>
-        <div id="meshList" class="list"></div>
+        <div class="row">
+            <span class="hint grow"><b id="pickCount">0</b> mesh đã chọn — thứ tự ô trong thanh = cột 1 từ trên xuống, rồi cột 2... <b>Kéo thả</b> thẻ để đổi chỗ / chuyển cột.</span>
+            <label title="Mỗi cột hiện bao nhiêu thẻ (chỉ để nhìn, không ảnh hưởng game)">Số ô mỗi cột <input type="number" id="perColumn" value="8" min="1" step="1" style="width:48px"></label>
+        </div>
+        <div id="meshList" class="board"></div>
+        <div class="hint">Chưa chọn (<span id="restCount">0</span>) — kéo thẻ lên bảng trên (hoặc tick) để thêm; kéo thẻ từ bảng trên xuống đây để bỏ.</div>
+        <div id="restList" class="board rest"></div>
         <div class="grid">
             <label title="Chơi đủ N item thì vào chế độ 'chạm đâu cũng mở store' (CTA). 0 = tắt, chỉ mở store khi xếp xong hết. Nên nhỏ hơn tổng số item">storeAfterItems <input type="number" id="storeAfterItems" step="1" min="0"></label>
             <label title="Icon chiếm bao nhiêu phần ô vuông trong thanh. 0.65 = 65% cạnh ô. Tăng nếu icon nhìn nhỏ, giảm nếu icon chạm mép / dính nhau">iconFill <input type="number" id="iconFill" step="0.05" min="0.1" max="1"></label>

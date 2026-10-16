@@ -21,7 +21,7 @@ exports.$ = {
     build: '#build', applyItems: '#applyItems',
     validate: '#validate', save: '#save', report: '#report',
     portrait: '#portrait', landscape: '#landscape', device: '#device', showHiddenItems: '#showHiddenItems',
-    noPreview: '#noPreview', rethumb: '#rethumb',
+    noPreview: '#noPreview', rethumb: '#rethumb', perColumn: '#perColumn', restList: '#restList', restCount: '#restCount',
 };
 
 function escapeHtml(text) {
@@ -42,6 +42,7 @@ const state = {
     order: [],      // uuid mesh đã chọn, theo thứ tự ô
     thumbs: {},     // uuid node → file png
     thumbGen: 0,    // lần chụp hiện tại (đổi phòng / reload → bỏ kết quả cũ)
+    drag: null,     // uuid card đang kéo
 };
 
 exports.methods = {
@@ -101,50 +102,151 @@ exports.methods = {
             if (gen !== state.thumbGen) return;
             Object.assign(state.thumbs, map);
             for (const uuid of Object.keys(map)) {
-                const img = this.$.meshList.querySelector(`.mesh[data-uuid="${CSS.escape(uuid)}"] img`);
+                const img = this.boardEls(`.card[data-uuid="${CSS.escape(uuid)}"] img`)[0];
                 if (img) img.src = fileUrl(map[uuid]) + (force ? '?t=' + Date.now() : '');
             }
         }
     },
 
-    // ------------------------------------------------------------ mesh list
+    // ------------------------------------------------------------ mesh board (cột dọc, kéo thả)
+    perColumn() {
+        return Math.max(1, Math.floor(Number(this.$.perColumn.value) || 8));
+    },
+
+    cardHtml(m, idx) {
+        const warn = [!m.bounds ? 'không bounds' : '', m.dup ? 'trùng tên' : '', !m.active ? 'đang ẩn' : ''].filter(Boolean).join(', ');
+        const src = state.thumbs[m.uuid] ? `src="${fileUrl(state.thumbs[m.uuid])}"` : '';
+        return `<div class="card ${idx >= 0 ? 'picked' : ''}" draggable="true" data-uuid="${m.uuid}"
+                title="${escapeHtml(m.path)}&#10;Kích thước trên màn hình: ${m.w.toFixed(2)} × ${m.h.toFixed(2)} (world unit)&#10;Kéo thả để đổi thứ tự / chọn / bỏ chọn">
+            <img class="thumb" ${src} alt="" draggable="false">
+            <div class="meta">
+                <div class="top">
+                    ${idx >= 0 ? `<span class="idx">${idx + 1}</span>` : ''}
+                    <input type="checkbox" data-act="pick" ${idx >= 0 ? 'checked' : ''} title="Tick = mesh này thành 1 item trong thanh">
+                </div>
+                <span class="name">${escapeHtml(m.name.replace(/^[A-Za-z]+_/, ''))}</span>
+                <span class="size">${m.w.toFixed(1)}×${m.h.toFixed(1)}</span>
+                ${warn ? `<span class="warn">${warn}</span>` : ''}
+            </div>
+        </div>`;
+    },
+
+    /** Cột dọc: cột 1 từ trên xuống, rồi cột 2... (= thứ tự ô trong thanh) */
+    columnsHtml(list, picked, startIdx) {
+        const per = this.perColumn();
+        const cols = [];
+        for (let i = 0; i < list.length; i += per) cols.push(list.slice(i, i + per));
+        if (picked && !cols.length) cols.push([]);
+        return cols.map((col, c) => `<div class="col" data-col="${c}">
+            ${picked ? `<div class="colhead">Cột ${c + 1}</div>` : ''}
+            ${col.map((m) => this.cardHtml(m, picked ? state.order.indexOf(m.uuid) : -1)).join('')}
+        </div>`).join('');
+    },
+
     renderList() {
         const q = this.$.filter.value.trim().toLowerCase();
+        const match = (m) => !q || m.name.toLowerCase().includes(q) || m.path.toLowerCase().includes(q);
         const byUuid = new Map(state.meshes.map((m) => [m.uuid, m]));
         const picked = state.order.map((u) => byUuid.get(u)).filter(Boolean);
         const rest = state.meshes.filter((m) => !state.order.includes(m.uuid));
-        const rows = picked.concat(rest).filter((m) => !q || m.name.toLowerCase().includes(q) || m.path.toLowerCase().includes(q));
         this.$.pickCount.textContent = String(state.order.length);
-        this.$.meshList.innerHTML = rows.map((m) => {
-            const idx = state.order.indexOf(m.uuid);
-            const warn = [!m.bounds ? 'không bounds' : '', m.dup ? 'trùng tên' : '', !m.active ? 'đang ẩn' : ''].filter(Boolean).join(', ');
-            return `<div class="mesh ${idx >= 0 ? 'picked' : ''}" data-uuid="${m.uuid}" title="${escapeHtml(m.path)}">
-                <span class="idx">${idx >= 0 ? idx + 1 : ''}</span>
-                <input type="checkbox" data-act="pick" ${idx >= 0 ? 'checked' : ''} title="Tick = mesh này thành 1 item trong thanh">
-                <img class="thumb" ${state.thumbs[m.uuid] ? `src="${fileUrl(state.thumbs[m.uuid])}"` : ''} alt="">
-                <span class="name">${escapeHtml(m.name)}</span>
-                ${warn ? `<span class="warn">${warn}</span>` : ''}
-                <span class="size">${m.w.toFixed(2)}×${m.h.toFixed(2)}</span>
-                ${idx >= 0 ? '<button data-act="up" title="Đưa lên 1 ô (ra trước trong thanh)">▲</button><button data-act="down" title="Đưa xuống 1 ô">▼</button>' : ''}
-            </div>`;
-        }).join('');
+        this.$.restCount.textContent = String(rest.length);
+        this.$.meshList.innerHTML = this.columnsHtml(picked.filter(match), true);
+        this.$.restList.innerHTML = this.columnsHtml(rest.filter(match), false)
+            || '<div class="empty">Mọi mesh đều đã được chọn</div>';
     },
 
-    onListClick(e) {
-        const act = e.target && e.target.dataset && e.target.dataset.act;
-        const row = e.target && e.target.closest && e.target.closest('.mesh');
-        if (!act || !row) return;
-        const uuid = row.dataset.uuid;
-        const i = state.order.indexOf(uuid);
-        if (act === 'pick') {
-            if (e.target.checked && i < 0) state.order.push(uuid);
-            if (!e.target.checked && i >= 0) state.order.splice(i, 1);
-        } else if (act === 'up' && i > 0) {
-            [state.order[i - 1], state.order[i]] = [state.order[i], state.order[i - 1]];
-        } else if (act === 'down' && i >= 0 && i < state.order.length - 1) {
-            [state.order[i + 1], state.order[i]] = [state.order[i], state.order[i + 1]];
+    /** Chèn `uuid` vào thứ tự tại vị trí `index` (bỏ chỗ cũ trước) */
+    moveTo(uuid, index) {
+        const from = state.order.indexOf(uuid);
+        if (from >= 0) {
+            state.order.splice(from, 1);
+            if (from < index) index--;
         }
-        this.renderList();
+        state.order.splice(Math.max(0, Math.min(index, state.order.length)), 0, uuid);
+    },
+
+    /** Phần tử khớp selector trong 2 bảng (kể cả chính bảng) */
+    boardEls(sel) {
+        const out = [];
+        for (const b of [this.$.meshList, this.$.restList]) {
+            if (b.matches(sel)) out.push(b);
+            out.push(...b.querySelectorAll(sel));
+        }
+        return out;
+    },
+
+    clearDropMarks() {
+        for (const el of this.boardEls('.drop-before, .drop-after, .drop-target')) {
+            el.classList.remove('drop-before', 'drop-after', 'drop-target');
+        }
+    },
+
+    bindBoard() {
+        const boards = [this.$.meshList, this.$.restList];
+        for (const board of boards) {
+            board.addEventListener('click', (e) => {
+                if (!(e.target && e.target.dataset && e.target.dataset.act === 'pick')) return;
+                const uuid = e.target.closest('.card').dataset.uuid;
+                const i = state.order.indexOf(uuid);
+                if (e.target.checked && i < 0) state.order.push(uuid);
+                if (!e.target.checked && i >= 0) state.order.splice(i, 1);
+                this.renderList();
+            });
+            board.addEventListener('dragstart', (e) => {
+                const card = e.target.closest && e.target.closest('.card');
+                if (!card) return;
+                state.drag = card.dataset.uuid;
+                card.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', state.drag);
+            });
+            board.addEventListener('dragend', () => {
+                state.drag = null;
+                this.clearDropMarks();
+                for (const el of this.boardEls('.dragging')) el.classList.remove('dragging');
+            });
+            board.addEventListener('dragover', (e) => {
+                if (!state.drag) return;
+                e.preventDefault();
+                this.clearDropMarks();
+                const card = e.target.closest && e.target.closest('.card');
+                if (board === this.$.meshList && card) {
+                    const r = card.getBoundingClientRect();
+                    card.classList.add(e.clientY < r.top + r.height / 2 ? 'drop-before' : 'drop-after');
+                } else {
+                    const col = e.target.closest && e.target.closest('.col');
+                    (col && board === this.$.meshList ? col : board).classList.add('drop-target');
+                }
+            });
+            board.addEventListener('drop', (e) => {
+                if (!state.drag) return;
+                e.preventDefault();
+                const uuid = state.drag;
+                if (board === this.$.restList) {
+                    const i = state.order.indexOf(uuid);         // kéo xuống "Chưa chọn" = bỏ chọn
+                    if (i >= 0) state.order.splice(i, 1);
+                } else {
+                    const card = e.target.closest && e.target.closest('.card');
+                    const col = e.target.closest && e.target.closest('.col');
+                    let index = state.order.length;
+                    if (card && card.dataset.uuid !== uuid) {
+                        const r = card.getBoundingClientRect();
+                        index = state.order.indexOf(card.dataset.uuid) + (e.clientY < r.top + r.height / 2 ? 0 : 1);
+                    } else if (card) {
+                        index = state.order.indexOf(uuid);
+                    } else if (col) {
+                        // thả vào chỗ trống của 1 cột → cuối cột đó
+                        const cards = col.querySelectorAll('.card');
+                        const last = cards[cards.length - 1];
+                        index = last ? state.order.indexOf(last.dataset.uuid) + 1 : Number(col.dataset.col) * this.perColumn();
+                    }
+                    this.moveTo(uuid, index);
+                }
+                state.drag = null;
+                this.renderList();
+            });
+        }
     },
 
     // ------------------------------------------------------------ actions
@@ -230,7 +332,8 @@ exports.ready = async function () {
     on(this.$.selAll, () => { for (const m of state.meshes) if (!state.order.includes(m.uuid)) state.order.push(m.uuid); this.renderList(); });
     on(this.$.selNone, () => { state.order = []; this.renderList(); });
     this.$.filter.addEventListener('input', () => this.renderList());
-    this.$.meshList.addEventListener('click', this.onListClick.bind(this));
+    this.bindBoard();
+    this.$.perColumn.addEventListener('change', () => this.renderList());
     on(this.$.build, this.build);
     on(this.$.applyItems, this.applyItems);
     on(this.$.validate, this.validate);

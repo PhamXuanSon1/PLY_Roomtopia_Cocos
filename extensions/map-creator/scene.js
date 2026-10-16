@@ -98,6 +98,58 @@ function camPlanePivot(node, cam) {
     return { x: Vec3.dot(node.worldPosition, right), y: Vec3.dot(node.worldPosition, up) };
 }
 
+function isInside(node, ancestor) {
+    for (let n = node; n; n = n.parent) if (n === ancestor) return true;
+    return false;
+}
+
+/** Node trong `newRoot` có cùng đường dẫn (tính từ gốc model) với `node` trong `oldRoot`; gốc ↔ gốc */
+function mapNode(node, oldRoot, newRoot) {
+    if (node === oldRoot) return newRoot;
+    const parts = relPath(node, oldRoot).split('/');
+    let cur = newRoot;
+    for (const p of parts) {
+        cur = cur.getChildByName(p);
+        if (!cur) return null;
+    }
+    return cur;
+}
+
+/**
+ * Mọi property Node / Node[] của mọi component trong scene (ngoài model cũ) đang trỏ vào model cũ
+ * → trỏ sang node cùng đường dẫn trong model mới (vd ModelRotate.model = gốc FBX, pickTargets = mesh).
+ * Không tìm thấy node tương ứng → null (Node) / bỏ khỏi mảng, báo trong `lost`.
+ */
+function relinkRefs(oldRoots, newRoot) {
+    const { Component, Node } = cc();
+    const oldRoot = oldRoots[0];
+    let ok = 0;
+    const lost = [];
+    if (!oldRoot) return { ok, lost };
+    const map = (v, label) => {
+        if (!(v instanceof Node) || !oldRoots.some((o) => isInside(v, o))) return v;
+        const m = isInside(v, oldRoot) ? mapNode(v, oldRoot, newRoot) : null;
+        if (m) ok++;
+        else lost.push(label + ' → ' + v.name);
+        return m;
+    };
+    for (const c of scene().getComponentsInChildren(Component)) {
+        if (oldRoots.some((o) => isInside(c.node, o))) continue;
+        for (const key of Object.keys(c)) {
+            const v = c[key];
+            const label = (c.constructor.name || 'Component') + '.' + key.replace(/^_/, '') + ' (' + c.node.name + ')';
+            if (v instanceof Node) {
+                const m = map(v, label);
+                if (m !== v) c[key] = m;
+            } else if (Array.isArray(v) && v.some((x) => x instanceof Node)) {
+                const arr = v.map((x) => map(x, label)).filter((x) => x !== null);
+                if (arr.length !== v.length || arr.some((x, i) => x !== v[i])) c[key] = arr;
+            }
+        }
+    }
+    return { ok, lost };
+}
+
 function roomMeshes(root) {
     const { MeshRenderer } = cc();
     return root ? root.getComponentsInChildren(MeshRenderer).map((r) => r.node) : [];
@@ -189,12 +241,13 @@ exports.methods = {
             n.setScale(ref.scale);
         }
         setLayer(n, ref ? ref.layer : root.layer);
+        const relinked = relinkRefs(old, n);   // TRƯỚC khi xoá: ref vào model cũ → node cùng đường dẫn trong model mới
         for (const c of old) { c.removeFromParent(); c.destroy(); }   // tách ngay (destroy hoãn tới cuối frame) → collect / đếm mesh không lẫn model cũ
 
-        // gameplay trỏ vào mesh cũ → dọn
+        // item trong thanh là bản clone mesh cũ → xoá (pickTargets đã được nối sang mesh mới nếu trùng đường dẫn)
         const im = comp('ItemManager');
         if (im) {
-            im.pickTargets = [];
+            im.pickTargets = (im.pickTargets || []).filter((t) => t && t.isValid && !old.some((o) => isInside(t, o)));
             im.clearPreview = true;            // setter: xoá item trong Content
         }
         const fit = comp('FitInBox');
@@ -204,7 +257,7 @@ exports.methods = {
         }
         const zs = comp('ZoomSlider');
         if (zs) zs._editorKey = '';
-        return { ok: true, model: n.name, meshes: roomMeshes(root).length };
+        return { ok: true, model: n.name, meshes: roomMeshes(root).length, relinked: relinked.ok, lost: relinked.lost };
     },
 
     /** Gán thông số FitInBox (anchorX/Y, padding, portraitScale, landscapeScale, allowUpscale) */
@@ -253,6 +306,18 @@ exports.methods = {
         if (!cam) errors.push('Không tìm thấy WCam.');
         const meshes = roomMeshes(root);
         if (!meshes.length) errors.push('Phòng không có MeshRenderer nào.');
+
+        // ref quan trọng bị mất (Missing Node) — vd sau khi xoá / thay model
+        const refs = [['ModelRotate', 'model', false], ['FitInBox', 'rotator', false], ['FitInBox', 'box', true], ['FitInBox', 'cam', true], ['ZoomSlider', 'model', true]];
+        for (const [cls, key, required] of refs) {
+            for (const c of scene().getComponentsInChildren(cls)) {
+                const v = c[key];
+                if (v && v.isValid) continue;
+                const msg = cls + '.' + key + ' trên "' + c.node.name + '" đang trống / Missing';
+                if (required) errors.push(msg);
+                else warnings.push(msg + ' (để trống = dùng chính node gắn script — kiểm tra lại có đúng ý không).');
+            }
+        }
         info.push('Phòng: ' + root.children.map((c) => c.name).join(', ') + ' — ' + meshes.length + ' mesh');
 
         const targets = ((im && im.pickTargets) || []);
