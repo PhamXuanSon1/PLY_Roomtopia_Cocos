@@ -19,6 +19,7 @@ const { ccclass, property } = _decorator;
 export class SnapEffect extends Component {
     static readonly FX_LAYER_NAME = 'FX';
     static readonly FX_LAYER_BIT = 1;
+    /** Mặt nạ layer dành riêng cho camera và các hạt hiệu ứng snap. */
     static get fxLayer() { return 1 << SnapEffect.FX_LAYER_BIT; }
 
     @property({ serializable: false, displayName: '⚙ Hiện thông số nâng cao', tooltip: 'Hiện thêm các thông số ít khi phải chỉnh (node cha, camera, vị trí chữ WinReact...)' })
@@ -53,11 +54,13 @@ export class SnapEffect extends Component {
 
     private fxCam: Camera | null = null;
 
+    /** Đăng ký layer FX nếu project chưa có để camera phụ lọc đúng hiệu ứng. */
     onLoad() {
         const existing = Layers.nameToLayer(SnapEffect.FX_LAYER_NAME);
         if (existing === undefined || existing < 0) Layers.addLayer(SnapEffect.FX_LAYER_NAME, SnapEffect.FX_LAYER_BIT);
     }
 
+    /** Đồng bộ camera hiệu ứng sau khi camera phòng cập nhật, kể cả lúc đổi kích thước màn hình. */
     lateUpdate() {
         const cam = this.cam ?? ui?.wCamera;
         if (cam && this.fxCam?.isValid) this.syncFxCam(cam);
@@ -78,6 +81,7 @@ export class SnapEffect extends Component {
         return c;
     }
 
+    /** Sao chép phép chiếu, vùng vẽ và đích render của camera phòng sang camera FX đã tạo. */
     private syncFxCam(cam: Camera) {
         const c = this.fxCam!;
         c.projection = cam.projection;

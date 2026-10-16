@@ -37,6 +37,7 @@ export class Ply_Pool extends Ply_Singleton {
 
     private dict: Map<PoolType, Ply_GameUnit[]> = new Map();
 
+    /** Đăng ký pool dùng chung và tạo sẵn các đối tượng theo cấu hình trong scene. */
     onLoad() {
         super.onLoad();
         Ply_Pool.Ins = this;
@@ -121,6 +122,7 @@ export class Ply_Pool extends Ply_Singleton {
         return n;
     }
 
+    /** Xoá tham chiếu pool dùng chung nếu pool đang bị huỷ chính là instance hiện tại. */
     onDestroy() {
         super.onDestroy();
         if (Ply_Pool.Ins === this) Ply_Pool.Ins = null;

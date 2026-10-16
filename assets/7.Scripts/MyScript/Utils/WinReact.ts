@@ -26,6 +26,7 @@ export class WinReact extends Ply_GameUnit {
     @property({ tooltip: 'Tự chạy khi start() (khi đặt thẳng prefab vào scene). Lấy từ Ply_Pool thì luôn tắt' })
     autoPlay = true;
 
+    /** Gán loại WinReact để chữ phản hồi được thu hồi về đúng pool. */
     onLoad() {
         this.poolType = PoolType.WinReact;
     }
@@ -42,10 +43,12 @@ export class WinReact extends Ply_GameUnit {
         return r;
     }
 
+    /** Tự phát khi prefab đặt sẵn trong scene; đối tượng lấy từ pool đã được spawn() phát. */
     start() {
         if (this.autoPlay) this.play();
     }
 
+    /** Hiện chữ truyền vào hoặc chọn ngẫu nhiên; phát clip rồi về pool, thiếu clip thì thu hồi ngay. */
     play(text?: string) {
         const label = this.label ?? this.getComponentInChildren(Label);
         const t = text ?? (this.texts.length ? this.texts[Math.floor(Math.random() * this.texts.length)] : undefined);

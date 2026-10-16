@@ -44,6 +44,7 @@ export class BlinkFx extends Ply_GameUnit {
 
     private _depthOff = false;
 
+    /** Gán loại BlinkFx để hiệu ứng được trả về đúng pool khi hết hạt. */
     onLoad() {
         this.poolType = PoolType.BlinkFx;
     }

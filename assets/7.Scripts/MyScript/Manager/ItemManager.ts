@@ -63,38 +63,65 @@ export class ItemManager extends Component implements ItemCallbacks {
     /** Âm thanh nhấc / thả */
     get sfx(): ItemSfx { return this.sub(ItemSfx); }
 
+    /** Lấy component cấu hình cùng node, tự thêm nếu scene cũ chưa có component đó. */
     private sub<T extends Component>(type: new () => T): T {
         return this.getComponent(type) ?? this.addComponent(type)!;
     }
 
     // tên cũ giữ lại (đọc / ghi qua component con) để code + Map Creator dùng như trước
+    /** Đọc cạnh ô dự phòng từ TrayLayout qua API cũ của ItemManager. */
     get cellSize() { return this.layout.cellSize; }
+    /** Ghi cạnh ô qua TrayLayout để kích hoạt cập nhật thẻ Cell. */
     set cellSize(v: number) { this.layout.cellSize = v; }
+    /** Tỉ lệ cạnh ô mà icon được phép chiếm, lấy từ TrayLayout. */
     get iconFill() { return this.layout.iconFill; }
+    /** Chuyển cấu hình tỉ lệ icon từ API cũ sang TrayLayout. */
     set iconFill(v: number) { this.layout.iconFill = v; }
+    /** Khoảng cách giữa hai tâm ô liền nhau, tính bằng px local của thanh. */
     get spacing() { return this.layout.spacing; }
+    /** Chuyển khoảng cách ô từ API cũ sang TrayLayout. */
     set spacing(v: number) { this.layout.spacing = v; }
+    /** Lề từ mép đầu thanh tới tâm ô đầu tiên, tính bằng px local. */
     get edgePad() { return this.layout.edgePad; }
+    /** Chuyển lề đầu thanh từ API cũ sang TrayLayout. */
     set edgePad(v: number) { this.layout.edgePad = v; }
+    /** Khoảng nới ngoài mép thanh trước khi ẩn ô, tính bằng px local. */
     get cullPad() { return this.layout.cullPad; }
+    /** Đọc cờ cho phép hiện thẻ Cell từ TrayLayout. */
     get showCells() { return this.layout.showCells; }
+    /** Đọc cờ hiện thẻ Cell lúc chơi ở màn dọc. */
     get showCellsInPlay() { return this.layout.showCellsInPlay; }
+    /** Cho biết item lấy thứ tự Hierarchy thay cho vị trí ngang hiện tại. */
     get orderByHierarchy() { return this.layout.orderByHierarchy; }
+    /** Vị trí cuộn preview từ 0 đến 1, không thay đổi tiến trình lúc chơi. */
     get previewScroll() { return this.layout.previewScroll; }
+    /** Số item đầu được coi là đã gom trong preview của editor. */
     get previewCollected() { return this.layout.previewCollected; }
+    /** Cờ hiện cả các item ngoài vùng thanh trong preview của editor. */
     get showHiddenItems() { return this.layout.showHiddenItems; }
+    /** Chuyển cờ xem toàn bộ hàng item sang TrayLayout. */
     set showHiddenItems(v: boolean) { this.layout.showHiddenItems = v; }
+    /** Ngưỡng thả đúng tính bằng px chuẩn màn rộng 393pt, lấy từ SnapRules. */
     get snapPx() { return this.rules.snapPx; }
+    /** Cho biết ngưỡng thả đúng có cộng thêm kích thước bao của target hay không. */
     get snapByBounds() { return this.rules.snapByBounds; }
+    /** Cho biết target của item có bắt buộc gần điểm thả nhất hay không. */
     get requireNearest() { return this.rules.requireNearest; }
+    /** Hệ số phóng to target khi thả đúng, lấy từ SnapRules. */
     get snapScale() { return this.rules.snapScale; }
+    /** Thời gian target phóng to khi thả đúng, tính bằng giây. */
     get snapScaleUpDuration() { return this.rules.snapScaleUpDuration; }
+    /** Thời gian target thu về kích thước gốc, tính bằng giây. */
     get snapScaleDownDuration() { return this.rules.snapScaleDownDuration; }
 
     // nút editor cũ (Map Creator gọi): tick = chạy
+    /** Giữ API cũ để Map Creator yêu cầu sinh preview, chỉ thực hiện trong editor. */
     set previewItems(v: boolean) { if (v && EDITOR) this.buildPreview(); }
+    /** Luôn trả false vì sinh preview là thao tác tức thời. */
     get previewItems() { return false; }
+    /** Giữ API cũ để Map Creator yêu cầu xoá preview, chỉ thực hiện trong editor. */
     set clearPreview(v: boolean) { if (v && EDITOR) this.clearContent(); }
+    /** Luôn trả false để thao tác xoá preview không giữ trạng thái bật. */
     get clearPreview() { return false; }
 
     /** TrayLayout đổi cellSize / showCells → áp ngay cho thẻ Cell */

@@ -16,8 +16,10 @@ export class ItemSfx extends Component {
 
     private audio: AudioSource | null = null;
 
+    /** Phát âm thanh nhấc item với âm lượng hiệu ứng đang cấu hình. */
     playPick() { this.play(this.pickSound); }
 
+    /** Chọn ngẫu nhiên âm thanh thả đúng; bỏ qua khi danh sách clip trống. */
     playDrop() {
         if (this.dropSounds.length) this.play(this.dropSounds[Math.floor(Math.random() * this.dropSounds.length)]);
     }
