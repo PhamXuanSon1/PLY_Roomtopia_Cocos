@@ -1,0 +1,66 @@
+<div id="app">
+    <header class="row">
+        <h2>Map Creator</h2>
+        <span id="sceneName" class="hint"></span>
+        <span class="grow"></span>
+        <button id="refresh" title="Đọc lại trạng thái từ scene đang mở">&#8635; Reload</button>
+    </header>
+    <div id="status" class="status hidden"></div>
+
+    <section>
+        <h3><b>1</b> Model phòng</h3>
+        <div class="hint">Đang dùng: <span id="roomName">—</span></div>
+        <div class="row">
+            <select id="model" class="grow"></select>
+            <button id="swap" class="danger" title="Thay model con của node gốc phòng. Item cũ trong thanh bị xoá">Thay phòng</button>
+        </div>
+        <label class="check"><input type="checkbox" id="keepTransform" checked> Giữ position / rotation / scale của model cũ</label>
+    </section>
+
+    <section>
+        <h3><b>2</b> Khung phòng (FitInBox)</h3>
+        <div class="grid">
+            <label>anchorX <input type="number" id="anchorX" step="0.01" min="0" max="1"></label>
+            <label>anchorY <input type="number" id="anchorY" step="0.01" min="0" max="1"></label>
+            <label>padding <input type="number" id="padding" step="0.05" min="0"></label>
+            <label>portraitScale <input type="number" id="portraitScale" step="0.05" min="0.5" max="2"></label>
+            <label>landscapeScale <input type="number" id="landscapeScale" step="0.05" min="0.5" max="2"></label>
+            <label class="check"><input type="checkbox" id="allowUpscale"> allowUpscale</label>
+        </div>
+        <div class="row">
+            <button id="applyFit">Áp dụng</button>
+            <button id="alignView" title="Scene view: ortho + căn theo WCam (nhìn như màn hình game)">Căn view theo WCam</button>
+            <span class="hint">Xem dọc/ngang: component EditorPreview</span>
+        </div>
+    </section>
+
+    <section class="items">
+        <h3><b>3</b> Item cho thanh</h3>
+        <div class="row">
+            <input type="text" id="filter" class="grow" placeholder="Lọc theo tên...">
+            <button id="selAll">Chọn hết</button>
+            <button id="selNone">Bỏ hết</button>
+        </div>
+        <div class="hint"><span id="pickCount">0</span> mesh được chọn — thứ tự từ trên xuống = thứ tự ô trong thanh (▲▼ để đổi)</div>
+        <div id="meshList" class="list"></div>
+        <div class="grid">
+            <label>storeAfterItems <input type="number" id="storeAfterItems" step="1" min="0"></label>
+            <label>iconFill <input type="number" id="iconFill" step="0.05" min="0.1" max="1"></label>
+            <label>spacing <input type="number" id="spacing" step="10"></label>
+            <label>edgePad <input type="number" id="edgePad" step="10"></label>
+        </div>
+        <div class="row">
+            <button id="build" class="primary" title="pickTargets = mesh đã chọn, sinh lại item trong thanh">Build items</button>
+            <button id="applyItems">Chỉ lưu thông số</button>
+        </div>
+    </section>
+
+    <section>
+        <h3><b>4</b> Kiểm tra &amp; lưu</h3>
+        <div class="row">
+            <button id="validate">Kiểm tra</button>
+            <button id="save" class="primary">Save scene</button>
+        </div>
+        <div id="report" class="report"></div>
+    </section>
+</div>

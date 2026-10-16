@@ -1,0 +1,40 @@
+{
+  "package_version": 2,
+  "name": "map-creator",
+  "version": "1.0.0",
+  "description": "Dựng map (phòng) mới trên scene đang mở: thay model phòng, chỉnh khung, chọn item cho thanh, kiểm tra lỗi trước khi build.",
+  "author": "PLY",
+  "editor": ">=3.7.0",
+  "main": "./main.js",
+  "panels": {
+    "default": {
+      "title": "Map Creator",
+      "type": "dockable",
+      "main": "./src/panels/default.js",
+      "size": {
+        "min-width": 420,
+        "min-height": 420,
+        "width": 560,
+        "height": 820
+      }
+    }
+  },
+  "contributions": {
+    "menu": [
+      {
+        "path": "Tool",
+        "label": "Map Creator",
+        "message": "open-panel"
+      }
+    ],
+    "messages": {
+      "open-panel": { "methods": ["openPanel"] },
+      "list-models": { "methods": ["listModels"] },
+      "scene-call": { "methods": ["sceneCall"] },
+      "save-scene": { "methods": ["saveScene"] }
+    },
+    "scene": {
+      "script": "./scene.js"
+    }
+  }
+}
