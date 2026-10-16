@@ -20,10 +20,16 @@ exports.$ = {
     storeAfterItems: '#storeAfterItems', iconFill: '#iconFill', spacing: '#spacing', edgePad: '#edgePad',
     build: '#build', applyItems: '#applyItems',
     validate: '#validate', save: '#save', report: '#report',
+    portrait: '#portrait', landscape: '#landscape', device: '#device', showHiddenItems: '#showHiddenItems',
+    noPreview: '#noPreview', rethumb: '#rethumb',
 };
 
 function escapeHtml(text) {
     return String(text).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+}
+
+function fileUrl(p) {
+    return 'file:///' + String(p).replace(/\\/g, '/').replace(/^\/+/, '');
 }
 
 function call(method, ...args) {
@@ -34,6 +40,8 @@ function call(method, ...args) {
 const state = {
     meshes: [],     // từ scene.getState
     order: [],      // uuid mesh đã chọn, theo thứ tự ô
+    thumbs: {},     // uuid node → file png
+    thumbGen: 0,    // lần chụp hiện tại (đổi phòng / reload → bỏ kết quả cũ)
 };
 
 exports.methods = {
@@ -63,7 +71,40 @@ exports.methods = {
         for (const k of ITEM_KEYS) if (res.items[k] !== undefined) this.$[k].value = res.items[k];
         state.meshes = res.meshes;
         state.order = res.order.filter((u) => res.meshes.some((m) => m.uuid === u));
+        this.renderPreview(res.preview);
         this.renderList();
+        this.loadThumbs(false);
+    },
+
+    renderPreview(p) {
+        if (!p) return;
+        this.$.portrait.classList.toggle('on', p.orientation === 0);
+        this.$.landscape.classList.toggle('on', p.orientation === 1);
+        this.$.device.value = String(p.device);
+        this.$.showHiddenItems.checked = !!p.showHiddenItems;
+        this.$.noPreview.classList.toggle('hidden', !!p.hasEditorPreview);
+    },
+
+    async setPreview(values) {
+        const res = await call('setPreview', values);
+        if (!res || !res.ok) return this.showStatus((res && res.error) || 'Lỗi', 'error');
+        const st = await call('getState');
+        if (st && st.ok) this.renderPreview(st.preview);
+    },
+
+    /** Ảnh mesh: chụp màu thật theo góc camera game (chạy nền, từng đợt) rồi gắn vào từng dòng */
+    async loadThumbs(force) {
+        const gen = ++state.thumbGen;
+        const list = state.meshes.map((m) => ({ uuid: m.uuid, meshUuid: m.meshUuid }));
+        for (let i = 0; i < list.length; i += 8) {
+            const map = await Editor.Message.request(PKG, 'thumbs', list.slice(i, i + 8), force).catch(() => ({}));
+            if (gen !== state.thumbGen) return;
+            Object.assign(state.thumbs, map);
+            for (const uuid of Object.keys(map)) {
+                const img = this.$.meshList.querySelector(`.mesh[data-uuid="${CSS.escape(uuid)}"] img`);
+                if (img) img.src = fileUrl(map[uuid]) + (force ? '?t=' + Date.now() : '');
+            }
+        }
     },
 
     // ------------------------------------------------------------ mesh list
@@ -79,11 +120,12 @@ exports.methods = {
             const warn = [!m.bounds ? 'không bounds' : '', m.dup ? 'trùng tên' : '', !m.active ? 'đang ẩn' : ''].filter(Boolean).join(', ');
             return `<div class="mesh ${idx >= 0 ? 'picked' : ''}" data-uuid="${m.uuid}" title="${escapeHtml(m.path)}">
                 <span class="idx">${idx >= 0 ? idx + 1 : ''}</span>
-                <input type="checkbox" data-act="pick" ${idx >= 0 ? 'checked' : ''}>
+                <input type="checkbox" data-act="pick" ${idx >= 0 ? 'checked' : ''} title="Tick = mesh này thành 1 item trong thanh">
+                <img class="thumb" ${state.thumbs[m.uuid] ? `src="${fileUrl(state.thumbs[m.uuid])}"` : ''} alt="">
                 <span class="name">${escapeHtml(m.name)}</span>
                 ${warn ? `<span class="warn">${warn}</span>` : ''}
                 <span class="size">${m.w.toFixed(2)}×${m.h.toFixed(2)}</span>
-                ${idx >= 0 ? '<button data-act="up">▲</button><button data-act="down">▼</button>' : ''}
+                ${idx >= 0 ? '<button data-act="up" title="Đưa lên 1 ô (ra trước trong thanh)">▲</button><button data-act="down" title="Đưa xuống 1 ô">▼</button>' : ''}
             </div>`;
         }).join('');
     },
@@ -118,6 +160,7 @@ exports.methods = {
         const res = await call('swapRoom', uuid, this.$.keepTransform.checked);
         if (!res || !res.ok) return this.showStatus((res && res.error) || 'Thay phòng lỗi.', 'error');
         state.order = [];
+        state.thumbs = {};
         await this.load();
         this.showStatus(`Đã thay phòng: ${res.model} (${res.meshes} mesh). Chọn item ở bước 3 rồi Build items.`, 'ok');
     },
@@ -138,7 +181,7 @@ exports.methods = {
 
     async applyItems() {
         const res = await call('setItems', this.itemValues());
-        this.showStatus(res && res.ok ? 'Đã lưu thông số item.' : (res && res.error) || 'Lỗi', res && res.ok ? 'ok' : 'error');
+        this.showStatus(res && res.ok ? 'Đã áp dụng thông số vào ItemManager (item giữ nguyên, chưa build lại).' : (res && res.error) || 'Lỗi', res && res.ok ? 'ok' : 'error');
     },
 
     async build() {
@@ -175,6 +218,11 @@ exports.ready = async function () {
     on(this.$.refresh, async () => { await this.loadModels(); await this.load(); });
     on(this.$.swap, this.swap);
     on(this.$.applyFit, this.applyFit);
+    on(this.$.portrait, () => this.setPreview({ orientation: 0 }));
+    on(this.$.landscape, () => this.setPreview({ orientation: 1 }));
+    this.$.device.addEventListener('change', () => this.setPreview({ device: Number(this.$.device.value) }));
+    this.$.showHiddenItems.addEventListener('change', () => this.setPreview({ showHiddenItems: this.$.showHiddenItems.checked }));
+    on(this.$.rethumb, () => this.loadThumbs(true));
     on(this.$.alignView, async () => {
         const r = await call('alignView');
         if (!r || !r.ok) this.showStatus((r && r.error) || 'Lỗi', 'error');

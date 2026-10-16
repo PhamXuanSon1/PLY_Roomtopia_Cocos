@@ -125,7 +125,9 @@ exports.methods = {
         const meshes = roomMeshes(root).map((n) => {
             counts[n.name] = (counts[n.name] || 0) + 1;
             const b = cam ? camPlaneBox(n, cam) : null;
-            return { uuid: n.uuid, name: n.name, path: relPath(n, root), picked: picked.has(n.uuid), w: b ? b.w : 0, h: b ? b.h : 0, bounds: !!b, active: n.activeInHierarchy };
+            const mr = n.getComponent(cc().MeshRenderer);
+            const meshUuid = mr && mr.mesh ? mr.mesh._uuid : '';
+            return { uuid: n.uuid, name: n.name, path: relPath(n, root), meshUuid, picked: picked.has(n.uuid), w: b ? b.w : 0, h: b ? b.h : 0, bounds: !!b, active: n.activeInHierarchy };
         });
         for (const m of meshes) m.dup = counts[m.name] > 1;
         // thứ tự ô: theo item trong thanh (Hierarchy của Content — có thể đã sắp tay / Item Order Editor), không có thì theo pickTargets
@@ -140,8 +142,15 @@ exports.methods = {
         if (fit) for (const k of FIT_KEYS) fitVals[k] = fit[k];
         const itemVals = {};
         if (im) for (const k of ITEM_KEYS) itemVals[k] = im[k];
+        const ep = comp('EditorPreview');
         return {
             ok: true,
+            preview: {
+                hasEditorPreview: !!ep,
+                orientation: ep ? ep.orientation : 0,
+                device: ep ? ep.device : 0,
+                showHiddenItems: !!(im && im.showHiddenItems),
+            },
             scene: scene().name,
             room: { uuid: root.uuid, name: root.name, model: root.children.map((c) => c.name).join(', ') },
             meshes,
@@ -305,6 +314,35 @@ exports.methods = {
             }
         }
         return { ok: true, errors, warnings, info };
+    },
+
+    /**
+     * Chế độ xem trước trong editor:
+     *  orientation 0 = dọc, 1 = ngang; device = PreviewDevice (0 Design, 1 9:16, 2 9:19.5, 3 3:4) — qua EditorPreview (chưa có thì tự thêm vào node Manager)
+     *  showHiddenItems = hiện MỌI item thẳng hàng dài (không cắt theo thanh) như trước khi có cull
+     */
+    async setPreview(values) {
+        const v = values || {};
+        if (v.orientation !== undefined || v.device !== undefined) {
+            let ep = comp('EditorPreview');
+            if (!ep) {
+                const gm = comp('GameManager');
+                const host = (gm && gm.node.parent) || scene();
+                ep = host.addComponent('EditorPreview');
+            }
+            if (!ep) return { ok: false, error: 'Không thêm được EditorPreview (script chưa compile?).' };
+            if (v.orientation !== undefined) ep.orientation = v.orientation;
+            if (v.device !== undefined) ep.device = v.device;
+        }
+        const im = comp('ItemManager');
+        if (im && v.showHiddenItems !== undefined) im.showHiddenItems = !!v.showHiddenItems;
+        // editor đứng yên thì không chạy update → vẽ lại vài frame cho layout áp ngay
+        const E = globalThis.cce && globalThis.cce.Engine;
+        for (let i = 0; i < 6 && E && E.repaintInEditMode; i++) {
+            E.repaintInEditMode();
+            await new Promise((r) => setTimeout(r, 80));
+        }
+        return { ok: true };
     },
 
     /** Scene view: ortho + căn theo WCam (nhìn y như màn hình game) */

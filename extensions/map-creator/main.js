@@ -68,6 +68,41 @@ exports.methods = {
         return res;
     },
 
+    /**
+     * Thumbnail từng mesh: [{ uuid (node), meshUuid }] → { uuid: file png }.
+     *  1. Ảnh màu thật, nhìn theo góc WCam: dùng scene script `captureNode` của extension item-order-editor
+     *     (cache ở temp/map-creator/thumbs, có rồi thì không chụp lại; force = chụp lại hết)
+     *  2. Lỗi / thiếu item-order-editor → ảnh xám editor tự sinh cho mesh sub-asset
+     */
+    async thumbs(list, force) {
+        const fs = require('fs');
+        const path = require('path');
+        const outDir = path.join(Editor.Project.path, 'temp', PKG, 'thumbs');
+        const result = {};
+        for (const it of list || []) {
+            const cached = path.join(outDir, it.uuid.replace(/[\\/:*?"<>|+]/g, '_') + '.png');
+            if (!force && fs.existsSync(cached)) { result[it.uuid] = cached; continue; }
+            try {
+                // captureNode ghi <outDir>/<uuid>.png — uuid có thể chứa "/" → tạo trước thư mục con
+                fs.mkdirSync(path.dirname(path.join(outDir, it.uuid + '.png')), { recursive: true });
+                const r = await Editor.Message.request('scene', 'execute-scene-script', {
+                    name: 'item-order-editor', method: 'captureNode', args: [it.uuid, outDir, 128],
+                });
+                if (r && r.ok && r.file) {
+                    if (r.file !== cached) fs.renameSync(r.file, cached);
+                    result[it.uuid] = cached;
+                    continue;
+                }
+            } catch (e) {
+                /* item-order-editor chưa bật → ảnh xám */
+            }
+            const id = String(it.meshUuid || '');
+            const gray = id && path.join(Editor.Project.path, 'temp', 'asset-db', 'assets', id.slice(0, 2), id, id + '.png');
+            if (gray && fs.existsSync(gray)) result[it.uuid] = gray;
+        }
+        return result;
+    },
+
     async saveScene() {
         try {
             await Editor.Message.request('scene', 'save-scene');

@@ -66,7 +66,7 @@ button.danger { background: #b91c1c; border-color: #b91c1c; color: #fff; }
 button:disabled { opacity: 0.5; cursor: default; }
 
 .list {
-    height: 260px;
+    height: 340px;
     overflow-y: auto;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 3px;
@@ -79,6 +79,25 @@ button:disabled { opacity: 0.5; cursor: default; }
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 .mesh.picked { background: rgba(37, 99, 235, 0.15); }
+.mesh .thumb {
+    width: 40px; height: 40px;
+    flex: none;
+    object-fit: contain;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.3);
+}
+.mesh .thumb:not([src]) { visibility: hidden; }
+
+.seg { display: inline-flex; }
+.seg button { border-radius: 0; }
+.seg button:first-child { border-radius: 3px 0 0 3px; }
+.seg button:last-child { border-radius: 0 3px 3px 0; }
+.seg button.on { background: #2563eb; border-color: #2563eb; color: #fff; }
+
+[title] { cursor: help; }
+button[title], input[title], select[title] { cursor: pointer; }
+input[type=text][title], input[type=number] { cursor: text; }
+
 .mesh .idx { width: 22px; text-align: right; color: #888; }
 .mesh .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mesh .size { color: #888; font-size: 11px; }

@@ -3,63 +3,84 @@
         <h2>Map Creator</h2>
         <span id="sceneName" class="hint"></span>
         <span class="grow"></span>
-        <button id="refresh" title="Đọc lại trạng thái từ scene đang mở">&#8635; Reload</button>
+        <button id="refresh" title="Đọc lại trạng thái từ scene đang mở (sau khi bạn sửa tay trong Inspector / Hierarchy)">&#8635; Reload</button>
     </header>
     <div id="status" class="status hidden"></div>
+    <div class="hint">Rê chuột lên tên thông số để xem giải thích chi tiết.</div>
+
+    <section>
+        <h3><b>👁</b> Xem trước trong Scene editor</h3>
+        <div class="row">
+            <span title="Hướng màn hình để xem layout (thanh item, hộp nền, phòng) đúng như trên điện thoại. Chỉ ảnh hưởng editor, lúc chạy game tự theo màn hình thật">Màn hình</span>
+            <div class="seg">
+                <button id="portrait" title="Màn DỌC: thanh item nằm ngang dưới đáy, phòng ở phía trên">▯ Dọc</button>
+                <button id="landscape" title="Màn NGANG: thanh item thành panel dọc bên phải, phòng phủ phần còn lại">▭ Ngang</button>
+            </div>
+            <select id="device" title="Tỉ lệ màn hình xem trước. Design = Design Resolution của project (1080×2350). 9:16 = máy cũ, 9:19.5 = máy tai thỏ, 3:4 = iPad">
+                <option value="0">Design (1080×2350)</option>
+                <option value="1">Phone 9:16</option>
+                <option value="2">Phone 9:19.5</option>
+                <option value="3">Tablet 3:4</option>
+            </select>
+            <button id="alignView" title="Đưa Scene view về chế độ ortho và căn theo camera game (WCam) → nhìn y như màn hình điện thoại. Bấm khối giữa gizmo trục góc trên phải Scene view để về lại góc nhìn 3D">Căn view theo WCam</button>
+        </div>
+        <label class="check" title="BẬT: mọi item xếp thành 1 hàng dài, không bị ẩn khi nằm ngoài thanh (như bản cũ) → dễ nhìn hết / chọn / sắp xếp. TẮT: chỉ hiện các ô nằm trong thanh, giống hệt lúc chơi. Không ảnh hưởng lúc chạy game"><input type="checkbox" id="showHiddenItems"> Hiện tất cả item thành hàng dài (không cắt theo thanh)</label>
+        <div id="noPreview" class="hint hidden">Scene chưa có component EditorPreview — chọn Dọc/Ngang sẽ tự thêm vào node Manager.</div>
+    </section>
 
     <section>
         <h3><b>1</b> Model phòng</h3>
         <div class="hint">Đang dùng: <span id="roomName">—</span></div>
         <div class="row">
-            <select id="model" class="grow"></select>
-            <button id="swap" class="danger" title="Thay model con của node gốc phòng. Item cũ trong thanh bị xoá">Thay phòng</button>
+            <select id="model" class="grow" title="Danh sách FBX / glTF / prefab trong assets. Chọn model phòng mới rồi bấm Thay phòng"></select>
+            <button id="swap" class="danger" title="Thay model con của node gốc phòng bằng model đang chọn. Node gốc (FitInBox, ModelRotate) giữ nguyên nên mọi tham chiếu vẫn đúng. Model cũ và TOÀN BỘ item trong thanh bị xoá → làm tiếp bước 3. Ctrl+Z để hoàn tác">Thay phòng</button>
         </div>
-        <label class="check"><input type="checkbox" id="keepTransform" checked> Giữ position / rotation / scale của model cũ</label>
+        <label class="check" title="BẬT: model mới nhận vị trí / góc xoay / scale của model cũ (FBX cùng quy trình xuất từ phần mềm 3D thường khớp luôn). TẮT: giữ transform gốc trong file FBX"><input type="checkbox" id="keepTransform" checked> Giữ position / rotation / scale của model cũ</label>
     </section>
 
     <section>
         <h3><b>2</b> Khung phòng (FitInBox)</h3>
+        <div class="hint">FitInBox tự scale + dời phòng cho nằm gọn trong vùng chơi (khung xanh lá của gizmo). Các số dưới đây chỉnh cách đặt:</div>
         <div class="grid">
-            <label>anchorX <input type="number" id="anchorX" step="0.01" min="0" max="1"></label>
-            <label>anchorY <input type="number" id="anchorY" step="0.01" min="0" max="1"></label>
-            <label>padding <input type="number" id="padding" step="0.05" min="0"></label>
-            <label>portraitScale <input type="number" id="portraitScale" step="0.05" min="0.5" max="2"></label>
-            <label>landscapeScale <input type="number" id="landscapeScale" step="0.05" min="0.5" max="2"></label>
-            <label class="check"><input type="checkbox" id="allowUpscale"> allowUpscale</label>
+            <label title="Vị trí NGANG của phòng trong vùng chơi. 0 = sát trái, 0.5 = giữa, 1 = sát phải">anchorX <input type="number" id="anchorX" step="0.01" min="0" max="1"></label>
+            <label title="Vị trí DỌC của phòng trong vùng chơi. 0 = sát đáy (gần thanh item), 0.5 = giữa, 1 = sát đỉnh">anchorY <input type="number" id="anchorY" step="0.01" min="0" max="1"></label>
+            <label title="Lề trống quanh phòng bên trong vùng chơi (đơn vị world, 1 ≈ 1/13 chiều cao màn). Lớn hơn = phòng nhỏ lại, xa mép hơn">padding <input type="number" id="padding" step="0.05" min="0"></label>
+            <label title="Màn DỌC: nhân thêm độ to của phòng sau khi fit. 1 = vừa khít vùng chơi, 1.2 = to hơn 20% (có thể lòi ra ngoài khi xoay)">portraitScale <input type="number" id="portraitScale" step="0.05" min="0.5" max="2"></label>
+            <label title="Màn NGANG: nhân thêm độ to của phòng sau khi fit (giống portraitScale nhưng cho màn ngang)">landscapeScale <input type="number" id="landscapeScale" step="0.05" min="0.5" max="2"></label>
+            <label class="check" title="BẬT: được phóng phòng TO HƠN kích thước gốc để lấp đầy vùng chơi. TẮT: chỉ thu nhỏ khi phòng to quá, không phóng to"><input type="checkbox" id="allowUpscale"> allowUpscale</label>
         </div>
         <div class="row">
-            <button id="applyFit">Áp dụng</button>
-            <button id="alignView" title="Scene view: ortho + căn theo WCam (nhìn như màn hình game)">Căn view theo WCam</button>
-            <span class="hint">Xem dọc/ngang: component EditorPreview</span>
+            <button id="applyFit" title="Ghi các số ở trên vào component FitInBox của phòng — phòng fit lại ngay trong Scene view">Áp dụng</button>
         </div>
     </section>
 
     <section class="items">
         <h3><b>3</b> Item cho thanh</h3>
         <div class="row">
-            <input type="text" id="filter" class="grow" placeholder="Lọc theo tên...">
-            <button id="selAll">Chọn hết</button>
-            <button id="selNone">Bỏ hết</button>
+            <input type="text" id="filter" class="grow" placeholder="Lọc theo tên..." title="Gõ một phần tên mesh để lọc danh sách (không đổi lựa chọn)">
+            <button id="selAll" title="Chọn mọi mesh trong phòng làm item (thêm vào cuối thứ tự)">Chọn hết</button>
+            <button id="selNone" title="Bỏ chọn hết (chưa đổi scene cho tới khi bấm Build items)">Bỏ hết</button>
+            <button id="rethumb" title="Chụp lại ảnh mesh (sau khi đổi material / model). Ảnh chụp màu thật theo góc camera game">📷</button>
         </div>
-        <div class="hint"><span id="pickCount">0</span> mesh được chọn — thứ tự từ trên xuống = thứ tự ô trong thanh (▲▼ để đổi)</div>
+        <div class="hint"><span id="pickCount">0</span> mesh được chọn — tick = thành 1 ô trong thanh, thứ tự từ trên xuống = thứ tự ô (▲▼ để đổi). Số W×H = kích thước mesh trên màn hình (world unit).</div>
         <div id="meshList" class="list"></div>
         <div class="grid">
-            <label>storeAfterItems <input type="number" id="storeAfterItems" step="1" min="0"></label>
-            <label>iconFill <input type="number" id="iconFill" step="0.05" min="0.1" max="1"></label>
-            <label>spacing <input type="number" id="spacing" step="10"></label>
-            <label>edgePad <input type="number" id="edgePad" step="10"></label>
+            <label title="Chơi đủ N item thì vào chế độ 'chạm đâu cũng mở store' (CTA). 0 = tắt, chỉ mở store khi xếp xong hết. Nên nhỏ hơn tổng số item">storeAfterItems <input type="number" id="storeAfterItems" step="1" min="0"></label>
+            <label title="Icon chiếm bao nhiêu phần ô vuông trong thanh. 0.65 = 65% cạnh ô. Tăng nếu icon nhìn nhỏ, giảm nếu icon chạm mép / dính nhau">iconFill <input type="number" id="iconFill" step="0.05" min="0.1" max="1"></label>
+            <label title="Khoảng cách giữa tâm 2 ô liền nhau trong thanh (px, thanh rộng ~1080). Lớn hơn = ô thưa hơn, ít ô hiện cùng lúc">spacing <input type="number" id="spacing" step="10"></label>
+            <label title="Ô đầu tiên cách mép trái thanh bao nhiêu px">edgePad <input type="number" id="edgePad" step="10"></label>
         </div>
         <div class="row">
-            <button id="build" class="primary" title="pickTargets = mesh đã chọn, sinh lại item trong thanh">Build items</button>
-            <button id="applyItems">Chỉ lưu thông số</button>
+            <button id="build" class="primary" title="Ghi lựa chọn vào ItemManager.pickTargets rồi SINH LẠI toàn bộ item trong thanh theo đúng thứ tự trên (item cũ bị xoá, icon được đo lại). Đồng thời lưu 4 thông số bên trên">Build items</button>
+            <button id="applyItems" title="Chỉ ghi 4 thông số storeAfterItems / iconFill / spacing / edgePad vào ItemManager — KHÔNG sinh lại item, KHÔNG đổi lựa chọn mesh. Dùng khi chỉ muốn chỉnh số">Áp dụng thông số (không build lại)</button>
         </div>
     </section>
 
     <section>
         <h3><b>4</b> Kiểm tra &amp; lưu</h3>
         <div class="row">
-            <button id="validate">Kiểm tra</button>
-            <button id="save" class="primary">Save scene</button>
+            <button id="validate" title="Quét lỗi: mesh thiếu bounds, item trỏ mesh không tồn tại, tên trùng, pivot trùng, storeAfterItems quá lớn, phòng lòi khỏi vùng chơi...">Kiểm tra</button>
+            <button id="save" class="primary" title="Lưu scene đang mở (như Ctrl+S)">Save scene</button>
         </div>
         <div id="report" class="report"></div>
     </section>
