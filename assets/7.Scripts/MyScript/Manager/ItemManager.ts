@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, director, EventTouch, Input, input, instantiate, Layers, MeshRenderer, Node, Prefab, Quat, tween, UITransform, Vec2, Vec3, Vec4 } from 'cc';
+import { _decorator, Camera, Component, director, EventTouch, Input, input, Layers, MeshRenderer, Node, Quat, tween, UITransform, Vec2, Vec3, Vec4 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { BottomBar } from '../Item/BottomBar';
@@ -12,6 +12,8 @@ import { AppLovinAnalytics } from '../../Tool/AppLovinAnalytics';
 import { TrayLayout } from './TrayLayout';
 import { SnapRules } from './SnapRules';
 import { ItemSfx } from './ItemSfx';
+import { Ply_Pool } from '../ScriptTemplate/Ply_Pool';
+import { PoolType } from '../ScriptTemplate/Ply_Types';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -40,9 +42,6 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     @property({ visible(this: ItemManager) { return this.showAdvanced; }, tooltip: 'BẬT: mesh KHÔNG có trong pickTargets cũng đổi sang xám (chỉ đồ được chơi mới có màu khi xếp xong)' })
     grayOthers = true;
-
-    @property({ type: Prefab, visible(this: ItemManager) { return this.showAdvanced; }, tooltip: 'Prefab 1 ô item (ItemController + ItemGraphic + ItemMovement)' })
-    itemPrefab: Prefab | null = null;
 
     @property({ type: BottomBar, visible(this: ItemManager) { return this.showAdvanced; }, tooltip: 'Thanh chứa item (BottomBar)' })
     bar: BottomBar | null = null;
@@ -330,9 +329,9 @@ export class ItemManager extends Component implements ItemCallbacks {
             let item = existing[i];
             if (item && !item.node.active) item.node.active = true;   // editor có thể đã ẩn (cull / previewCollected) → bật lại, cull làm lại bên dưới
             if (!item) {
-                const node = instantiate(this.itemPrefab!);
-                node.setParent(content);
-                item = node.getComponent(ItemController)!;
+                const node = Ply_Pool.create(PoolType.Item, content);      // prefab Item khai báo ở Ply_Pool
+                item = node?.getComponent(ItemController) ?? null;
+                if (!item) { console.error('[ItemManager] Ply_Pool chưa khai báo prefab Item'); return; }
                 this.placeSlot(item, this.slotX(i));
             }
             // item có sẵn: giữ nguyên vị trí/scale như editor; Cell luôn theo showCells (mặc định tắt)
@@ -643,7 +642,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     buildPreview() {
         const gm = this.findGameManager();
         const content = this.bar?.content;
-        if (!gm?.model || !content || !this.itemPrefab) { console.warn('[ItemManager] thiếu GameManager.model / bar.content / itemPrefab'); return; }
+        if (!gm?.model || !content) { console.warn('[ItemManager] thiếu GameManager.model / bar.content'); return; }
 
         this.clearContent();
         const allMeshes = gm.model.getComponentsInChildren(MeshRenderer).map(r => r.node);
@@ -652,7 +651,8 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.computeLoop(targets.length);
 
         targets.forEach((target, i) => {
-            const node = instantiate(this.itemPrefab!);
+            const node = Ply_Pool.create(PoolType.Item);               // editor: instantiate prefab Item khai báo ở Ply_Pool
+            if (!node) return;
             ItemManager.unlinkPrefab(node);                       // cắt link prefab TRƯỚC khi bind (xem hàm)
             node.name = `Item_${target.name}`;
             node.setParent(content);                              // LƯU vào scene → Play dùng lại

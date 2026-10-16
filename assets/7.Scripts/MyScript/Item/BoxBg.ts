@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, Label, Layers, Mat4, Node, UITransform, v3, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Component, director, Label, Layers, Mat4, Node, UITransform, v3, Vec2, Vec3 } from 'cc';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
 import { PreviewScreen } from '../Utils/PreviewScreen';
 const { ccclass, property, executeInEditMode } = _decorator;
@@ -10,6 +10,8 @@ const { ccclass, property, executeInEditMode } = _decorator;
  *    và Sprite/Label dùng material có depth test (BgDepth.mtl) → map 3D (gần camera hơn) đè lên nền.
  *  - Gán `frame` (node 3D có UITransform, vd BoxFrame) → hộp khớp đúng hình chiếu của khung đó qua WCam,
  *    bỏ qua heightPercent.
+ *  - Màn DỌC + portraitToBar: đáy hộp kéo xuống sát mép trên nền thanh item (như màn ngang: nền phủ tới thanh),
+ *    phòng fit vào vùng lớn hơn → to hơn. Tắt thì dùng frame / heightPercent như cũ.
  *  - Màn NGANG (landscapeFullScreen): hộp phủ cả màn (tràn ra ngoài để giấu góc bo); "vùng chơi" cho FitInBox /
  *    CountLabel = màn trừ panel item dọc bên phải (landscapePanelFrac).
  */
@@ -19,7 +21,16 @@ export class BoxBg extends Component {
     @property({ type: Camera, tooltip: 'Camera vẽ map (WCam). Để trống → Camera trên node cha' })
     cam: Camera | null = null;
 
-    @property({ range: [0, 100, 1], slide: true, tooltip: 'Hộp chiếm bao nhiêu % chiều cao màn hình, tính từ mép trên (chỉ dùng khi không gán frame)', visible(this: BoxBg) { return !this.frame; } })
+    @property({ group: 'Portrait', tooltip: 'Màn DỌC: đáy hộp nền kéo xuống SÁT mép trên thanh item (giống màn ngang, không còn khoảng trống giữa nền và thanh). Tắt = dùng heightPercent / frame' })
+    portraitToBar = true;
+
+    @property({ group: 'Portrait', type: Node, tooltip: 'Node thanh item (có BottomBar). Để trống → tự tìm BottomBar trong scene', visible(this: BoxBg) { return this.portraitToBar; } })
+    barNode: Node | null = null;
+
+    @property({ group: 'Portrait', tooltip: 'Khoảng hở giữa đáy hộp và mép trên thanh (Tab) — px local, 100 px = 1 world unit. Âm = hộp luồn xuống (che mất Tab vì nền vẽ đè lên)', visible(this: BoxBg) { return this.portraitToBar; } })
+    portraitBarGap = 0;
+
+    @property({ range: [0, 100, 1], slide: true, tooltip: 'Hộp chiếm bao nhiêu % chiều cao màn hình, tính từ mép trên (khi tắt portraitToBar và không gán frame)', visible(this: BoxBg) { return !this.frame && !this.portraitToBar; } })
     heightPercent = 60;
 
     @property({ tooltip: 'Lề trái/phải (px, 100px = 1 world unit). Âm = tràn ra ngoài để giấu góc bo' })
@@ -196,8 +207,11 @@ export class BoxBg extends Component {
 
         const fut = this.frame?.getComponent(UITransform);
         const wcam = this.cam;
+        const barTop = !landscape && this.portraitToBar && wcam ? this.barTopCam(wcam) : null;
         if (full) {
             bottom = -halfH + this.landscapeBottomMargin / k;
+        } else if (barTop !== null) {
+            bottom = barTop + this.portraitBarGap / k;
         } else if (fut && wcam) {
             const inv = Mat4.invert(BoxBg._inv, wcam.node.worldMatrix);
             Mat4.multiply(inv, inv, this.frame!.worldMatrix);          // frame local → WCam space
@@ -218,6 +232,16 @@ export class BoxBg extends Component {
         return { left, right, top, bottom };
     }
 
+    /** Mép trên nền thanh item trong camera space của `cam` (null = không có thanh / đang là panel dọc) */
+    private barTopCam(cam: Camera): number | null {
+        const bar = (this.barNode?.getComponent('BottomBar') ?? director.getScene()?.getComponentInChildren('BottomBar')) as unknown as
+            { topEdgeWorld(out: Vec3): boolean } | null;
+        if (!bar || !bar.topEdgeWorld(BoxBg._p)) return null;
+        const inv = Mat4.invert(BoxBg._inv2, cam.node.worldMatrix);
+        return Vec3.transformMat4(BoxBg._p, BoxBg._p, inv).y;
+    }
+
+    private static readonly _inv2 = new Mat4();
     private static readonly _inv = new Mat4();
     private static readonly _p = v3();
 }

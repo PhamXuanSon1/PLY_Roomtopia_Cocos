@@ -1,16 +1,19 @@
-import { _decorator, Animation, CCString, Component, instantiate, Label, Node, Prefab, Vec3 } from 'cc';
+import { _decorator, Animation, CCString, Label, Node, Quat, Vec3 } from 'cc';
+import { Ply_GameUnit } from '../ScriptTemplate/Ply_GameUnit';
+import { Ply_Pool } from '../ScriptTemplate/Ply_Pool';
+import { PoolType } from '../ScriptTemplate/Ply_Types';
 const { ccclass, property } = _decorator;
 
 /**
  * WinReact: chữ phản hồi ("Great!", "Perfect!"...) — animation làm bằng AnimationClip của Cocos
  * (assets/1.Animations/WinReact.anim: scale nảy + fade opacity + trôi lên, đánh vào node con "Text"),
- * script chỉ: chọn chữ → play clip → hết clip thì destroy node.
+ * script chỉ: chọn chữ → play clip → hết clip thì trả về Ply_Pool (PoolType.WinReact).
  *
  *  Prefab dựng theo px (font ~80). Node cha là UI 2D tính theo world unit → spawner đặt scale (vd 0.003 như HandSprite).
- *  Dùng: WinReact.spawn(prefab, parent, worldPos, scale) hoặc kéo prefab vào scene (autoPlay chạy ở start()).
+ *  Dùng: WinReact.spawn(parent, worldPos, scale) — prefab khai báo ở Ply_Pool; hoặc kéo prefab vào scene (autoPlay chạy ở start()).
  */
 @ccclass('WinReact')
-export class WinReact extends Component {
+export class WinReact extends Ply_GameUnit {
     @property({ type: Label, tooltip: 'Label hiện chữ (node con Text). Để trống → Label trong con' })
     label: Label | null = null;
 
@@ -20,17 +23,22 @@ export class WinReact extends Component {
     @property({ type: [CCString], tooltip: 'Chọn ngẫu nhiên 1 chữ mỗi lần play (để trống = giữ chữ trong prefab)' })
     texts: string[] = ['Great!', 'Nice!', 'Perfect!'];
 
-    @property({ tooltip: 'Tự chạy khi start()' })
+    @property({ tooltip: 'Tự chạy khi start() (khi đặt thẳng prefab vào scene). Lấy từ Ply_Pool thì luôn tắt' })
     autoPlay = true;
 
-    /** Spawn prefab tại worldPos (dưới parent UI 2D), tự play + tự huỷ */
-    static spawn(prefab: Prefab, parent: Node, worldPos: Vec3, scale = 0.003, text?: string): WinReact | null {
-        const n = instantiate(prefab);
-        n.setParent(parent, false);
-        n.setScale(scale, scale, scale);
-        n.setWorldPosition(worldPos);
-        const r = n.getComponent(WinReact);
-        if (r) { r.autoPlay = false; r.play(text); }
+    onLoad() {
+        this.poolType = PoolType.WinReact;
+    }
+
+    /** Lấy chữ từ Ply_Pool tại worldPos (dưới parent UI 2D), tự play, hết clip tự trả về pool */
+    static spawn(parent: Node, worldPos: Vec3, scale = 0.003, text?: string): WinReact | null {
+        const unit = Ply_Pool.Ins?.spawn(PoolType.WinReact, worldPos, Quat.IDENTITY, parent);
+        const r = unit?.getComponent(WinReact) ?? null;
+        if (!r) { unit?.despawn(); return null; }
+        r.node.setScale(scale, scale, scale);
+        r.node.setWorldPosition(worldPos);
+        r.autoPlay = false;
+        r.play(text);
         return r;
     }
 
@@ -44,8 +52,8 @@ export class WinReact extends Component {
         if (label && t !== undefined) label.string = t;
 
         const anim = this.anim ?? this.getComponent(Animation);
-        if (!anim || !anim.defaultClip) { this.node.destroy(); return; }
-        anim.once(Animation.EventType.FINISHED, () => { if (this.node.isValid) this.node.destroy(); });
+        if (!anim || !anim.defaultClip) { this.despawn(); return; }
+        anim.once(Animation.EventType.FINISHED, () => { if (this.node.isValid) this.despawn(); });
         anim.play();
     }
 }

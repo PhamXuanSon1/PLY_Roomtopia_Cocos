@@ -1,153 +1,128 @@
-import { _decorator, Component, Node, Prefab, instantiate, Vec3, Quat, CCInteger } from 'cc';
+import { _decorator, CCInteger, director, instantiate, Node, Prefab, Quat, Vec3 } from 'cc';
+import { EDITOR } from 'cc/env';
 import { Ply_Singleton } from './Ply_Singleton';
 import { Ply_GameUnit } from './Ply_GameUnit';
 import { PoolType } from './Ply_Types';
 export { PoolType };
 const { ccclass, property } = _decorator;
 
-/**
- * Quan ly Object Pool duoc chuyen tu Unity Ply_Pool.
- * 
- * Diem khac biệt so voi Unity:
- * - Dung Prefab thay vi tham chieu gameUnit truc tiep de khoi tao
- * - Dung node.active thay vi gameObject.SetActive()
- * - Dung instantiate() tu 'cc' thay vi UnityEngine.Object.Instantiate()
- * - Dat vi tri/goi quay qua node.setPosition() va node.setRotation()
- */
+/** 1 dòng khai báo: loại → prefab + số lượng tạo sẵn lúc vào game */
 @ccclass('Ply_PoolAmount')
 class PoolAmount {
+    @property({ type: PoolType, tooltip: 'Loại đối tượng (khai báo trong Ply_Types.PoolType)' })
+    type: PoolType = PoolType.BlinkFx;
 
-    @property({ type: PoolType })
-    type: PoolType = PoolType.Heart;
-
-    @property(CCInteger)
+    @property({ type: CCInteger, min: 0, tooltip: 'Tạo sẵn bấy nhiêu cái lúc vào game (hết thì tự tạo thêm). Đồ xuất hiện nhiều cùng lúc (effect) nên tạo sẵn để khỏi giật' })
     amount: number = 0;
 
-    @property(Prefab)
+    @property({ type: Prefab, tooltip: 'Prefab của loại này' })
     prefab: Prefab | null = null;
 }
 
+/**
+ * Ply_Pool — NƠI DUY NHẤT tạo đối tượng từ prefab (chuyển từ Ply_Pool của Unity).
+ *
+ *  - Lúc chạy : Ply_Pool.Ins.spawn(type, pos, rot, parent) lấy từ pool (thiếu thì tạo thêm), unit.despawn() trả về.
+ *  - Trong editor (sinh item xem trước, lưu vào scene): Ply_Pool.create(type) → instantiate prefab khai báo ở đây.
+ *  - Prefab không gắn script kế thừa Ply_GameUnit thì tự thêm Ply_GameUnit khi spawn.
+ *  Node gắn Ply_Pool nên có scale 1 (effect spawn ra là con của node này).
+ */
 @ccclass('Ply_Pool')
 export class Ply_Pool extends Ply_Singleton {
 
     public static Ins: Ply_Pool | null = null;
 
-    @property([PoolAmount])
+    @property({ type: [PoolAmount], tooltip: 'Danh sách prefab được phép tạo trong game: loại + prefab + số lượng tạo sẵn' })
     poolAmounts: PoolAmount[] = [];
 
     private dict: Map<PoolType, Ply_GameUnit[]> = new Map();
 
-
-    // onLoad() la ham duoc goi khi component duoc khoi tao, truoc khi bat dau scene
     onLoad() {
         super.onLoad();
         Ply_Pool.Ins = this;
         this.onInit();
     }
 
-
-    // Ham khoi tao pool, tao cac game unit va luu vao dict
+    /** Tạo sẵn `amount` cái cho mỗi loại (ẩn, nằm dưới node pool) */
     private onInit() {
-        for (let i = 0; i < this.poolAmounts.length; i++) {
-            const poolAmount = this.poolAmounts[i];
-
-
-            // Neu chua co danh sach cho loai pool nay, tao mot danh sach moi
-            if (!this.dict.has(poolAmount.type)) {
-                this.dict.set(poolAmount.type, []);
-            }
-
-
-            // Khoi tao cac game unit va them vao danh sach
-            for (let j = 0; j < poolAmount.amount; j++) {
-                if (!poolAmount.prefab) continue;
-
-                const unitNode = instantiate(poolAmount.prefab);
-                unitNode.active = false;
-                unitNode.setParent(this.node);
-
-                const gameUnit = unitNode.getComponent(Ply_GameUnit);
-                if (gameUnit) {
-                    this.dict.get(poolAmount.type)!.push(gameUnit);
-                }
+        for (const pa of this.poolAmounts) {
+            if (!this.dict.has(pa.type)) this.dict.set(pa.type, []);
+            for (let j = 0; j < pa.amount; j++) {
+                const unit = this.make(pa.type);
+                if (!unit) break;
+                unit.node.active = false;
+                this.dict.get(pa.type)!.push(unit);
             }
         }
     }
 
-    /**
-     * Lay mot game unit ra tu pool (spawn).
-     * @param poolType - Loai doi tuong can spawn
-     * @param pos - Vi tri the gioi
-     * @param rot - Goc quay (Quat), mac dinh la identity
-     * @returns Ply_GameUnit duoc spawn
-     */
-    public spawn(poolType: PoolType, pos: Vec3, rot: Quat = new Quat()): Ply_GameUnit | null {
-        const queue = this.dict.get(poolType); // Lay danh sach game unit tu pool
-        let gameUnit: Ply_GameUnit | null = null; // Khai bao bien gameUnit de luu ket qua
-
-        // Neu co game unit trong pool, lay mot cai ra va xoa khoi danh sach
-        if (queue && queue.length > 0) {
-            gameUnit = queue.shift()!; // queue.shift() lay phan tu dau tien va xoa khoi danh sach
-        } else {
-            // Neu khong co san trong pool, khoi tao mot cai moi
-            const prefab = this.getPrefab(poolType);
-            if (!prefab) return null;
-
-            // Khoi tao mot node moi tu prefab va lay component Ply_GameUnit
-            const unitNode = instantiate(prefab);
-            unitNode.setParent(this.node);
-            gameUnit = unitNode.getComponent(Ply_GameUnit) ?? unitNode.addComponent(Ply_GameUnit);
-        }
-
-        if (gameUnit && gameUnit.node) {
-            gameUnit.node.setPosition(pos);
-            gameUnit.node.setRotation(rot);
-            gameUnit.node.active = true;
-        }
-
-        return gameUnit;
+    /** Instantiate 1 cái mới dưới node pool, gắn Ply_GameUnit nếu thiếu */
+    private make(type: PoolType): Ply_GameUnit | null {
+        const prefab = this.getPrefab(type);
+        if (!prefab) { console.error(`[Ply_Pool] chưa khai báo prefab cho ${PoolType[type]}`); return null; }
+        const n = instantiate(prefab);
+        n.setParent(this.node, false);
+        const unit = n.getComponent(Ply_GameUnit) ?? n.addComponent(Ply_GameUnit);
+        unit.poolType = type;
+        return unit;
     }
 
     /**
-     * Tra game unit ve lai pool (despawn).
-     * @param poolType - Loai doi tuong
-     * @param gameUnit - Game unit can thu hoi
+     * Lấy 1 đối tượng ra khỏi pool.
+     * @param pos     vị trí world
+     * @param rot     góc quay world
+     * @param parent  node cha muốn cắm vào (bỏ trống = giữ dưới node pool)
      */
-    public despawn(poolType: PoolType, gameUnit: Ply_GameUnit) {
-        if (!gameUnit || !gameUnit.node || !gameUnit.node.isValid) return;
-        gameUnit.node.active = false;
-
-        // Tra node ve lai Pool node de lan spawn tiep theo setPosition() hoat dong dung
-        // (tranh truong hop node van la con cua parent cu, dan den toa do local bi sai)
-        if (gameUnit.node.parent !== this.node) {
-            gameUnit.node.setParent(this.node, false);
+    public spawn(type: PoolType, pos: Vec3 = Vec3.ZERO, rot: Quat = Quat.IDENTITY, parent: Node | null = null): Ply_GameUnit | null {
+        const list = this.dict.get(type);
+        let unit: Ply_GameUnit | null = null;
+        while (list && list.length && !unit) {
+            const u = list.shift()!;
+            if (u.isValid && u.node.isValid) unit = u;        // bỏ qua cái đã bị huỷ ở ngoài
         }
-
-        if (!this.dict.has(poolType)) {
-            this.dict.set(poolType, []);
-        }
-        const list = this.dict.get(poolType)!;
-        if (list.indexOf(gameUnit) < 0) {
-            list.push(gameUnit);
-        }
+        if (!unit) unit = this.make(type);
+        if (!unit) return null;
+        const n = unit.node;
+        if (parent && n.parent !== parent) n.setParent(parent, false);
+        n.setWorldPosition(pos);
+        n.setWorldRotation(rot);
+        n.active = true;
+        return unit;
     }
 
-    /**
-     * Lay prefab tuong ung voi loai pool.
-     */
-    public getPrefab(poolType: PoolType): Prefab | null {
-        for (let i = 0; i < this.poolAmounts.length; i++) {
-            if (this.poolAmounts[i].type === poolType) {
-                return this.poolAmounts[i].prefab;
-            }
-        }
+    /** Trả đối tượng về pool (ẩn, về lại dưới node pool) */
+    public despawn(type: PoolType, unit: Ply_GameUnit) {
+        if (!unit || !unit.node || !unit.node.isValid) return;
+        unit.node.active = false;
+        if (unit.node.parent !== this.node) unit.node.setParent(this.node, false);
+        if (!this.dict.has(type)) this.dict.set(type, []);
+        const list = this.dict.get(type)!;
+        if (list.indexOf(unit) < 0) list.push(unit);
+    }
+
+    /** Prefab khai báo cho loại này */
+    public getPrefab(type: PoolType): Prefab | null {
+        for (const pa of this.poolAmounts) if (pa.type === type) return pa.prefab;
         return null;
+    }
+
+    /**
+     * Tạo node từ prefab khai báo cho `type`:
+     *  - lúc chạy  → spawn từ pool (node sẽ trả về pool khi despawn)
+     *  - trong editor (Ply_Pool chưa onLoad) → instantiate thẳng (dùng để sinh item xem trước, lưu vào scene)
+     */
+    public static create(type: PoolType, parent: Node | null = null): Node | null {
+        if (Ply_Pool.Ins && !EDITOR) return Ply_Pool.Ins.spawn(type, Vec3.ZERO, Quat.IDENTITY, parent)?.node ?? null;
+        const pool = director.getScene()?.getComponentInChildren(Ply_Pool);
+        const prefab = pool?.getPrefab(type);
+        if (!prefab) { console.warn(`[Ply_Pool] chưa có Ply_Pool / prefab cho ${PoolType[type]} trong scene`); return null; }
+        const n = instantiate(prefab);
+        if (parent) n.setParent(parent, false);
+        return n;
     }
 
     onDestroy() {
         super.onDestroy();
-        if (Ply_Pool.Ins === this) {
-            Ply_Pool.Ins = null;
-        }
+        if (Ply_Pool.Ins === this) Ply_Pool.Ins = null;
     }
 }

@@ -1,9 +1,11 @@
-import { _decorator, Camera, Component, EventTouch, Input, input, instantiate, Label, Mat4, math, Node, Prefab, screen, Size, Sprite, UITransform, Vec2, Vec3, Vec4 } from 'cc';
+import { _decorator, Camera, Component, EventTouch, Input, input, Label, Mat4, math, Node, screen, Size, Sprite, UITransform, Vec2, Vec3, Vec4 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { LANDSCAPE_PANEL_FRAC } from '../Config/TrayConfig';
 import { PreviewScreen } from '../Utils/PreviewScreen';
 import { BoxBg } from './BoxBg';
+import { Ply_Pool } from '../ScriptTemplate/Ply_Pool';
+import { PoolType } from '../ScriptTemplate/Ply_Types';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -64,20 +66,14 @@ export class BottomBar extends Component {
     @property({ group: 'Scroll', tooltip: 'Vùng cắt item (clipRect) nới thêm bấy nhiêu px màn hình mỗi bên (0 = sát mép thanh)' })
     clipPaddingPx = 0;
 
-    @property({ group: 'Skin', type: Node, tooltip: 'Node nền có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0). Để trống → lấy con tên "Bg", không có nữa thì instantiate bgPrefab lúc chạy' })
+    @property({ group: 'Skin', type: Node, tooltip: 'Node nền có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0). Để trống → lấy con tên "Bg", không có nữa thì lấy prefab TrayBg từ Ply_Pool lúc chạy' })
     bgNode: Node | null = null;
 
-    @property({ group: 'Skin', type: Node, tooltip: 'Node tab có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0; chứa CountLabel). Để trống → lấy con tên "Tab", không có nữa thì instantiate tabPrefab lúc chạy' })
+    @property({ group: 'Skin', type: Node, tooltip: 'Node tab có sẵn trong scene (con của thanh, QuadImage anchor 0.5,0; chứa CountLabel). Để trống → lấy con tên "Tab", không có nữa thì lấy prefab TrayTab từ Ply_Pool lúc chạy' })
     tabNode: Node | null = null;
-
-    @property({ group: 'Skin', type: Prefab, tooltip: 'Fallback khi không có Bg trong scene: nền thanh (Gameplay/Bg.prefab). Để trống = không nền', visible(this: BottomBar) { return !this.sceneBg(); } })
-    bgPrefab: Prefab | null = null;
 
     @property({ group: 'Skin', tooltip: 'Chiều cao nền (prefab) khi thanh NGANG (local px). 0 = bằng chiều cao thanh. Bg có sẵn trong scene thì chỉnh thẳng UITransform của nó', visible(this: BottomBar) { return !this.sceneBg(); } })
     bgHeight = 0;
-
-    @property({ group: 'Skin', type: Prefab, tooltip: 'Fallback khi không có Tab trong scene: tab trên mép nền (Gameplay/Tab.prefab). Để trống = không tab', visible(this: BottomBar) { return !this.sceneTab(); } })
-    tabPrefab: Prefab | null = null;
 
     @property({ group: 'Skin', tooltip: 'Tab (prefab) dịch dọc so với MÉP TRÊN nền (local px). Âm = lún xuống đè lên nền. Tab có sẵn trong scene thì kéo thẳng node', visible(this: BottomBar) { return !this.sceneTab(); } })
     tabOffsetY = -29;
@@ -186,22 +182,22 @@ export class BottomBar extends Component {
     private sceneBg() { return this.bgNode ?? this.node.getChildByName('Bg'); }
     private sceneTab() { return this.tabNode ?? this.node.getChildByName('Tab'); }
 
-    /** Bg/Tab: dùng node có sẵn trong scene (bgNode/tabNode); thiếu thì instantiate prefab làm con, xếp TRƯỚC Content (Bg → Tab → Content) */
+    /** Bg/Tab: dùng node có sẵn trong scene (bgNode/tabNode); thiếu thì lấy prefab TrayBg/TrayTab từ Ply_Pool, xếp TRƯỚC Content (Bg → Tab → Content) */
     private spawnSkin() {
-        const make = (prefab: Prefab | null, name: string) => {
-            if (!prefab || EDITOR) return null;            // editor không sinh prefab (sẽ bị lưu vào scene) → đặt Bg/Tab sẵn trong hierarchy
-            const n = instantiate(prefab);
+        const make = (type: PoolType, name: string) => {
+            if (EDITOR) return null;                        // editor không sinh prefab (sẽ bị lưu vào scene) → đặt Bg/Tab sẵn trong hierarchy
+            const n = Ply_Pool.create(type, this.node);
+            if (!n) return null;
             n.name = name;
             n.layer = this.node.layer;
-            n.setParent(this.node);
             return n;
         };
         // Node có sẵn trong hierarchy (gán Inspector hoặc con tên "Bg"/"Tab") → dùng NGUYÊN như đặt trong scene, không đụng size/vị trí.
         // Không có thì mới instantiate prefab và tự layout theo thanh.
         const sceneBg = this.sceneBg();
         const sceneTab = this.sceneTab();
-        this._bg = sceneBg ?? make(this.bgPrefab, 'Bg');
-        this._tab = sceneTab ?? make(this.tabPrefab, 'Tab');
+        this._bg = sceneBg ?? make(PoolType.TrayBg, 'Bg');
+        this._tab = sceneTab ?? make(PoolType.TrayTab, 'Tab');
         this._layoutBg = !sceneBg && !!this._bg;
         this._layoutTab = !sceneTab && !!this._tab;
         let i = 0;
@@ -495,6 +491,25 @@ export class BottomBar extends Component {
         p.y = -halfH;
         Vec3.transformMat4(p, p, camMat);
         this.node.setWorldPosition(p);
+    }
+
+    /**
+     * Mép TRÊN cao nhất của thanh (Tab nhô lên trên Bg; không có thì Bg; không có nữa thì UITransform), giữa thanh, toạ độ world.
+     * BoxBg dùng để kéo đáy hộp nền màn dọc xuống sát thanh. Lấy mép Tab vì nền BoxBg là Sprite vẽ sau → đè mất Tab nếu phủ qua.
+     * false = đang là panel dọc (màn ngang).
+     */
+    topEdgeWorld(out: Vec3): boolean {
+        if (this._vertical) return false;
+        const ut = this.getComponent(UITransform);
+        let top = ut ? (1 - ut.anchorY) * ut.height : 0;
+        const edge = (n: Node | null) => {
+            const t = n?.activeInHierarchy ? n.getComponent(UITransform) : null;
+            return n && t ? n.position.y + (1 - t.anchorY) * t.height : -Infinity;
+        };
+        const skinTop = Math.max(edge(this._bg ?? this.sceneBg()), edge(this._tab ?? this.sceneTab()));
+        if (isFinite(skinTop)) top = skinTop;
+        Vec3.transformMat4(out, out.set(0, top, 0), this.node.worldMatrix);
+        return true;
     }
 
     // ------------------------------------------------------------ helpers

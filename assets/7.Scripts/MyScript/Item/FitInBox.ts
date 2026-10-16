@@ -146,7 +146,8 @@ export class FitInBox extends Component {
         if (!cam || !box) return;
         const size = PreviewScreen.visibleSize();
         // đổi bất kỳ thông số nào → fit lại ngay (editor thấy liền, không cần Play)
-        const key = `${size.width}|${size.height}|${cam.orthoHeight}|${box.heightPercent}|${box.sideMargin}|${box.topOverflow}|${box.landscapeFullScreen}|${box.landscapeBottomMargin}|${box.landscapePanelFrac}`
+        const r = box.getCamRect(cam.orthoHeight, true, true);      // vùng chơi (đáy có thể bám theo thanh item → đổi khi thanh đổi)
+        const key = `${size.width}|${size.height}|${cam.orthoHeight}|${r.left.toFixed(3)}|${r.right.toFixed(3)}|${r.top.toFixed(3)}|${r.bottom.toFixed(3)}`
             + `|${this.padding}|${this.portraitScale}|${this.landscapeScale}|${this.portraitFitCurrentRotation}|${this.anchorX}|${this.anchorY}|${this.allowUpscale}|${this.landscapeUpscale}|${this.rotationSamples}`;
         if (key === this._key) return;
         this._key = key;
