@@ -57,7 +57,8 @@ export class TrayLayout extends Component {
     @property({ visible(this: TrayLayout) { return this.showAdvanced; }, tooltip: 'Lúc chơi (màn dọc) có hiện thẻ Cell không. Tắt = icon nằm thẳng trên nền Bg (màn ngang luôn hiện)' })
     showCellsInPlay = false;
 
-    @property({ visible(this: TrayLayout) { return this.showAdvanced; }, tooltip: 'Thứ tự ô = thứ tự node trong Hierarchy của Content (kéo thả node / Map Creator để sắp). Tắt = theo vị trí x hiện tại' })
+    /** Không còn dùng: thứ tự ô nằm ở LevelConfig.items (giữ field để scene cũ đọc không lỗi) */
+    @property({ visible: false })
     orderByHierarchy = true;
 
     // ---- xem trước trong editor (không ảnh hưởng lúc chạy) ----
@@ -71,25 +72,25 @@ export class TrayLayout extends Component {
     previewCollected = 0;
 
     /** Luôn trả false để nút sinh preview có thể được bấm lại trong Inspector. */
-    @property({ group: 'Editor Preview', displayName: '▶ Preview items', tooltip: 'Sinh item vào thanh theo ItemManager.pickTargets (lưu vào scene, lúc chơi dùng lại). Bấm lại = sinh lại từ đầu' })
+    @property({ group: 'Editor Preview', displayName: '▶ Preview items', tooltip: 'Sinh lại item xem trước theo LevelConfig của map, đo lại icon (chỉ để xem, không lưu vào scene). Lưu scale icon / thứ tự bằng Tool → Map Creator → Build items' })
     get previewItems() { return false; }
     /** Chỉ sinh lại item preview khi bật nút trong editor. */
     set previewItems(v: boolean) { if (v && EDITOR) this.host()?.buildPreview(); }
 
     /** Luôn trả false để thao tác xoá preview là nút bấm, không lưu trạng thái bật. */
-    @property({ group: 'Editor Preview', displayName: '✖ Clear preview', tooltip: 'Xoá toàn bộ item đang có trong thanh' })
+    @property({ group: 'Editor Preview', displayName: '✖ Clear preview', tooltip: 'Xoá item xem trước trong thanh (frame sau tự sinh lại theo LevelConfig)' })
     get clearPreview() { return false; }
     /** Chỉ xoá nội dung thanh khi bật nút trong editor. */
     set clearPreview(v: boolean) { if (v && EDITOR) this.host()?.clearContent(); }
 
     /** Luôn trả false để nút xáo thứ tự sẵn sàng cho lần bấm tiếp theo. */
-    @property({ group: 'Editor Preview', displayName: '🔀 Shuffle items', tooltip: 'Xáo ngẫu nhiên thứ tự item trong thanh (editor: lưu vào scene)' })
+    @property({ group: 'Editor Preview', displayName: '🔀 Shuffle items', tooltip: 'Xáo ngẫu nhiên thứ tự ô. Editor: xáo LevelConfig.items trên instance — lưu vào prefab Level bằng Map Creator → Build items' })
     get shuffleItems() { return false; }
     /** Xáo preview trong editor hoặc các item chưa hoàn thành khi đang chơi. */
     set shuffleItems(v: boolean) { if (v) { const h = this.host(); EDITOR ? h?.shufflePreview() : h?.shuffle(); } }
 
     /** Luôn trả false vì áp thứ tự là thao tác tức thời trong Inspector. */
-    @property({ group: 'Editor Preview', displayName: '↕ Apply order', tooltip: 'Xếp lại item theo thứ tự node trong Hierarchy của Content' })
+    @property({ group: 'Editor Preview', displayName: '↕ Apply order', tooltip: 'Xếp lại item xem trước theo thứ tự ô trong LevelConfig' })
     get applyOrder() { return false; }
     /** Chỉ xếp lại preview theo Hierarchy khi bật nút trong editor. */
     set applyOrder(v: boolean) { if (v && EDITOR) this.host()?.applyOrderPreview(); }

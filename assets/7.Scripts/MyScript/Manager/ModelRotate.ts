@@ -1,4 +1,4 @@
-import { _decorator, Component, EventTouch, Input, input, Node, Vec2 } from 'cc';
+import { _decorator, Component, director, EventTouch, Input, input, Node, Vec2 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { BottomBar } from '../Item/BottomBar';
 import { ItemManager } from './ItemManager';
@@ -13,10 +13,10 @@ export class ModelRotate extends Component {
     @property({ type: Node, tooltip: 'Node cần xoay. Để trống = node gắn script này' })
     model: Node | null = null;
 
-    @property({ type: BottomBar, tooltip: 'Touch bắt đầu trong thanh thì không xoay' })
+    @property({ type: BottomBar, tooltip: 'Touch bắt đầu trong thanh thì không xoay. Để trống → BottomBar trong scene' })
     bar: BottomBar | null = null;
 
-    @property({ type: ItemManager, tooltip: 'Đang kéo item thì không xoay' })
+    @property({ type: ItemManager, tooltip: 'Đang kéo item thì không xoay. Để trống → ItemManager trong scene' })
     itemManager: ItemManager | null = null;
 
     @property({ tooltip: 'Độ xoay cho mỗi px ngón tay đi ngang' })
@@ -43,19 +43,26 @@ export class ModelRotate extends Component {
     private baseY = 0;           // góc Y ban đầu
     private angle = 0;           // góc lệch so với baseY
 
+    /** Chọn node cần xoay và ghi góc Y ban đầu làm mốc cho thao tác kéo/reset. */
     onLoad() {
         if (!this.model) this.model = this.node;
         this.baseY = this.model.eulerAngles.y;
     }
 
+    /** Tìm thanh/manager ngoài prefab và đăng ký sự kiện xoay phòng khi chơi. */
     onEnable() {
         if (EDITOR) return;
+        // component nằm trong prefab Level → không lưu được ref ra scene, tự tìm
+        const scene = director.getScene();
+        if (!this.bar?.isValid) this.bar = scene?.getComponentInChildren(BottomBar) ?? null;
+        if (!this.itemManager?.isValid) this.itemManager = scene?.getComponentInChildren(ItemManager) ?? null;
         input.on(Input.EventType.TOUCH_START, this.onTouchStart, this);
         input.on(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
         input.on(Input.EventType.TOUCH_END, this.onTouchEnd, this);
         input.on(Input.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
     }
 
+    /** Gỡ các sự kiện chạm để component bị tắt không tiếp tục điều khiển phòng. */
     onDisable() {
         if (EDITOR) return;
         input.off(Input.EventType.TOUCH_START, this.onTouchStart, this);
@@ -64,6 +71,7 @@ export class ModelRotate extends Component {
         input.off(Input.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
     }
 
+    /** Nhận một ngón tay ngoài thanh khi chưa vào chế độ store và xoá quán tính cũ. */
     private onTouchStart(e: EventTouch) {
         if (this.touchId !== -1) return;
         const loc = e.getLocation();
@@ -75,6 +83,7 @@ export class ModelRotate extends Component {
         this.velocity = 0;
     }
 
+    /** Qua ngưỡng kéo thì xoay theo độ dịch ngang; bỏ lượt xoay nếu đang kéo item. */
     private onTouchMove(e: EventTouch) {
         if (e.getID() !== this.touchId) return;
         if (this.itemManager?.isDragging) { this.touchId = -1; return; }   // đang kéo item → bỏ
@@ -90,18 +99,21 @@ export class ModelRotate extends Component {
         if (Math.abs(this.angle) >= this.rotatedDeg) this._rotatedOnce = true;
     }
 
+    /** Nhả ngón tay xoay, giữ vận tốc cuối để update tiếp tục quán tính. */
     private onTouchEnd(e: EventTouch) {
         if (e.getID() !== this.touchId) return;
         this.touchId = -1;
         this.dragging = false;
     }
 
+    /** Tiếp tục xoay theo vận tốc còn lại và giảm dần bằng hệ số quán tính. */
     update() {
         if (this.dragging || Math.abs(this.velocity) < 0.01) return;
         this.rotateBy(this.velocity);
         this.velocity *= this.inertia;
     }
 
+    /** Cộng góc lệch vào mốc Y ban đầu, giữ nguyên góc X/Z của model. */
     private rotateBy(deg: number) {
         this.angle += deg;
         const e = this.model!.eulerAngles;

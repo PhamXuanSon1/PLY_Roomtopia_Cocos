@@ -31,6 +31,7 @@
       "open-panel": { "methods": ["openPanel"] },
       "list-models": { "methods": ["listModels"] },
       "scene-call": { "methods": ["sceneCall"] },
+      "level-call": { "methods": ["levelCall"] },
       "thumbs": { "methods": ["thumbs"] },
       "save-scene": { "methods": ["saveScene"] }
     },

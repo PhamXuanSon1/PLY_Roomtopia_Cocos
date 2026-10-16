@@ -120,6 +120,18 @@ async function findSpriteFrame(treeNode, depth) {
     return '';
 }
 
+/**
+ * Tên ngắn cho dễ đọc: bỏ "Item_" và tiền tố CHUNG của mọi tên tới dấu "_" cuối
+ * (vd Item_Bathroom_Wall_1, Item_Bathroom_Toilet → Wall_1, Toilet) — không gắn cứng tên map.
+ */
+function shortenNames(items) {
+    const names = items.map((it) => it.name.replace(/^Item_/, ''));
+    let prefix = names.length > 1 ? names[0] : '';
+    for (const n of names) while (prefix && !n.startsWith(prefix)) prefix = prefix.slice(0, -1);
+    prefix = prefix.slice(0, prefix.lastIndexOf('_') + 1);         // chỉ cắt tới hết 1 "từ" (dấu _)
+    items.forEach((it, i) => { it.name = names[i].slice(prefix.length) || names[i]; });
+}
+
 // ---------------------------------------------------------------- methods
 
 exports.methods = {
@@ -159,13 +171,14 @@ exports.methods = {
             }
             items.push({
                 uuid: child.uuid,
-                name: child.name.replace(/^Item_(Bathroom_)?/, ''),   // tên ngắn cho dễ đọc
+                name: child.name,
                 active: child.active !== false,
                 width: Number(size.width) || 0,
                 height: Number(size.height) || 0,
                 thumb,
             });
         }
+        shortenNames(items);
         return { ok: true, parent: { uuid: tree.uuid, name: tree.name }, items };
     },
 

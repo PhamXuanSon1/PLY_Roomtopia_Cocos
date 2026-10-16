@@ -6,6 +6,7 @@ import { ItemController } from '../Item/ItemController';
 import { ItemGraphic } from '../Item/ItemGraphic';
 import { ItemManager } from './ItemManager';
 import { ModelRotate } from './ModelRotate';
+import { LevelConfig } from './LevelConfig';
 const { ccclass, property } = _decorator;
 
 /**
@@ -41,7 +42,7 @@ export class HandHintManager extends Component {
     @property({ type: BoxBg, tooltip: 'Lấy vùng chơi để đặt hint xoay (màn ngang trừ panel)' })
     box: BoxBg | null = null;
 
-    @property({ type: ModelRotate, tooltip: 'Biết người chơi đã xoay phòng chưa' })
+    @property({ type: ModelRotate, tooltip: 'Biết người chơi đã xoay phòng chưa. Để trống → ModelRotate của prefab Level hiện tại' })
     rotate: ModelRotate | null = null;
 
     @property({ tooltip: 'Vào game bao lâu thì hiện tay lần đầu (s)' })
@@ -81,6 +82,7 @@ export class HandHintManager extends Component {
     private lastCollected = 0;
     private lastVertical: boolean | null = null;
 
+    /** Chặn manager trùng, đưa tay vào lớp UI và chuẩn bị thời gian chờ hướng dẫn đầu tiên. */
     onLoad() {
         if (EDITOR) return;
         // scene có thể lỡ gắn 2 HandHintManager (2 node khác nhau) → cái sau tự tắt,
@@ -107,19 +109,23 @@ export class HandHintManager extends Component {
      * thứ tự onLoad giữa các component không đảm bảo, `ui` có thể chưa gán xong.
      */
     private get wCamera(): Camera | null { return this.cam ?? ui?.wCamera ?? null; }
+    /** Lấy camera UI lúc cần để không phụ thuộc thứ tự khởi tạo singleton ui. */
     private get uiCamera(): Camera | null { return this.uiCam ?? ui?.uiCamera ?? null; }
 
+    /** Theo dõi chạm màn hình để ẩn tay ngay khi người chơi bắt đầu tương tác. */
     onEnable() {
         if (EDITOR) return;
         input.on(Input.EventType.TOUCH_START, this.onUserTouch, this);
     }
 
+    /** Gỡ sự kiện chạm và dừng tween hướng dẫn khi component bị tắt. */
     onDisable() {
         if (EDITOR) return;
         input.off(Input.EventType.TOUCH_START, this.onUserTouch, this);
         this.stop();
     }
 
+    /** Giải phóng tham chiếu instance để scene sau có thể tạo manager hướng dẫn mới. */
     onDestroy() {
         if (HandHintManager.inst === this) HandHintManager.inst = null;
     }
@@ -138,6 +144,7 @@ export class HandHintManager extends Component {
     }
 
     // ============================================================ loop
+    /** Theo dõi tiến trình, thao tác và thời gian rảnh để chọn lúc hiện hoặc dừng hướng dẫn. */
     update(dt: number) {
         if (EDITOR || !this.enabledHint || !this.itemManager) return;
         if (!this.wCamera || !this.uiCamera) return;        // ref chưa sẵn sàng → chờ frame sau
@@ -154,6 +161,7 @@ export class HandHintManager extends Component {
             this.lastVertical = vertical;
             this.notify();
         }
+        if (!this.rotate?.isValid) { const lv = LevelConfig.current; this.rotate = lv?.getComponent(ModelRotate) ?? lv?.getComponentInChildren(ModelRotate) ?? null; }   // nằm trên gốc prefab Level
         if (this.rotate?.rotatedOnce) this.rotateHintDone = true;
 
         // đang kéo item → ẩn tay, giữ idle = 0. Suốt cú kéo không có TOUCH_START mới nên
@@ -172,6 +180,7 @@ export class HandHintManager extends Component {
         if (this.idle >= this.idleDelay) this.play();
     }
 
+    /** Chọn hướng dẫn kéo, xoay hoặc tắt theo số item đã xong và thao tác xoay đã học. */
     private nextMode(): 'drag' | 'rotate' | 'none' {
         const im = this.itemManager!;
         if (im.collected < this.tutorialDrags) return 'drag';
@@ -179,6 +188,7 @@ export class HandHintManager extends Component {
         return this.idleHintAfterTutorial ? 'drag' : 'none';
     }
 
+    /** Chọn kiểu hướng dẫn/item phù hợp, hiện tay và bắt đầu vòng tween tương ứng. */
     private play() {
         this.mode = this.nextMode();
         if (this.mode === 'none') { this.idle = 0; return; }
@@ -194,8 +204,10 @@ export class HandHintManager extends Component {
         this.mode === 'drag' ? this.dragStep() : this.rotateStep();
     }
 
+    /** Dừng vòng cũ rồi chọn lại hướng dẫn khi item hoặc vùng hiển thị đã thay đổi. */
     private restart() { this.stop(); this.play(); }
 
+    /** Huỷ tween đang chạy, ẩn tay và bỏ item đang được hướng dẫn. */
     private stop() {
         if (!this.showing) return;
         this.showing = false;
@@ -223,6 +235,7 @@ export class HandHintManager extends Component {
     }
 
     // ------------------------------------------------------------ drag: ô → target
+    /** Lặp động tác nhấn ô, kéo tới tâm target rồi thả; đo lại hai đầu ở mỗi vòng. */
     private dragStep() {
         const item = this.hintItem;
         if (!this.showing || !item || !item.target) return;
@@ -242,6 +255,7 @@ export class HandHintManager extends Component {
     }
 
     // ------------------------------------------------------------ rotate: quẹt ngang giữa vùng chơi
+    /** Lặp động tác quẹt ngang giữa vùng chơi để minh hoạ cách xoay phòng. */
     private rotateStep() {
         if (!this.showing) return;
         const hand = this.hand!;
@@ -290,11 +304,13 @@ export class HandHintManager extends Component {
         else h.active = on;
     }
 
+    /** Đặt cả cây node tay vào layer của UI để camera UI vẽ được mọi phần. */
     private static setLayerRecursive(n: Node, layer: number) {
         n.layer = layer;
         for (const c of n.children) HandHintManager.setLayerRecursive(c, layer);
     }
 
+    /** Khi người chơi chạm màn hình, ẩn tay và đếm lại thời gian rảnh. */
     private onUserTouch() {
         this.notify();
     }

@@ -1,15 +1,19 @@
 import { _decorator, Color, Component, Material, Node } from 'cc';
+import { LevelConfig } from './LevelConfig';
 const { ccclass, property } = _decorator;
 
 /**
- * Giữ cấu hình level (1 level duy nhất — playable).
+ * Cấu hình chung của gameplay (không phụ thuộc map). Map hiện tại = prefab Level (LevelConfig) có trong scene.
  */
 @ccclass('GameManager')
 export class GameManager extends Component {
     static inst: GameManager | null = null;
 
-    @property({ type: Node, tooltip: 'Root của map 3D' })
-    model: Node | null = null;
+    /** Node gốc phòng của map hiện tại (prefab Level trong scene) */
+    get model(): Node | null { return LevelConfig.current?.node ?? null; }
+
+    /** Cấu hình map hiện tại */
+    get level(): LevelConfig | null { return LevelConfig.current; }
 
     @property({ type: Material, tooltip: 'Material xám cho target chưa hoàn thành' })
     grayMat: Material | null = null;
@@ -26,10 +30,12 @@ export class GameManager extends Component {
     @property({ group: 'Drag Blink', tooltip: 'Nghỉ bao lâu ở màu gốc giữa 2 chu kỳ fade (giây, 0 = nháy liên tục)' })
     blinkIdle = 0.4;
 
+    /** Công bố cấu hình gameplay hiện tại để các component khác truy cập qua inst. */
     onLoad() {
         GameManager.inst = this;
     }
 
+    /** Xoá tham chiếu dùng chung nếu component bị huỷ vẫn là instance đang được giữ. */
     onDestroy() {
         if (GameManager.inst === this) GameManager.inst = null;
     }

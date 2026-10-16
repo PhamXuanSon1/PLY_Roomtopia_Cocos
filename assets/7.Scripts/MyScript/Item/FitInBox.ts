@@ -1,11 +1,11 @@
-import { _decorator, Camera, Component, DirectionalLight, Layers, Mat4, MeshRenderer, Node, Rect, SphereLight, SpotLight, v3, Vec3 } from 'cc';
+import { _decorator, Camera, Component, director, DirectionalLight, Layers, Mat4, MeshRenderer, Node, Rect, SphereLight, SpotLight, v3, Vec3 } from 'cc';
 import { BoxBg } from './BoxBg';
 import { EDITOR } from 'cc/env';
 import { PreviewScreen } from '../Utils/PreviewScreen';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
- * FitInBox: giữ node (Lv50_Bathroom_Root) LUÔN nằm gọn trong BoxBg.
+ * FitInBox: giữ node gốc phòng (prefab Level) LUÔN nằm gọn trong BoxBg.
  *
  *  Chỉ fit khi màn hình / orthoHeight / hộp đổi (KHÔNG fit theo từng frame xoay → không giật).
  *  Bounds = hợp của bounds ở nhiều góc xoay Y của `rotator` → xoay kiểu gì cũng không lòi ra hộp.
@@ -17,10 +17,10 @@ const { ccclass, property, executeInEditMode } = _decorator;
 @ccclass('FitInBox')
 @executeInEditMode
 export class FitInBox extends Component {
-    @property({ type: Camera, tooltip: 'Camera 3D vẽ map (WCam)' })
+    @property({ type: Camera, tooltip: 'Camera 3D vẽ map (WCam). Để trống → camera của BoxBg (prefab Level không lưu được ref ra scene)' })
     cam: Camera | null = null;
 
-    @property({ type: BoxBg, tooltip: 'Hộp nền cần nằm gọn trong' })
+    @property({ type: BoxBg, tooltip: 'Hộp nền cần nằm gọn trong. Để trống → BoxBg trong scene' })
     box: BoxBg | null = null;
 
     @property({ type: Node, tooltip: 'Node bị ModelRotate xoay quanh Y. Bounds lấy hợp mọi góc xoay của node này' })
@@ -58,6 +58,7 @@ export class FitInBox extends Component {
 
     static readonly ROOM_LAYER_NAME = 'ROOM';
     static readonly ROOM_LAYER_BIT = 2;
+    /** Mặt nạ layer riêng của phòng, dùng cho camera cắt vùng chơi và đèn chiếu sáng. */
     static get roomLayer() { return 1 << FitInBox.ROOM_LAYER_BIT; }
 
     private roomCam: Camera | null = null;
@@ -70,6 +71,7 @@ export class FitInBox extends Component {
     private static readonly _inv = new Mat4();
     private static readonly _p = v3();
 
+    /** Lưu scale gốc, gom mesh và cấu hình layer/đèn khi phòng cần cắt theo vùng chơi. */
     onLoad() {
         this.baseScale = this.node.scale.x || 1;
         this.collect();
@@ -88,6 +90,7 @@ export class FitInBox extends Component {
         }
     }
 
+    /** Gán cùng layer cho toàn bộ cây node để camera phòng xử lý đồng nhất. */
     static setLayerRecursive(n: Node, layer: number) {
         n.layer = layer;
         for (const c of n.children) FitInBox.setLayerRecursive(c, layer);
@@ -141,8 +144,24 @@ export class FitInBox extends Component {
         });
     }
 
+    /** cam / box tự tìm khi để trống (component nằm trong prefab Level) — field riêng, KHÔNG ghi vào cam / box (prefab không lưu được ref ra scene) */
+    private _rcam: Camera | null = null;
+    private _rbox: BoxBg | null = null;
+    /** Camera đang dùng: cam (Inspector) hoặc camera của BoxBg */
+    get useCam(): Camera | null { return this.cam?.isValid ? this.cam : this._rcam; }
+    /** BoxBg đang dùng: box (Inspector) hoặc BoxBg trong scene */
+    get useBox(): BoxBg | null { return this.box?.isValid ? this.box : this._rbox; }
+
+    /** Tự tìm BoxBg/camera còn thiếu và lưu vào cache riêng để tránh ghi tham chiếu scene vào prefab. */
+    private resolveRefs() {
+        if (!this.box?.isValid && !this._rbox?.isValid) this._rbox = director.getScene()?.getComponentInChildren(BoxBg) ?? null;
+        if (!this.cam?.isValid && !this._rcam?.isValid) this._rcam = this.useBox?.cam ?? null;
+    }
+
+    /** Phát hiện thay đổi vùng chơi hoặc cấu hình để fit phòng và đồng bộ camera cắt. */
     lateUpdate() {
-        const cam = this.cam, box = this.box;
+        this.resolveRefs();
+        const cam = this.useCam, box = this.useBox;
         if (!cam || !box) return;
         const size = PreviewScreen.visibleSize();
         // đổi bất kỳ thông số nào → fit lại ngay (editor thấy liền, không cần Play)
@@ -157,9 +176,10 @@ export class FitInBox extends Component {
 
     /** Bounds (cam space của `cam`) của map ở góc xoay hiện tại — EditorPreview vẽ gizmo. null = chưa có mesh/camera */
     currentBounds(): { minX: number; maxX: number; minY: number; maxY: number } | null {
-        if (!this.cam || !this.meshes.length) return null;
+        const cam = this.useCam;
+        if (!cam || !this.meshes.length) return null;
         const b = { minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity };
-        this.accumBounds(Mat4.invert(FitInBox._inv, this.cam.node.worldMatrix), b);
+        this.accumBounds(Mat4.invert(FitInBox._inv, cam.node.worldMatrix), b);
         return isFinite(b.minX) ? b : null;
     }
 
@@ -178,8 +198,9 @@ export class FitInBox extends Component {
         }
     }
 
+    /** Đo giới hạn mesh trong camera, chọn scale và dịch phòng vào hộp theo padding/anchor. */
     fit() {
-        const cam = this.cam, box = this.box;
+        const cam = this.useCam, box = this.useBox;
         if (!cam || !box || !this.meshes.length) return;
 
         // ---- bounds của map trong camera space: hợp mọi góc xoay Y của rotator ----

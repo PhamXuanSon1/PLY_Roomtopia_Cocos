@@ -6,14 +6,14 @@ const path = require('path');
 const PKG = 'map-creator';
 const STATIC = path.join(__dirname, '..', '..', 'static');
 const FIT_KEYS = ['anchorX', 'anchorY', 'padding', 'portraitScale', 'landscapeScale'];
-const ITEM_KEYS = ['storeAfterItems', 'iconFill', 'spacing', 'edgePad'];
+const ITEM_KEYS = ['storeAfterItems', 'snapPx', 'iconFill', 'spacing', 'edgePad'];
 
 exports.template = fs.readFileSync(path.join(STATIC, 'template', 'default.html'), 'utf8');
 exports.style = fs.readFileSync(path.join(STATIC, 'style', 'default.css'), 'utf8');
 
 exports.$ = {
     sceneName: '#sceneName', refresh: '#refresh', status: '#status',
-    roomName: '#roomName', model: '#model', swap: '#swap', keepTransform: '#keepTransform',
+    levelList: '#levelList', useLevel: '#useLevel', roomName: '#roomName', model: '#model', swap: '#swap', keepTransform: '#keepTransform', levelName: '#levelName', newLevel: '#newLevel', snapPx: '#snapPx',
     anchorX: '#anchorX', anchorY: '#anchorY', padding: '#padding', portraitScale: '#portraitScale',
     landscapeScale: '#landscapeScale', allowUpscale: '#allowUpscale', applyFit: '#applyFit', alignView: '#alignView',
     filter: '#filter', selAll: '#selAll', selNone: '#selNone', pickCount: '#pickCount', meshList: '#meshList',
@@ -30,6 +30,11 @@ function escapeHtml(text) {
 
 function fileUrl(p) {
     return 'file:///' + String(p).replace(/\\/g, '/').replace(/^\/+/, '');
+}
+
+/** Thao tác GHI vào prefab Level (main.js levelCall) */
+function levelCall(op, ...args) {
+    return Editor.Message.request(PKG, 'level-call', op, ...args).catch((e) => ({ ok: false, error: String(e) }));
 }
 
 function call(method, ...args) {
@@ -54,6 +59,24 @@ exports.methods = {
     },
 
     // ------------------------------------------------------------ load
+    async loadLevels(current) {
+        const res = await levelCall('listLevels');
+        const levels = (res && res.levels) || [];
+        this.$.levelList.innerHTML = levels.map((l) => `<option value="${l.uuid}" ${l.uuid === current ? 'selected' : ''}>${escapeHtml(l.name)}</option>`).join('');
+    },
+
+    async useLevel() {
+        const uuid = this.$.levelList.value;
+        if (!uuid) return;
+        this.showStatus('Đang đổi level...');
+        const res = await levelCall('useLevel', uuid);
+        if (!res || !res.ok) return this.showStatus((res && res.error) || 'Đổi level lỗi.', 'error');
+        state.order = [];
+        state.thumbs = {};
+        await this.load();
+        this.showStatus(res.same ? 'Level này đang được dùng.' : 'Đã đổi level. Nhớ Save scene.', 'ok');
+    },
+
     async loadModels() {
         const list = await Editor.Message.request(PKG, 'list-models').catch(() => []);
         this.$.model.innerHTML = list.map((m) => `<option value="${m.uuid}">${escapeHtml(m.url.replace('db://assets/', ''))}</option>`).join('');
@@ -66,13 +89,14 @@ exports.methods = {
             return;
         }
         this.$.sceneName.textContent = res.scene || '';
-        this.$.roomName.textContent = `${res.room.name} › ${res.room.model || '(trống)'} — ${res.meshes.length} mesh, thanh có ${res.previewCount} item`;
+        this.$.roomName.textContent = `${res.room.name}${res.room.prefabUuid ? '' : ' (CHƯA là prefab)'} › ${res.room.model || '(trống)'} — ${res.meshes.length} mesh, ${res.order.length || res.meshes.length} ô`;
         for (const k of FIT_KEYS) if (res.fit[k] !== undefined) this.$[k].value = res.fit[k];
         this.$.allowUpscale.checked = !!res.fit.allowUpscale;
         for (const k of ITEM_KEYS) if (res.items[k] !== undefined) this.$[k].value = res.items[k];
         state.meshes = res.meshes;
         state.order = res.order.filter((u) => res.meshes.some((m) => m.uuid === u));
         this.renderPreview(res.preview);
+        this.loadLevels(res.room.prefabUuid);
         this.renderList();
         this.loadThumbs(false);
     },
@@ -250,29 +274,34 @@ exports.methods = {
     },
 
     // ------------------------------------------------------------ actions
-    async swap() {
+    /** mode 'replace' = Thay phòng (ghi đè prefab Level hiện tại), 'new' = Tạo level mới */
+    async makeLevel(mode) {
         const uuid = this.$.model.value;
         if (!uuid) return;
         const label = this.$.model.selectedOptions[0] ? this.$.model.selectedOptions[0].textContent : uuid;
-        const r = await Editor.Dialog.warn(`Thay model phòng bằng:\n${label}\n\nModel cũ và toàn bộ item trong thanh sẽ bị xoá (Ctrl+Z để hoàn tác, chưa Save thì có thể đóng scene không lưu).`, {
-            buttons: ['Thay phòng', 'Huỷ'], default: 0, cancel: 1, title: 'Map Creator',
-        });
+        const name = this.$.levelName.value.trim();
+        if (mode === 'new' && !name) return this.showStatus('Nhập tên level mới (vd Kitchen).', 'error');
+        const msg = mode === 'replace'
+            ? `Thay phòng của level hiện tại bằng:\n${label}\n\nPrefab level được ghi đè; các ô được nối sang mesh mới theo đường dẫn / tên (ô không tìm thấy sẽ bị bỏ). Ctrl+Z để hoàn tác.`
+            : `Tạo level mới Level_${name} từ:\n${label}\n\nLevel hiện tại được gỡ khỏi scene (prefab của nó vẫn giữ trong 5.Prefabs/Levels).`;
+        const r = await Editor.Dialog.warn(msg, { buttons: [mode === 'replace' ? 'Thay phòng' : 'Tạo level', 'Huỷ'], default: 0, cancel: 1, title: 'Map Creator' });
         if (r && r.response !== 0) return;
-        this.showStatus('Đang thay phòng...');
-        const res = await call('swapRoom', uuid, this.$.keepTransform.checked);
-        if (!res || !res.ok) return this.showStatus((res && res.error) || 'Thay phòng lỗi.', 'error');
+        this.showStatus(mode === 'replace' ? 'Đang thay phòng...' : 'Đang tạo level...');
+        const res = await levelCall('createLevel', uuid, name, { mode, keepTransform: this.$.keepTransform.checked });
+        if (!res || !res.ok) return this.showStatus((res && res.error) || 'Lỗi.', 'error');
         state.order = [];
         state.thumbs = {};
         await this.load();
-        this.showStatus(`Đã thay phòng: ${res.model} (${res.meshes} mesh). Chọn item ở bước 3 rồi Build items.`, 'ok');
+        const lost = res.lost && res.lost.length ? ` — không nối được ${res.lost.length} ô: ${res.lost.slice(0, 5).join(', ')}` : '';
+        this.showStatus(`Đã lưu ${res.url} (${res.mapped} ô)${lost}. Chọn / sắp ô ở bước 3 rồi Build items.`, lost ? 'error' : 'ok');
     },
 
     async applyFit() {
         const v = {};
         for (const k of FIT_KEYS) if (this.$[k].value !== '') v[k] = Number(this.$[k].value);
         v.allowUpscale = this.$.allowUpscale.checked;
-        const res = await call('setFit', v);
-        this.showStatus(res && res.ok ? 'Đã áp dụng khung phòng.' : (res && res.error) || 'Lỗi', res && res.ok ? 'ok' : 'error');
+        const res = await levelCall('setFit', v);
+        this.showStatus(res && res.ok ? 'Đã áp dụng khung phòng vào prefab Level.' : (res && res.error) || 'Lỗi', res && res.ok ? 'ok' : 'error');
     },
 
     itemValues() {
@@ -282,18 +311,18 @@ exports.methods = {
     },
 
     async applyItems() {
-        const res = await call('setItems', this.itemValues());
-        this.showStatus(res && res.ok ? 'Đã áp dụng thông số vào ItemManager (item giữ nguyên, chưa build lại).' : (res && res.error) || 'Lỗi', res && res.ok ? 'ok' : 'error');
+        const res = await levelCall('setItems', this.itemValues());
+        this.showStatus(res && res.ok ? 'Đã áp dụng thông số (LevelConfig + TrayLayout), danh sách ô giữ nguyên.' : (res && res.error) || 'Lỗi', res && res.ok ? 'ok' : 'error');
     },
 
     async build() {
         if (!state.order.length) return this.showStatus('Chưa chọn mesh nào ở bước 3.', 'error');
-        this.showStatus('Đang sinh item...');
-        await call('setItems', this.itemValues());
-        const res = await call('buildItems', state.order);
+        this.showStatus('Đang ghi ô + đo icon...');
+        await levelCall('setItems', this.itemValues());
+        const res = await levelCall('buildItems', state.order);
         if (!res || !res.ok) return this.showStatus((res && res.error) || 'Build lỗi.', 'error');
         await this.load();
-        this.showStatus(`Đã sinh ${res.count} item vào thanh. Bấm Kiểm tra rồi Save.`, 'ok');
+        this.showStatus(`Đã lưu ${res.count} ô + scale icon (${res.key}) vào prefab Level. Bấm Kiểm tra rồi Save.`, 'ok');
     },
 
     async validate() {
@@ -310,15 +339,17 @@ exports.methods = {
     },
 
     async save() {
-        const res = await Editor.Message.request(PKG, 'save-scene');
-        this.showStatus(res && res.ok ? 'Đã lưu scene.' : (res && res.error) || 'Lưu lỗi.', res && res.ok ? 'ok' : 'error');
+        const res = await levelCall('save');
+        this.showStatus(res && res.ok ? 'Đã Apply level vào prefab và lưu scene.' : (res && res.error) || 'Lưu lỗi.', res && res.ok ? 'ok' : 'error');
     },
 };
 
 exports.ready = async function () {
     const on = (el, fn) => el.addEventListener('click', fn.bind(this));
     on(this.$.refresh, async () => { await this.loadModels(); await this.load(); });
-    on(this.$.swap, this.swap);
+    on(this.$.swap, () => this.makeLevel('replace'));
+    on(this.$.newLevel, () => this.makeLevel('new'));
+    on(this.$.useLevel, this.useLevel);
     on(this.$.applyFit, this.applyFit);
     on(this.$.portrait, () => this.setPreview({ orientation: 0 }));
     on(this.$.landscape, () => this.setPreview({ orientation: 1 }));

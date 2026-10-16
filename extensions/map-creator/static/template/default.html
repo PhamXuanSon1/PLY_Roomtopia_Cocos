@@ -29,18 +29,27 @@
     </section>
 
     <section>
-        <h3><b>1</b> Model phòng</h3>
+        <h3><b>1</b> Level (map)</h3>
+        <div class="hint">Mỗi map = 1 prefab trong 5.Prefabs/Levels (phòng + LevelConfig). Scene chỉ chứa 1 level — đổi map = đổi prefab.</div>
         <div class="hint">Đang dùng: <span id="roomName">—</span></div>
         <div class="row">
-            <select id="model" class="grow" title="Danh sách FBX / glTF / prefab trong assets. Chọn model phòng mới rồi bấm Thay phòng"></select>
-            <button id="swap" class="danger" title="Thay model con của node gốc phòng bằng model đang chọn. Node gốc (FitInBox, ModelRotate) giữ nguyên nên mọi tham chiếu vẫn đúng. Model cũ và TOÀN BỘ item trong thanh bị xoá → làm tiếp bước 3. Ctrl+Z để hoàn tác">Thay phòng</button>
+            <select id="levelList" class="grow" title="Prefab Level có sẵn trong 5.Prefabs/Levels"></select>
+            <button id="useLevel" title="ĐỔI MAP: thay level trong scene bằng prefab đang chọn (prefab level hiện tại giữ nguyên trong assets). Nhớ Save scene">Dùng level này</button>
         </div>
-        <label class="check" title="BẬT: model mới nhận vị trí / góc xoay / scale của model cũ (FBX cùng quy trình xuất từ phần mềm 3D thường khớp luôn). TẮT: giữ transform gốc trong file FBX"><input type="checkbox" id="keepTransform" checked> Giữ position / rotation / scale của model cũ</label>
+        <div class="row">
+            <select id="model" class="grow" title="Danh sách FBX / glTF / prefab trong assets — model phòng để Thay phòng hoặc Tạo level mới"></select>
+            <button id="swap" class="danger" title="THAY PHÒNG của level hiện tại bằng model đang chọn: giữ thông số (khung, storeAfterItems, snapPx), nối lại các ô theo đường dẫn / tên mesh, ghi đè chính prefab Level đó. Ctrl+Z để hoàn tác">Thay phòng</button>
+        </div>
+        <div class="row">
+            <input type="text" id="levelName" class="grow" placeholder="Tên level mới (vd Kitchen)" title="Tên prefab mới: 5.Prefabs/Levels/Level_<tên>.prefab">
+            <button id="newLevel" class="primary" title="TẠO LEVEL MỚI từ model đang chọn: prefab Level_<tên>.prefab mới (copy thông số khung / xoay của level hiện tại), thay level đang có trong scene. Prefab level cũ vẫn giữ nguyên trong assets">Tạo level mới</button>
+        </div>
+        <label class="check" title="BẬT: node gốc + model mới nhận vị trí / góc xoay / scale của level hiện tại (FBX cùng quy trình xuất từ phần mềm 3D thường khớp luôn). TẮT: giữ transform gốc trong file FBX"><input type="checkbox" id="keepTransform" checked> Giữ position / rotation / scale của level hiện tại</label>
     </section>
 
     <section>
         <h3><b>2</b> Khung phòng (FitInBox)</h3>
-        <div class="hint">FitInBox tự scale + dời phòng cho nằm gọn trong vùng chơi (khung xanh lá của gizmo). Các số dưới đây chỉnh cách đặt:</div>
+        <div class="hint">FitInBox (trên prefab Level) tự scale + dời phòng cho nằm gọn trong vùng chơi (khung xanh lá của gizmo). Áp dụng = ghi vào prefab Level:</div>
         <div class="grid">
             <label title="Vị trí NGANG của phòng trong vùng chơi. 0 = sát trái, 0.5 = giữa, 1 = sát phải">anchorX <input type="number" id="anchorX" step="0.01" min="0" max="1"></label>
             <label title="Vị trí DỌC của phòng trong vùng chơi. 0 = sát đáy (gần thanh item), 0.5 = giữa, 1 = sát đỉnh">anchorY <input type="number" id="anchorY" step="0.01" min="0" max="1"></label>
@@ -70,14 +79,15 @@
         <div class="hint">Chưa chọn (<span id="restCount">0</span>) — kéo thẻ lên bảng trên (hoặc tick) để thêm; kéo thẻ từ bảng trên xuống đây để bỏ.</div>
         <div id="restList" class="board rest"></div>
         <div class="grid">
-            <label title="Chơi đủ N item thì vào chế độ 'chạm đâu cũng mở store' (CTA). 0 = tắt, chỉ mở store khi xếp xong hết. Nên nhỏ hơn tổng số item">storeAfterItems <input type="number" id="storeAfterItems" step="1" min="0"></label>
+            <label title="(Riêng map này — LevelConfig) Chơi đủ N item thì vào chế độ 'chạm đâu cũng mở store' (CTA). 0 = tắt, chỉ mở store khi xếp xong hết. Nên nhỏ hơn tổng số item">storeAfterItems <input type="number" id="storeAfterItems" step="1" min="0"></label>
+            <label title="(Riêng map này — LevelConfig) Ngưỡng thả đúng, px quy về màn rộng 393pt. 0 = dùng SnapRules.snapPx chung của scene">snapPx <input type="number" id="snapPx" step="5" min="0"></label>
             <label title="Icon chiếm bao nhiêu phần ô vuông trong thanh. 0.65 = 65% cạnh ô. Tăng nếu icon nhìn nhỏ, giảm nếu icon chạm mép / dính nhau">iconFill <input type="number" id="iconFill" step="0.05" min="0.1" max="1"></label>
             <label title="Khoảng cách giữa tâm 2 ô liền nhau trong thanh (px, thanh rộng ~1080). Lớn hơn = ô thưa hơn, ít ô hiện cùng lúc">spacing <input type="number" id="spacing" step="10"></label>
             <label title="Ô đầu tiên cách mép trái thanh bao nhiêu px">edgePad <input type="number" id="edgePad" step="10"></label>
         </div>
         <div class="row">
-            <button id="build" class="primary" title="Ghi lựa chọn vào ItemManager.pickTargets rồi SINH LẠI toàn bộ item trong thanh theo đúng thứ tự trên (item cũ bị xoá, icon được đo lại). Đồng thời lưu 4 thông số bên trên">Build items</button>
-            <button id="applyItems" title="Chỉ ghi 4 thông số storeAfterItems / iconFill / spacing / edgePad vào ItemManager — KHÔNG sinh lại item, KHÔNG đổi lựa chọn mesh. Dùng khi chỉ muốn chỉnh số">Áp dụng thông số (không build lại)</button>
+            <button id="build" class="primary" title="Ghi danh sách + thứ tự ô vào LevelConfig, đo scale icon theo cỡ ô / iconFill hiện tại rồi lưu sẵn vào prefab Level (lúc chạy khỏi đo lại). Đồng thời ghi các thông số bên trên">Build items</button>
+            <button id="applyItems" title="Chỉ ghi thông số: storeAfterItems / snapPx vào LevelConfig (prefab Level), iconFill / spacing / edgePad vào TrayLayout (scene) — KHÔNG đổi danh sách ô, KHÔNG đo lại icon">Áp dụng thông số (không build lại)</button>
         </div>
     </section>
 
@@ -85,7 +95,7 @@
         <h3><b>4</b> Kiểm tra &amp; lưu</h3>
         <div class="row">
             <button id="validate" title="Quét lỗi: mesh thiếu bounds, item trỏ mesh không tồn tại, tên trùng, pivot trùng, storeAfterItems quá lớn, phòng lòi khỏi vùng chơi...">Kiểm tra</button>
-            <button id="save" class="primary" title="Lưu scene đang mở (như Ctrl+S)">Save scene</button>
+            <button id="save" class="primary" title="Apply level vào prefab Level + lưu scene đang mở (như Ctrl+S)">Save</button>
         </div>
         <div id="report" class="report"></div>
     </section>

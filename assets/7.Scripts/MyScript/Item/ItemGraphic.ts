@@ -64,8 +64,11 @@ export class ItemGraphic extends Component {
     private static quadMesh: any = null;
 
     // =========================================================== setup
-    /** Gọi 1 lần lúc build. PHẢI gọi trước setGray() vì cache defaultMats ở đây. */
-    bind(target: Node, _cam: Camera | null = null, cellPx = CELL_PX, iconFill = ICON_FILL) {
+    /**
+     * Gọi 1 lần lúc build. PHẢI gọi trước setGray() vì cache defaultMats ở đây.
+     * presetScale > 0: scale icon đã đo sẵn (LevelConfig) → không đo lại, chỉ căn tâm theo góc xoay hiện tại.
+     */
+    bind(target: Node, _cam: Camera | null = null, cellPx = CELL_PX, iconFill = ICON_FILL, presetScale = 0) {
         this.target = target;
         this.cellPx = cellPx;
         this.iconFill = iconFill;
@@ -97,7 +100,10 @@ export class ItemGraphic extends Component {
         // 3. cắm vào ô. Clone tái dùng (từ Preview) → giữ nguyên scale/vị trí đã lưu, KHÔNG đo lại
         const reused = clone === this.iconClone;
         this.iconClone = clone;
-        if (!reused) {
+        if (!reused && presetScale > 0) {
+            this.iconScale = presetScale;
+            this.putIconInCell();                          // scale ≠ 1 → recenter() căn tâm bbox vào giữa ô
+        } else if (!reused) {
             this.iconScale = 1;
             this.putIconInCell();
             this.iconScale = this.fitScale();
@@ -132,6 +138,7 @@ export class ItemGraphic extends Component {
         this.applyClip();
     }
 
+    /** Đồng bộ vùng cắt cho thẻ Cell và các material riêng của icon/bóng. */
     private applyClip() {
         this.cell?.getComponent(QuadImage)?.setClip(this.clipRect);
         for (const m of this.clipMats) {
@@ -328,11 +335,13 @@ export class ItemGraphic extends Component {
         return out.set((min.x + max.x) / 2, max.y, (min.z + max.z) / 2);
     }
 
+    /** Đổi layer cho node và mọi node con để icon được vẽ bởi đúng camera. */
     static setLayerRecursive(n: Node, layer: number) {
         n.layer = layer;
         for (const ch of n.children) ItemGraphic.setLayerRecursive(ch, layer);
     }
 
+    /** Dùng chung mesh quad cho bóng; không có material bóng thì ẩn node bóng. */
     private setupShadow() {
         if (!this.shadow) return;
         if (!this.shadowMat) { this.shadow.node.active = false; return; }
@@ -343,18 +352,21 @@ export class ItemGraphic extends Component {
     }
 
     // =========================================================== target trong map
+    /** Dừng nháy và phủ material xám lên mọi slot của target chưa hoàn thành. */
     setGray(gray: Material) {
         this.stopBlink();                          // bản material riêng khi nháy sẽ bị thay ở dưới
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats.map(() => gray);
     }
 
+    /** Dừng nháy rồi trả các material gốc đã lưu khi bind target. */
     restore() {
         this.stopBlink();
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats;
     }
 
+    /** Thay mọi slot material của target bằng material hướng dẫn. */
     setHintMat(hint: Material) {
         if (!this.targetRenderer) return;
         this.targetRenderer.sharedMaterials = this.defaultMats.map(() => hint);
@@ -405,6 +417,7 @@ export class ItemGraphic extends Component {
         this.blinkBase.length = 0;
     }
 
+    /** Nội suy màu nháy đi-về và giữ màu gốc trong khoảng nghỉ giữa hai chu kỳ. */
     update(dt: number) {
         if (this.blinkTime < 0) return;
         const cycle = Math.max(this.blinkCycle, 0.05);
@@ -443,6 +456,7 @@ export class ItemGraphic extends Component {
         if (this.shadow) this.shadow.node.active = show && !!this.shadowMat;
     }
 
+    /** Bật/tắt node item theo vùng nhìn thấy của thanh, chỉ ghi khi trạng thái đổi. */
     setVisible(on: boolean) {
         if (this.node.active === on) return;
         this.node.active = on;

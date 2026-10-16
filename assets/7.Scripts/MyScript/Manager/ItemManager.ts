@@ -1,4 +1,4 @@
-import { _decorator, Camera, Component, director, EventTouch, Input, input, Layers, MeshRenderer, Node, Quat, tween, UITransform, Vec2, Vec3, Vec4 } from 'cc';
+import { _decorator, Camera, CCObject, Component, EventTouch, Input, input, Layers, MeshRenderer, Node, Quat, UITransform, Vec2, Vec3, Vec4 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
 import { BottomBar } from '../Item/BottomBar';
@@ -7,6 +7,7 @@ import { ItemGraphic } from '../Item/ItemGraphic';
 import { ReleaseResult } from '../Item/ItemMovement';
 import { CELL_PX, px } from '../Config/TrayConfig';
 import { GameManager } from './GameManager';
+import { LevelConfig } from './LevelConfig';
 import { SnapEffect } from '../Utils/SnapEffect';
 import { AppLovinAnalytics } from '../../Tool/AppLovinAnalytics';
 import { TrayLayout } from './TrayLayout';
@@ -19,8 +20,10 @@ const { ccclass, property, executeInEditMode } = _decorator;
 /**
  * ItemManager: quản lý TẤT CẢ item trong thanh.
  * Thông số tách sang component cùng node: TrayLayout (xếp ô + xem trước), SnapRules (luật thả), ItemSfx (âm thanh).
+ * Danh sách item + thứ tự + storeAfterItems là của MAP → nằm ở LevelConfig (prefab Level), không lưu trong scene.
  *
- *  build()            tạo 1 Item cho mỗi mesh trong map, xếp vào BottomBar/Content
+ *  build()            lúc chạy: lấy prefab Item từ Ply_Pool cho mỗi ô của LevelConfig, xếp vào BottomBar/Content
+ *  editor             item xem trước sinh từ LevelConfig, là node DontSave (không lưu vào scene)
  *  updateVisibility() mỗi frame: xếp ô theo bar.offset (vòng lặp nếu tràn thanh), ẩn ô ngoài thanh.
  *                     Thanh ngang: ô xếp theo +X; thanh dọc (màn ngang, bar.vertical): theo −Y từ trên xuống
  *  nhấc item          nghe BottomBar.EVENT_LIFT → pick() ô dưới ngón tay → item.onSelect
@@ -34,11 +37,12 @@ export class ItemManager extends Component implements ItemCallbacks {
     @property({ serializable: false, displayName: '⚙ Hiện thông số nâng cao', tooltip: 'Hiện các tham chiếu (prefab, thanh, camera, effect...) — thường đã gán sẵn, ít khi phải đổi' })
     showAdvanced = false;
 
-    @property({ type: [Node], tooltip: 'Các mesh trong phòng được chơi, thứ tự = thứ tự ô trong thanh. Để trống → mọi mesh trong phòng. Dễ chỉnh nhất bằng Tool → Map Creator' })
-    pickTargets: Node[] = [];
-
-    @property({ tooltip: 'Chơi đủ N item thì mọi chạm / kéo / xoay đều mở store (CTA). 0 = tắt, chỉ mở store khi xếp xong hết' })
-    storeAfterItems = 0;
+    /** Map hiện tại (prefab Level trong scene) */
+    get level(): LevelConfig | null { return LevelConfig.current; }
+    /** Mesh được chơi theo thứ tự ô (LevelConfig.items; trống → mọi mesh trong phòng) */
+    get pickTargets(): Node[] { return this.level?.targets() ?? []; }
+    /** Chơi đủ N item thì vào store mode — cấu hình theo map (LevelConfig) */
+    get storeAfterItems() { return this.level?.storeAfterItems ?? 0; }
 
     @property({ visible(this: ItemManager) { return this.showAdvanced; }, tooltip: 'BẬT: mesh KHÔNG có trong pickTargets cũng đổi sang xám (chỉ đồ được chơi mới có màu khi xếp xong)' })
     grayOthers = true;
@@ -101,8 +105,8 @@ export class ItemManager extends Component implements ItemCallbacks {
     get showHiddenItems() { return this.layout.showHiddenItems; }
     /** Chuyển cờ xem toàn bộ hàng item sang TrayLayout. */
     set showHiddenItems(v: boolean) { this.layout.showHiddenItems = v; }
-    /** Ngưỡng thả đúng tính bằng px chuẩn màn rộng 393pt, lấy từ SnapRules. */
-    get snapPx() { return this.rules.snapPx; }
+    /** Ngưỡng thả đúng (px chuẩn màn rộng 393pt): LevelConfig.snapPx nếu > 0, không thì SnapRules. */
+    get snapPx() { const l = this.level?.snapPx ?? 0; return l > 0 ? l : this.rules.snapPx; }
     /** Cho biết ngưỡng thả đúng có cộng thêm kích thước bao của target hay không. */
     get snapByBounds() { return this.rules.snapByBounds; }
     /** Cho biết target của item có bắt buộc gần điểm thả nhất hay không. */
@@ -137,6 +141,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     /** Layer riêng cho thẻ + icon trong thanh (đèn chiếu, phân biệt với map). Cắt theo vùng thanh do shader clipRect lo */
     static readonly TRAY_LAYER_NAME = 'TRAY';
     static readonly TRAY_LAYER_BIT = 0;
+    /** Mặt nạ layer riêng dùng chung cho icon trong thanh và ghost đang kéo. */
     static get trayLayer() { return 1 << ItemManager.TRAY_LAYER_BIT; }
 
     /** Đặt layer TRAY cho item và toàn bộ con */
@@ -152,7 +157,9 @@ export class ItemManager extends Component implements ItemCallbacks {
     items: ItemController[] = [];
     collected = 0;
 
+    /** Tổng số item của lượt chơi, gồm cả item đã hoàn thành. */
     get total() { return this.items.length; }
+    /** Số item chưa hoàn thành để tính bố cục thanh và điều kiện kết thúc. */
     get remain() { return this.items.length - this.collected; }
 
     // ---- nội bộ ----
@@ -167,6 +174,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     /** Vùng thanh trên màn hình (0..1) → clipRect cho shader icon/thẻ; item ngoài vùng bị cắt */
     private barRect = new Vec4(0, 0, 1, 1);
     private _tmpRect = new Vec4();
+    /** Báo đang kéo item để tạm chặn xoay phòng và ẩn tay hướng dẫn. */
     get isDragging() { return !!this.dragging; }
     private touchId = -1;
     /** nửa độ dài thanh theo trục xếp (local px): ngang = width/2, dọc = height/2 */
@@ -178,17 +186,20 @@ export class ItemManager extends Component implements ItemCallbacks {
     private period = 0;
 
     // =========================================================== vòng đời
+    /** Đảm bảo layer TRAY tồn tại trước khi dựng icon và ghost. */
     onLoad() {
         // đăng ký layer TRAY (bit 0) nếu project chưa khai báo trong Project Settings → Layers
         const existing = Layers.nameToLayer(ItemManager.TRAY_LAYER_NAME);
         if (existing === undefined || existing < 0) Layers.addLayer(ItemManager.TRAY_LAYER_NAME, ItemManager.TRAY_LAYER_BIT);
     }
 
+    /** Dựng thanh item lúc chơi sau khi các component đã hoàn tất onLoad. */
     start() {
         if (EDITOR) return;
         this.build();
     }
 
+    /** Nhận yêu cầu nhấc item/đổi bố cục từ thanh và theo dõi ngón tay kéo item. */
     onEnable() {
         if (EDITOR) return;
         this.bar?.node.on(BottomBar.EVENT_LIFT, this.onLift, this);
@@ -198,6 +209,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         input.on(Input.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
     }
 
+    /** Gỡ sự kiện của thanh, kéo-thả và mở store khi manager bị tắt. */
     onDisable() {
         if (EDITOR) return;
         this.bar?.node.off(BottomBar.EVENT_LIFT, this.onLift, this);
@@ -210,6 +222,7 @@ export class ItemManager extends Component implements ItemCallbacks {
 
     private lastModelRot = new Quat();
 
+    /** Đồng bộ góc icon theo phòng; cập nhật bố cục editor hoặc vùng item hiện khi chơi. */
     update() {
         this.syncIconRotation();          // chạy cả trong editor: xoay model root là icon xoay theo ngay
         if (EDITOR) { this.editorLayout(); return; }
@@ -217,7 +230,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     }
 
     private _editorKey = '';
-    private _editorFitKey = '';
+    private _previewKey = '';
 
     /**
      * Editor: xếp item preview Y NHƯ lúc Play (vòng lặp khi tràn thanh, ô ngoài thanh ẩn, item đã gom ẩn + dồn lên).
@@ -226,11 +239,8 @@ export class ItemManager extends Component implements ItemCallbacks {
     private editorLayout() {
         const bar = this.bar, content = bar?.content;
         if (!bar || !content) return;
+        this.ensurePreview();
         const list = this.previewList();
-        // icon đo lại khi đổi iconFill / cellSize. Đổi dọc ↔ ngang thì KHÔNG đo lại (lúc chạy cũng giữ scale icon đã lưu)
-        const fitKey = `${this.iconFill}|${this.cellSize}`;
-        if (this._editorFitKey && fitKey !== this._editorFitKey) this.refitIcons(list);
-        this._editorFitKey = fitKey;
 
         const cell = this.cellPx();
         const key = `${list.map(it => it.node.uuid).join(',')}|${this.spacing}|${this.edgePad}|${this.cullPad}|${bar.length}|${bar.vertical}|${cell}`
@@ -261,12 +271,72 @@ export class ItemManager extends Component implements ItemCallbacks {
         if (n > 0) bar.setCount(done, n);
     }
 
-    /** Editor: item preview trong Content theo thứ tự Hierarchy */
+    /** Editor: item preview trong Content theo thứ tự ô của LevelConfig */
     private previewList(): ItemController[] {
         const content = this.bar?.content;
         if (!content) return [];
-        return content.getComponentsInChildren(ItemController)
-            .sort((a, b) => a.node.getSiblingIndex() - b.node.getSiblingIndex());
+        const order = new Map(this.pickTargets.map((t, i) => [t, i] as [Node, number]));
+        /** Lấy thứ tự target trong level; item không có target hợp lệ được đẩy xuống cuối. */
+        const rank = (it: ItemController) => (it.target && order.has(it.target) ? order.get(it.target)! : 1e9);
+        return content.getComponentsInChildren(ItemController).sort((a, b) => rank(a) - rank(b));
+    }
+
+    /** Cỡ ô | iconFill hiện tại — scale icon đo sẵn trong LevelConfig chỉ dùng khi khớp key này */
+    iconFitKey() {
+        return `${this.cellPx()}|${this.iconFill}`;
+    }
+
+    /**
+     * Editor: item xem trước khớp LevelConfig chưa (danh sách, thứ tự, scale icon, cỡ ô / iconFill)? Chưa → sinh lại.
+     * Item xem trước là node DontSave: không lưu vào scene, lúc chạy build() sinh từ Ply_Pool.
+     */
+    private ensurePreview() {
+        const level = this.level, content = this.bar?.content;
+        if (!content) return;
+        const targets = level ? level.targets() : [];
+        const key = targets.map(t => t.uuid).join(',') + '|' + this.iconFitKey() + '|' + (level?.iconFitKey ?? '')
+            + '|' + (level?.items.map(it => it.iconScale.toFixed(4)).join(',') ?? '');
+        const have = content.getComponentsInChildren(ItemController);
+        const fine = have.length === targets.length && have.every(it => it.target?.isValid && it.graphic?.iconClone?.isValid);
+        if (key === this._previewKey && fine) return;
+        this._previewKey = key;
+        this.rebuildPreview(targets, true);
+    }
+
+    /** Editor: xoá preview cũ, sinh 1 item DontSave cho mỗi target. usePreset = dùng scale icon đã lưu trong LevelConfig (nếu khớp key) */
+    private rebuildPreview(targets: Node[], usePreset: boolean) {
+        const content = this.bar?.content, level = this.level;
+        if (!content) return;
+        this.clearContent();
+        const cam = this.bar!.cam ?? this.cam;
+        const px = this.cellPx(), fill = this.iconFill, key = this.iconFitKey();
+        for (const target of targets) {
+            const node = Ply_Pool.create(PoolType.Item);               // editor: instantiate prefab Item khai báo ở Ply_Pool
+            if (!node) return;
+            ItemManager.unlinkPrefab(node);
+            node.hideFlags |= CCObject.Flags.DontSave | CCObject.Flags.HideInHierarchy;   // chỉ để xem, không lưu vào scene
+            node.name = `Item_${target.name}`;
+            node.setParent(content);
+            const item = node.getComponent(ItemController)!;
+            item.target = target;
+            item.graphic!.bind(target, cam, px, fill, usePreset && level ? level.presetScale(target, key) : 0);   // chỉ hình, không gray
+            ItemManager.unlinkPrefab(node);
+            ItemManager.setTrayLayer(node);
+        }
+        this.applyShowCells();
+        this._editorKey = '';                                          // editorLayout xếp / cull lại
+    }
+
+    /**
+     * Editor (Map Creator gọi): đo lại scale icon của mọi ô theo cỡ ô / iconFill hiện tại.
+     * Trả về { key, items: [{ uuid (target), scale }] } để ghi vào LevelConfig của prefab Level.
+     */
+    measureIcons(): { key: string; items: { uuid: string; scale: number }[] } {
+        const targets = this.pickTargets;
+        this.rebuildPreview(targets, false);
+        this._previewKey = '';                                         // frame sau ensurePreview so lại với LevelConfig mới
+        const byTarget = new Map(this.bar!.content!.getComponentsInChildren(ItemController).map(it => [it.target, it] as [Node | null, ItemController]));
+        return { key: this.iconFitKey(), items: targets.map(t => ({ uuid: t.uuid, scale: byTarget.get(t)?.graphic?.iconScale ?? 0 })) };
     }
 
     /** Editor: ẩn/hiện item preview (lúc chạy build() bật lại hết rồi tự cull) */
@@ -274,13 +344,8 @@ export class ItemManager extends Component implements ItemCallbacks {
         if (it.node.active !== on) it.node.active = on;
     }
 
-    /** Editor: đo lại scale icon của mọi item theo cellPx / iconFill hiện tại */
-    private refitIcons(list: ItemController[]) {
-        const px = this.cellPx();
-        for (const it of list) it.graphic?.refit(px, this.iconFill);
-        this._editorKey = '';
-    }
 
+    /** Cập nhật vùng cắt sau bước bố cục để icon không vẽ lòi ra ngoài thanh. */
     lateUpdate() {
         if (EDITOR) return;
         this.updateClip();
@@ -309,38 +374,19 @@ export class ItemManager extends Component implements ItemCallbacks {
     }
 
     // =========================================================== 1. build
+    /** Lúc chạy: 1 ô cho mỗi target của LevelConfig, prefab Item lấy từ Ply_Pool */
     build() {
         const gm = GameManager.inst!;
+        const level = this.level;
+        if (!level) { console.error('[ItemManager] scene chưa có prefab Level (LevelConfig) — không có item'); return; }
         const cam = this.camera();
         const content = this.bar!.content!;
         this.barHalfW = this.barHalfLen();
         this.lastVertical = this.bar!.vertical;
+        for (const c of content.children.slice()) c.destroy();         // scene cũ còn lưu item preview → bỏ, sinh mới
 
-        const allMeshes = gm.model!.getComponentsInChildren(MeshRenderer).map(r => r.node);
-
-        // item có sẵn trong Content (sinh từ Preview trong editor) → dùng lại, KHÔNG sinh thêm
-        const existing = content.getComponentsInChildren(ItemController)
-            .sort((a, b) => this.orderByHierarchy
-                ? a.node.getSiblingIndex() - b.node.getSiblingIndex()      // thứ tự trong Hierarchy = thứ tự ô
-                : a.node.position.x - b.node.position.x);
-        // tìm target cho item cũ: ItemController.target → ItemGraphic.target → theo tên "Item_<tên mesh>"
-        for (const it of existing) {
-            if (it.target?.isValid) continue;
-            const byGraphic = it.graphic?.target;
-            const byName = allMeshes.find(m => it.node.name === `Item_${m.name}`);
-            it.target = byGraphic?.isValid ? byGraphic : (byName ?? null);
-            if (!it.target) console.warn(`[ItemManager] ${it.node.name} không tìm được target — xoá`);
-        }
-        const usable = existing.filter(it => it.target);
-        for (const it of existing) if (!it.target) it.node.destroy();
-
-        let targets: Node[];
-        if (usable.length > 0) {
-            targets = usable.map(it => it.target!);
-        } else {
-            targets = this.pickTargets.length > 0 ? this.pickTargets.slice() : allMeshes.slice();
-        }
-        existing.length = 0; existing.push(...usable);
+        const allMeshes = level.allMeshes();
+        const targets = level.targets();
 
         // mesh không được chọn chơi: xám luôn (không cần trả màu nên đổi thẳng)
         if (this.grayOthers && gm.grayMat) {
@@ -351,17 +397,14 @@ export class ItemManager extends Component implements ItemCallbacks {
             }
         }
 
+        const fitKey = this.iconFitKey();
         this.items = [];
         targets.forEach((target, i) => {
-            let item = existing[i];
-            if (item && !item.node.active) item.node.active = true;   // editor có thể đã ẩn (cull / previewCollected) → bật lại, cull làm lại bên dưới
-            if (!item) {
-                const node = Ply_Pool.create(PoolType.Item, content);      // prefab Item khai báo ở Ply_Pool
-                item = node?.getComponent(ItemController) ?? null;
-                if (!item) { console.error('[ItemManager] Ply_Pool chưa khai báo prefab Item'); return; }
-                this.placeSlot(item, this.slotX(i));
-            }
-            // item có sẵn: giữ nguyên vị trí/scale như editor; Cell luôn theo showCells (mặc định tắt)
+            const node = Ply_Pool.create(PoolType.Item, content);          // prefab Item khai báo ở Ply_Pool
+            const item = node?.getComponent(ItemController) ?? null;
+            if (!node || !item) { console.error('[ItemManager] Ply_Pool chưa khai báo prefab Item'); return; }
+            node.name = `Item_${target.name}`;
+            this.placeSlot(item, this.slotX(i));
             item.init(
                 target,
                 i,
@@ -374,6 +417,7 @@ export class ItemManager extends Component implements ItemCallbacks {
                 this.snapScale,
                 this.snapScaleUpDuration,
                 this.snapScaleDownDuration,
+                level.presetScale(target, fitKey),                     // scale icon đã đo sẵn (khớp cỡ ô / iconFill) → khỏi đo lại
             );
             item.graphic!.blinkColor = gm.blinkOnDrag ? gm.blinkColor : null;   // fade màu target khi kéo
             item.graphic!.blinkCycle = gm.blinkCycle;
@@ -390,7 +434,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.refreshCount();
         this.updateVisibility();
         this.barRect.set(-1, -1, -1, -1);              // ép updateClip() gán clipRect cho item mới ở lateUpdate
-        console.log(`[ItemManager] ${this.total} items`);
+        console.log(`[ItemManager] ${this.total} items (${level.node.name})`);
     }
 
     /** Đẩy `collected/total` lên label của BottomBar */
@@ -444,6 +488,7 @@ export class ItemManager extends Component implements ItemCallbacks {
     }
 
     // =========================================================== 2. layout + cull (mỗi frame)
+    /** Xếp các item còn lại theo vòng cuộn và chỉ hiện ô nằm trong vùng thanh cho phép. */
     updateVisibility() {
         if (!this.bar?.content) return;
         // thanh đổi độ dài / đổi ngang↔dọc (resize / fitLayout) → tính lại loop/period
@@ -503,6 +548,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         return null;
     }
 
+    /** Gắn ngón tay cho lượt kéo mới rồi chuyển vị trí chạm tới item đang được kéo. */
     private onTouchMove(e: EventTouch) {
         if (!this.dragging) return;
         if (this.touchId === -2) this.touchId = e.getID();
@@ -510,6 +556,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         this.dragging.onMove(e.getLocation());
     }
 
+    /** Kết thúc lượt kéo của đúng ngón tay và để item tự kiểm tra kết quả thả. */
     private onTouchEnd(e: EventTouch) {
         if (!this.dragging || (this.touchId !== -2 && e.getID() !== this.touchId)) return;
         const item = this.dragging;
@@ -517,6 +564,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         item.onRelease();                  // → onSnapped hoặc onReturned
     }
 
+    /** Huỷ lượt kéo hiện tại và yêu cầu item trở về thanh. */
     private onTouchCancel(e: EventTouch) {
         if (!this.dragging) return;
         const item = this.dragging;
@@ -569,6 +617,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         return Math.min(maxX - minX, maxY - minY) / 2;
     }
 
+    /** Phát hiệu ứng thả đúng, ghi tiến trình, dồn thanh rồi xét thắng hoặc chuyển sang mở store. */
     onSnapped(item: ItemController) {
         this.sfx.playDrop();
         if (item.target) this.snapEffect?.play(item.target);
@@ -621,10 +670,12 @@ export class ItemManager extends Component implements ItemCallbacks {
         console.log(`[ItemManager] store mode sau ${this.collected} item`);
     }
 
+    /** Mở store khi người chơi chạm trong chế độ CTA sau ngưỡng hoàn thành của map. */
     private onStoreTouch() {
         ui?.openStore?.();
     }
 
+    /** Điểm nhận kết quả thả trượt/huỷ; hiện chưa xử lý thêm vì item đã tự về ô. */
     onReturned(item: ItemController, result: ReleaseResult) {
         // thả trượt: icon đã tự về ô. Chỗ này để thêm sound / hint nếu cần
     }
@@ -665,36 +716,12 @@ export class ItemManager extends Component implements ItemCallbacks {
     }
 
     // =========================================================== editor preview
-    /** Sinh item vào Content ngay trong editor. Item được LƯU vào scene và dùng lại khi Play. Không đổi màu map. */
+    /** Nút ▶ Preview items: sinh lại item xem trước, đo lại icon (chỉ để xem — lưu scale / thứ tự bằng Map Creator) */
     buildPreview() {
-        const gm = this.findGameManager();
-        const content = this.bar?.content;
-        if (!gm?.model || !content) { console.warn('[ItemManager] thiếu GameManager.model / bar.content'); return; }
-
-        this.clearContent();
-        const allMeshes = gm.model.getComponentsInChildren(MeshRenderer).map(r => r.node);
-        const targets = this.pickTargets.length > 0 ? this.pickTargets : allMeshes;
-        this.barHalfW = this.barHalfLen();
-        this.computeLoop(targets.length);
-
-        targets.forEach((target, i) => {
-            const node = Ply_Pool.create(PoolType.Item);               // editor: instantiate prefab Item khai báo ở Ply_Pool
-            if (!node) return;
-            ItemManager.unlinkPrefab(node);                       // cắt link prefab TRƯỚC khi bind (xem hàm)
-            node.name = `Item_${target.name}`;
-            node.setParent(content);                              // LƯU vào scene → Play dùng lại
-            const item = node.getComponent(ItemController)!;
-            this.placeSlot(item, this.slotX(i, targets.length, 0));
-            item.target = target;
-            item.graphic!.bind(target, this.bar!.cam ?? this.cam, this.cellPx(), this.iconFill);   // chỉ hình, không gray
-            ItemManager.unlinkPrefab(node);                       // icon clone vừa sinh (clone mesh FBX) cũng phải cắt
-            ItemManager.setTrayLayer(node);
-        });
-        this.applyShowCells();
+        if (!this.level) { console.warn('[ItemManager] scene chưa có prefab Level (LevelConfig)'); return; }
+        this.rebuildPreview(this.pickTargets, false);
         this.collected = 0;
-        this.refreshCount(targets.length);           // label trong editor cũng hiện 0/max
-        this._editorKey = '';                        // editorLayout xếp/cull lại ở frame sau
-        console.log(`[ItemManager] preview ${targets.length} items`);
+        this.refreshCount(this.pickTargets.length);
     }
 
     /**
@@ -710,37 +737,22 @@ export class ItemManager extends Component implements ItemCallbacks {
         for (const c of n.children) ItemManager.unlinkPrefab(c);
     }
 
-    /** Xếp lại item preview theo thứ tự node trong Hierarchy của Content (editor). Không sinh lại item. */
+    /** Editor: xếp lại item xem trước theo thứ tự ô của LevelConfig */
     applyOrderPreview() {
-        const content = this.bar?.content;
-        if (!content) return;
-        const list = content.getComponentsInChildren(ItemController)
-            .sort((a, b) => a.node.getSiblingIndex() - b.node.getSiblingIndex());
-        if (!list.length) return;
-        this.barHalfW = this.barHalfLen();
-        this.computeLoop(list.length);
-        list.forEach((it, i) => this.placeSlot(it, this.slotX(i, list.length, 0)));
         this._editorKey = '';
-        console.log('[ItemManager] order:', list.map(it => it.target?.name ?? it.node.name).join(' → '));
+        console.log('[ItemManager] order:', this.pickTargets.map(t => t.name).join(' → '));
     }
 
-    /** Xáo thứ tự item preview trong Content (editor) → thứ tự ô lúc Play cũng theo đó */
+    /** Editor: xáo thứ tự ô trong LevelConfig (chỉ trên instance — lưu vào prefab bằng Map Creator / Apply) */
     shufflePreview() {
-        const content = this.bar?.content;
-        if (!content) return;
-        const list = content.getComponentsInChildren(ItemController);
-        if (list.length < 2) return;
-        for (let i = list.length - 1; i > 0; i--) {
+        const items = this.level?.items;
+        if (!items || items.length < 2) return;
+        for (let i = items.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [list[i], list[j]] = [list[j], list[i]];
+            [items[i], items[j]] = [items[j], items[i]];
         }
-        this.barHalfW = this.barHalfLen();
-        this.computeLoop(list.length);
-        list.forEach((it, i) => {
-            it.node.setSiblingIndex(i);
-            this.placeSlot(it, this.slotX(i, list.length, 0));
-        });
-        this._editorKey = '';
+        this._previewKey = '';
+        console.log('[ItemManager] đã xáo thứ tự ô — mở Tool → Map Creator → Build items để lưu vào prefab Level');
     }
 
     /** Bật/tắt quad Cell của 1 item (fallback tìm con tên "Cell" cho item sinh từ prefab cũ) */
@@ -785,15 +797,11 @@ export class ItemManager extends Component implements ItemCallbacks {
         for (const it of content.getComponentsInChildren(ItemController)) this.setCellActive(it, this.cellsVisible);
     }
 
-    /** Xoá mọi con của Content */
+    /** Xoá mọi con của Content (tách ngay, destroy hoãn tới cuối frame) */
     clearContent() {
         const content = this.bar?.content;
         if (!content) return;
-        for (const c of content.children.slice()) c.destroy();
-    }
-
-    private findGameManager(): GameManager | null {
-        return GameManager.inst ?? director.getScene()?.getComponentInChildren(GameManager) ?? null;
+        for (const c of content.children.slice()) { c.removeFromParent(); c.destroy(); }
     }
 
     // =========================================================== helpers
@@ -805,6 +813,7 @@ export class ItemManager extends Component implements ItemCallbacks {
         return this.bar?.hitHeight ?? CELL_PX;
     }
 
+    /** Lấy camera đã gán cho manager, nếu thiếu thì dùng camera world của UI. */
     private camera(): Camera {
         return this.cam ?? ui.wCamera;
     }

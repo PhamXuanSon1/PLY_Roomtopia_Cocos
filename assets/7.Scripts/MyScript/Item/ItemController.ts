@@ -37,10 +37,11 @@ export class ItemController extends Component {
     private _snapScaleUpDuration = 0;
     private _snapScaleDownDuration = 0;
 
+    /** Cho biết item đã đặt đúng chỗ để thanh và tay hướng dẫn bỏ qua item này. */
     get isCompleted() { return this.state === ItemState.Completed; }
 
-    /** Gọi 1 lần lúc ItemManager build */
-    init(target: Node, index: number, cam: Camera, ghostRoot: Node, gray: Material | null, cb: ItemCallbacks, cellPx?: number, iconFill?: number, snapScale = 1, snapScaleUpDuration = 0, snapScaleDownDuration = 0) {
+    /** Gọi 1 lần lúc ItemManager build. presetScale > 0 = scale icon đã đo sẵn trong LevelConfig */
+    init(target: Node, index: number, cam: Camera, ghostRoot: Node, gray: Material | null, cb: ItemCallbacks, cellPx?: number, iconFill?: number, snapScale = 1, snapScaleUpDuration = 0, snapScaleDownDuration = 0, presetScale = 0) {
         this.target = target;
         this.index = index;
         this._cb = cb;
@@ -48,7 +49,7 @@ export class ItemController extends Component {
         this._snapScaleUpDuration = snapScaleUpDuration;
         this._snapScaleDownDuration = snapScaleDownDuration;
 
-        this.graphic!.bind(target, cam, cellPx, iconFill);
+        this.graphic!.bind(target, cam, cellPx, iconFill, presetScale);
         if (gray) this.graphic!.setGray(gray);
 
         const m = this.movement!;
@@ -60,6 +61,7 @@ export class ItemController extends Component {
     // ------------------------------------------------------------ input (từ ItemManager)
     private _cellWasActive = false;
 
+    /** Bắt đầu kéo item trong thanh, ẩn thẻ Cell và nháy target để chỉ vị trí cần thả. */
     onSelect(screenPos: Vec2) {
         if (this.state !== ItemState.InTray) return;
         this.state = ItemState.Dragging;
@@ -76,11 +78,13 @@ export class ItemController extends Component {
         if (cell) cell.active = this._cellWasActive;
     }
 
+    /** Chuyển vị trí ngón tay cho bộ di chuyển khi item đang ở trạng thái kéo. */
     onMove(screenPos: Vec2) {
         if (this.state !== ItemState.Dragging) return;
         this.movement!.move(screenPos);
     }
 
+    /** Kết thúc kéo, kiểm tra snap rồi hoàn thành item hoặc trả thẻ và báo thả trượt. */
     onRelease() {
         if (this.state !== ItemState.Dragging) return;
         const ghostPos = this.movement!.release();
@@ -95,6 +99,7 @@ export class ItemController extends Component {
         }
     }
 
+    /** Huỷ kéo, trả icon/thẻ về thanh và báo kết quả thả trượt cho manager. */
     onCancel() {
         if (this.state !== ItemState.Dragging) return;
         this.movement!.cancel();

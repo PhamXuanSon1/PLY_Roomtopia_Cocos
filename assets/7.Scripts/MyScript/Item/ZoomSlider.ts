@@ -1,6 +1,7 @@
 import { _decorator, Camera, Component, EventTouch, math, MeshRenderer, Node, UITransform, Vec3 } from 'cc';
 import { EDITOR } from 'cc/env';
 import { ui } from '../../Manager/UI';
+import { LevelConfig } from '../Manager/LevelConfig';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 /**
@@ -19,7 +20,7 @@ const { ccclass, property, executeInEditMode } = _decorator;
 @ccclass('ZoomSlider')
 @executeInEditMode
 export class ZoomSlider extends Component {
-    @property({ type: Node, tooltip: 'Root phòng (Gameplay/Lv50_Bathroom_Root)' })
+    @property({ type: Node, tooltip: 'Node phòng cần zoom. Để trống → node gốc của prefab Level hiện tại' })
     model: Node | null = null;
 
     @property({ type: Node, tooltip: 'Node handle (con của thanh). Tự đặt y theo progress' })
@@ -51,16 +52,21 @@ export class ZoomSlider extends Component {
     private _touchId = -1;
     private _editorKey = '';
 
+    /** Hệ số zoom hiện tại so với scale gốc của phòng. */
     get zoom() { return this._zoom; }
+    /** Vị trí tay nắm từ 0 đến 1; khoảng zoom không hợp lệ thì trả 0. */
     get progress() { return this.maxZoom > this.minZoom ? (this._zoom - this.minZoom) / (this.maxZoom - this.minZoom) : 0; }
 
+    /** Tìm tay nắm/phòng, ghi scale gốc và áp mức zoom khởi đầu khi chơi. */
     onLoad() {
         if (!this.handle) this.handle = this.node.getChildByName('Handle');     // chưa gán trong Inspector → lấy con "Handle"
         if (EDITOR) return;
+        if (!this.model) this.model = LevelConfig.current?.node ?? null;
         if (this.model) { this._base = this.model.scale.x; this._lastSet = NaN; }
         this.setZoom(this.startZoom);
     }
 
+    /** Đăng ký thao tác chạm/kéo trực tiếp trên node thanh zoom khi chơi. */
     onEnable() {
         if (EDITOR) return;
         this.node.on(Node.EventType.TOUCH_START, this.onTouchStart, this);
@@ -69,6 +75,7 @@ export class ZoomSlider extends Component {
         this.node.on(Node.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
     }
 
+    /** Gỡ sự kiện và nhả ngón tay để lần bật sau không giữ trạng thái kéo cũ. */
     onDisable() {
         if (EDITOR) return;
         this.node.off(Node.EventType.TOUCH_START, this.onTouchStart, this);
@@ -88,8 +95,11 @@ export class ZoomSlider extends Component {
         this.setZoom(this.startZoom);
     }
 
+    /** Nhận scale/vị trí mới từ FitInBox rồi zoom quanh tâm phòng để hình không bị trôi. */
     lateUpdate() {
-        if (EDITOR || !this.model) return;
+        if (EDITOR) return;
+        if (!this.model?.isValid) this.model = LevelConfig.current?.node ?? null;
+        if (!this.model) return;
         const m = this.model;
         const cur = m.scale.x, wp = m.worldPosition;
         // FitInBox / resize vừa set scale hoặc pos gốc mới → ghi lại base + tâm bbox ở base
@@ -139,17 +149,20 @@ export class ZoomSlider extends Component {
     }
 
     // ------------------------------------------------------------ touch: kéo dọc trên thanh
+    /** Nhận một ngón tay và đặt mức zoom theo điểm chạm đầu tiên trên thanh. */
     private onTouchStart(e: EventTouch) {
         if (this._touchId !== -1) return;
         this._touchId = e.getID();
         this.setProgress(this.progressAt(e));
     }
 
+    /** Cập nhật mức zoom theo ngón tay đang điều khiển, bỏ qua các ngón tay khác. */
     private onTouchMove(e: EventTouch) {
         if (e.getID() !== this._touchId) return;
         this.setProgress(this.progressAt(e));
     }
 
+    /** Nhả quyền điều khiển khi ngón tay hiện tại kết thúc hoặc bị huỷ. */
     private onTouchEnd(e: EventTouch) {
         if (e.getID() === this._touchId) this._touchId = -1;
     }
@@ -167,18 +180,23 @@ export class ZoomSlider extends Component {
     }
 
     // ------------------------------------------------------------ zoom
+    /** Tăng zoom một bước, có giới hạn bởi maxZoom. */
     onPlus() { this.setZoom(this._zoom + this.step); }
+    /** Giảm zoom một bước, có giới hạn bởi minZoom. */
     onMinus() { this.setZoom(this._zoom - this.step); }
 
+    /** Đổi tiến trình 0..1 thành mức zoom trong khoảng minZoom..maxZoom. */
     setProgress(p: number) {
         this.setZoom(math.lerp(this.minZoom, this.maxZoom, math.clamp(p, 0, 1)));
     }
 
+    /** Giới hạn zoom và đồng bộ tay nắm; scale phòng được áp dụng trong lateUpdate. */
     setZoom(z: number) {
         this._zoom = math.clamp(z, this.minZoom, this.maxZoom);
         this.placeHandle();
     }
 
+    /** Đặt tay nắm theo chiều cao và điểm neo của thanh, giữ nguyên toạ độ X/Z. */
     private placeHandle() {
         const h = this.handle, ut = this.getComponent(UITransform);
         if (!h || !ut) return;
